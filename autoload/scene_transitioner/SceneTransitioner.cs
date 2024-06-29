@@ -8,13 +8,14 @@ using System.Threading.Tasks;
 namespace GodotExtensionatorStarter {
 
     public sealed partial class SceneTransitionManager : Node {
+        #region Signals
 
         [Signal]
         public delegate void TransitionRequestedEventHandler(string nextScenePath);
 
         [Signal]
         public delegate void TransitionFinishedEventHandler(string nextScenePath);
-
+        #endregion
 
         [Export] public PackedScene LoadingScreenScene = (PackedScene)GD.Load("res://autoload/scenes/loading/LoadingScreen.tscn");
 
