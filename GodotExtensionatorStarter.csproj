@@ -22,4 +22,7 @@
     <PackageReference Include="Ninetailsrabbit.Extensionator" Version="0.1.1" />
     <PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.4.1" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="autoload\scene_transitioner\transitions\" />
+  </ItemGroup>
 </Project>
