@@ -1,6 +1,6 @@
 <Project Sdk="Godot.NET.Sdk/4.2.2">
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net7.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'ios' ">net8.0</TargetFramework>
 	<RootNamespace>GodotExtensionatorStarter</RootNamespace>
@@ -16,4 +16,8 @@
 	<DebugType>portable</DebugType>
 	<DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Ninetailsrabbit.Extensionator" Version="0.1.1" />
+    <PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.4.1" />
+  </ItemGroup>
 </Project>
