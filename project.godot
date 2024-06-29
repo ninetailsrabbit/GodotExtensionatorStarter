@@ -13,8 +13,12 @@ config_version=5
 config/name="GodotExtensionatorStarter"
 config/description="A starter for gamedev in godot"
 config/version="1.0.0"
-config/features=PackedStringArray("4.2", "Forward Plus")
+config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
+
+[autoload]
+
+GameGlobals="*res://autoload/GameGlobals.cs"
 
 [display]
 

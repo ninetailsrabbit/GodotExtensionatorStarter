@@ -1,1 +1,1 @@
-﻿[assembly:Godot.AssemblyHasScriptsAttribute(new System.Type[] {typeof(global::GodotExtensionatorStarter.GameGlobals)})]
+﻿[assembly:Godot.AssemblyHasScriptsAttribute(new System.Type[] {typeof(global::GodotExtensionatorStarter.GameGlobals), typeof(global::GodotExtensionatorStarter.GlobalGameEvents), typeof(global::GodotExtensionatorStarter.Hitbox2D), typeof(global::GodotExtensionatorStarter.Hurtbox2D), typeof(global::GodotExtensionatorStarter.Hitbox3D), typeof(global::GodotExtensionatorStarter.Hurtbox3D), typeof(global::GodotExtensionatorStarter.Interactable3D)})]
