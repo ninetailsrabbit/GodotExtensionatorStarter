@@ -36,7 +36,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Process(double delta) {
-            Interactable3D detectedInteractable = GetDetectedInteractable();
+            Interactable3D? detectedInteractable = GetDetectedInteractable();
 
             if (detectedInteractable is not null) {
                 if (!CurrentInteractable.Equals(detectedInteractable) && !Focused) {

@@ -23,18 +23,18 @@ namespace GodotExtensionatorStarter {
         public double SmoothValue = 0f;
         public bool Loading = false;
 
-        public SceneTransitionManager SceneTransitionManager { get; set; } = default!;
+        public SceneTransitioner SceneTransitioner { get; set; } = default!;
 
         public override void _EnterTree() {
-            SceneTransitionManager = this.GetAutoloadNode<SceneTransitionManager>();
+            SceneTransitioner = this.GetAutoloadNode<SceneTransitioner>();
         }
         public override void _Ready() {
-           
+
 
             Finished += OnFinished;
             Failed += OnFailed;
 
-            nextScenePath = SceneTransitionManager.NextScenePath;
+            nextScenePath = SceneTransitioner.NextScenePath;
 
             if (nextScenePath.FilePathIsValid()) {
                 ResourceLoader.LoadThreadedRequest(nextScenePath, "Loading screen active", UseSubThreads, CacheMode);
@@ -85,8 +85,8 @@ namespace GodotExtensionatorStarter {
 
         private void OnFinished() {
             Reset();
-            SceneTransitionManager.NextScenePath = "";
-            SceneTransitionManager.TransitionToScene((PackedScene)ResourceLoader.LoadThreadedGet(nextScenePath));
+            SceneTransitioner.NextScenePath = "";
+            SceneTransitioner.TransitionToScene((PackedScene)ResourceLoader.LoadThreadedGet(nextScenePath));
         }
 
         private void OnFailed(int status) {

@@ -10,7 +10,7 @@ partial class LoadingScreen
     protected override void SaveGodotObjectData(global::Godot.Bridge.GodotSerializationInfo info)
     {
         base.SaveGodotObjectData(info);
-        info.AddProperty(PropertyName.SceneTransitionManager, global::Godot.Variant.From<global::GodotExtensionatorStarter.SceneTransitionManager>(this.SceneTransitionManager));
+        info.AddProperty(PropertyName.SceneTransitioner, global::Godot.Variant.From<global::GodotExtensionatorStarter.SceneTransitioner>(this.SceneTransitioner));
         info.AddProperty(PropertyName.nextScenePath, global::Godot.Variant.From<string>(this.nextScenePath));
         info.AddProperty(PropertyName.UseSubThreads, global::Godot.Variant.From<bool>(this.UseSubThreads));
         info.AddProperty(PropertyName.CacheMode, global::Godot.Variant.From<global::Godot.ResourceLoader.CacheMode>(this.CacheMode));
@@ -27,8 +27,8 @@ partial class LoadingScreen
     protected override void RestoreGodotObjectData(global::Godot.Bridge.GodotSerializationInfo info)
     {
         base.RestoreGodotObjectData(info);
-        if (info.TryGetProperty(PropertyName.SceneTransitionManager, out var _value_SceneTransitionManager))
-            this.SceneTransitionManager = _value_SceneTransitionManager.As<global::GodotExtensionatorStarter.SceneTransitionManager>();
+        if (info.TryGetProperty(PropertyName.SceneTransitioner, out var _value_SceneTransitioner))
+            this.SceneTransitioner = _value_SceneTransitioner.As<global::GodotExtensionatorStarter.SceneTransitioner>();
         if (info.TryGetProperty(PropertyName.nextScenePath, out var _value_nextScenePath))
             this.nextScenePath = _value_nextScenePath.As<string>();
         if (info.TryGetProperty(PropertyName.UseSubThreads, out var _value_UseSubThreads))

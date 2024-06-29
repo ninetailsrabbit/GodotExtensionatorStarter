@@ -19,6 +19,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 GameGlobals="*res://autoload/GameGlobals.cs"
+SceneTransitioner="*res://autoload/scene_transitioner/SceneTransitioner.tscn"
 
 [display]
 

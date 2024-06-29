@@ -1,6 +1,6 @@
 ﻿namespace GodotExtensionatorStarter {
 
-partial class SceneTransitionManager
+partial class SceneTransitioner
 {
 #pragma warning disable CS0109 // Disable warning about redundant 'new' keyword
 #if TOOLS
@@ -14,8 +14,8 @@ partial class SceneTransitionManager
     internal new static global::System.Collections.Generic.Dictionary<global::Godot.StringName, global::Godot.Variant> GetGodotPropertyDefaultValues()
     {
         var values = new global::System.Collections.Generic.Dictionary<global::Godot.StringName, global::Godot.Variant>(1);
-        string __LoadingScreenScene_default_value = "res://autoload/scene_transitioner/loading/LoadingScreen.tscn";
-        values.Add(PropertyName.LoadingScreenScene, global::Godot.Variant.From<string>(__LoadingScreenScene_default_value));
+        global::Godot.PackedScene __LoadingScreenScene_default_value = global::Godot.GD.Load<global::Godot.PackedScene>("res://autoload/scene_transitioner/loading/LoadingScreen.tscn");
+        values.Add(PropertyName.LoadingScreenScene, global::Godot.Variant.From<global::Godot.PackedScene>(__LoadingScreenScene_default_value));
         return values;
     }
 #endif // TOOLS

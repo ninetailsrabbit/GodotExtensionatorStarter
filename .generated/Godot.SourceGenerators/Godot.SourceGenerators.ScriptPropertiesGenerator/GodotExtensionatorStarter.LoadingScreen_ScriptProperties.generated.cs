@@ -11,9 +11,9 @@ partial class LoadingScreen
     /// </summary>
     public new class PropertyName : global::Godot.CanvasLayer.PropertyName {
         /// <summary>
-        /// Cached name for the 'SceneTransitionManager' property.
+        /// Cached name for the 'SceneTransitioner' property.
         /// </summary>
-        public new static readonly global::Godot.StringName SceneTransitionManager = "SceneTransitionManager";
+        public new static readonly global::Godot.StringName SceneTransitioner = "SceneTransitioner";
         /// <summary>
         /// Cached name for the 'nextScenePath' field.
         /// </summary>
@@ -51,8 +51,8 @@ partial class LoadingScreen
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
     protected override bool SetGodotClassPropertyValue(in godot_string_name name, in godot_variant value)
     {
-        if (name == PropertyName.SceneTransitionManager) {
-            this.SceneTransitionManager = global::Godot.NativeInterop.VariantUtils.ConvertTo<global::GodotExtensionatorStarter.SceneTransitionManager>(value);
+        if (name == PropertyName.SceneTransitioner) {
+            this.SceneTransitioner = global::Godot.NativeInterop.VariantUtils.ConvertTo<global::GodotExtensionatorStarter.SceneTransitioner>(value);
             return true;
         }
         else if (name == PropertyName.nextScenePath) {
@@ -93,8 +93,8 @@ partial class LoadingScreen
     [global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]
     protected override bool GetGodotClassPropertyValue(in godot_string_name name, out godot_variant value)
     {
-        if (name == PropertyName.SceneTransitionManager) {
-            value = global::Godot.NativeInterop.VariantUtils.CreateFrom<global::GodotExtensionatorStarter.SceneTransitionManager>(this.SceneTransitionManager);
+        if (name == PropertyName.SceneTransitioner) {
+            value = global::Godot.NativeInterop.VariantUtils.CreateFrom<global::GodotExtensionatorStarter.SceneTransitioner>(this.SceneTransitioner);
             return true;
         }
         else if (name == PropertyName.nextScenePath) {
@@ -148,7 +148,7 @@ partial class LoadingScreen
         properties.Add(new(type: (global::Godot.Variant.Type)3, name: PropertyName.CurrentProgressValue, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
         properties.Add(new(type: (global::Godot.Variant.Type)3, name: PropertyName.SmoothValue, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
         properties.Add(new(type: (global::Godot.Variant.Type)1, name: PropertyName.Loading, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
-        properties.Add(new(type: (global::Godot.Variant.Type)24, name: PropertyName.SceneTransitionManager, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
+        properties.Add(new(type: (global::Godot.Variant.Type)24, name: PropertyName.SceneTransitioner, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
         return properties;
     }
 #pragma warning restore CS0109

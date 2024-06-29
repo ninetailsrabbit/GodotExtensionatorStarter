@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace GodotExtensionatorStarter {
 
-    public sealed partial class SceneTransitionManager : Node {
+    public sealed partial class SceneTransitioner : Node {
         #region Signals
 
         [Signal]
@@ -17,7 +17,7 @@ namespace GodotExtensionatorStarter {
         public delegate void TransitionFinishedEventHandler(string nextScenePath);
         #endregion
 
-        [Export] public PackedScene LoadingScreenScene = (PackedScene)GD.Load("res://autoload/scenes/loading/LoadingScreen.tscn");
+        [Export] public PackedScene LoadingScreenScene = GD.Load<PackedScene>("res://autoload/scene_transitioner/loading/LoadingScreen.tscn");
 
         public AnimationPlayer TransitionAnimationPlayer { get; set; } = default!;
         public ColorRect ColorRect { get; set; } = default!;
@@ -35,13 +35,12 @@ namespace GodotExtensionatorStarter {
         public string NextScenePath = string.Empty;
         public Array<TRANSITIONS> RemainingAnimations = [];
 
-        public override void _Ready() {
+        public override void _EnterTree() {
             TransitionAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-            ColorRect = GetNode<ColorRect>("%ColorRect");
+            ColorRect = GetNode<ColorRect>("ColorRect");
 
             TransitionAnimationPlayer.AnimationFinished += OnTransitionAnimationFinished;
         }
-
         public async void TransitionToScene(
             string scenePath,
             bool loadingScreen = false,

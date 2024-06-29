@@ -3,7 +3,7 @@ using Godot.NativeInterop;
 
 namespace GodotExtensionatorStarter {
 
-partial class SceneTransitionManager
+partial class SceneTransitioner
 {
 #pragma warning disable CS0109 // Disable warning about redundant 'new' keyword
     /// <summary>
@@ -44,7 +44,7 @@ partial class SceneTransitionManager
             return true;
         }
         else if (name == PropertyName.LoadingScreenScene) {
-            this.LoadingScreenScene = global::Godot.NativeInterop.VariantUtils.ConvertTo<string>(value);
+            this.LoadingScreenScene = global::Godot.NativeInterop.VariantUtils.ConvertTo<global::Godot.PackedScene>(value);
             return true;
         }
         else if (name == PropertyName.NextScenePath) {
@@ -52,7 +52,7 @@ partial class SceneTransitionManager
             return true;
         }
         else if (name == PropertyName.RemainingAnimations) {
-            this.RemainingAnimations = global::Godot.NativeInterop.VariantUtils.ConvertToArray<global::GodotExtensionatorStarter.SceneTransitionManager.TRANSITIONS>(value);
+            this.RemainingAnimations = global::Godot.NativeInterop.VariantUtils.ConvertToArray<global::GodotExtensionatorStarter.SceneTransitioner.TRANSITIONS>(value);
             return true;
         }
         return base.SetGodotClassPropertyValue(name, value);
@@ -70,7 +70,7 @@ partial class SceneTransitionManager
             return true;
         }
         else if (name == PropertyName.LoadingScreenScene) {
-            value = global::Godot.NativeInterop.VariantUtils.CreateFrom<string>(this.LoadingScreenScene);
+            value = global::Godot.NativeInterop.VariantUtils.CreateFrom<global::Godot.PackedScene>(this.LoadingScreenScene);
             return true;
         }
         else if (name == PropertyName.NextScenePath) {
@@ -92,7 +92,7 @@ partial class SceneTransitionManager
     internal new static global::System.Collections.Generic.List<global::Godot.Bridge.PropertyInfo> GetGodotPropertyList()
     {
         var properties = new global::System.Collections.Generic.List<global::Godot.Bridge.PropertyInfo>();
-        properties.Add(new(type: (global::Godot.Variant.Type)4, name: PropertyName.LoadingScreenScene, hint: (global::Godot.PropertyHint)13, hintString: "", usage: (global::Godot.PropertyUsageFlags)4102, exported: true));
+        properties.Add(new(type: (global::Godot.Variant.Type)24, name: PropertyName.LoadingScreenScene, hint: (global::Godot.PropertyHint)17, hintString: "PackedScene", usage: (global::Godot.PropertyUsageFlags)4102, exported: true));
         properties.Add(new(type: (global::Godot.Variant.Type)24, name: PropertyName.TransitionAnimationPlayer, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
         properties.Add(new(type: (global::Godot.Variant.Type)24, name: PropertyName.ColorRect, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
         properties.Add(new(type: (global::Godot.Variant.Type)4, name: PropertyName.NextScenePath, hint: (global::Godot.PropertyHint)0, hintString: "", usage: (global::Godot.PropertyUsageFlags)4096, exported: false));
