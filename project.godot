@@ -37,7 +37,8 @@ project/assembly_name="GodotExtensionatorStarter"
 folder_colors={
 "res://assets/": "pink",
 "res://autoload/": "orange",
-"res://components/": "yellow"
+"res://components/": "yellow",
+"res://shaders/": "purple"
 }
 
 [layer_names]

@@ -4,7 +4,9 @@
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net7.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'ios' ">net8.0</TargetFramework>
 	<RootNamespace>GodotExtensionatorStarter</RootNamespace>
-    <EnableDynamicLoading>true</EnableDynamicLoading>
+	<NoWarn>0108,8604,8021,1591,1573,8601</NoWarn>
+
+	<EnableDynamicLoading>true</EnableDynamicLoading>
 	<LangVersion>preview</LangVersion>
 	<Nullable>enable</Nullable>
 	<ImplicitUsings>disable</ImplicitUsings>
