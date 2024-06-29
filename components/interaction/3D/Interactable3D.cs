@@ -3,8 +3,7 @@ using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
 
-    [Icon("res://components/interaction/interactable.svg")]
-    [GlobalClass]
+    [GlobalClass, Icon("res://components/interaction/interactable.svg")]
     public partial class Interactable3D : Area3D {
         #region Signals
         [Signal]
