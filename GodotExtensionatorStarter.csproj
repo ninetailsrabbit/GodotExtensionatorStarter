@@ -3,7 +3,6 @@
     <TargetFramework>net8.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net7.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'ios' ">net8.0</TargetFramework>
-	<RootNamespace>GodotExtensionatorStarter</RootNamespace>
 	<NoWarn>0108,8604,8021,1591,1573,8601</NoWarn>
 
 	<EnableDynamicLoading>true</EnableDynamicLoading>
@@ -18,11 +17,11 @@
 	<DebugType>portable</DebugType>
 	<DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Ninetailsrabbit.Extensionator" Version="0.1.1" />
-    <PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.4.1" />
+	<PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.4.1" />
+	<PackageReference Include="Ninetailsrabbit.GodotExtensionatorComponents" Version="0.1.9" PrivateAssets="All" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="autoload\scene_transitioner\transitions\" />
-  </ItemGroup>
+	
 </Project>

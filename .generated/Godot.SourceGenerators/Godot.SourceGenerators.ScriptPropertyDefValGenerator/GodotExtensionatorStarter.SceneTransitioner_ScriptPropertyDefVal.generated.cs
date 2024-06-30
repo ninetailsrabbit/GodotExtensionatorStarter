@@ -14,7 +14,7 @@ partial class SceneTransitioner
     internal new static global::System.Collections.Generic.Dictionary<global::Godot.StringName, global::Godot.Variant> GetGodotPropertyDefaultValues()
     {
         var values = new global::System.Collections.Generic.Dictionary<global::Godot.StringName, global::Godot.Variant>(1);
-        global::Godot.PackedScene __LoadingScreenScene_default_value = global::Godot.GD.Load<global::Godot.PackedScene>("res://autoload/scene_transitioner/loading/LoadingScreen.tscn");
+        global::Godot.PackedScene __LoadingScreenScene_default_value = global::GodotExtensionatorStarter.Preloader.Instance.LoadingScreenDefaultScene;
         values.Add(PropertyName.LoadingScreenScene, global::Godot.Variant.From<global::Godot.PackedScene>(__LoadingScreenScene_default_value));
         return values;
     }

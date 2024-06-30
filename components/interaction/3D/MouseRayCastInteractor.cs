@@ -39,7 +39,7 @@ namespace GodotExtensionatorStarter {
             Interactable3D? detectedInteractable = GetDetectedInteractable();
 
             if (detectedInteractable is not null) {
-                if (!CurrentInteractable.Equals(detectedInteractable) && !Focused) {
+                if (CurrentInteractable is not null && !CurrentInteractable.Equals(detectedInteractable) && !Focused) {
                     Focus(detectedInteractable);
                 }
                 else {

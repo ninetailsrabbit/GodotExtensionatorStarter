@@ -13,6 +13,7 @@ config_version=5
 config/name="GodotExtensionatorStarter"
 config/description="A starter for gamedev in godot"
 config/version="1.0.0"
+run/main_scene="res://test_main.tscn"
 config/features=PackedStringArray("4.2", "C#", "Forward Plus")
 config/icon="res://icon.svg"
 
@@ -20,6 +21,12 @@ config/icon="res://icon.svg"
 
 GameGlobals="*res://autoload/GameGlobals.cs"
 SceneTransitioner="*res://autoload/scene_transitioner/SceneTransitioner.tscn"
+GlobalGameEvents="*res://autoload/GlobalGameEvents.cs"
+MusicManagerAutoload="*res://autoload/audio/MusicManagerAutoload.cs"
+SoundPoolAutoload="*res://autoload/audio/SoundPoolAutoload.cs"
+SaveGameManagerAutoload="*res://autoload/persistence/SaveGameManagerAutoload.cs"
+SettingsFileHandlerAutoload="*res://autoload/settings/SettingsFileHandlerAutoload.cs"
+GamedpadControllerManager="*res://autoload/input/GamedpadControllerManager.cs"
 
 [display]
 

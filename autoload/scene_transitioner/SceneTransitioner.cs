@@ -17,7 +17,7 @@ namespace GodotExtensionatorStarter {
         public delegate void TransitionFinishedEventHandler(string nextScenePath);
         #endregion
 
-        [Export] public PackedScene LoadingScreenScene = GD.Load<PackedScene>("res://autoload/scene_transitioner/loading/LoadingScreen.tscn");
+        [Export] public PackedScene LoadingScreenScene = Preloader.Instance.LoadingScreenDefaultScene;
 
         public AnimationPlayer TransitionAnimationPlayer { get; set; } = default!;
         public ColorRect ColorRect { get; set; } = default!;

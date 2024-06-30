@@ -12,7 +12,6 @@ namespace GodotExtensionatorStarter {
         public delegate void InteractedEventHandler(GodotObject interactor);
         [Signal]
         public delegate void CanceledInteractionEventHandler(GodotObject interactor);
-
         #endregion
 
         #region Player
@@ -27,7 +26,6 @@ namespace GodotExtensionatorStarter {
         public delegate void GamePausedEventHandler();
         [Signal]
         public delegate void GameResumedEventHandler();
-
         #endregion
 
     }

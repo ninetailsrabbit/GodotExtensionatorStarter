@@ -197,6 +197,7 @@ publish/
 PublishScripts/
 
 # NuGet Packages
+nupkg/
 *.nupkg
 # NuGet Symbol Packages
 *.snupkg
@@ -407,7 +408,7 @@ FodyWeavers.xsd
 .import/
 export.cfg
 export_presets.cfg
-
+.generated
 # Imported translations (automatically generated from CSV files)
 *.translation
 
