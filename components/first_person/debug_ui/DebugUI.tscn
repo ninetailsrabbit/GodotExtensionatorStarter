@@ -1,0 +1,57 @@
+[gd_scene load_steps=2 format=3 uid="uid://pm541j6sodr8"]
+
+[ext_resource type="Script" path="res://components/first_person/debug_ui/DebugInformation.cs" id="1_rx7iq"]
+
+[node name="DebugUI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 290.0
+offset_bottom = 190.0
+size_flags_horizontal = 0
+script = ExtResource("1_rx7iq")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 289.0
+offset_bottom = 189.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 15
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 15
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="FPSLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "FPS:"
+
+[node name="VsyncLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "VSYNC:"
+
+[node name="MemoryLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "MEMORY:"
+
+[node name="VelocityLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "VELOCITY:"
+
+[node name="StateLabel" type="Label" parent="Panel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "STATE:"

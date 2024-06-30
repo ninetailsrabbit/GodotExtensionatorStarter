@@ -24,10 +24,10 @@ namespace GodotExtensionatorStarter {
         public ConfigFile ConfigFileApi = new();
         public bool IncludeUIKeybindings = false;
 
-        public GamepadControllerAutoload GamepadControllerManager { get; set; } = default!;
+        public GamepadControllerManager GamepadControllerManager { get; set; } = default!;
 
         public override void _Ready() {
-            GamepadControllerManager = this.GetAutoloadNode<GamepadControllerAutoload>("GamepadControllerManager");
+            GamepadControllerManager = this.GetAutoloadNode<GamepadControllerManager>();
         }
 
         public SettingsFileHandlerAutoload ChangeConfigPath(string newPath) {
@@ -125,13 +125,13 @@ namespace GodotExtensionatorStarter {
                             string joypadButton = "";
 
                             if (GamepadControllerManager.CurrentControllerIsXbox() || GamepadControllerManager.CurrentControllerIsGeneric())
-                                joypadButton = $"InputEventJoypadButton{INPUT_EVENT_SEPARATOR}{eventJoypadButton.ButtonIndex}{INPUT_EVENT_SEPARATOR}{GamepadControllerAutoload.XBOX_BUTTON_LABELS[(int)eventJoypadButton.ButtonIndex]} Button";
+                                joypadButton = $"InputEventJoypadButton{INPUT_EVENT_SEPARATOR}{eventJoypadButton.ButtonIndex}{INPUT_EVENT_SEPARATOR}{GamepadControllerManager.XBOX_BUTTON_LABELS[(int)eventJoypadButton.ButtonIndex]} Button";
 
                             else if (GamepadControllerManager.CurrentControllerIsSwitch() || GamepadControllerManager.CurrentControllerIsSwitchJoycon())
-                                joypadButton = $"InputEventJoypadButton{INPUT_EVENT_SEPARATOR}{eventJoypadButton.ButtonIndex}{INPUT_EVENT_SEPARATOR}{GamepadControllerAutoload.SWITCH_BUTTON_LABELS[(int)eventJoypadButton.ButtonIndex]} Button";
+                                joypadButton = $"InputEventJoypadButton{INPUT_EVENT_SEPARATOR}{eventJoypadButton.ButtonIndex}{INPUT_EVENT_SEPARATOR}{GamepadControllerManager.SWITCH_BUTTON_LABELS[(int)eventJoypadButton.ButtonIndex]} Button";
 
                             else if (GamepadControllerManager.CurrentControllerIsPlaystation())
-                                joypadButton = $"InputEventJoypadButton{INPUT_EVENT_SEPARATOR}{eventJoypadButton.ButtonIndex}{INPUT_EVENT_SEPARATOR}{GamepadControllerAutoload.PLAYSTATION_BUTTON_LABELS[(int)eventJoypadButton.ButtonIndex]} Button";
+                                joypadButton = $"InputEventJoypadButton{INPUT_EVENT_SEPARATOR}{eventJoypadButton.ButtonIndex}{INPUT_EVENT_SEPARATOR}{GamepadControllerManager.PLAYSTATION_BUTTON_LABELS[(int)eventJoypadButton.ButtonIndex]} Button";
 
                             KeybindingsEvents.Add(joypadButton);
                         }
