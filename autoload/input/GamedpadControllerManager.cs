@@ -4,7 +4,7 @@ using Godot.Collections;
 
 namespace GodotExtensionatorStarter {
 
-    public sealed partial class GamepadControllerAutoload : Node {
+    public sealed partial class GamepadControllerManager : Node {
 
         #region
         public delegate void ControllerConnectedEventHandler(long device, string controllerName);
