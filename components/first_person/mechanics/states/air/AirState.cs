@@ -25,15 +25,17 @@ namespace GodotExtensionatorStarter {
         public void AirMove(double? delta = null) {
             delta ??= GetPhysicsProcessDeltaTime();
 
-            if (AirAcceleration > 0 && AirFriction > 0) {
-                var acceleration = Actor.MotionInput.WorldCoordinateSpaceDirection.Dot(Actor.Velocity) > 0 ? AirAcceleration : AirFriction;
-                var accelerationWeight = Mathf.Clamp(acceleration * (float)delta, 0f, 1.0f);
-                var velocity = Actor.Velocity.Lerp(AirSpeed * Actor.MotionInput.WorldCoordinateSpaceDirection, (float)accelerationWeight);
+            if(AirControlMode.Equals(AIR_CONTROL_MODE.FULL) || (AirControlMode.Equals(AIR_CONTROL_MODE.KEEP_IMPULSE) && Actor.MotionInput.InputDirection.IsNotZeroApprox()) ) {
+                if (AirAcceleration > 0 && AirFriction > 0) {
+                    var acceleration = Actor.MotionInput.WorldCoordinateSpaceDirection.Dot(Actor.Velocity) > 0 ? AirAcceleration : AirFriction;
+                    var accelerationWeight = Mathf.Clamp(acceleration * (float)delta, 0f, 1.0f);
+                    var velocity = Actor.Velocity.Lerp(AirSpeed * Actor.MotionInput.WorldCoordinateSpaceDirection, (float)accelerationWeight);
 
-                Actor.Velocity = Actor.Velocity with { X = velocity.X, Z = velocity.Z };
-            }
-            else {
-                Actor.Velocity = Actor.MotionInput.WorldCoordinateSpaceDirection * AirSpeed;
+                    Actor.Velocity = Actor.Velocity with { X = velocity.X, Z = velocity.Z };
+                }
+                else {
+                    Actor.Velocity = Actor.MotionInput.WorldCoordinateSpaceDirection * AirSpeed;
+                }
             }
         }
 
@@ -42,6 +44,8 @@ namespace GodotExtensionatorStarter {
 
             Actor.Velocity += Actor.UpDirectionOpposite() * (float)(force * delta);
         }
+
+
         protected void LimitFallVelocity() {
             Vector3 upDirectionOpposite = Actor.UpDirectionOpposite();
 

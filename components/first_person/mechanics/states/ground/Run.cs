@@ -37,6 +37,8 @@ namespace GodotExtensionatorStarter {
 
 
             DetectCrouch();
+            DetectJump();
+
             Actor.MoveAndSlide();
         }
 

@@ -26,6 +26,7 @@ namespace GodotExtensionatorStarter {
             Accelerate(delta);
             DetectRun();
             DetectCrouch();
+            DetectJump();
 
             Actor.MoveAndSlide();
         }

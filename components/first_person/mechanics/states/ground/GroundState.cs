@@ -11,6 +11,8 @@ namespace GodotExtensionatorStarter {
         [Export] public string CrouchInputAction = "crouch";
         [Export] public string CrawlInputAction = "crawl";
         [Export] public string JumpInputAction = "jump";
+        [Export] public string CrouchAnimationName = "crouch";
+        [Export] public string CrawlAnimationName = "crawl";
         [ExportGroup("Motion Parameters")]
         [Export] public float GravityForce = 9.8f;
         [Export] public float Speed = 10f;

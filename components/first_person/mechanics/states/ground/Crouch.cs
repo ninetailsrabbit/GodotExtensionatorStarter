@@ -24,7 +24,10 @@ namespace GodotExtensionatorStarter {
             }
 
             Accelerate(delta);
-            DetectJump();
+
+            if(!Actor.CeilShapeCast.IsColliding())
+                DetectJump();
+
             DetectCrawl();
 
             Actor.MoveAndSlide();
@@ -35,14 +38,14 @@ namespace GodotExtensionatorStarter {
             var previousState = FSM?.LastState();
 
             if (previousState is not Slide && previousState is not Crawl) {
-                Actor.AnimationPlayer?.Play("crouch");
+                Actor.AnimationPlayer?.Play(CrouchAnimationName);
                 await Actor.AnimationPlayer.WaitToFinished();
             }
         }
 
         private async void ResetCrouchAnimation(MachineState nextState) {
             if (Actor.AnimationPlayer is not null && nextState is not Crawl) {
-                Actor.AnimationPlayer.PlayBackwards("crouch");
+                Actor.AnimationPlayer.PlayBackwards(CrouchAnimationName);
                 await Actor.AnimationPlayer.WaitToFinished();
             }
         }

@@ -6,7 +6,8 @@ namespace GodotExtensionatorStarter {
     public partial class Crawl : GroundState {
 
         public override void Enter() {
-            Actor.AnimationPlayer?.Play("crawl");
+            if (Actor.AnimationPlayer is not null)
+                Actor.AnimationPlayer?.Play(CrawlAnimationName);
         }
 
         public override void Exit(MachineState nextState) {
@@ -27,7 +28,7 @@ namespace GodotExtensionatorStarter {
 
         private async void ResetCrawlAnimation() {
             if (Actor.AnimationPlayer is not null) {
-                Actor.AnimationPlayer.PlayBackwards("crawl");
+                Actor.AnimationPlayer.PlayBackwards(CrawlAnimationName);
                 await Actor.AnimationPlayer.WaitToFinished();
             }
         }

@@ -14,7 +14,7 @@ namespace GodotExtensionatorStarter {
             if (Actor.MotionInput.InputDirection.IsNotZeroApprox())
                 FSM?.ChangeStateTo<Walk>();
 
-            //DetectJump();
+            DetectJump();
             DetectCrouch();
 
             Actor.MoveAndSlide();
