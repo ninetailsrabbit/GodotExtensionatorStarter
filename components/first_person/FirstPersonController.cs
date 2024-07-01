@@ -1,7 +1,6 @@
 ﻿using FirstPersonTemplate;
 using Godot;
 using GodotExtensionator;
-using System.Drawing;
 
 namespace GodotExtensionatorStarter {
 
@@ -42,6 +41,8 @@ namespace GodotExtensionatorStarter {
         public AnimationPlayer AnimationPlayer { get; private set; } = default!;
         public CameraMovement CameraMovement { get; private set; } = default!;
         public HeadBob HeadBob { get; private set; } = default!;
+        public StairStepper StairStepper { get; private set; } = default!;
+
         public FiniteStateMachine FSM { get; private set; } = default!;
         public TransformedInput MotionInput { get; private set; } = default!;
         #endregion
@@ -71,6 +72,7 @@ namespace GodotExtensionatorStarter {
             FSM = GetNode<FiniteStateMachine>(nameof(FiniteStateMachine));
             CameraMovement = this.FirstNodeOfClass<CameraMovement>();
             HeadBob = this.FirstNodeOfClass<HeadBob>();
+            StairStepper = this.FirstNodeOfClass<StairStepper>();
 
             FSM.RegisterTransitions([
                 new WalkToRunTransition(),

@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=25 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
@@ -7,6 +7,8 @@
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Idle.cs" id="3_b68la"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/SwingHead.cs" id="4_r2a3k"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/HeadBob.cs" id="4_ur46t"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/walls/WallRayCastDetector3D.cs" id="6_t0ij4"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/stairs/StairStepper.cs" id="7_11x7o"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Walk.cs" id="8_5flmd"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Run.cs" id="9_v3glq"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Crouch.cs" id="10_2mvts"]
@@ -146,6 +148,23 @@ script = ExtResource("4_ur46t")
 Actor = NodePath("..")
 Head = NodePath("../Head/Eyes")
 
+[node name="WallRayCastDetector3D" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
+script = ExtResource("6_t0ij4")
+
+[node name="StairStepper" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "CameraPivot")]
+script = ExtResource("7_11x7o")
+Actor = NodePath("..")
+CameraPivot = NodePath("../Head/Eyes")
+
+[node name="StairsAheadRayCast3D" type="RayCast3D" parent="StairStepper"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.540311, -0.579435)
+target_position = Vector3(0, -0.55, 0)
+debug_shape_custom_color = Color(0.713726, 0, 0, 1)
+
+[node name="StairsBelowRayCast3D" type="RayCast3D" parent="StairStepper"]
+debug_shape_custom_color = Color(0.713726, 0, 0, 1)
+
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrentState")]
 script = ExtResource("1_r2hbn")
 CurrentState = NodePath("Ground/Idle")
@@ -203,4 +222,3 @@ Actor = NodePath("../../..")
 [node name="Jump" type="Node" parent="FiniteStateMachine/Air" node_paths=PackedStringArray("Actor")]
 script = ExtResource("14_xlj0y")
 Actor = NodePath("../../..")
-AirControlMode = 0

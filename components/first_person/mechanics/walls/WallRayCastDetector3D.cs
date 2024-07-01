@@ -2,8 +2,7 @@
 
 namespace FirstPersonTemplate {
 
-    [Icon("res://components/first_person/mechanics/icons/wall_detector.svg")]
-    [GlobalClass]
+    [GlobalClass, Icon("res://components/first_person/mechanics/icons/wall_detector.svg")]
     public partial class WallRayCastDetector3D : Node3D {
         public enum WALL_SIDES {
             FRONT,
@@ -22,11 +21,11 @@ namespace FirstPersonTemplate {
         [Export(PropertyHint.Range, "0.1f, 10.0f, 0.01f")] public float FrontDistanceDetector = 0.5f;
 
         public RayCast3D TopRightRayCast { get; set; } = default!;
-        public RayCast3D BottomRightRayCast {get; set;} = default!;
-        public RayCast3D TopLeftRayCast {get; set;} = default!;
-        public RayCast3D BottomLeftRayCast {get; set;} = default!;
-        public RayCast3D TopFrontRayCast {get; set;} = default!;
-        public RayCast3D BottomFrontRayCast {get; set;} = default!;
+        public RayCast3D BottomRightRayCast { get; set; } = default!;
+        public RayCast3D TopLeftRayCast { get; set; } = default!;
+        public RayCast3D BottomLeftRayCast { get; set; } = default!;
+        public RayCast3D TopFrontRayCast { get; set; } = default!;
+        public RayCast3D BottomFrontRayCast { get; set; } = default!;
 
         public override void _Ready() {
             CreateWallRayCastDetectors();
