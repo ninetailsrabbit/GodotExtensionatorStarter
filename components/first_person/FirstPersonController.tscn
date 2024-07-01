@@ -158,11 +158,13 @@ Actor = NodePath("..")
 CameraPivot = NodePath("../Head/Eyes")
 
 [node name="StairsAheadRayCast3D" type="RayCast3D" parent="StairStepper"]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.540311, -0.579435)
 target_position = Vector3(0, -0.55, 0)
 debug_shape_custom_color = Color(0.713726, 0, 0, 1)
 
 [node name="StairsBelowRayCast3D" type="RayCast3D" parent="StairStepper"]
+unique_name_in_owner = true
 debug_shape_custom_color = Color(0.713726, 0, 0, 1)
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrentState")]

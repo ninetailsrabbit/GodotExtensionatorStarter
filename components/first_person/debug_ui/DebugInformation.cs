@@ -21,6 +21,7 @@ namespace GodotExtensionatorStarter {
         public HSlider CameraSensitivitySlider { get; set; } = default!;
         public HSlider CameraVerticalRotationLimitSlider { get; set; } = default!;
 
+        public SpinBox IdleFrictionSpinBox { get; set; } = default!;
 
         public override void _UnhandledInput(InputEvent @event) {
             if (Input.IsActionJustPressed(PauseAction)) {
@@ -41,6 +42,7 @@ namespace GodotExtensionatorStarter {
 
         public override void _ExitTree() {
             Actor.FSM.StateChanged -= OnStateChanged;
+            Actor.FSM.StatesInitialized -= PrepareStates;
         }
 
         public override void _EnterTree() {
@@ -61,11 +63,15 @@ namespace GodotExtensionatorStarter {
             CameraSensitivitySlider = GetNode<HSlider>("%CameraSensitivitySlider");
             CameraVerticalRotationLimitSlider = GetNode<HSlider>("%CameraVerticalRotationLimitSlider");
 
+            IdleFrictionSpinBox = GetNode<SpinBox>("%IdleFrictionSpinBox");
+
             MouseSensitivitySlider.ValueChanged += OnMouseSensitivityValueChanged;
             CameraSensitivitySlider.ValueChanged += OnCameraSensitivityValueChanged;
             CameraVerticalRotationLimitSlider.ValueChanged += OnCameraVerticalRotationLimitValueChanged;
+            IdleFrictionSpinBox.ValueChanged += OnIdleFrictionValueChanged;
 
             Actor.FSM.StateChanged += OnStateChanged;
+            Actor.FSM.StatesInitialized += PrepareStates;
 
         }
 
@@ -119,8 +125,11 @@ namespace GodotExtensionatorStarter {
             CameraVerticalRotationLimitSlider.Value = Actor.CameraMovement.CameraVerticalRotationLimit;
             CameraVerticalRotationLimitSlider.MinValue = 0f;
             CameraVerticalRotationLimitSlider.MaxValue = Mathf.RadToDeg(Mathf.Tau);
-            CameraVerticalRotationLimitSlider.Step = 1f;            
+            CameraVerticalRotationLimitSlider.Step = 1f;
+        }
 
+        private void PrepareStates() {
+            IdleFrictionSpinBox.Value = Actor.FSM.GetState<Idle>().Friction;
         }
 
         #region Signal callbacks
@@ -138,6 +147,10 @@ namespace GodotExtensionatorStarter {
 
         private void OnCameraVerticalRotationLimitValueChanged(double value) {
             Actor.CameraMovement.CameraVerticalRotationLimit = (float)value;
+        }
+
+        private void OnIdleFrictionValueChanged(double value) {
+            Actor.FSM.GetState<Walk>().Friction = (float)value;
         }
         #endregion
     }

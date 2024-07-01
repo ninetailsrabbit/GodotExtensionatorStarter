@@ -18,6 +18,9 @@ namespace GodotExtensionatorStarter {
 
         public delegate void StackFlushedEventHandler(Array<MachineState> stack);
         public event StackFlushedEventHandler? StackFlushed;
+
+        public delegate void StatesInitializedEventHandler();
+        public event StatesInitializedEventHandler? StatesInitialized;
         #endregion
 
         #region Exports
@@ -145,17 +148,24 @@ namespace GodotExtensionatorStarter {
             return States.ContainsKey(name);
         }
 
-        public void EnterState(MachineState state) {
+        public static void EnterState(MachineState state) {
             state.Enter();
         }
 
-        public void ExitState(MachineState state, MachineState nextState) {
+        public static void ExitState(MachineState state, MachineState nextState) {
             state.Exit(nextState);
         }
 
         public MachineState? GetStateByName(string name) {
             if (States.TryGetValue(name, out MachineState? value))
                 return value;
+
+            return null;
+        }
+
+        public T? GetState<T>() where T : MachineState {
+            if (GetStateByName(typeof(T).Name) is T state)
+                return state;
 
             return null;
         }
@@ -206,9 +216,10 @@ namespace GodotExtensionatorStarter {
 
         #region PrivateFunctions
         private void InitializeStateNodes() {
-            foreach (MachineState state in this.GetNodesByClass<MachineState>()) {
+            foreach (MachineState state in this.GetNodesByClass<MachineState>())
                 AddStateToDictionary(state);
-            }
+
+            StatesInitialized?.Invoke();
         }
 
         public void RegisterTransitions(params Transition[] transitions) {

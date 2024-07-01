@@ -101,7 +101,7 @@ namespace GodotExtensionatorStarter {
                 (oppositeUpDirection.IsEqualApprox(Vector3.Left) && Velocity.X < 0) ||
                 (oppositeUpDirection.IsEqualApprox(Vector3.Right) && Velocity.X > 0);
 
-            return !isGrounded && oppositeToGravityVector; // !StairStepper.StairsBelowRayCast3D.IsColliding()
+            return !isGrounded && oppositeToGravityVector && !StairStepper.StairsBelowRayCast3D.IsColliding();
         }
 
         private void SwitchMouseCaptureMode() {

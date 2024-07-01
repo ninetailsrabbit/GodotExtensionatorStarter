@@ -79,12 +79,12 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0156863, 0.0156863, 0.0156863, 0.529412)
 
-[node name="Panel" type="Panel" parent="Parameters"]
+[node name="CameraPanel" type="Panel" parent="Parameters"]
 layout_mode = 0
 offset_right = 295.0
 offset_bottom = 193.0
 
-[node name="MarginContainer" type="MarginContainer" parent="Parameters/Panel"]
+[node name="MarginContainer" type="MarginContainer" parent="Parameters/CameraPanel"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -96,32 +96,67 @@ theme_override_constants/margin_top = 10
 theme_override_constants/margin_right = 10
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Parameters/Panel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Parameters/CameraPanel/MarginContainer"]
 layout_mode = 2
 
-[node name="MouseSensitivityLabel" type="Label" parent="Parameters/Panel/MarginContainer/VBoxContainer"]
+[node name="MouseSensitivityLabel" type="Label" parent="Parameters/CameraPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Mouse sensitivity"
 
-[node name="MouseSensitivitySlider" type="HSlider" parent="Parameters/Panel/MarginContainer/VBoxContainer"]
+[node name="MouseSensitivitySlider" type="HSlider" parent="Parameters/CameraPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CameraSensitivityLabel" type="Label" parent="Parameters/Panel/MarginContainer/VBoxContainer"]
+[node name="CameraSensitivityLabel" type="Label" parent="Parameters/CameraPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Camera sensitivity"
 
-[node name="CameraSensitivitySlider" type="HSlider" parent="Parameters/Panel/MarginContainer/VBoxContainer"]
+[node name="CameraSensitivitySlider" type="HSlider" parent="Parameters/CameraPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="CameraRotationLimitLabel" type="Label" parent="Parameters/Panel/MarginContainer/VBoxContainer"]
+[node name="CameraRotationLimitLabel" type="Label" parent="Parameters/CameraPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Camera vert rotation limit"
 
-[node name="CameraVerticalRotationLimitSlider" type="HSlider" parent="Parameters/Panel/MarginContainer/VBoxContainer"]
+[node name="CameraVerticalRotationLimitSlider" type="HSlider" parent="Parameters/CameraPanel/MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="IdleStatePanel" type="Panel" parent="Parameters"]
+layout_mode = 0
+offset_left = 293.0
+offset_right = 454.0
+offset_bottom = 104.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Parameters/IdleStatePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Parameters/IdleStatePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="IdleStateLabel" type="Label" parent="Parameters/IdleStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "IDLE "
+
+[node name="FrictionLabel" type="Label" parent="Parameters/IdleStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Friction"
+
+[node name="IdleFrictionSpinBox" type="SpinBox" parent="Parameters/IdleStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
