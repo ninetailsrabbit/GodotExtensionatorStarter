@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=21 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
@@ -11,6 +11,7 @@
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Run.cs" id="9_v3glq"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Crouch.cs" id="10_2mvts"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/air/Fall.cs" id="10_sbrnj"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Crawl.cs" id="11_171lm"]
 
 [sub_resource type="Animation" id="Animation_cmn3m"]
 resource_name = "crouch"
@@ -82,9 +83,10 @@ height = 0.638921
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1dytl"]
 radius = 0.35
-height = 0.9
+height = 0.7
 
 [node name="FirstPersonController" type="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00191653, 0)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_xrc74")
@@ -118,12 +120,13 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55665, 0)
 
 [node name="CeilShapeCast" type="ShapeCast3D" parent="Head"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04335, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05612, 0)
 shape = SubResource("CapsuleShape3D_1dytl")
 
 [node name="Eyes" type="Node3D" parent="Head"]
 
 [node name="Camera3D" type="Camera3D" parent="Head/Eyes"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.4926)
 
 [node name="CameraMovement" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "Camera", "PivotPoint")]
 script = ExtResource("3_7s15c")
@@ -177,6 +180,12 @@ Speed = 4.5
 SideSpeed = 4.0
 Acceleration = 6.0
 Friction = 10.0
+
+[node name="Crawl" type="Node" parent="FiniteStateMachine/Ground" node_paths=PackedStringArray("Actor")]
+script = ExtResource("11_171lm")
+Actor = NodePath("../../..")
+Speed = 2.5
+SideSpeed = 2.3
 
 [node name="Air" type="Node" parent="FiniteStateMachine"]
 

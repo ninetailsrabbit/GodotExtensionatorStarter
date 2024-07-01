@@ -135,6 +135,12 @@ namespace GodotExtensionatorStarter {
                     CrawlShape.Disabled = true;
                     HeadBob.Intensity = HeadBobCrouchIntensity;
                     break;
+                case Crawl _:
+                    StandShape.Disabled = true;
+                    CrouchShape.Disabled = true;
+                    CrawlShape.Disabled = false;
+                    HeadBob.Intensity = HeadBobCrouchIntensity;
+                    break;
                 case Slide _:
                     StandShape.Disabled = true;
                     CrouchShape.Disabled = false;

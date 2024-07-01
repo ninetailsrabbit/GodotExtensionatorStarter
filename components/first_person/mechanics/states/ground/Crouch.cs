@@ -6,15 +6,11 @@ namespace GodotExtensionatorStarter {
     public partial class Crouch : GroundState {
 
         public override void Enter() {
-            if (FSM?.LastState() is not Slide)
-                Actor.AnimationPlayer?.Play("crouch");
+            CrouchAnimation();
         }
 
-        public override async void Exit(MachineState nextState) {
-            if (Actor.AnimationPlayer is not null && nextState is not Crawl) {
-                Actor.AnimationPlayer.PlayBackwards("crouch");
-                await Actor.AnimationPlayer.WaitToFinished();
-            }
+        public override void Exit(MachineState nextState) {
+            ResetCrouchAnimation(nextState);
         }
 
         public override void PhysicsUpdate(double delta) {
@@ -27,10 +23,29 @@ namespace GodotExtensionatorStarter {
                     FSM?.ChangeStateTo<Walk>();
             }
 
-            DetectJump();
             Accelerate(delta);
+            DetectJump();
+            DetectCrawl();
 
             Actor.MoveAndSlide();
         }
+
+        #region Animations
+        private async void CrouchAnimation() {
+            var previousState = FSM?.LastState();
+
+            if (previousState is not Slide && previousState is not Crawl) {
+                Actor.AnimationPlayer?.Play("crouch");
+                await Actor.AnimationPlayer.WaitToFinished();
+            }
+        }
+
+        private async void ResetCrouchAnimation(MachineState nextState) {
+            if (Actor.AnimationPlayer is not null && nextState is not Crawl) {
+                Actor.AnimationPlayer.PlayBackwards("crouch");
+                await Actor.AnimationPlayer.WaitToFinished();
+            }
+        }
+        #endregion
     }
 }

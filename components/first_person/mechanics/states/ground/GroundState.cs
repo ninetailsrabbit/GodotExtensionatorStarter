@@ -50,21 +50,22 @@ namespace GodotExtensionatorStarter {
         }
 
         public void DetectRun() {
-            if (InputMap.HasAction(RunInputAction) && Input.IsActionPressed(RunInputAction))
+            if (Actor.Run && InputMap.HasAction(RunInputAction) && Input.IsActionPressed(RunInputAction))
                 FSM?.ChangeStateTo<Run>();
         }
 
         public void DetectCrouch() {
-            if (InputMap.HasAction(CrouchInputAction) && Input.IsActionJustPressed(CrouchInputAction))
+            if (Actor.Crouch && InputMap.HasAction(CrouchInputAction) && Input.IsActionPressed(CrouchInputAction))
                 FSM?.ChangeStateTo<Crouch>();
         }
 
-        //public void DetectCrawl() {
-        //    if (InputMap.HasAction(CrawlInputAction) && Input.IsActionJustPressed(CrawlInputAction))
-        //        FSM?.ChangeStateTo<Crawl>();
-        //}
+        public void DetectCrawl() {
+            if (Actor.Crawl && InputMap.HasAction(CrawlInputAction) && Input.IsActionPressed(CrawlInputAction))
+                FSM?.ChangeStateTo<Crawl>();
+        }
+
         public void DetectJump() {
-            if (InputMap.HasAction(JumpInputAction) && Input.IsActionJustPressed(JumpInputAction))
+            if (Actor.Jump && InputMap.HasAction(JumpInputAction) && Input.IsActionJustPressed(JumpInputAction))
                 FSM?.ChangeStateTo<Jump>();
         }
     }
