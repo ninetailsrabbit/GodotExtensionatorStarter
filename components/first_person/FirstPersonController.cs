@@ -44,6 +44,7 @@ namespace GodotExtensionatorStarter {
 
         public bool wasGrounded = false;
         public bool isGrounded = false;
+
         public override void _UnhandledInput(InputEvent @event) {
             if (Input.IsActionJustPressed("ui_cancel")) {
                 SwitchMouseCaptureMode();
@@ -73,6 +74,17 @@ namespace GodotExtensionatorStarter {
             isGrounded = IsOnFloor();
 
             MotionInput.Update();
+        }
+
+        public bool IsFalling() {
+            Vector3 oppositeUpDirection = this.UpDirectionOpposite();
+
+            bool oppositeToGravityVector = (oppositeUpDirection.IsEqualApprox(Vector3.Down) && Velocity.Y < 0) ||
+                (oppositeUpDirection.IsEqualApprox(Vector3.Up) && Velocity.Y > 0) ||
+                (oppositeUpDirection.IsEqualApprox(Vector3.Left) && Velocity.X < 0) ||
+                (oppositeUpDirection.IsEqualApprox(Vector3.Right) && Velocity.X > 0);
+
+            return !isGrounded && oppositeToGravityVector; // !StairStepper.StairsBelowRayCast3D.IsColliding()
         }
 
         private void SwitchMouseCaptureMode() {

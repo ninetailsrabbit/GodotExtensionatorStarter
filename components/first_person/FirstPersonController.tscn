@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=12 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Idle.cs" id="3_b68la"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/SwingHead.cs" id="4_r2a3k"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/HeadBob.cs" id="4_ur46t"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Walk.cs" id="8_5flmd"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f1ah1"]
 radius = 0.4
@@ -56,6 +57,7 @@ script = ExtResource("3_7s15c")
 Actor = NodePath("..")
 Camera = NodePath("../Head/Eyes/Camera3D")
 PivotPoint = NodePath("../Head/Eyes")
+CameraSensitivity = 0.6
 
 [node name="SwingHead" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "Head")]
 script = ExtResource("4_r2a3k")
@@ -70,9 +72,17 @@ Head = NodePath("../Head/Eyes")
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrentState")]
 script = ExtResource("1_r2hbn")
 CurrentState = NodePath("Ground/Idle")
+StackCapacity = 1
 
 [node name="Ground" type="Node" parent="FiniteStateMachine"]
 
 [node name="Idle" type="Node" parent="FiniteStateMachine/Ground" node_paths=PackedStringArray("Actor")]
 script = ExtResource("3_b68la")
 Actor = NodePath("../../..")
+Friction = 10.0
+
+[node name="Walk" type="Node" parent="FiniteStateMachine/Ground" node_paths=PackedStringArray("Actor")]
+script = ExtResource("8_5flmd")
+Actor = NodePath("../../..")
+Acceleration = 8.0
+Friction = 10.0

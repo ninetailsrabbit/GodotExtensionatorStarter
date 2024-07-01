@@ -133,8 +133,6 @@ namespace GodotExtensionatorStarter {
         }
 
         private void OnCameraSensitivityValueChanged(double value) {
-            GD.Print(value);
-
             Actor.CameraMovement.CameraSensitivity = (float)value;
         }
 

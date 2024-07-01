@@ -22,12 +22,5 @@
     <PackageReference Include="Ninetailsrabbit.Extensionator" Version="0.2.2" />
 	<PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.4.2" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="components\first_person\mechanics\states\air\" />
-    <Folder Include="components\first_person\mechanics\states\special\" />
-    <Folder Include="components\first_person\mechanics\states\wall\" />
-    <Folder Include="components\first_person\mechanics\states\transitions\" />
-  </ItemGroup>
 	
 </Project>
