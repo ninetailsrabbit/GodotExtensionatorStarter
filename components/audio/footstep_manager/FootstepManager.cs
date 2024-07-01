@@ -20,7 +20,9 @@ namespace GodotExtensionatorStarter {
         public bool SfxPlaying = false;
 
         public override void _EnterTree() {
-            ArgumentNullException.ThrowIfNull(FloorDetectorRaycast);
+            FloorDetectorRaycast ??= this.FirstNodeOfType<RayCast3D>();
+
+            ArgumentNullException.ThrowIfNull(nameof(FloorDetectorRaycast));
 
             CreateIntervalTimer();
         }

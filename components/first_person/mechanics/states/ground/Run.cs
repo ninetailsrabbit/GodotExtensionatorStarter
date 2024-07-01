@@ -18,7 +18,7 @@ namespace GodotExtensionatorStarter {
 
             if (SprintTime > 0 && IsInstanceValid(SpeedTimer))
                 SpeedTimer.Start();
-            
+
             InRecovery = false;
         }
 
@@ -30,29 +30,28 @@ namespace GodotExtensionatorStarter {
 
             Accelerate(delta);
 
-            //if(Actor.Slide) {
-            //    if (InputMap.HasAction(CrouchInputAction) && Input.IsActionJustPressed(CrouchInputAction))
-            //        FSM?.ChangeStateTo<Slide>();
-            //} else {
-            //    DetectCrouch();
-            //}
+            if (Actor.Crouch && Actor.Slide && InputMap.HasAction(CrouchInputAction) && Input.IsActionJustPressed(CrouchInputAction)) {
+                FSM?.ChangeStateTo<Slide>();
+                return;
+            }
 
+
+            DetectCrouch();
             Actor.MoveAndSlide();
         }
 
         private void CreateSpeedTimer() {
-            if (SpeedTimer is null) {
-                SpeedTimer = new Timer {
-                    Name = "RunSpeedTimer",
-                    WaitTime = SprintTime,
-                    ProcessCallback = Timer.TimerProcessCallback.Physics,
-                    Autostart = false,
-                    OneShot = true
-                };
+            SpeedTimer ??= new Timer {
+                Name = "RunSpeedTimer",
+                WaitTime = SprintTime,
+                ProcessCallback = Timer.TimerProcessCallback.Physics,
+                Autostart = false,
+                OneShot = true
+            };
 
-                AddChild(SpeedTimer);
-                SpeedTimer.Timeout += OnSpeedTimerTimeout;
-            }
+            AddChild(SpeedTimer);
+            SpeedTimer.Timeout += OnSpeedTimerTimeout;
+
         }
 
         private void OnSpeedTimerTimeout() {

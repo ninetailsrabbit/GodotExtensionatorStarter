@@ -31,17 +31,15 @@ namespace GodotExtensionatorStarter {
         }
 
         private void CreateCatchingBreathTimer() {
-            if (CatchingBreathTimer == null) {
-                CatchingBreathTimer = new Timer {
-                    Name = "RunCatchingBreathTimer",
-                    WaitTime = CatchingBreathRecoveryTime,
-                    ProcessCallback = Timer.TimerProcessCallback.Physics,
-                    Autostart = false,
-                    OneShot = true
-                };
+            CatchingBreathTimer ??= new Timer {
+                Name = "RunCatchingBreathTimer",
+                WaitTime = CatchingBreathRecoveryTime,
+                ProcessCallback = Timer.TimerProcessCallback.Physics,
+                Autostart = false,
+                OneShot = true
+            };
 
-                AddChild(CatchingBreathTimer);
-            }
+            AddChild(CatchingBreathTimer);
         }
     }
 }
