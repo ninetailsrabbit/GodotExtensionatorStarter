@@ -26,7 +26,7 @@ namespace GodotExtensionatorStarter {
         [ExportGroup("HeadBob configuration")]
         [Export] public float HeadBobWalkIntensity = 0.02f;
         [Export] public float HeadBobRunIntensity = 0.05f;
-        [Export] public float HeadBobCrouchIntensity = 0.02f;
+        [Export] public float HeadBobCrouchIntensity = 0.01f;
         [Export] public float HeadBobSwimIntensity = 0.02f;
         #endregion
 
@@ -35,6 +35,7 @@ namespace GodotExtensionatorStarter {
         public CollisionShape3D StandShape { get; private set; } = default!;
         public CollisionShape3D CrouchShape { get; private set; } = default!;
         public CollisionShape3D CrawlShape { get; private set; } = default!;
+        public ShapeCast3D CeilShapeCast { get; private set; } = default!;
         #endregion
 
         #region Motion
@@ -65,6 +66,7 @@ namespace GodotExtensionatorStarter {
             StandShape = GetNode<CollisionShape3D>(nameof(StandShape));
             CrouchShape = GetNode<CollisionShape3D>(nameof(CrouchShape));
             CrawlShape = GetNode<CollisionShape3D>(nameof(CrawlShape));
+            CeilShapeCast = GetNode<ShapeCast3D>("%CeilShapeCast");
 
             FSM = GetNode<FiniteStateMachine>(nameof(FiniteStateMachine));
             CameraMovement = this.FirstNodeOfClass<CameraMovement>();
@@ -127,17 +129,17 @@ namespace GodotExtensionatorStarter {
                     CrawlShape.Disabled = true;
                     HeadBob.Intensity = HeadBobRunIntensity;
                     break;
-                //case Crouch _:
-                //    StandShape.Disabled = true;
-                //    CrouchShape.Disabled = false;
-                //    CrawlShape.Disabled = true;
-                //    HeadBob.Intensity = HeadBobCrouchIntensity;
-                //    break;
-                //case Slide _:
-                //    StandShape.Disabled = true;
-                //    CrouchShape.Disabled = false;
-                //    CrawlShape.Disabled = true;
-                //    break;
+                case Crouch _:
+                    StandShape.Disabled = true;
+                    CrouchShape.Disabled = false;
+                    CrawlShape.Disabled = true;
+                    HeadBob.Intensity = HeadBobCrouchIntensity;
+                    break;
+                case Slide _:
+                    StandShape.Disabled = true;
+                    CrouchShape.Disabled = false;
+                    CrawlShape.Disabled = true;
+                    break;
                 //case Swim _:
                 //    HeadBob.Intensity = HeadBobSwimIntensity;
                 //    break;

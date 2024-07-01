@@ -15,7 +15,7 @@ namespace GodotExtensionatorStarter {
                 FSM?.ChangeStateTo<Walk>();
 
             //DetectJump();
-            //DetectCrouch();
+            DetectCrouch();
 
             Actor.MoveAndSlide();
         }

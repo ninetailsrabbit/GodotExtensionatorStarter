@@ -29,6 +29,14 @@ namespace GodotExtensionatorStarter {
                 FSM?.ChangeStateTo<Idle>();
 
             Accelerate(delta);
+
+            //if(Actor.Slide) {
+            //    if (InputMap.HasAction(CrouchInputAction) && Input.IsActionJustPressed(CrouchInputAction))
+            //        FSM?.ChangeStateTo<Slide>();
+            //} else {
+            //    DetectCrouch();
+            //}
+
             Actor.MoveAndSlide();
         }
 

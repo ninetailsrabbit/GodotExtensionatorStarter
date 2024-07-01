@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=20 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
@@ -9,7 +9,64 @@
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/HeadBob.cs" id="4_ur46t"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Walk.cs" id="8_5flmd"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Run.cs" id="9_v3glq"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Crouch.cs" id="10_2mvts"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/air/Fall.cs" id="10_sbrnj"]
+
+[sub_resource type="Animation" id="Animation_cmn3m"]
+resource_name = "crouch"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.55665, 0), Vector3(0, 0.664, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_y7dw2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.55665, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_xjibj"]
+resource_name = "crawl"
+length = 0.25
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.664, 0), Vector3(0, 0.35, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_khayj"]
+_data = {
+"RESET": SubResource("Animation_y7dw2"),
+"crawl": SubResource("Animation_xjibj"),
+"crouch": SubResource("Animation_cmn3m")
+}
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f1ah1"]
 radius = 0.4
@@ -23,7 +80,13 @@ height = 1.02655
 radius = 0.319461
 height = 0.638921
 
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_1dytl"]
+radius = 0.35
+height = 0.9
+
 [node name="FirstPersonController" type="CharacterBody3D"]
+collision_layer = 2
+collision_mask = 5
 script = ExtResource("1_xrc74")
 
 [node name="Debug" type="CanvasLayer" parent="."]
@@ -32,6 +95,9 @@ script = ExtResource("1_xrc74")
 Actor = NodePath("../..")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_khayj")
+}
 
 [node name="StandShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.941876, 0)
@@ -49,6 +115,11 @@ disabled = true
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55665, 0)
+
+[node name="CeilShapeCast" type="ShapeCast3D" parent="Head"]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.04335, 0)
+shape = SubResource("CapsuleShape3D_1dytl")
 
 [node name="Eyes" type="Node3D" parent="Head"]
 
@@ -98,6 +169,14 @@ Speed = 12.0
 SideSpeed = 10.0
 Acceleration = 9.0
 Friction = 12.0
+
+[node name="Crouch" type="Node" parent="FiniteStateMachine/Ground" node_paths=PackedStringArray("Actor")]
+script = ExtResource("10_2mvts")
+Actor = NodePath("../../..")
+Speed = 4.5
+SideSpeed = 4.0
+Acceleration = 6.0
+Friction = 10.0
 
 [node name="Air" type="Node" parent="FiniteStateMachine"]
 
