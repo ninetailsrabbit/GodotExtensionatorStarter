@@ -1,0 +1,58 @@
+﻿using Godot;
+using GodotExtensionator;
+
+
+namespace GodotExtensionatorStarter {
+    [GlobalClass]
+    public partial class Fall : AirState {
+        [Export] public float EdgeGampJump = 0.45f;
+        [Export] public bool CoyoteTime = true;
+        [Export] public int CoyoteTimeFrames = 25;
+        [Export] public bool JumpInputBuffer = true;
+        [Export] public int JumpInputBufferTimeFrames = 30;
+
+        private bool _jumpRequested = false;
+        private int _currentCoyoteTimeFrames = 0;
+        private int _currentJumpInputBufferTimeFrames = 0;
+
+        public override void Enter() {
+            // We keep the frames relative to the physic ticks per second so 120 ticks means the frames are multiplied by 2
+            var scaleReferencePhysicTicksPerSecond = (int)Mathf.Round(Engine.PhysicsTicksPerSecond / 60);
+
+            _jumpRequested = false;
+            _currentCoyoteTimeFrames = CoyoteTimeFrames * scaleReferencePhysicTicksPerSecond;
+            _currentJumpInputBufferTimeFrames = JumpInputBufferTimeFrames * scaleReferencePhysicTicksPerSecond;
+        }
+        public override void PhysicsUpdate(double delta) {
+            if (!CoyoteTimeCountIsActive())
+                base.PhysicsUpdate(delta);
+
+            _jumpRequested = InputMap.HasAction(JumpInputAction) && Input.IsActionJustPressed(JumpInputAction);
+            _currentCoyoteTimeFrames -= 1;
+            _currentJumpInputBufferTimeFrames -= 1;
+
+            if (_jumpRequested && CoyoteTimeCountIsActive())
+                FSM?.ChangeStateTo<Jump>();
+
+            else if ((!Actor.wasGrounded && Actor.isGrounded) || Actor.IsOnFloor()) {
+
+                if (_jumpRequested && JumpInputBufferIsActive()) {
+                    FSM?.ChangeStateTo<Jump>();
+                }
+                else {
+                    if (Actor.MotionInput.InputDirection.IsZeroApprox())
+                        FSM?.ChangeStateTo<Idle>();
+                    else
+                        FSM?.ChangeStateTo<Walk>();
+                }
+            }
+
+            AirMove(delta);
+
+            Actor.MoveAndSlide();
+        }
+
+        private bool CoyoteTimeCountIsActive() => CoyoteTime && _currentCoyoteTimeFrames.IsGreaterThanZero() && FSM?.LastState() is GroundState;
+        private bool JumpInputBufferIsActive() => JumpInputBuffer && _currentJumpInputBufferTimeFrames.IsGreaterThanZero();
+    }
+}

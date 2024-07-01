@@ -1,6 +1,7 @@
 ﻿using FirstPersonTemplate;
 using Godot;
 using GodotExtensionator;
+using System.Drawing;
 
 namespace GodotExtensionatorStarter {
 
@@ -29,6 +30,7 @@ namespace GodotExtensionatorStarter {
         [Export] public float HeadBobSwimIntensity = 0.02f;
         #endregion
 
+
         #region Collisions
         public CollisionShape3D StandShape { get; private set; } = default!;
         public CollisionShape3D CrouchShape { get; private set; } = default!;
@@ -36,6 +38,7 @@ namespace GodotExtensionatorStarter {
         #endregion
 
         #region Motion
+        public AnimationPlayer AnimationPlayer { get; private set; } = default!;
         public CameraMovement CameraMovement { get; private set; } = default!;
         public HeadBob HeadBob { get; private set; } = default!;
         public FiniteStateMachine FSM { get; private set; } = default!;
@@ -58,9 +61,19 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             MotionInput = new(this);
 
+            AnimationPlayer = GetNode<AnimationPlayer>(nameof(AnimationPlayer));
+            StandShape = GetNode<CollisionShape3D>(nameof(StandShape));
+            CrouchShape = GetNode<CollisionShape3D>(nameof(CrouchShape));
+            CrawlShape = GetNode<CollisionShape3D>(nameof(CrawlShape));
+
             FSM = GetNode<FiniteStateMachine>(nameof(FiniteStateMachine));
             CameraMovement = this.FirstNodeOfClass<CameraMovement>();
             HeadBob = this.FirstNodeOfClass<HeadBob>();
+
+            FSM.RegisterTransitions([
+                new WalkToRunTransition(),
+                new RunToWalkTransition()
+            ]);
 
             FSM.StateChanged += OnStateChanged;
         }
@@ -96,7 +109,47 @@ namespace GodotExtensionatorStarter {
 
         #region Signal callbacks
         private void OnStateChanged(MachineState from, MachineState to) {
-
+            switch (to) {
+                case Idle _:
+                    StandShape.Disabled = false;
+                    CrouchShape.Disabled = true;
+                    CrawlShape.Disabled = true;
+                    break;
+                case Walk _:
+                    StandShape.Disabled = false;
+                    CrouchShape.Disabled = true;
+                    CrawlShape.Disabled = true;
+                    HeadBob.Intensity = HeadBobWalkIntensity;
+                    break;
+                case Run _:
+                    StandShape.Disabled = false;
+                    CrouchShape.Disabled = true;
+                    CrawlShape.Disabled = true;
+                    HeadBob.Intensity = HeadBobRunIntensity;
+                    break;
+                //case Crouch _:
+                //    StandShape.Disabled = true;
+                //    CrouchShape.Disabled = false;
+                //    CrawlShape.Disabled = true;
+                //    HeadBob.Intensity = HeadBobCrouchIntensity;
+                //    break;
+                //case Slide _:
+                //    StandShape.Disabled = true;
+                //    CrouchShape.Disabled = false;
+                //    CrawlShape.Disabled = true;
+                //    break;
+                //case Swim _:
+                //    HeadBob.Intensity = HeadBobSwimIntensity;
+                //    break;
+                case AirState _:
+                    StandShape.Disabled = false;
+                    CrouchShape.Disabled = true;
+                    CrawlShape.Disabled = true;
+                    break;
+                default:
+                    HeadBob.Intensity = HeadBobWalkIntensity;
+                    break;
+            }
         }
 
         #endregion

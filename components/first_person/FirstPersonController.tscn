@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=14 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
@@ -8,6 +8,8 @@
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/SwingHead.cs" id="4_r2a3k"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/HeadBob.cs" id="4_ur46t"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Walk.cs" id="8_5flmd"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Run.cs" id="9_v3glq"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/states/air/Fall.cs" id="10_sbrnj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f1ah1"]
 radius = 0.4
@@ -84,5 +86,21 @@ Friction = 10.0
 [node name="Walk" type="Node" parent="FiniteStateMachine/Ground" node_paths=PackedStringArray("Actor")]
 script = ExtResource("8_5flmd")
 Actor = NodePath("../../..")
+Speed = 8.5
+SideSpeed = 8.0
 Acceleration = 8.0
 Friction = 10.0
+
+[node name="Run" type="Node" parent="FiniteStateMachine/Ground" node_paths=PackedStringArray("Actor")]
+script = ExtResource("9_v3glq")
+Actor = NodePath("../../..")
+Speed = 12.0
+SideSpeed = 10.0
+Acceleration = 9.0
+Friction = 12.0
+
+[node name="Air" type="Node" parent="FiniteStateMachine"]
+
+[node name="Fall" type="Node" parent="FiniteStateMachine/Air" node_paths=PackedStringArray("Actor")]
+script = ExtResource("10_sbrnj")
+Actor = NodePath("../../..")

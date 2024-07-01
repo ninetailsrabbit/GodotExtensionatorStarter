@@ -22,8 +22,8 @@ namespace GodotExtensionatorStarter {
             if (!Actor.isGrounded)
                 ApplyGravity(GravityForce, delta);
 
-            //if (Actor.IsFalling())
-            //    FSM.ChangeStateTo<Fall>();
+            if (Actor.IsFalling())
+                FSM?.ChangeStateTo<Fall>();
         }
 
         public void ApplyGravity(float force, double? delta = null) {
@@ -43,11 +43,30 @@ namespace GodotExtensionatorStarter {
                 var velocity = Actor.Velocity.Lerp(currentSpeed * Actor.MotionInput.WorldCoordinateSpaceDirection, (float)accelerationWeight);
 
                 Actor.Velocity = Actor.Velocity with { X = velocity.X, Z = velocity.Z };
-            } else {
+            }
+            else {
                 Actor.Velocity = Actor.MotionInput.WorldCoordinateSpaceDirection * currentSpeed;
             }
-   
         }
+
+        public void DetectRun() {
+            if (InputMap.HasAction(RunInputAction) && Input.IsActionPressed(RunInputAction))
+                FSM?.ChangeStateTo<Run>();
+        }
+
+        //public void DetectCrouch() {
+        //    if (InputMap.HasAction(CrouchInputAction) && Input.IsActionJustPressed(CrouchInputAction))
+        //        FSM.ChangeStateTo<Crouch>();
+        //}
+
+        //public void DetectCrawl() {
+        //    if (InputMap.HasAction(CrawlInputAction) && Input.IsActionJustPressed(CrawlInputAction))
+        //        FSM.ChangeStateTo<Crawl>();
+        //}
+        //public void DetectJump() {
+        //    if (InputMap.HasAction(JumpInputAction) && Input.IsActionJustPressed(JumpInputAction))
+        //        FSM.ChangeStateTo<Jump>();
+        //}
     }
 
 }
