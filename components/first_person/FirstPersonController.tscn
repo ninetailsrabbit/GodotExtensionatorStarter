@@ -1,9 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=11 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
 [ext_resource type="PackedScene" uid="uid://pm541j6sodr8" path="res://components/first_person/debug_ui/DebugUI.tscn" id="2_db6yj"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/camera/CameraMovement.cs" id="3_7s15c"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Idle.cs" id="3_b68la"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/camera/SwingHead.cs" id="4_r2a3k"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/camera/HeadBob.cs" id="4_ur46t"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_f1ah1"]
 radius = 0.4
@@ -34,10 +37,12 @@ shape = SubResource("CapsuleShape3D_f1ah1")
 [node name="CrouchShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.534717, 0)
 shape = SubResource("CapsuleShape3D_07a4u")
+disabled = true
 
 [node name="CrawlShape" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.318652, 0)
 shape = SubResource("CapsuleShape3D_lixv4")
+disabled = true
 
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55665, 0)
@@ -45,6 +50,22 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55665, 0)
 [node name="Eyes" type="Node3D" parent="Head"]
 
 [node name="Camera3D" type="Camera3D" parent="Head/Eyes"]
+
+[node name="CameraMovement" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "Camera", "PivotPoint")]
+script = ExtResource("3_7s15c")
+Actor = NodePath("..")
+Camera = NodePath("../Head/Eyes/Camera3D")
+PivotPoint = NodePath("../Head/Eyes")
+
+[node name="SwingHead" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "Head")]
+script = ExtResource("4_r2a3k")
+Actor = NodePath("..")
+Head = NodePath("../Head/Eyes")
+
+[node name="HeadBob" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "Head")]
+script = ExtResource("4_ur46t")
+Actor = NodePath("..")
+Head = NodePath("../Head/Eyes")
 
 [node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrentState")]
 script = ExtResource("1_r2hbn")

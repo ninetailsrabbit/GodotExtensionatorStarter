@@ -1,7 +1,10 @@
-﻿using Godot;
+﻿using FirstPersonTemplate;
+using Godot;
 using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
+
+    [Icon("res://components/first_person/mechanics/icons/first_person_controller.svg")]
     public partial class FirstPersonController : CharacterBody3D {
         public const string GROUP_NAME = "player";
 
@@ -33,6 +36,8 @@ namespace GodotExtensionatorStarter {
         #endregion
 
         #region Motion
+        public CameraMovement CameraMovement { get; private set; } = default!;
+        public HeadBob HeadBob { get; private set; } = default!;
         public FiniteStateMachine FSM { get; private set; } = default!;
         public TransformedInput MotionInput { get; private set; } = default!;
         #endregion
@@ -45,10 +50,22 @@ namespace GodotExtensionatorStarter {
             }
         }
 
+        public override void _ExitTree() {
+            FSM.StateChanged -= OnStateChanged;
+        }
+
         public override void _EnterTree() {
             MotionInput = new(this);
 
             FSM = GetNode<FiniteStateMachine>(nameof(FiniteStateMachine));
+            CameraMovement = this.FirstNodeOfClass<CameraMovement>();
+            HeadBob = this.FirstNodeOfClass<HeadBob>();
+
+            FSM.StateChanged += OnStateChanged;
+        }
+
+        public override void _Ready() {
+            InputExtension.CaptureMouse();
         }
 
         public override void _PhysicsProcess(double delta) {
@@ -64,5 +81,12 @@ namespace GodotExtensionatorStarter {
             else
                 InputExtension.ShowMouseCursor();
         }
+
+        #region Signal callbacks
+        private void OnStateChanged(MachineState from, MachineState to) {
+
+        }
+
+        #endregion
     }
 }

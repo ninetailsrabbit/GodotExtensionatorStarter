@@ -408,7 +408,7 @@ FodyWeavers.xsd
 .import/
 export.cfg
 export_presets.cfg
-.generated
+.generated/
 # Imported translations (automatically generated from CSV files)
 *.translation
 
