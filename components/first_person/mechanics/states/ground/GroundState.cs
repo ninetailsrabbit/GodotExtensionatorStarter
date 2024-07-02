@@ -14,11 +14,11 @@ namespace GodotExtensionatorStarter {
         [Export] public string CrouchAnimationName = "crouch";
         [Export] public string CrawlAnimationName = "crawl";
         [ExportGroup("Motion Parameters")]
-        [Export] public float GravityForce = 9.8f;
-        [Export] public float Speed = 10f;
-        [Export] public float SideSpeed = 9.5f;
-        [Export] public float Acceleration = 0;
-        [Export] public float Friction = 0;
+        [Export] public float GravityForce { get; set; } = 9.8f;
+        [Export] public float Speed { get; set; } = 10f;
+        [Export] public float SideSpeed { get; set; } = 9.5f;
+        [Export] public float Acceleration { get; set; } = 0;
+        [Export] public float Friction { get; set; } = 0;
 
         public override void PhysicsUpdate(double delta) {
             if (!Actor.isGrounded)

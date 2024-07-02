@@ -1,6 +1,9 @@
 ﻿using Godot;
 using GodotExtensionator;
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace GodotExtensionatorStarter {
     public partial class DebugInformation : Control {
@@ -17,12 +20,27 @@ namespace GodotExtensionatorStarter {
 
         public Control ParametersPanel { get; set; } = default!;
 
+        #region Camera nodes
         public HSlider MouseSensitivitySlider { get; set; } = default!;
         public HSlider CameraSensitivitySlider { get; set; } = default!;
         public HSlider CameraVerticalRotationLimitSlider { get; set; } = default!;
+        #endregion
 
+        #region State parameters nodes
         public SpinBox IdleFrictionSpinBox { get; set; } = default!;
+        public SpinBox WalkSpeedSpinBox { get; set; } = default!;
+        public SpinBox WalkSideSpeedSpinBox { get; set; } = default!;
+        public SpinBox WalkAccelerationSpinBox { get; set; } = default!;
+        public SpinBox WalkFrictionSpinBox { get; set; } = default!;
+        public SpinBox WalkCatchingBreathSpinBox { get; set; } = default!;
+        public SpinBox RunSpeedSpinBox { get; set; } = default!;
+        public SpinBox RunSideSpeedSpinBox { get; set; } = default!;
+        public SpinBox RunAccelerationSpinBox { get; set; } = default!;
+        public SpinBox RunFrictionSpinBox { get; set; } = default!;
+        public SpinBox RunSprintTimeSpinBox { get; set; } = default!;
+        #endregion
 
+        private Dictionary<string, List<PropertyInfo>> StatesProperties = [];
         public override void _UnhandledInput(InputEvent @event) {
             if (Input.IsActionJustPressed(PauseAction)) {
                 if (ParametersPanel.Visible)
@@ -59,20 +77,42 @@ namespace GodotExtensionatorStarter {
             ParametersPanel = GetNode<Control>("Parameters");
             ParametersPanel.Hide();
 
-            MouseSensitivitySlider = GetNode<HSlider>("%MouseSensitivitySlider");
-            CameraSensitivitySlider = GetNode<HSlider>("%CameraSensitivitySlider");
-            CameraVerticalRotationLimitSlider = GetNode<HSlider>("%CameraVerticalRotationLimitSlider");
+            MouseSensitivitySlider = GetNode<HSlider>($"%{nameof(MouseSensitivitySlider)}");
+            CameraSensitivitySlider = GetNode<HSlider>($"%{nameof(CameraSensitivitySlider)}");
+            CameraVerticalRotationLimitSlider = GetNode<HSlider>($"%{nameof(CameraVerticalRotationLimitSlider)}");
 
-            IdleFrictionSpinBox = GetNode<SpinBox>("%IdleFrictionSpinBox");
+            IdleFrictionSpinBox = GetNode<SpinBox>($"%{nameof(IdleFrictionSpinBox)}");
+            WalkSpeedSpinBox = GetNode<SpinBox>($"%{nameof(WalkSpeedSpinBox)}");
+            WalkSideSpeedSpinBox = GetNode<SpinBox>($"%{nameof(WalkSideSpeedSpinBox)}");
+            WalkAccelerationSpinBox = GetNode<SpinBox>($"%{nameof(WalkAccelerationSpinBox)}");
+            WalkFrictionSpinBox = GetNode<SpinBox>($"%{nameof(WalkFrictionSpinBox)}");
+            WalkCatchingBreathSpinBox = GetNode<SpinBox>($"%{nameof(WalkCatchingBreathSpinBox)}");
+
+            RunSpeedSpinBox = GetNode<SpinBox>($"%{nameof(RunSpeedSpinBox)}");
+            RunSideSpeedSpinBox = GetNode<SpinBox>($"%{nameof(RunSideSpeedSpinBox)}");
+            RunAccelerationSpinBox = GetNode<SpinBox>($"%{nameof(RunAccelerationSpinBox)}");
+            RunFrictionSpinBox = GetNode<SpinBox>($"%{nameof(RunFrictionSpinBox)}");
+            RunSprintTimeSpinBox = GetNode<SpinBox>($"%{nameof(RunSprintTimeSpinBox)}");
 
             MouseSensitivitySlider.ValueChanged += OnMouseSensitivityValueChanged;
             CameraSensitivitySlider.ValueChanged += OnCameraSensitivityValueChanged;
             CameraVerticalRotationLimitSlider.ValueChanged += OnCameraVerticalRotationLimitValueChanged;
             IdleFrictionSpinBox.ValueChanged += OnIdleFrictionValueChanged;
 
+            WalkSpeedSpinBox.ValueChanged += (double value) => OnWalkStateValueChanged(WalkSpeedSpinBox, value);
+            WalkSideSpeedSpinBox.ValueChanged += (double value) => OnWalkStateValueChanged(WalkSideSpeedSpinBox, value);
+            WalkAccelerationSpinBox.ValueChanged += (double value) => OnWalkStateValueChanged(WalkAccelerationSpinBox, value);
+            WalkFrictionSpinBox.ValueChanged += (double value) => OnWalkStateValueChanged(WalkFrictionSpinBox, value);
+            WalkCatchingBreathSpinBox.ValueChanged += (double value) => OnWalkStateValueChanged(WalkCatchingBreathSpinBox, value);
+
+            RunSpeedSpinBox.ValueChanged += (double value) => OnRunStateValueChanged(RunSpeedSpinBox, value);
+            RunSideSpeedSpinBox.ValueChanged += (double value) => OnRunStateValueChanged(RunSideSpeedSpinBox, value);
+            RunAccelerationSpinBox.ValueChanged += (double value) => OnRunStateValueChanged(RunAccelerationSpinBox, value);
+            RunFrictionSpinBox.ValueChanged += (double value) => OnRunStateValueChanged(RunFrictionSpinBox, value);
+            RunSprintTimeSpinBox.ValueChanged += (double value) => OnRunStateValueChanged(RunSprintTimeSpinBox, value);
+
             Actor.FSM.StateChanged += OnStateChanged;
             Actor.FSM.StatesInitialized += PrepareStates;
-
         }
 
         public override void _Ready() {
@@ -129,7 +169,29 @@ namespace GodotExtensionatorStarter {
         }
 
         private void PrepareStates() {
-            IdleFrictionSpinBox.Value = Actor.FSM.GetState<Idle>().Friction;
+            if (Actor.FSM.GetState<Idle>() is Idle idleState)
+                IdleFrictionSpinBox.Value = idleState.Friction;
+
+            if (Actor.FSM.GetState<Walk>() is Walk walkState) {
+                StatesProperties.Add(walkState.GetType().Name, [.. walkState.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)]);
+
+                WalkSpeedSpinBox.Value = walkState.Speed;
+                WalkSideSpeedSpinBox.Value = walkState.SideSpeed;
+                WalkAccelerationSpinBox.Value = walkState.Acceleration;
+                WalkFrictionSpinBox.Value = walkState.Friction;
+                WalkCatchingBreathSpinBox.Value = walkState.CatchingBreathRecoveryTime;
+            }
+
+
+            if (Actor.FSM.GetState<Run>() is Run runState) {
+                StatesProperties.Add(runState.GetType().Name, [.. runState.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)]);
+
+                RunSpeedSpinBox.Value = runState.Speed;
+                RunSideSpeedSpinBox.Value = runState.SideSpeed;
+                RunAccelerationSpinBox.Value = runState.Acceleration;
+                RunFrictionSpinBox.Value = runState.Friction;
+                RunSprintTimeSpinBox.Value = runState.SprintTime;
+            }
         }
 
         #region Signal callbacks
@@ -152,6 +214,29 @@ namespace GodotExtensionatorStarter {
         private void OnIdleFrictionValueChanged(double value) {
             Actor.FSM.GetState<Walk>().Friction = (float)value;
         }
+
+        private void OnWalkStateValueChanged(SpinBox spinBox, double value) {
+            if (Actor.FSM.GetState<Walk>() is Walk walkState) {
+                var meta = spinBox.GetMeta("property");
+
+                if (StatesProperties[walkState.GetType().Name]
+                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta.ToString())) is PropertyInfo property) {
+                    property.SetValue(walkState, (float)value);
+                }
+            }
+        }
+
+        private void OnRunStateValueChanged(SpinBox spinBox, double value) {
+            if (Actor.FSM.GetState<Run>() is Run runState) {
+                var meta = spinBox.GetMeta("property");
+
+                if (StatesProperties[runState.GetType().Name]
+                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta.ToString())) is PropertyInfo property) {
+                    property.SetValue(runState, (float)value);
+                }
+            }
+        }
+
         #endregion
     }
 }

@@ -160,3 +160,167 @@ unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
 step = 0.5
+
+[node name="WalkStatePanel" type="Panel" parent="Parameters"]
+layout_mode = 0
+offset_left = 457.0
+offset_right = 693.0
+offset_bottom = 339.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Parameters/WalkStatePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Parameters/WalkStatePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="WalkStateLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "WALK"
+
+[node name="SpeedLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Speed
+"
+
+[node name="WalkSpeedSpinBox" type="SpinBox" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "Speed"
+
+[node name="SideSpeedLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Side Speed
+"
+
+[node name="WalkSideSpeedSpinBox" type="SpinBox" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "SideSpeed"
+
+[node name="AccelerationLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Acceleration"
+
+[node name="WalkAccelerationSpinBox" type="SpinBox" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "Acceleration"
+
+[node name="FrictionLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Friction"
+
+[node name="WalkFrictionSpinBox" type="SpinBox" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "Friction"
+
+[node name="CatchingBreathTimerLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Catching breath time"
+
+[node name="WalkCatchingBreathSpinBox" type="SpinBox" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "CatchingBreathRecoveryTime"
+
+[node name="RunStatePanel" type="Panel" parent="Parameters"]
+layout_mode = 0
+offset_left = 690.0
+offset_right = 926.0
+offset_bottom = 339.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Parameters/RunStatePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Parameters/RunStatePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="RunStateLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "RUN"
+
+[node name="SpeedLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Speed
+"
+
+[node name="RunSpeedSpinBox" type="SpinBox" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "Speed"
+
+[node name="SideSpeedLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Side Speed
+"
+
+[node name="RunSideSpeedSpinBox" type="SpinBox" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "SideSpeed"
+
+[node name="AccelerationLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Acceleration"
+
+[node name="RunAccelerationSpinBox" type="SpinBox" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "Acceleration"
+
+[node name="FrictionLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Friction"
+
+[node name="RunFrictionSpinBox" type="SpinBox" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "Friction"
+
+[node name="SprintTimeLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Sprint time"
+
+[node name="RunSprintTimeSpinBox" type="SpinBox" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "SprintTime"

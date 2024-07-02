@@ -4,8 +4,7 @@ namespace GodotExtensionatorStarter {
 
     [GlobalClass]
     public partial class Walk : GroundState {
-
-        [Export] public float CatchingBreathRecoveryTime = 3f;
+        [Export] public float CatchingBreathRecoveryTime { get; set; } = 3f;
 
         public Timer CatchingBreathTimer { get; set; } = default!;
 

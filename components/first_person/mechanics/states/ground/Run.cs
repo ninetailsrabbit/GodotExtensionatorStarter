@@ -5,7 +5,7 @@ namespace GodotExtensionatorStarter {
     [GlobalClass]
     public partial class Run : GroundState {
 
-        [Export] public float SprintTime = 3.5f;
+        [Export] public float SprintTime { get; set; } = 3.5f;
 
         public bool InRecovery = false;
         public Timer SpeedTimer { get; set; } = default!;
