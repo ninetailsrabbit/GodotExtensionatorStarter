@@ -182,7 +182,7 @@ namespace GodotExtensionatorStarter {
             FallAirFrictionSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallAirFrictionSpinBox, value);
             FallCoyoteTimeFramesSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallCoyoteTimeFramesSpinBox, value);
             FallJumpInputBufferFramesSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallJumpInputBufferFramesSpinBox, value);
-            FallCoyoteTimeCheckBox.Toggled += (bool toggled) => OnFallStateCheckboxToggled(FallCoyoteTimeCheckBox, toggled); 
+            FallCoyoteTimeCheckBox.Toggled += (bool toggled) => OnFallStateCheckboxToggled(FallCoyoteTimeCheckBox, toggled);
             FallJumpInputBufferCheckBox.Toggled += (bool toggled) => OnFallStateCheckboxToggled(FallJumpInputBufferCheckBox, toggled);
             FallAirControlModeOptionButton.ItemSelected += OnFallSideOptionSelected;
 
@@ -409,7 +409,12 @@ namespace GodotExtensionatorStarter {
 
                 if (StatesProperties[fallState.GetType().Name]
                     .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta)) is PropertyInfo property) {
-                    property.SetValue(fallState, (float)value);
+
+                    if (property.PropertyType == typeof(int))
+                        property.SetValue(fallState, Convert.ToInt32(value));
+                    else
+                        property.SetValue(fallState, (float)value);
+
                 }
             }
         }
