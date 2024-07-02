@@ -9,20 +9,20 @@ namespace GodotExtensionatorStarter {
     public partial class Slide : GroundState {
         private readonly Random _rng = new();
         public enum SLIDE_SIDE {
-            RIGHT,
+            RANDOM,
             LEFT,
-            RANDOM
+            RIGHT
         }
 
         [Export] public Node3D Head { get; set; } = null!;
-        [Export] public float SlideTime = 0.9f;
-        [Export] public float SlideLerpSpeed = 8f;
-        [Export] public float SlideTiltComebackTime = 0.35f;
-        [Export(PropertyHint.Range, "0, 360f, 0.01")] public float SlideTilt = 7f;
-        [Export] public SLIDE_SIDE SlideTiltSide = SLIDE_SIDE.RANDOM;
-        [Export] public float FrictionMomentum = 0.1f;
-        [Export] public bool ReduceSpeedGradually = true;
-        [Export] public bool SwingHead = true;
+        [Export] public float SlideTime { get; set; } = 0.9f;
+        [Export] public float SlideLerpSpeed { get; set; } = 8f;
+        [Export] public float SlideTiltComebackTime { get; set; } = 0.35f;
+        [Export(PropertyHint.Range, "0, 360f, 0.01")] public float SlideTilt { get; set; } = 7f;
+        [Export] public SLIDE_SIDE SlideTiltSide { get; set; } = SLIDE_SIDE.RANDOM;
+        [Export] public float FrictionMomentum { get; set; } = 0.1f;
+        [Export] public bool ReduceSpeedGradually { get; set; } = true;
+        [Export] public bool SwingHead { get; set; } = true;
 
         private Timer _slideTimer { get; set; } = default!;
         private Vector3 _entryVelocity = Vector3.Zero;
@@ -44,10 +44,10 @@ namespace GodotExtensionatorStarter {
                 case SLIDE_SIDE.RANDOM:
                     _slideSide = _rng.Chance(0.5f).ToSign();
                     break;
-                case SLIDE_SIDE.RIGHT:
+                case SLIDE_SIDE.LEFT:
                     _slideSide = 1;
                     break;
-                case SLIDE_SIDE.LEFT:
+                case SLIDE_SIDE.RIGHT:
                     _slideSide = -1;
                     break;
             }

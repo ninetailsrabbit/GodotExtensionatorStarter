@@ -38,6 +38,16 @@ namespace GodotExtensionatorStarter {
         public SpinBox RunAccelerationSpinBox { get; set; } = default!;
         public SpinBox RunFrictionSpinBox { get; set; } = default!;
         public SpinBox RunSprintTimeSpinBox { get; set; } = default!;
+
+        public SpinBox SlideTimeSpinBox { get; set; } = default!;
+        public SpinBox SlideLerpSpeedSpinBox { get; set; } = default!;
+        public SpinBox SlideTiltSpinBox { get; set; } = default!;
+        public SpinBox SlideTiltComebackTimeSpinBox { get; set; } = default!;
+        public SpinBox SlideFrictionMomentumSpinBox { get; set; } = default!;
+        public OptionButton SlideSideOptionButton { get; set; } = default!;
+        public CheckBox SlideReduceSpeedGraduallyCheckbox { get; set; } = default!;
+        public CheckBox SlideSwingHeadCheckbox { get; set; } = default!;
+
         #endregion
 
         private Dictionary<string, List<PropertyInfo>> StatesProperties = [];
@@ -94,6 +104,15 @@ namespace GodotExtensionatorStarter {
             RunFrictionSpinBox = GetNode<SpinBox>($"%{nameof(RunFrictionSpinBox)}");
             RunSprintTimeSpinBox = GetNode<SpinBox>($"%{nameof(RunSprintTimeSpinBox)}");
 
+            SlideTimeSpinBox = GetNode<SpinBox>($"%{nameof(SlideTimeSpinBox)}");
+            SlideLerpSpeedSpinBox = GetNode<SpinBox>($"%{nameof(SlideLerpSpeedSpinBox)}");
+            SlideTiltSpinBox = GetNode<SpinBox>($"%{nameof(SlideTiltSpinBox)}");
+            SlideTiltComebackTimeSpinBox = GetNode<SpinBox>($"%{nameof(SlideTiltComebackTimeSpinBox)}");
+            SlideFrictionMomentumSpinBox = GetNode<SpinBox>($"%{nameof(SlideFrictionMomentumSpinBox)}");
+            SlideReduceSpeedGraduallyCheckbox = GetNode<CheckBox>($"%{nameof(SlideReduceSpeedGraduallyCheckbox)}");
+            SlideSwingHeadCheckbox = GetNode<CheckBox>($"%{nameof(SlideSwingHeadCheckbox)}");
+            SlideSideOptionButton = GetNode<OptionButton>($"%{nameof(SlideSideOptionButton)}");
+
             MouseSensitivitySlider.ValueChanged += OnMouseSensitivityValueChanged;
             CameraSensitivitySlider.ValueChanged += OnCameraSensitivityValueChanged;
             CameraVerticalRotationLimitSlider.ValueChanged += OnCameraVerticalRotationLimitValueChanged;
@@ -110,6 +129,15 @@ namespace GodotExtensionatorStarter {
             RunAccelerationSpinBox.ValueChanged += (double value) => OnRunStateValueChanged(RunAccelerationSpinBox, value);
             RunFrictionSpinBox.ValueChanged += (double value) => OnRunStateValueChanged(RunFrictionSpinBox, value);
             RunSprintTimeSpinBox.ValueChanged += (double value) => OnRunStateValueChanged(RunSprintTimeSpinBox, value);
+
+            SlideTimeSpinBox.ValueChanged += (double value) => OnSlideStateSpinBoxValueChanged(SlideTimeSpinBox, value);
+            SlideLerpSpeedSpinBox.ValueChanged += (double value) => OnSlideStateSpinBoxValueChanged(SlideLerpSpeedSpinBox, value);
+            SlideTiltSpinBox.ValueChanged += (double value) => OnSlideStateSpinBoxValueChanged(SlideTiltSpinBox, value);
+            SlideTiltComebackTimeSpinBox.ValueChanged += (double value) => OnSlideStateSpinBoxValueChanged(SlideTiltComebackTimeSpinBox, value);
+            SlideFrictionMomentumSpinBox.ValueChanged += (double value) => OnSlideStateSpinBoxValueChanged(SlideFrictionMomentumSpinBox, value);
+            SlideReduceSpeedGraduallyCheckbox.Toggled += (bool toggled) => OnSlideStateCheckboxToggled(SlideReduceSpeedGraduallyCheckbox, toggled);
+            SlideSwingHeadCheckbox.Toggled += (bool toggled) => OnSlideStateCheckboxToggled(SlideSwingHeadCheckbox, toggled);
+            SlideSideOptionButton.ItemSelected += OnSlideSideOptionSelected;
 
             Actor.FSM.StateChanged += OnStateChanged;
             Actor.FSM.StatesInitialized += PrepareStates;
@@ -192,6 +220,21 @@ namespace GodotExtensionatorStarter {
                 RunFrictionSpinBox.Value = runState.Friction;
                 RunSprintTimeSpinBox.Value = runState.SprintTime;
             }
+
+            if (Actor.FSM.GetState<Slide>() is Slide slideState) {
+                StatesProperties.Add(slideState.GetType().Name, [.. slideState.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)]);
+
+                SlideTimeSpinBox.Value = slideState.SlideTime;
+                SlideLerpSpeedSpinBox.Value = slideState.SlideLerpSpeed;
+                SlideTiltSpinBox.Value = slideState.SlideTilt;
+                SlideTiltComebackTimeSpinBox.Value = slideState.SlideTiltComebackTime;
+                SlideFrictionMomentumSpinBox.Value = slideState.FrictionMomentum;
+
+                SlideReduceSpeedGraduallyCheckbox.ButtonPressed = slideState.ReduceSpeedGradually;
+                SlideSwingHeadCheckbox.ButtonPressed = slideState.SwingHead;
+
+                SlideSideOptionButton.Selected = (int)slideState.SlideTiltSide;
+            }
         }
 
         #region Signal callbacks
@@ -225,15 +268,42 @@ namespace GodotExtensionatorStarter {
                 }
             }
         }
-
         private void OnRunStateValueChanged(SpinBox spinBox, double value) {
             if (Actor.FSM.GetState<Run>() is Run runState) {
-                var meta = spinBox.GetMeta("property");
+                var meta = spinBox.GetMeta("property").ToString();
 
                 if (StatesProperties[runState.GetType().Name]
-                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta.ToString())) is PropertyInfo property) {
+                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta)) is PropertyInfo property) {
                     property.SetValue(runState, (float)value);
                 }
+            }
+        }
+
+        private void OnSlideStateSpinBoxValueChanged(SpinBox spinBox, double value) {
+            if (Actor.FSM.GetState<Slide>() is Slide slideState) {
+                var meta = spinBox.GetMeta("property").ToString();
+
+                if (StatesProperties[slideState.GetType().Name]
+                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta)) is PropertyInfo property) {
+                    property.SetValue(slideState, (float)value);
+                }
+            }
+        }
+
+        private void OnSlideStateCheckboxToggled(CheckBox checkbox, bool toggled) {
+            if (Actor.FSM.GetState<Slide>() is Slide slideState) {
+                var meta = checkbox.GetMeta("property").ToString();
+
+                if (StatesProperties[slideState.GetType().Name]
+                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta)) is PropertyInfo property) {
+                    property.SetValue(slideState, toggled);
+                }
+            }
+        }
+
+        private void OnSlideSideOptionSelected(long value) {
+            if (Actor.FSM.GetState<Slide>() is Slide slideState) {
+                slideState.SlideTiltSide = (Slide.SLIDE_SIDE)value;
             }
         }
 

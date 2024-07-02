@@ -212,7 +212,7 @@ SideSpeed = 2.3
 [node name="Slide" type="Node" parent="FiniteStateMachine/Ground" node_paths=PackedStringArray("Head", "Actor")]
 script = ExtResource("12_aj1ds")
 Head = NodePath("../../../Head/Eyes")
-ReduceSpeedGradually = false
+SlideTiltSide = 1
 Actor = NodePath("../../..")
 
 [node name="Air" type="Node" parent="FiniteStateMachine"]

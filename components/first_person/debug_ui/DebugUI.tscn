@@ -164,7 +164,7 @@ step = 0.5
 [node name="WalkStatePanel" type="Panel" parent="Parameters"]
 layout_mode = 0
 offset_left = 457.0
-offset_right = 693.0
+offset_right = 639.0
 offset_bottom = 339.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Parameters/WalkStatePanel"]
@@ -195,7 +195,7 @@ text = "Speed
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "Speed"
 
 [node name="SideSpeedLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
@@ -207,7 +207,7 @@ text = "Side Speed
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "SideSpeed"
 
 [node name="AccelerationLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
@@ -218,7 +218,7 @@ text = "Acceleration"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "Acceleration"
 
 [node name="FrictionLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
@@ -229,7 +229,7 @@ text = "Friction"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "Friction"
 
 [node name="CatchingBreathTimerLabel" type="Label" parent="Parameters/WalkStatePanel/MarginContainer/VBoxContainer"]
@@ -240,13 +240,13 @@ text = "Catching breath time"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "CatchingBreathRecoveryTime"
 
 [node name="RunStatePanel" type="Panel" parent="Parameters"]
 layout_mode = 0
-offset_left = 690.0
-offset_right = 926.0
+offset_left = 641.0
+offset_right = 780.0
 offset_bottom = 339.0
 
 [node name="MarginContainer" type="MarginContainer" parent="Parameters/RunStatePanel"]
@@ -277,7 +277,7 @@ text = "Speed
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "Speed"
 
 [node name="SideSpeedLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
@@ -289,7 +289,7 @@ text = "Side Speed
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "SideSpeed"
 
 [node name="AccelerationLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
@@ -300,7 +300,7 @@ text = "Acceleration"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "Acceleration"
 
 [node name="FrictionLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
@@ -311,7 +311,7 @@ text = "Friction"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "Friction"
 
 [node name="SprintTimeLabel" type="Label" parent="Parameters/RunStatePanel/MarginContainer/VBoxContainer"]
@@ -322,5 +322,114 @@ text = "Sprint time"
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 1000.0
-step = 0.5
+step = 0.1
 metadata/property = "SprintTime"
+
+[node name="SlideStatePanel" type="Panel" parent="Parameters"]
+layout_mode = 0
+offset_left = 783.0
+offset_right = 1019.0
+offset_bottom = 475.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Parameters/SlideStatePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Parameters/SlideStatePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="SlideStateLabel" type="Label" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "SLIDE"
+
+[node name="SlideTimeLabel" type="Label" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Slide time"
+
+[node name="SlideTimeSpinBox" type="SpinBox" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.1
+metadata/property = "SlideTime"
+
+[node name="SideLerpSpeedLabel" type="Label" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Slide lerp speed
+"
+
+[node name="SlideLerpSpeedSpinBox" type="SpinBox" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.1
+metadata/property = "LerpSpeed"
+
+[node name="SlideTiltComebackTimeLabel" type="Label" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Slide tilt comeback time"
+
+[node name="SlideTiltComebackTimeSpinBox" type="SpinBox" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.1
+metadata/property = "SlideTiltComebackTime"
+
+[node name="SlideTiltLabel" type="Label" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Slide tilt"
+
+[node name="SlideTiltSpinBox" type="SpinBox" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 360.0
+step = 0.1
+metadata/property = "SlideTilt"
+
+[node name="SprintTimeLabel" type="Label" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Friction momentum"
+
+[node name="SlideFrictionMomentumSpinBox" type="SpinBox" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1.0
+step = 0.1
+metadata/property = "FrictionMomentum"
+
+[node name="SlideSwingSideLabel" type="Label" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Slide swing side"
+
+[node name="SlideSideOptionButton" type="OptionButton" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+item_count = 3
+selected = 0
+popup/item_0/text = "Random"
+popup/item_0/id = 0
+popup/item_1/text = "Left"
+popup/item_1/id = 1
+popup/item_2/text = "Right"
+popup/item_2/id = 2
+
+[node name="SlideReduceSpeedGraduallyCheckbox" type="CheckBox" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Reduce speed gradually"
+metadata/property = "ReduceSpeedGradually"
+
+[node name="SlideSwingHeadCheckbox" type="CheckBox" parent="Parameters/SlideStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Swing head"
+metadata/property = "SwingHead"
