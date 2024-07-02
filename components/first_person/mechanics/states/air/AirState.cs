@@ -10,12 +10,12 @@ namespace GodotExtensionatorStarter {
         }
         [Export] public FirstPersonController Actor { get; set; } = null!;
         [Export] public AIR_CONTROL_MODE AirControlMode { get; set; } = AIR_CONTROL_MODE.KEEP_IMPULSE;
-        [Export] public string JumpInputAction = "jump";
-        [Export] public float GravityForce = 12.5f;
-        [Export] public float MaximumFallVelocity = 50f;
-        [Export] public float AirAcceleration = 8.0f;
-        [Export] public float AirFriction = 12.0f;
-        [Export] public float AirSpeed = 5.5f;
+        [Export] public string JumpInputAction { get; set; }  = "jump";
+        [Export] public float GravityForce { get; set; } = 12.5f;
+        [Export] public float MaximumFallVelocity { get; set; } = 50f;
+        [Export] public float AirAcceleration { get; set; } = 8.0f;
+        [Export] public float AirFriction { get; set; } = 12.0f;
+        [Export] public float AirSpeed { get; set; } = 5.5f;
 
         public override void PhysicsUpdate(double delta) {
             ApplyGravity(GravityForce, delta);

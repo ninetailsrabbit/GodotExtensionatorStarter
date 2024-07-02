@@ -42,7 +42,6 @@ namespace GodotExtensionatorStarter {
         public SpinBox RunFrictionSpinBox { get; set; } = default!;
         public SpinBox RunSprintTimeSpinBox { get; set; } = default!;
 
-
         public SpinBox SlideTimeSpinBox { get; set; } = default!;
         public SpinBox SlideLerpSpeedSpinBox { get; set; } = default!;
         public SpinBox SlideTiltSpinBox { get; set; } = default!;
@@ -51,6 +50,18 @@ namespace GodotExtensionatorStarter {
         public OptionButton SlideSideOptionButton { get; set; } = default!;
         public CheckBox SlideReduceSpeedGraduallyCheckbox { get; set; } = default!;
         public CheckBox SlideSwingHeadCheckbox { get; set; } = default!;
+
+        public SpinBox FallEdgeGapJumpSpinBox { get; set; } = default!;
+        public SpinBox FallGravityForceSpinBox { get; set; } = default!;
+        public SpinBox FallMaximumFallVelocitySpinBox { get; set; } = default!;
+        public SpinBox FallAirSpeedSpinBox { get; set; } = default!;
+        public SpinBox FallAirAccelerationSpinBox { get; set; } = default!;
+        public SpinBox FallAirFrictionSpinBox { get; set; } = default!;
+        public SpinBox FallCoyoteTimeFramesSpinBox { get; set; } = default!;
+        public SpinBox FallJumpInputBufferFramesSpinBox { get; set; } = default!;
+        public OptionButton FallAirControlModeOptionButton { get; set; } = default!;
+        public CheckBox FallCoyoteTimeCheckBox { get; set; } = default!;
+        public CheckBox FallJumpInputBufferCheckBox { get; set; } = default!;
 
         #endregion
 
@@ -121,6 +132,18 @@ namespace GodotExtensionatorStarter {
             SlideSwingHeadCheckbox = GetNode<CheckBox>($"%{nameof(SlideSwingHeadCheckbox)}");
             SlideSideOptionButton = GetNode<OptionButton>($"%{nameof(SlideSideOptionButton)}");
 
+            FallEdgeGapJumpSpinBox = GetNode<SpinBox>($"%{nameof(FallEdgeGapJumpSpinBox)}");
+            FallGravityForceSpinBox = GetNode<SpinBox>($"%{nameof(FallGravityForceSpinBox)}");
+            FallMaximumFallVelocitySpinBox = GetNode<SpinBox>($"%{nameof(FallMaximumFallVelocitySpinBox)}");
+            FallAirSpeedSpinBox = GetNode<SpinBox>($"%{nameof(FallAirSpeedSpinBox)}");
+            FallAirAccelerationSpinBox = GetNode<SpinBox>($"%{nameof(FallAirAccelerationSpinBox)}");
+            FallAirFrictionSpinBox = GetNode<SpinBox>($"%{nameof(FallAirFrictionSpinBox)}");
+            FallCoyoteTimeFramesSpinBox = GetNode<SpinBox>($"%{nameof(FallCoyoteTimeFramesSpinBox)}");
+            FallJumpInputBufferFramesSpinBox = GetNode<SpinBox>($"%{nameof(FallJumpInputBufferFramesSpinBox)}");
+            FallAirControlModeOptionButton = GetNode<OptionButton>($"%{nameof(FallAirControlModeOptionButton)}");
+            FallCoyoteTimeCheckBox = GetNode<CheckBox>($"%{nameof(FallCoyoteTimeCheckBox)}");
+            FallJumpInputBufferCheckBox = GetNode<CheckBox>($"%{nameof(FallJumpInputBufferCheckBox)}");
+
             MouseSensitivitySlider.ValueChanged += OnMouseSensitivityValueChanged;
             CameraSensitivitySlider.ValueChanged += OnCameraSensitivityValueChanged;
             CameraVerticalRotationLimitSlider.ValueChanged += OnCameraVerticalRotationLimitValueChanged;
@@ -151,9 +174,22 @@ namespace GodotExtensionatorStarter {
             SlideSwingHeadCheckbox.Toggled += (bool toggled) => OnSlideStateCheckboxToggled(SlideSwingHeadCheckbox, toggled);
             SlideSideOptionButton.ItemSelected += OnSlideSideOptionSelected;
 
+            FallEdgeGapJumpSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallEdgeGapJumpSpinBox, value);
+            FallMaximumFallVelocitySpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallMaximumFallVelocitySpinBox, value);
+            FallGravityForceSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallGravityForceSpinBox, value);
+            FallAirSpeedSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallAirSpeedSpinBox, value);
+            FallAirAccelerationSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallAirAccelerationSpinBox, value);
+            FallAirFrictionSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallAirFrictionSpinBox, value);
+            FallCoyoteTimeFramesSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallCoyoteTimeFramesSpinBox, value);
+            FallJumpInputBufferFramesSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallJumpInputBufferFramesSpinBox, value);
+            FallCoyoteTimeCheckBox.Toggled += (bool toggled) => OnFallStateCheckboxToggled(FallCoyoteTimeCheckBox, toggled); 
+            FallJumpInputBufferCheckBox.Toggled += (bool toggled) => OnFallStateCheckboxToggled(FallJumpInputBufferCheckBox, toggled);
+            FallAirControlModeOptionButton.ItemSelected += OnFallSideOptionSelected;
+
             Actor.FSM.StateChanged += OnStateChanged;
             Actor.FSM.StatesInitialized += PrepareStates;
         }
+
 
         public override void _Ready() {
             MouseFilter = MouseFilterEnum.Pass;
@@ -233,7 +269,6 @@ namespace GodotExtensionatorStarter {
                 WalkCatchingBreathSpinBox.Value = walkState.CatchingBreathRecoveryTime;
             }
 
-
             if (Actor.FSM.GetState<Run>() is Run runState) {
                 StatesProperties.Add(runState.GetType().Name, [.. runState.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)]);
 
@@ -258,6 +293,26 @@ namespace GodotExtensionatorStarter {
 
                 SlideSideOptionButton.Selected = (int)slideState.SlideTiltSide;
             }
+
+            if (Actor.FSM.GetState<Fall>() is Fall fallState) {
+                StatesProperties.Add(fallState.GetType().Name, [.. fallState.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)]);
+
+                FallEdgeGapJumpSpinBox.Value = fallState.EdgeGampJump;
+                FallGravityForceSpinBox.Value = fallState.GravityForce;
+                FallMaximumFallVelocitySpinBox.Value = fallState.MaximumFallVelocity;
+                FallAirSpeedSpinBox.Value = fallState.AirSpeed;
+                FallAirAccelerationSpinBox.Value = fallState.AirAcceleration;
+                FallAirFrictionSpinBox.Value = fallState.AirFriction;
+
+                FallAirControlModeOptionButton.Selected = (int)fallState.AirControlMode;
+                FallCoyoteTimeFramesSpinBox.Value = fallState.CoyoteTimeFrames;
+                FallJumpInputBufferFramesSpinBox.Value = fallState.JumpInputBufferTimeFrames;
+                FallCoyoteTimeCheckBox.ButtonPressed = fallState.CoyoteTime;
+                FallJumpInputBufferCheckBox.ButtonPressed = fallState.JumpInputBuffer;
+
+            }
+
+
         }
 
         #region Signal callbacks
@@ -348,6 +403,33 @@ namespace GodotExtensionatorStarter {
             }
         }
 
+        private void OnFallStateSpinBoxValueChanged(SpinBox spinBox, double value) {
+            if (Actor.FSM.GetState<Fall>() is Fall fallState) {
+                var meta = spinBox.GetMeta("property").ToString();
+
+                if (StatesProperties[fallState.GetType().Name]
+                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta)) is PropertyInfo property) {
+                    property.SetValue(fallState, (float)value);
+                }
+            }
+        }
+
+        private void OnFallStateCheckboxToggled(CheckBox checkbox, bool toggled) {
+            if (Actor.FSM.GetState<Fall>() is Fall fallState) {
+                var meta = checkbox.GetMeta("property").ToString();
+
+                if (StatesProperties[fallState.GetType().Name]
+                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta)) is PropertyInfo property) {
+                    property.SetValue(fallState, toggled);
+                }
+            }
+        }
+
+        private void OnFallSideOptionSelected(long value) {
+            if (Actor.FSM.GetState<Fall>() is Fall fallState) {
+                fallState.AirControlMode = (Fall.AIR_CONTROL_MODE)value;
+            }
+        }
         #endregion
     }
 }

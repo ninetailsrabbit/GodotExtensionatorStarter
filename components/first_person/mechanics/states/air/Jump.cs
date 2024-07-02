@@ -6,9 +6,9 @@ namespace GodotExtensionatorStarter {
     [GlobalClass]
     public partial class Jump : AirState {
 
-        [Export] public int JumpTimes = 1;
-        [Export] public float HeightReducedByJump = 0.2f;
-        [Export] public bool ShortenJumpOnInputRelease = true;
+        [Export] public int JumpTimes { get; set; } = 1;
+        [Export] public float HeightReducedByJump { get; set; } = 0.2f;
+        [Export] public bool ShortenJumpOnInputRelease { get; set; } = true;
 
         [ExportGroup("Jump configuration")]
         [Export]

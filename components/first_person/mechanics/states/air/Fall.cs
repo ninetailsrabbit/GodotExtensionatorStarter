@@ -5,11 +5,11 @@ using GodotExtensionator;
 namespace GodotExtensionatorStarter {
     [GlobalClass]
     public partial class Fall : AirState {
-        [Export] public float EdgeGampJump = 0.45f;
-        [Export] public bool CoyoteTime = true;
-        [Export] public int CoyoteTimeFrames = 25;
-        [Export] public bool JumpInputBuffer = true;
-        [Export] public int JumpInputBufferTimeFrames = 30;
+        [Export] public float EdgeGampJump { get; set; } = 0.45f;
+        [Export] public bool CoyoteTime { get; set; } = true;
+        [Export] public int CoyoteTimeFrames { get; set; } = 25;
+        [Export] public bool JumpInputBuffer { get; set; } = true;
+        [Export] public int JumpInputBufferTimeFrames { get; set; } = 30;
 
         private bool _jumpRequested = false;
         private int _currentCoyoteTimeFrames = 0;
