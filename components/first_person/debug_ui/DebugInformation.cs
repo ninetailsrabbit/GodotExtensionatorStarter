@@ -28,6 +28,9 @@ namespace GodotExtensionatorStarter {
 
         #region State parameters nodes
         public SpinBox IdleFrictionSpinBox { get; set; } = default!;
+        public SpinBox CrouchSpeedSpinBox { get; set; } = default!;
+        public SpinBox CrouchAccelerationSpinBox { get; set; } = default!;
+        public SpinBox CrawlSpeedSpinBox { get; set; } = default!;
         public SpinBox WalkSpeedSpinBox { get; set; } = default!;
         public SpinBox WalkSideSpeedSpinBox { get; set; } = default!;
         public SpinBox WalkAccelerationSpinBox { get; set; } = default!;
@@ -38,6 +41,7 @@ namespace GodotExtensionatorStarter {
         public SpinBox RunAccelerationSpinBox { get; set; } = default!;
         public SpinBox RunFrictionSpinBox { get; set; } = default!;
         public SpinBox RunSprintTimeSpinBox { get; set; } = default!;
+
 
         public SpinBox SlideTimeSpinBox { get; set; } = default!;
         public SpinBox SlideLerpSpeedSpinBox { get; set; } = default!;
@@ -98,6 +102,10 @@ namespace GodotExtensionatorStarter {
             WalkFrictionSpinBox = GetNode<SpinBox>($"%{nameof(WalkFrictionSpinBox)}");
             WalkCatchingBreathSpinBox = GetNode<SpinBox>($"%{nameof(WalkCatchingBreathSpinBox)}");
 
+            CrouchSpeedSpinBox = GetNode<SpinBox>($"%{nameof(CrouchSpeedSpinBox)}");
+            CrouchAccelerationSpinBox = GetNode<SpinBox>($"%{nameof(CrouchAccelerationSpinBox)}");
+            CrawlSpeedSpinBox = GetNode<SpinBox>($"%{nameof(CrawlSpeedSpinBox)}");
+
             RunSpeedSpinBox = GetNode<SpinBox>($"%{nameof(RunSpeedSpinBox)}");
             RunSideSpeedSpinBox = GetNode<SpinBox>($"%{nameof(RunSideSpeedSpinBox)}");
             RunAccelerationSpinBox = GetNode<SpinBox>($"%{nameof(RunAccelerationSpinBox)}");
@@ -116,7 +124,11 @@ namespace GodotExtensionatorStarter {
             MouseSensitivitySlider.ValueChanged += OnMouseSensitivityValueChanged;
             CameraSensitivitySlider.ValueChanged += OnCameraSensitivityValueChanged;
             CameraVerticalRotationLimitSlider.ValueChanged += OnCameraVerticalRotationLimitValueChanged;
+
             IdleFrictionSpinBox.ValueChanged += OnIdleFrictionValueChanged;
+            CrouchSpeedSpinBox.ValueChanged += (double value) => OnCrouchStateValueChanged(CrouchSpeedSpinBox, value);
+            CrouchAccelerationSpinBox.ValueChanged += (double value) => OnCrouchStateValueChanged(CrouchAccelerationSpinBox, value);
+            CrawlSpeedSpinBox.ValueChanged += OnCrawlSpeedValueChanged;
 
             WalkSpeedSpinBox.ValueChanged += (double value) => OnWalkStateValueChanged(WalkSpeedSpinBox, value);
             WalkSideSpeedSpinBox.ValueChanged += (double value) => OnWalkStateValueChanged(WalkSideSpeedSpinBox, value);
@@ -200,6 +212,17 @@ namespace GodotExtensionatorStarter {
             if (Actor.FSM.GetState<Idle>() is Idle idleState)
                 IdleFrictionSpinBox.Value = idleState.Friction;
 
+            if (Actor.FSM.GetState<Crouch>() is Crouch crouchState) {
+                StatesProperties.Add(crouchState.GetType().Name, [.. crouchState.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)]);
+
+                CrouchSpeedSpinBox.Value = crouchState.Speed;
+                CrouchAccelerationSpinBox.Value = crouchState.Acceleration;
+            }
+
+            if (Actor.FSM.GetState<Crawl>() is Crawl crawlState) {
+                CrawlSpeedSpinBox.Value = crawlState.Speed;
+            }
+
             if (Actor.FSM.GetState<Walk>() is Walk walkState) {
                 StatesProperties.Add(walkState.GetType().Name, [.. walkState.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)]);
 
@@ -255,7 +278,25 @@ namespace GodotExtensionatorStarter {
         }
 
         private void OnIdleFrictionValueChanged(double value) {
-            Actor.FSM.GetState<Walk>().Friction = (float)value;
+            if (Actor.FSM.GetState<Idle>() is Idle idleState) {
+                idleState.Friction = (float)value;
+            }
+        }
+
+        private void OnCrawlSpeedValueChanged(double value) {
+            if (Actor.FSM.GetState<Crawl>() is Crawl crawlState) {
+                crawlState.Speed = (float)value;
+            }
+        }
+        private void OnCrouchStateValueChanged(SpinBox spinBox, double value) {
+            if (Actor.FSM.GetState<Crouch>() is Crouch crouchState) {
+                var meta = spinBox.GetMeta("property");
+
+                if (StatesProperties[crouchState.GetType().Name]
+                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta.ToString())) is PropertyInfo property) {
+                    property.SetValue(crouchState, (float)value);
+                }
+            }
         }
 
         private void OnWalkStateValueChanged(SpinBox spinBox, double value) {

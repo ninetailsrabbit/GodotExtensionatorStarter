@@ -161,6 +161,90 @@ layout_mode = 2
 max_value = 1000.0
 step = 0.5
 
+[node name="CrouchStatePanel" type="Panel" parent="Parameters"]
+layout_mode = 0
+offset_left = 294.0
+offset_top = 107.0
+offset_right = 455.0
+offset_bottom = 262.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Parameters/CrouchStatePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Parameters/CrouchStatePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="CrouchStateLabel" type="Label" parent="Parameters/CrouchStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "CROUCH"
+
+[node name="CrouchSpeedLabel" type="Label" parent="Parameters/CrouchStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Speed"
+
+[node name="CrouchSpeedSpinBox" type="SpinBox" parent="Parameters/CrouchStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "Speed"
+
+[node name="CrouchAccelerationLabel" type="Label" parent="Parameters/CrouchStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Acceleration"
+
+[node name="CrouchAccelerationSpinBox" type="SpinBox" parent="Parameters/CrouchStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+metadata/property = "Acceleration"
+
+[node name="CrawlStatePanel" type="Panel" parent="Parameters"]
+layout_mode = 0
+offset_left = 294.0
+offset_top = 263.0
+offset_right = 455.0
+offset_bottom = 367.0
+
+[node name="MarginContainer" type="MarginContainer" parent="Parameters/CrawlStatePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Parameters/CrawlStatePanel/MarginContainer"]
+layout_mode = 2
+
+[node name="CrawlStateLabel" type="Label" parent="Parameters/CrawlStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "CRAWL"
+
+[node name="CrawlSpeedLabel" type="Label" parent="Parameters/CrawlStatePanel/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Speed"
+
+[node name="CrawlSpeedSpinBox" type="SpinBox" parent="Parameters/CrawlStatePanel/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+max_value = 1000.0
+step = 0.5
+
 [node name="WalkStatePanel" type="Panel" parent="Parameters"]
 layout_mode = 0
 offset_left = 457.0
