@@ -9,8 +9,8 @@ namespace GodotExtensionatorStarter {
             KEEP_IMPULSE // If no input direction is applied stays with the previous velocity
         }
         [Export] public FirstPersonController Actor { get; set; } = null!;
-        [Export] public AIR_CONTROL_MODE AirControlMode { get; set; } = AIR_CONTROL_MODE.KEEP_IMPULSE;
-        [Export] public string JumpInputAction { get; set; }  = "jump";
+        [Export] public AIR_CONTROL_MODE AirControlMode { get; set; } = AIR_CONTROL_MODE.FULL;
+        [Export] public string JumpInputAction { get; set; } = "jump";
         [Export] public float GravityForce { get; set; } = 12.5f;
         [Export] public float MaximumFallVelocity { get; set; } = 50f;
         [Export] public float AirAcceleration { get; set; } = 8.0f;
@@ -25,16 +25,17 @@ namespace GodotExtensionatorStarter {
         public void AirMove(double? delta = null) {
             delta ??= GetPhysicsProcessDeltaTime();
 
-            if(AirControlMode.Equals(AIR_CONTROL_MODE.FULL) || (AirControlMode.Equals(AIR_CONTROL_MODE.KEEP_IMPULSE) && Actor.MotionInput.InputDirection.IsNotZeroApprox()) ) {
+            if (AirControlMode.Equals(AIR_CONTROL_MODE.FULL) || (AirControlMode.Equals(AIR_CONTROL_MODE.KEEP_IMPULSE) && Actor.MotionInput.InputDirection.IsNotZeroApprox())) {
+                var speed = Actor.MotionInput.WorldCoordinateSpaceDirection * AirSpeed;
+
                 if (AirAcceleration > 0 && AirFriction > 0) {
                     var acceleration = Actor.MotionInput.WorldCoordinateSpaceDirection.Dot(Actor.Velocity) > 0 ? AirAcceleration : AirFriction;
                     var accelerationWeight = Mathf.Clamp(acceleration * (float)delta, 0f, 1.0f);
-                    var velocity = Actor.Velocity.Lerp(AirSpeed * Actor.MotionInput.WorldCoordinateSpaceDirection, (float)accelerationWeight);
 
-                    Actor.Velocity = Actor.Velocity with { X = velocity.X, Z = velocity.Z };
+                    Actor.Velocity = Actor.Velocity.Lerp(Actor.Velocity with { X = speed.X, Y = Actor.Velocity.Y, Z = speed.Z }, (float)accelerationWeight);
                 }
                 else {
-                    Actor.Velocity = Actor.MotionInput.WorldCoordinateSpaceDirection * AirSpeed;
+                    Actor.Velocity = Actor.Velocity with { X = speed.X, Y = Actor.Velocity.Y, Z = speed.Z };
                 }
             }
         }

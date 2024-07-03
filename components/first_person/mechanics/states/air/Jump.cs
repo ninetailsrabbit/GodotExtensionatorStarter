@@ -22,7 +22,7 @@ namespace GodotExtensionatorStarter {
                 FallGravity = CalculateFallGravity(_jumpHeight, JumpFallTime);
             }
         }
-        private float _jumpHeight = 2.5f;
+        private float _jumpHeight = 4f;
 
         [Export]
         public float JumpPeakTime {
@@ -56,7 +56,7 @@ namespace GodotExtensionatorStarter {
                 AirSpeed = CalculateAirSpeed(_jumpDistance, JumpPeakTime, JumpFallTime);
             }
         }
-        private float _jumpDistance = 3f;
+        private float _jumpDistance = 4f;
 
         public float JumpVelocity;
         public float JumpGravity;
@@ -76,8 +76,6 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void Enter() {
-            JumpedPosition = Actor.Position;
-
             ApplyJump();
             Actor.MoveAndSlide();
         }
@@ -113,6 +111,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public void ApplyJump() {
+            JumpedPosition = Actor.Position;
             JumpCount += 1;
 
             Vector3 upDirection = Actor.UpDirection;

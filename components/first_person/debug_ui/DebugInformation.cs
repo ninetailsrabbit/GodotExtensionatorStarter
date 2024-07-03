@@ -63,6 +63,15 @@ namespace GodotExtensionatorStarter {
         public CheckBox FallCoyoteTimeCheckBox { get; set; } = default!;
         public CheckBox FallJumpInputBufferCheckBox { get; set; } = default!;
 
+        public SpinBox JumpTimesSpinBox { get; set; } = default!;
+        public SpinBox JumpHeightSpinBox { get; set; } = default!;
+        public SpinBox JumpPeakTimeSpinBox { get; set; } = default!;
+        public SpinBox JumpFallTimeSpinBox { get; set; } = default!;
+        public SpinBox JumpDistanceSpinBox { get; set; } = default!;
+        public SpinBox JumpReducedHeightByJumpSpinBox { get; set; } = default!;
+        public OptionButton JumpAirControlModeOptionButton { get; set; } = default!;
+        public CheckBox JumpShortenJumpOnInputReleaseCheckBox { get; set; } = default!;
+
         #endregion
 
         private Dictionary<string, List<PropertyInfo>> StatesProperties = [];
@@ -144,6 +153,15 @@ namespace GodotExtensionatorStarter {
             FallCoyoteTimeCheckBox = GetNode<CheckBox>($"%{nameof(FallCoyoteTimeCheckBox)}");
             FallJumpInputBufferCheckBox = GetNode<CheckBox>($"%{nameof(FallJumpInputBufferCheckBox)}");
 
+            JumpTimesSpinBox = GetNode<SpinBox>($"%{nameof(JumpTimesSpinBox)}");
+            JumpHeightSpinBox = GetNode<SpinBox>($"%{nameof(JumpHeightSpinBox)}");
+            JumpPeakTimeSpinBox = GetNode<SpinBox>($"%{nameof(JumpPeakTimeSpinBox)}");
+            JumpFallTimeSpinBox = GetNode<SpinBox>($"%{nameof(JumpFallTimeSpinBox)}");
+            JumpDistanceSpinBox = GetNode<SpinBox>($"%{nameof(JumpDistanceSpinBox)}");
+            JumpReducedHeightByJumpSpinBox = GetNode<SpinBox>($"%{nameof(JumpReducedHeightByJumpSpinBox)}");
+            JumpShortenJumpOnInputReleaseCheckBox = GetNode<CheckBox>($"%{nameof(JumpShortenJumpOnInputReleaseCheckBox)}");
+            JumpAirControlModeOptionButton = GetNode<OptionButton>($"%{nameof(JumpAirControlModeOptionButton)}");
+            
             MouseSensitivitySlider.ValueChanged += OnMouseSensitivityValueChanged;
             CameraSensitivitySlider.ValueChanged += OnCameraSensitivityValueChanged;
             CameraVerticalRotationLimitSlider.ValueChanged += OnCameraVerticalRotationLimitValueChanged;
@@ -184,7 +202,16 @@ namespace GodotExtensionatorStarter {
             FallJumpInputBufferFramesSpinBox.ValueChanged += (double value) => OnFallStateSpinBoxValueChanged(FallJumpInputBufferFramesSpinBox, value);
             FallCoyoteTimeCheckBox.Toggled += (bool toggled) => OnFallStateCheckboxToggled(FallCoyoteTimeCheckBox, toggled);
             FallJumpInputBufferCheckBox.Toggled += (bool toggled) => OnFallStateCheckboxToggled(FallJumpInputBufferCheckBox, toggled);
-            FallAirControlModeOptionButton.ItemSelected += OnFallSideOptionSelected;
+            FallAirControlModeOptionButton.ItemSelected += OnFallAirControlModeOptionSelected;
+
+            JumpTimesSpinBox.ValueChanged += (double value) => OnJumpStateSpinBoxValueChanged(JumpTimesSpinBox, value);
+            JumpHeightSpinBox.ValueChanged += (double value) => OnJumpStateSpinBoxValueChanged(JumpHeightSpinBox, value);
+            JumpPeakTimeSpinBox.ValueChanged += (double value) => OnJumpStateSpinBoxValueChanged(JumpPeakTimeSpinBox, value);
+            JumpFallTimeSpinBox.ValueChanged += (double value) => OnJumpStateSpinBoxValueChanged(JumpFallTimeSpinBox, value);
+            JumpDistanceSpinBox.ValueChanged += (double value) => OnJumpStateSpinBoxValueChanged(JumpDistanceSpinBox, value);
+            JumpReducedHeightByJumpSpinBox.ValueChanged += (double value) => OnJumpStateSpinBoxValueChanged(JumpReducedHeightByJumpSpinBox, value);
+            JumpAirControlModeOptionButton.ItemSelected += OnJumpAirControlModeOptionSelected;
+            JumpShortenJumpOnInputReleaseCheckBox.Toggled += OnJumpStateCheckboxToggled;
 
             Actor.FSM.StateChanged += OnStateChanged;
             Actor.FSM.StatesInitialized += PrepareStates;
@@ -312,6 +339,18 @@ namespace GodotExtensionatorStarter {
 
             }
 
+            if (Actor.FSM.GetState<Jump>() is Jump jumpState) {
+                StatesProperties.Add(jumpState.GetType().Name, [.. jumpState.GetType().GetProperties(BindingFlags.Public | BindingFlags.Instance)]);
+
+                JumpTimesSpinBox.Value = jumpState.JumpTimes;
+                JumpReducedHeightByJumpSpinBox.Value = jumpState.HeightReducedByJump;
+                JumpHeightSpinBox.Value = jumpState.JumpHeight;
+                JumpPeakTimeSpinBox.Value = jumpState.JumpPeakTime;
+                JumpFallTimeSpinBox.Value = jumpState.JumpFallTime;
+                JumpDistanceSpinBox.Value = jumpState.JumpDistance;
+                JumpAirControlModeOptionButton.Selected = (int)jumpState.AirControlMode;
+                JumpShortenJumpOnInputReleaseCheckBox.ButtonPressed = jumpState.ShortenJumpOnInputRelease;
+            }
 
         }
 
@@ -430,11 +469,40 @@ namespace GodotExtensionatorStarter {
             }
         }
 
-        private void OnFallSideOptionSelected(long value) {
+        private void OnFallAirControlModeOptionSelected(long value) {
             if (Actor.FSM.GetState<Fall>() is Fall fallState) {
                 fallState.AirControlMode = (Fall.AIR_CONTROL_MODE)value;
             }
         }
+
+        private void OnJumpStateSpinBoxValueChanged(SpinBox spinBox, double value) {
+            if (Actor.FSM.GetState<Jump>() is Jump jumpState) {
+                var meta = spinBox.GetMeta("property").ToString();
+
+                if (StatesProperties[jumpState.GetType().Name]
+                    .FirstOrDefault(info => info.Name.EqualsIgnoreCase(meta)) is PropertyInfo property) {
+
+                    if (property.PropertyType == typeof(int))
+                        property.SetValue(jumpState, Convert.ToInt32(value));
+                    else
+                        property.SetValue(jumpState, (float)value);
+
+                }
+            }
+        }
+
+        private void OnJumpAirControlModeOptionSelected(long value) {
+            if (Actor.FSM.GetState<Jump>() is Jump jumpState) {
+                jumpState.AirControlMode = (Jump.AIR_CONTROL_MODE)value;
+            }
+        }
+
+        private void OnJumpStateCheckboxToggled(bool toggled) {
+            if (Actor.FSM.GetState<Jump>() is Jump jumpState) {
+                jumpState.ShortenJumpOnInputRelease = toggled;
+            }
+        }
+
         #endregion
     }
 }
