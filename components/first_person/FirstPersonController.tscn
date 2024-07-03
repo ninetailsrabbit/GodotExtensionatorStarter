@@ -1,8 +1,9 @@
-[gd_scene load_steps=25 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=26 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
 [ext_resource type="PackedScene" uid="uid://pm541j6sodr8" path="res://components/first_person/debug_ui/DebugUI.tscn" id="2_db6yj"]
+[ext_resource type="PackedScene" uid="uid://cwa7ox3c5c2u5" path="res://components/first_person/pointer/InteractionPointer.tscn" id="2_ifwbi"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/CameraMovement.cs" id="3_7s15c"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Idle.cs" id="3_b68la"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/SwingHead.cs" id="4_r2a3k"]
@@ -96,9 +97,14 @@ collision_mask = 5
 script = ExtResource("1_xrc74")
 
 [node name="Debug" type="CanvasLayer" parent="."]
+layer = 2
 
 [node name="DebugUI" parent="Debug" node_paths=PackedStringArray("Actor") instance=ExtResource("2_db6yj")]
 Actor = NodePath("../..")
+
+[node name="HUD" type="CanvasLayer" parent="."]
+
+[node name="InteractionPointer" parent="HUD" instance=ExtResource("2_ifwbi")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -152,10 +158,10 @@ Head = NodePath("../Head/Eyes")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
 script = ExtResource("6_t0ij4")
 
-[node name="StairStepper" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "CameraPivot")]
+[node name="StairStepper" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "CameraSmoothingPivot")]
 script = ExtResource("7_11x7o")
 Actor = NodePath("..")
-CameraPivot = NodePath("../Head/Eyes")
+CameraSmoothingPivot = NodePath("../Head/Eyes")
 
 [node name="StairsAheadRayCast3D" type="RayCast3D" parent="StairStepper"]
 unique_name_in_owner = true

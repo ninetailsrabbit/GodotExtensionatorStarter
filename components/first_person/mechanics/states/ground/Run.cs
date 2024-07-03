@@ -39,7 +39,7 @@ namespace GodotExtensionatorStarter {
             DetectCrouch();
             DetectJump();
 
-            Actor.MoveAndSlide();
+            ApplyMovement(delta);
         }
 
         private void CreateSpeedTimer() {

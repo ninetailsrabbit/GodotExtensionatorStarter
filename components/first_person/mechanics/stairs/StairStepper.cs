@@ -12,14 +12,14 @@ namespace GodotExtensionatorStarter {
         const float CROUCH_JUMP_ADD = 0.9f;
 
         [Export] public FirstPersonController Actor { get; set; } = null!;
-        [Export] public Node3D CameraPivot { get; set; } = null!;
+        [Export] public Node3D CameraSmoothingPivot { get; set; } = null!;
         [Export] public float MaxStepHeight = 0.5f;
         public RayCast3D StairsAheadRayCast3D { get; set; } = default!;
         public RayCast3D StairsBelowRayCast3D { get; set; } = default!;
 
         private float _walkSpeed = 0f;
         private bool _snappedToStairsLastFrame = false;
-        private Vector3? _savedCameraPivotPositionForSmoothing = Vector3.Zero;
+        private Vector3? _savedCameraPivotPositionForSmoothing = null;
 
         public override void _EnterTree() {
             Actor ??= GetParent<FirstPersonController>();
@@ -79,7 +79,7 @@ namespace GodotExtensionatorStarter {
             StairsBelowRayCast3D.ForceRaycastUpdate();
             var floorBelow = StairsBelowRayCast3D.IsColliding() && !IsSurfaceTooSteep(StairsBelowRayCast3D.GetCollisionNormal());
 
-            if (Actor.Velocity.Y < 0 && floorBelow) {
+            if (!Actor.isGrounded && Actor.Velocity.Y <= 0 && floorBelow) {
                 var bodyTestResult = new KinematicCollision3D();
 
                 if (Actor.TestMove(Actor.GlobalTransform, Actor.UpDirectionOpposite() * MaxStepHeight, bodyTestResult)) {
@@ -95,16 +95,16 @@ namespace GodotExtensionatorStarter {
 
         public void SlideCameraPivotSmoothToOrigin(double delta) {
             if (_savedCameraPivotPositionForSmoothing is Vector3 savedPosition) {
-                CameraPivot.GlobalPosition = CameraPivot.GlobalPosition with { Y = savedPosition.Y };
-                CameraPivot.Position = CameraPivot.Position with { Y = Mathf.Clamp(CameraPivot.Position.Y, -CROUCH_TRANSLATE, CROUCH_TRANSLATE) };
+                CameraSmoothingPivot.GlobalPosition = CameraSmoothingPivot.GlobalPosition with { Y = savedPosition.Y };
+                CameraSmoothingPivot.Position = CameraSmoothingPivot.Position with { Y = Mathf.Clamp(CameraSmoothingPivot.Position.Y, -CROUCH_TRANSLATE, CROUCH_TRANSLATE) };
 
-                var moveAmount = Mathf.Max(Actor.Velocity.Length() * delta, _walkSpeed / 2 * delta);
+                var moveAmount = Mathf.Max(Actor.Velocity.Length() * delta, (_walkSpeed / 2) * delta);
 
-                CameraPivot.Position = CameraPivot.Position.MoveToward(new Vector3(CameraPivot.Position.X, 0f, CameraPivot.Position.Z), (float)moveAmount);
+                CameraSmoothingPivot.Position = CameraSmoothingPivot.Position with { Y = Mathf.MoveToward(CameraSmoothingPivot.Position.Y, 0f, (float)moveAmount) };
 
-                _savedCameraPivotPositionForSmoothing = CameraPivot.GlobalPosition;
+                _savedCameraPivotPositionForSmoothing = CameraSmoothingPivot.GlobalPosition;
 
-                if (CameraPivot.Position.Y == 0)
+                if (CameraSmoothingPivot.Position.Y == 0)
                     _savedCameraPivotPositionForSmoothing = null;
             }
         }
@@ -112,7 +112,7 @@ namespace GodotExtensionatorStarter {
         private bool IsSurfaceTooSteep(Vector3 normal) => normal.AngleTo(Vector3.Up) > Actor.FloorMaxAngle;
 
         private void SaveCameraPivotPositionForSmoothing() {
-            _savedCameraPivotPositionForSmoothing ??= CameraPivot.GlobalPosition;
+            _savedCameraPivotPositionForSmoothing ??= CameraSmoothingPivot.GlobalPosition;
         }
     }
 

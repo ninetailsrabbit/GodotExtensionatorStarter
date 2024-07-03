@@ -13,9 +13,9 @@ namespace GodotExtensionatorStarter {
         [Export] public string JumpInputAction { get; set; } = "jump";
         [Export] public float GravityForce { get; set; } = 12.5f;
         [Export] public float MaximumFallVelocity { get; set; } = 50f;
-        [Export] public float AirAcceleration { get; set; } = 8.0f;
-        [Export] public float AirFriction { get; set; } = 12.0f;
-        [Export] public float AirSpeed { get; set; } = 5.5f;
+        [Export] public float AirAcceleration { get; set; } = 20.0f;
+        [Export] public float AirFriction { get; set; } = 25.0f;
+        [Export] public float AirSpeed { get; set; } = 8.5f;
 
         public override void PhysicsUpdate(double delta) {
             ApplyGravity(GravityForce, delta);

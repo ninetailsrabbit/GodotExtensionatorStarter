@@ -25,12 +25,12 @@ namespace GodotExtensionatorStarter {
 
             Accelerate(delta);
 
-            if(!Actor.CeilShapeCast.IsColliding())
+            if (!Actor.CeilShapeCast.IsColliding())
                 DetectJump();
 
             DetectCrawl();
 
-            Actor.MoveAndSlide();
+            ApplyMovement(delta);
         }
 
         #region Animations

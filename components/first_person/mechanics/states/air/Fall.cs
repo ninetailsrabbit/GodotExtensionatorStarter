@@ -7,7 +7,7 @@ namespace GodotExtensionatorStarter {
     public partial class Fall : AirState {
         [Export] public float EdgeGampJump { get; set; } = 0.45f;
         [Export] public bool CoyoteTime { get; set; } = true;
-        [Export] public int CoyoteTimeFrames { get; set; } = 25;
+        [Export] public int CoyoteTimeFrames { get; set; } = 20;
         [Export] public bool JumpInputBuffer { get; set; } = true;
         [Export] public int JumpInputBufferTimeFrames { get; set; } = 30;
 
@@ -16,12 +16,9 @@ namespace GodotExtensionatorStarter {
         private int _currentJumpInputBufferTimeFrames = 0;
 
         public override void Enter() {
-            // We keep the frames relative to the physic ticks per second so 120 ticks means the frames are multiplied by 2
-            var scaleReferencePhysicTicksPerSecond = (int)Mathf.Round(Engine.PhysicsTicksPerSecond / 60);
-
             _jumpRequested = false;
-            _currentCoyoteTimeFrames = CoyoteTimeFrames * scaleReferencePhysicTicksPerSecond;
-            _currentJumpInputBufferTimeFrames = JumpInputBufferTimeFrames * scaleReferencePhysicTicksPerSecond;
+            _currentCoyoteTimeFrames = CoyoteTimeFrames;
+            _currentJumpInputBufferTimeFrames = JumpInputBufferTimeFrames;
         }
         public override void PhysicsUpdate(double delta) {
             if (!CoyoteTimeCountIsActive())
