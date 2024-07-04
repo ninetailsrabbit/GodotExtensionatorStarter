@@ -226,11 +226,10 @@ Actor = NodePath("../../..")
 [node name="Fall" type="Node" parent="FiniteStateMachine/Air" node_paths=PackedStringArray("Actor")]
 script = ExtResource("10_sbrnj")
 Actor = NodePath("../../..")
-AirAcceleration = 0.0
-AirFriction = 0.0
+AirSpeed = 7.0
 
 [node name="Jump" type="Node" parent="FiniteStateMachine/Air" node_paths=PackedStringArray("Actor")]
 script = ExtResource("14_xlj0y")
+JumpHeight = 3.5
+JumpDistance = 2.5
 Actor = NodePath("../../..")
-AirAcceleration = 0.0
-AirFriction = 0.0

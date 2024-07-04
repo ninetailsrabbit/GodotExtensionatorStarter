@@ -76,6 +76,8 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void Enter() {
+            base.Enter();
+
             ApplyJump();
             Actor.MoveAndSlide();
         }

@@ -17,6 +17,12 @@ namespace GodotExtensionatorStarter {
         [Export] public float AirFriction { get; set; } = 25.0f;
         [Export] public float AirSpeed { get; set; } = 8.5f;
 
+        public float FinalSpeed = 0f;
+
+        public override void Enter() {
+            FinalSpeed = FSM?.LastState() is GroundState groundState ? Mathf.Max(AirSpeed, groundState.Speed) : AirSpeed;
+        }
+
         public override void PhysicsUpdate(double delta) {
             ApplyGravity(GravityForce, delta);
             LimitFallVelocity();
@@ -26,7 +32,7 @@ namespace GodotExtensionatorStarter {
             delta ??= GetPhysicsProcessDeltaTime();
 
             if (AirControlMode.Equals(AIR_CONTROL_MODE.FULL) || (AirControlMode.Equals(AIR_CONTROL_MODE.KEEP_IMPULSE) && Actor.MotionInput.InputDirection.IsNotZeroApprox())) {
-                var speed = Actor.MotionInput.WorldCoordinateSpaceDirection * AirSpeed;
+                var speed = Actor.MotionInput.WorldCoordinateSpaceDirection * FinalSpeed;
 
                 if (AirAcceleration > 0 && AirFriction > 0) {
                     var acceleration = Actor.MotionInput.WorldCoordinateSpaceDirection.Dot(Actor.Velocity) > 0 ? AirAcceleration : AirFriction;

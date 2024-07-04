@@ -16,6 +16,8 @@ namespace GodotExtensionatorStarter {
         private int _currentJumpInputBufferTimeFrames = 0;
 
         public override void Enter() {
+            base.Enter();
+
             _jumpRequested = false;
             _currentCoyoteTimeFrames = CoyoteTimeFrames;
             _currentJumpInputBufferTimeFrames = JumpInputBufferTimeFrames;
