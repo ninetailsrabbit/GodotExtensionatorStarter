@@ -12,7 +12,7 @@ namespace FirstPersonTemplate {
         [Export] public FirstPersonController Actor { get; set; } = null!;
         [Export] public Camera3D Camera { get; set; } = default!;
         [Export] public Node3D PivotPoint { get; set; } = default!;
-        [Export(PropertyHint.Range, "0.01f, 1f, 0.01f")] public float CameraSensitivity { get; set; } = 0.4f;
+        [Export(PropertyHint.Range, "0, 100, 0.5")] public float CameraSensitivity { get; set; } = 45f;
         [Export(PropertyHint.Range, "0.1f, 20f, 0.1f")] public float MouseSensitivity { get; set; } = 3f;
         [Export(PropertyHint.Range, "0, 360f, 0.1f")] public float CameraVerticalRotationLimit { get; set; } = 89f;
 
@@ -48,8 +48,8 @@ namespace FirstPersonTemplate {
             var actorRotationX = PivotPoint.Rotation.X - pitchInput;
             actorRotationX = Mathf.Clamp(actorRotationX, -cameraRotationLimit, cameraRotationLimit);
 
-            Actor.Rotation = Actor.Rotation with { Y = Mathf.LerpAngle(Actor.Rotation.Y, actorRotationY, CameraSensitivity) };
-            PivotPoint.Rotation = PivotPoint.Rotation with { X = Mathf.LerpAngle(PivotPoint.Rotation.X, actorRotationX, CameraSensitivity) };
+            Actor.Rotation = Actor.Rotation with { Y = Mathf.LerpAngle(Actor.Rotation.Y, actorRotationY, CameraSensitivity / 100) };
+            PivotPoint.Rotation = PivotPoint.Rotation with { X = Mathf.LerpAngle(PivotPoint.Rotation.X, actorRotationX, CameraSensitivity / 100) };
             PivotPoint.Orthonormalize();
         }
     }

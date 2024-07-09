@@ -7,7 +7,7 @@ using System.Linq;
 namespace GodotExtensionatorStarter {
 
     [Tool]
-    [GlobalClass, Icon("res://components/audio/sound_queue.svg")]
+    [GlobalClass, Icon("res://components/audio/sound_queue/sound_queue.svg")]
     public partial class SoundQueue : Node {
 
         [Export]
