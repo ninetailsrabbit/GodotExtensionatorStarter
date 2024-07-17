@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using Extensionator;
+using Godot;
 using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
@@ -84,7 +85,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Ready() {
-            
+
             Priority = 3;
             CollisionLayer = GameGlobals.InteractablesCollisionLayer;
             CollisionMask = 0;
