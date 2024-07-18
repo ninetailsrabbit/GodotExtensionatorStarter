@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Godot;
+using GodotExtensionator;
+using System;
 
 namespace GodotExtensionatorStarter {
     public class PoolModelWrapper<T>(T value, IObjectPool<T> pool) : IDisposable {
@@ -9,6 +11,9 @@ namespace GodotExtensionatorStarter {
         public T Unwrap() => _value;
 
         public void Dispose() {
+            if (_value is Node node)
+                node.Disable();
+
             _currentPool.ReturnObject(this);
         }
     }
