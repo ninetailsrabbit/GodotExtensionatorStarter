@@ -11,8 +11,13 @@ namespace GodotExtensionatorStarter {
         public T Unwrap() => _value;
 
         public void Dispose() {
-            if (_value is Node node)
+            if (_value is Node node) {
+                if (node.IsInsideTree()) {
+                    node.GetParent()?.RemoveChild(node);
+                }
+
                 node.Disable();
+            }
 
             _currentPool.ReturnObject(this);
         }
