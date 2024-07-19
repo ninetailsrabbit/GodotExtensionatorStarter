@@ -81,6 +81,8 @@ namespace GodotExtensionatorStarter {
           }},
         };
 
+        public bool FPSCounter = false;
+        public int MaxFPS = 0; // Unlimited
 
         // https://github.com/Calinou/godot-sponza/blob/master/scripts/settings_gui.gd
         public enum QUALITY_PRESETS {

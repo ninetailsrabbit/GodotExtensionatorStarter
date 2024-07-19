@@ -149,6 +149,8 @@ namespace GodotExtensionatorStarter {
         }
 
         public void UpdateGraphics(GameSettingsResource gameSettings) {
+            ConfigFileApi.SetValue(GRAPHICS_SECTION, "fps_counter", gameSettings.FPSCounter);
+            ConfigFileApi.SetValue(GRAPHICS_SECTION, "max_fps", gameSettings.MaxFPS);
             ConfigFileApi.SetValue(GRAPHICS_SECTION, "display", (int)DisplayServer.WindowGetMode());
             ConfigFileApi.SetValue(GRAPHICS_SECTION, "resolution", DisplayServer.WindowGetSize());
             ConfigFileApi.SetValue(GRAPHICS_SECTION, "vsync", (int)DisplayServer.WindowGetVsyncMode());
@@ -200,8 +202,11 @@ namespace GodotExtensionatorStarter {
         public void LoadGraphics(ConfigFile configFile) {
             foreach (string key in configFile.GetSectionKeys(GRAPHICS_SECTION)) {
                 var configValue = configFile.GetValue(GRAPHICS_SECTION, key);
-
+    
                 switch (key) {
+                    case "max_fps":
+                        Engine.MaxFps = (int)configValue;
+                        break;
                     case "display":
                         DisplayServer.WindowSetMode((DisplayServer.WindowMode)(int)configValue);
                         break;
