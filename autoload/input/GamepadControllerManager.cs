@@ -6,7 +6,7 @@ namespace GodotExtensionatorStarter {
 
     public sealed partial class GamepadControllerManager : Node {
 
-        #region
+        #region Events
         public delegate void ControllerConnectedEventHandler(long device, string controllerName);
         public event ControllerConnectedEventHandler? ControllerConnected;
 
