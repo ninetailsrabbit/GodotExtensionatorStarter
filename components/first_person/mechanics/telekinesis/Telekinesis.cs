@@ -18,7 +18,7 @@ namespace GodotExtensionatorStarter {
 
         #region Exported variables
         [Export] public ThrowableRayCastInteractor ThrowableRayCastInteractor { get; set; } = default!;
-        [Export] public ThrowableAreaDetector ThrowableAreaDetector { get; set; } = default!;
+        [Export] public ThrowableAreaDetector? ThrowableAreaDetector { get; set; } = default!;
         [Export(PropertyHint.Range, "0.1, 1000, 0.01")] public float ThrowableInteractorDistance = 5f;
 
         [ExportGroup("Actions")]
@@ -26,7 +26,6 @@ namespace GodotExtensionatorStarter {
         [Export] public string ThrowInputAction = "throw";
         [Export] public string PullAreaInputAction = "pull_area";
         [Export] public string PushWaveInputAction = "push_wave";
-        [Export] public bool PullAbility = true;
         [Export] public bool PullAreaAbility = true;
         [Export] public bool PushWaveAbility = true;
 
@@ -37,10 +36,32 @@ namespace GodotExtensionatorStarter {
         [Export] public float AngularPower = 1.5f;
         #endregion
 
-
         public Array<ActiveThrowable> ActiveThrowables = [];
         public Array<Marker3D> Slots = [];
 
+        public override void _UnhandledInput(InputEvent @event) {
+            if (InputMap.HasAction(ThrowInputAction) && Input.IsActionJustPressed(ThrowInputAction)) {
+                foreach (var activeThrowable in ActiveThrowables)
+                    Throw(activeThrowable);
+            }
+
+            if (InputMap.HasAction(PullInputAction) && Input.IsActionJustPressed(PullInputAction)) {
+                if (ThrowableRayCastInteractor.CurrentThrowable is not null) {
+                    Pull(ThrowableRayCastInteractor.CurrentThrowable);
+                    ThrowableRayCastInteractor.Unfocus();
+                }
+            }
+
+            if (PullAreaAbility && InputMap.HasAction(PullAreaInputAction) && Input.IsActionJustPressed(PullAreaInputAction)) {
+                foreach (var body in GetNearThrowables())
+                    Pull(body);
+            }
+
+            if (PushWaveAbility && InputMap.HasAction(PushWaveInputAction) && Input.IsActionJustPressed(PushWaveInputAction)) {
+
+            }
+
+        }
         public override void _EnterTree() {
             ThrowableRayCastInteractor ??= this.FirstNodeOfClass<ThrowableRayCastInteractor>();
             ThrowableRayCastInteractor ??= GetParent<ThrowableRayCastInteractor>();
@@ -59,7 +80,9 @@ namespace GodotExtensionatorStarter {
 
         }
 
-
+        public void Throw(ActiveThrowable activeThrowable) {
+            Throw(activeThrowable.Body);
+        }
         public void Throw(Throwable body) {
             ActiveThrowables.Remove(ActiveThrowables.FirstOrDefault(activeThrowable => activeThrowable.Body.Equals(body)));
 
@@ -68,19 +91,23 @@ namespace GodotExtensionatorStarter {
             body.Throw(impulse);
             body.AngularVelocity = Vector3.One * AngularPower;
 
-            ThrowableRayCastInteractor.Enabled = ActiveThrowables.Count < Slots.Count;
+            EnableInteractors(false);
+
+            if (ThrowableAreaDetector is not null)
+                ThrowableAreaDetector.Monitoring = true;
 
             EmitSignal(SignalName.ThrowedThrowable, body);
         }
 
+        public void Pull(ActiveThrowable activeThrowable) {
+            Pull(activeThrowable.Body);
+        }
         public void Pull(Throwable body) {
             bool slotsAvailable = ThereAreAvailableSlots();
 
-            SetPhysicsProcess(slotsAvailable);
-            ThrowableRayCastInteractor.Enabled = slotsAvailable;
-            ThrowableAreaDetector.Monitoring = slotsAvailable;
+            EnableInteractors(slotsAvailable);
 
-            if (slotsAvailable) {
+            if (slotsAvailable && BodyCanBeLifted(body) && body.StateIsNeutral()) {
                 if (!body.BodyLocked) {
                     if (GetRandomFreeSlot() is Marker3D freeSlot) {
                         body.Pull(freeSlot);
@@ -140,7 +167,13 @@ namespace GodotExtensionatorStarter {
         #endregion
 
 
+        private void EnableInteractors(bool enable = false) {
+            ThrowableRayCastInteractor.Enabled = enable;
+            SetPhysicsProcess(enable);
 
+            if (ThrowableAreaDetector is not null)
+                ThrowableAreaDetector.Monitoring = enable;
+        }
     }
 
     public partial class ActiveThrowable(Throwable body, Marker3D slot) : RefCounted {

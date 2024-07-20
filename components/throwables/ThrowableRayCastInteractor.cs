@@ -40,9 +40,11 @@ namespace GodotExtensionatorStarter {
             Focused = true;
         }
 
-        public void Unfocus(Throwable throwable) {
+        public void Unfocus(Throwable? throwable = null) {
+            throwable ??= CurrentThrowable;
+
             if (Focused) {
-                throwable.EmitSignal(Throwable.SignalName.Unfocused);
+                throwable?.EmitSignal(Throwable.SignalName.Unfocused);
             }
 
             CurrentThrowable = null;
