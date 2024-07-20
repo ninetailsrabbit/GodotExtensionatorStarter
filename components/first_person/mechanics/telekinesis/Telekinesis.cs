@@ -58,7 +58,7 @@ namespace GodotExtensionatorStarter {
             }
 
             if (PushWaveAbility && InputMap.HasAction(PushWaveInputAction) && Input.IsActionJustPressed(PushWaveInputAction)) {
-
+                PushWave();
             }
 
         }
@@ -140,6 +140,11 @@ namespace GodotExtensionatorStarter {
             }
 
             return [];
+        }
+
+        public void PushWave() {
+            if (PushWaveAbility) 
+                AddChild(new PushWaveArea(this, GetViewport().GetCamera3D().ForwardDirection()));
         }
 
         public bool BodyCanBeLifted(Throwable body) => body.Mass <= MaximumMassThatCanLift;
