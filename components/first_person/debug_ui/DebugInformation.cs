@@ -262,9 +262,9 @@ namespace GodotExtensionatorStarter {
             MouseSensitivitySlider.Step = 0.1f;
 
             CameraSensitivitySlider.Value = Actor.CameraMovement.CameraSensitivity;
-            CameraSensitivitySlider.MinValue = 0.01f;
-            CameraSensitivitySlider.MaxValue = 1f;
-            CameraSensitivitySlider.Step = 0.01f;
+            CameraSensitivitySlider.MinValue = 0.5f;
+            CameraSensitivitySlider.MaxValue = 100f;
+            CameraSensitivitySlider.Step = 0.5f;
 
             CameraVerticalRotationLimitSlider.Value = Actor.CameraMovement.CameraVerticalRotationLimit;
             CameraVerticalRotationLimitSlider.MinValue = 0f;

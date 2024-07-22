@@ -12,7 +12,7 @@ namespace FirstPersonTemplate {
         [Export] public FirstPersonController Actor { get; set; } = null!;
         [Export] public Camera3D Camera { get; set; } = default!;
         [Export] public Node3D PivotPoint { get; set; } = default!;
-        [Export(PropertyHint.Range, "0, 100, 0.5")] public float CameraSensitivity { get; set; } = 45f;
+        [Export(PropertyHint.Range, "0.0, 100.0, 0.5")] public float CameraSensitivity { get; set; } = 45f;
         [Export(PropertyHint.Range, "0.1f, 20f, 0.1f")] public float MouseSensitivity { get; set; } = 3f;
         [Export(PropertyHint.Range, "0, 360f, 0.1f")] public float CameraVerticalRotationLimit { get; set; } = 89f;
 

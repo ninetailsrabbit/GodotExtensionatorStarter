@@ -115,6 +115,8 @@ pause={
 3d_physics/layer_5="Throwables"
 2d_physics/layer_6="Hitboxes"
 3d_physics/layer_6="Hitboxes"
+3d_physics/layer_7="Shards"
+3d_physics/layer_8="Pieces"
 
 [physics]
 

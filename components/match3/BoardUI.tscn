@@ -1,0 +1,63 @@
+[gd_scene load_steps=13 format=3 uid="uid://bb760ljp5a2gt"]
+
+[ext_resource type="Script" path="res://components/match3/BoardUI.cs" id="1_3cc16"]
+[ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="2_cu5di"]
+[ext_resource type="Texture2D" uid="uid://ctiniq36c2dh7" path="res://components/match3/debug_ui/preview_pieces/blue_gem.png" id="2_u6h7h"]
+[ext_resource type="Texture2D" uid="uid://dchtf3oa72c7v" path="res://components/match3/debug_ui/preview_pieces/green_gem.png" id="3_vcfkg"]
+[ext_resource type="Texture2D" uid="uid://frw370xlyi52" path="res://components/match3/debug_ui/preview_pieces/purple_gem.png" id="4_20wcn"]
+[ext_resource type="Texture2D" uid="uid://bxh84kxgxf2df" path="res://components/match3/debug_ui/preview_pieces/yellow_gem.png" id="5_p51ye"]
+[ext_resource type="Texture2D" uid="uid://b6m4agye6vlqx" path="res://components/match3/debug_ui/preview_cells/odd.png" id="6_15s3i"]
+[ext_resource type="Script" path="res://components/match3/states/Fill.cs" id="6_o5mwy"]
+[ext_resource type="Texture2D" uid="uid://bitl5y7wpoxpl" path="res://components/match3/debug_ui/preview_cells/even.png" id="7_4f54l"]
+[ext_resource type="Script" path="res://components/match3/states/WaitForInput.cs" id="9_fd8xc"]
+[ext_resource type="Script" path="res://components/match3/states/Swap.cs" id="10_lq5bd"]
+[ext_resource type="Script" path="res://components/match3/states/Consume.cs" id="11_tbuoa"]
+
+[node name="BoardUI" type="Node2D"]
+position = Vector2(135, 116)
+script = ExtResource("1_3cc16")
+PreviewGridInEditor = false
+PreviewPieces = [ExtResource("2_u6h7h"), ExtResource("3_vcfkg"), ExtResource("4_20wcn"), ExtResource("5_p51ye")]
+OddCellTexture = ExtResource("6_15s3i")
+EvenCellTexture = ExtResource("7_4f54l")
+
+[node name="DebugInformation" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = -19.0
+offset_top = -54.0
+offset_right = 21.0
+offset_bottom = -14.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="DebugInformation"]
+layout_mode = 0
+offset_top = -18.0
+offset_right = 168.0
+offset_bottom = 32.0
+
+[node name="StateInformationLabel" type="Label" parent="DebugInformation/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "PrevState -> [Current]"
+
+[node name="LockedInformationLabel" type="Label" parent="DebugInformation/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Locked"
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("CurrentState")]
+script = ExtResource("2_cu5di")
+CurrentState = NodePath("WaitForInput")
+StackCapacity = 1
+
+[node name="WaitForInput" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("9_fd8xc")
+
+[node name="Swap" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("10_lq5bd")
+
+[node name="Consume" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("11_tbuoa")
+
+[node name="Fill" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("6_o5mwy")

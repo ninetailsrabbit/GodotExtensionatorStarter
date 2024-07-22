@@ -21,6 +21,11 @@
   <ItemGroup>
     <PackageReference Include="Ninetailsrabbit.Extensionator" Version="0.2.2" />
 	<PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.5.4" />
+	<PackageReference Include="Ninetailsrabbit.Match3Maker" Version="1.2.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="components\match3\" />
   </ItemGroup>
 	
 </Project>

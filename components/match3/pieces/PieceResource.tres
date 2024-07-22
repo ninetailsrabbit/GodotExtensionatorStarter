@@ -1,0 +1,7 @@
+[gd_resource type="Resource" script_class="PieceResource" load_steps=2 format=3 uid="uid://ndbk5ylqgm3o"]
+
+[ext_resource type="Script" path="res://scenes/board/pieces/PieceResource.cs" id="1_8jg1p"]
+
+[resource]
+script = ExtResource("1_8jg1p")
+Weight = 1.0

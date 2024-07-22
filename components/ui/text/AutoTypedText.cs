@@ -33,15 +33,14 @@ namespace GodotExtensionatorStarter {
 
         public override void _UnhandledInput(InputEvent @event) {
             if (!TypingFinished) {
+
                 if (IsTyping) {
-                    if (CanBeSkipped && InputExtension.IsAnyActionJustPressed(InputActionsToStart)) {
+                    if (CanBeSkipped && InputExtension.IsAnyActionJustPressed(InputActionsToStart))
                         Skip();
-                    }
                 }
                 else {
-                    if (ManualStart && InputExtension.IsAnyActionJustPressed(InputActionsToStart)) {
+                    if (ManualStart && InputExtension.IsAnyActionJustPressed(InputActionsToStart))
                         DisplayLetters();
-                    }
                 }
             }
         }

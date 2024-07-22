@@ -142,7 +142,6 @@ script = ExtResource("3_7s15c")
 Actor = NodePath("..")
 Camera = NodePath("../Head/Eyes/Camera3D")
 PivotPoint = NodePath("../Head/Eyes")
-CameraSensitivity = 0.6
 
 [node name="SwingHead" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "Head")]
 script = ExtResource("4_r2a3k")
