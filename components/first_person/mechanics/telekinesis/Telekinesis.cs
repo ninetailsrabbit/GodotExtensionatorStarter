@@ -144,7 +144,7 @@ namespace GodotExtensionatorStarter {
 
         public void PushWave() {
             if (PushWaveAbility) 
-                AddChild(new PushWaveArea(this, GetViewport().GetCamera3D().ForwardDirection()));
+                AddChild(new PushWaveArea(GetViewport().GetCamera3D().ForwardDirection()));
         }
 
         public bool BodyCanBeLifted(Throwable body) => body.Mass <= MaximumMassThatCanLift;

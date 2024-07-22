@@ -6,11 +6,10 @@ using System;
 using System.Linq;
 
 namespace GodotExtensionatorStarter {
-    public partial class PushWaveArea(Telekinesis telekinesis, Vector3? direction = null) : Area3D {
+    public partial class PushWaveArea : Area3D {
 
         private readonly RandomNumberGenerator _rng = new();
-        [Export] public Telekinesis Telekinesis { get; set; } = telekinesis;
-        [Export] public Vector3 Direction = direction ?? Vector3.Forward;
+        [Export] public Vector3 Direction = Vector3.Forward;
         [Export] public Vector3 UpwardOffset = Vector3.Up;
         [Export] public int PushableBodies = 7;
         [Export] public float MinAngularForce = 0.5f;
@@ -23,6 +22,9 @@ namespace GodotExtensionatorStarter {
         [Export] public float WaveRadius = 5.0f;
         [Export] public float TimeAlive = 1.0f;
 
+        public PushWaveArea(Vector3? direction = null) {
+            Direction = direction ?? Vector3.Forward;
+        }
         public bool Active {
             get => _active;
             set {
