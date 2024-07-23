@@ -31,8 +31,8 @@ namespace GodotExtensionatorStarter {
 
         #endregion
 
-        public readonly Godot.Collections.Dictionary<string, MachineState> States = [];
-        public readonly Godot.Collections.Dictionary<string, Transition> Transitions = [];
+        public readonly Dictionary<string, MachineState> States = [];
+        public readonly Dictionary<string, Transition> Transitions = [];
         public readonly Array<MachineState> StatesStack = [];
 
         public bool IsTransitioning = false;
