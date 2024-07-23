@@ -133,7 +133,7 @@ namespace GodotExtensionatorStarter {
                     TimesInteracted += 1;
 
                 if (LockPlayer)
-                    EmitSignal(GlobalGameEvents.SignalName.LockPlayer, this);
+                    GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.LockPlayer, this);
 
                 EmitSignal(GlobalGameEvents.SignalName.Interacted, this);
             }
@@ -141,20 +141,20 @@ namespace GodotExtensionatorStarter {
         private void OnCancelInteraction(GodotObject interactor) {
             if (interactor is IInteractor _) {
                 if (LockPlayer)
-                    EmitSignal(GlobalGameEvents.SignalName.UnlockPlayer, this);
+                    GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.UnlockPlayer, this);
 
                 EmitSignal(GlobalGameEvents.SignalName.CanceledInteraction, this);
             }
         }
         private void OnUnFocused(GodotObject interactor) {
             if (interactor is IInteractor _)
-                EmitSignal(GlobalGameEvents.SignalName.UnFocused, this);
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.UnFocused, this);
 
         }
 
         private void OnFocused(GodotObject interactor) {
             if (interactor is IInteractor _)
-                EmitSignal(GlobalGameEvents.SignalName.Focused, this);
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.Focused, this);
 
         }
 

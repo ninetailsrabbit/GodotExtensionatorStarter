@@ -29,7 +29,6 @@ namespace GodotExtensionatorStarter {
         [Export] public float HeadBobSwimIntensity = 0.02f;
         #endregion
 
-
         #region Collisions
         public CollisionShape3D StandShape { get; private set; } = default!;
         public CollisionShape3D CrouchShape { get; private set; } = default!;

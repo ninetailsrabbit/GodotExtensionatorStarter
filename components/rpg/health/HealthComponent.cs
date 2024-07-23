@@ -5,18 +5,17 @@ namespace GodotExtensionatorStarter {
 
     [GlobalClass, Icon("res://components/rpg/health/health_component.svg")]
     public partial class HealthComponent : Node {
-        public enum TYPES {
-            DAMAGE,
-            HEALTH,
-            REGEN
-        }
+        #region Signals
+
         [Signal]
         public delegate void HealthChangedEventHandler(int amount, int type);
         [Signal]
         public delegate void InvulnerabilityChangedEventHandler(bool active);
         [Signal]
         public delegate void DiedEventHandler();
+        #endregion
 
+        #region Exported parameters
         [ExportGroup("Health parameters")]
         [Export] public int MaxHealth = 100;
         [Export] public float HealthOverflowPercentage = 0.0f;
@@ -31,7 +30,13 @@ namespace GodotExtensionatorStarter {
         [Export] public float HealthRegenTickTime = 1.0f;
         [Export] public bool IsInvulnerable = false;
         [Export] public float InvulnerabilityTime = 1.0f;
+        #endregion
 
+        public enum TYPES {
+            DAMAGE,
+            HEALTH,
+            REGEN
+        }
         public int MaxHealthOverflow { get { return MaxHealth + (int)(MaxHealth * HealthOverflowPercentage / 100); } }
         public Timer InvulnerabilityTimer { get; set; } = default!;
         public Timer HealthRegenTimer { get; set; } = default!;

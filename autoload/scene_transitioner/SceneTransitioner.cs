@@ -136,32 +136,16 @@ namespace GodotExtensionatorStarter {
             RemainingAnimations = (Array<TRANSITIONS>)RemainingAnimations.Where((transition) => !transition.Equals(TRANSITIONS.NO_TRANSITION));
         }
 
-        private string AnimationNameFromTransition(TRANSITIONS transition) {
-            string animationName;
-
-            switch (transition) {
-                case TRANSITIONS.FADE_TO_BLACK:
-                    animationName = "fade_to_black";
-                    break;
-                case TRANSITIONS.FADE_FROM_BLACK:
-                    animationName = "fade_from_black";
-                    break;
-                case TRANSITIONS.VORONOI_IN_LEFT_TO_RIGHT:
-                    animationName = "voronoi_in_left";
-                    break;
-                case TRANSITIONS.VORONOI_IN_RIGHT_TO_LEFT:
-                    animationName = "voronoi_in_right";
-                    break;
-                case TRANSITIONS.VORONOI_OUT_RIGHT_TO_LEFT:
-                    animationName = "voronoi_out_left";
-                    break;
-                case TRANSITIONS.VORONOI_OUT_LEFT_TO_RIGHT:
-                    animationName = "voronoi_out_right";
-                    break;
-                default:
-                    animationName = "";
-                    break;
-            }
+        private static string AnimationNameFromTransition(TRANSITIONS transition) {
+            string animationName = transition switch {
+                TRANSITIONS.FADE_TO_BLACK => "fade_to_black",
+                TRANSITIONS.FADE_FROM_BLACK => "fade_from_black",
+                TRANSITIONS.VORONOI_IN_LEFT_TO_RIGHT => "voronoi_in_left",
+                TRANSITIONS.VORONOI_IN_RIGHT_TO_LEFT => "voronoi_in_right",
+                TRANSITIONS.VORONOI_OUT_RIGHT_TO_LEFT => "voronoi_out_left",
+                TRANSITIONS.VORONOI_OUT_LEFT_TO_RIGHT => "voronoi_out_right",
+                _ => string.Empty,
+            };
 
             return animationName;
         }
