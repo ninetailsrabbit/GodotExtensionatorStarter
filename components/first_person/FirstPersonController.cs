@@ -9,6 +9,9 @@ namespace GodotExtensionatorStarter {
         public const string GROUP_NAME = "player";
 
         #region Exported variables
+        [ExportGroup("Input")]
+        [Export] public string[] MouseModeSwitchInputs = ["ui_cancel"];
+
         [ExportGroup("Mechanics")]
         [Export] public bool Run = true;
         [Export] public bool Jump = true;
@@ -50,7 +53,7 @@ namespace GodotExtensionatorStarter {
         public bool isGrounded = false;
 
         public override void _UnhandledInput(InputEvent @event) {
-            if (Input.IsActionJustPressed("ui_cancel")) {
+            if (InputExtension.IsAnyActionJustPressed(MouseModeSwitchInputs)) {
                 SwitchMouseCaptureMode();
             }
         }
