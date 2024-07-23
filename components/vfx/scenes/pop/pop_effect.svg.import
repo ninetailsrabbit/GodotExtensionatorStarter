@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cum3kncdqxnu4"
-path="res://.godot/imported/pop-effect.svg-a5464448319a7cba76ae372ff364b63e.ctex"
+path="res://.godot/imported/pop_effect.svg-d7d485e1e6575b848a6598cb158591f5.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://components/vfx/scenes/pop/pop-effect.svg"
-dest_files=["res://.godot/imported/pop-effect.svg-a5464448319a7cba76ae372ff364b63e.ctex"]
+source_file="res://components/vfx/scenes/pop/pop_effect.svg"
+dest_files=["res://.godot/imported/pop_effect.svg-d7d485e1e6575b848a6598cb158591f5.ctex"]
 
 [params]
 
