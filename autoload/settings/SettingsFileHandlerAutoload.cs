@@ -81,6 +81,7 @@ namespace GodotExtensionatorStarter {
             CreateAudioSection(gameSettings);
             CreateAccessibilitySection(gameSettings);
             CreateAnalyticsSection(gameSettings);
+            CreateLocalizationSection(gameSettings);
 
             SaveSettings();
 
@@ -176,27 +177,25 @@ namespace GodotExtensionatorStarter {
         }
 
         public void CreateGraphicsSection(GameSettingsResource gameSettings) {
-            ConfigFileApi.SetValue(GRAPHICS_SECTION, "fps_counter", gameSettings.FPSCounter);
-            ConfigFileApi.SetValue(GRAPHICS_SECTION, "max_fps", gameSettings.MaxFPS);
-            ConfigFileApi.SetValue(GRAPHICS_SECTION, "display", (int)DisplayServer.WindowGetMode());
-            ConfigFileApi.SetValue(GRAPHICS_SECTION, "resolution", DisplayServer.WindowGetSize());
-            ConfigFileApi.SetValue(GRAPHICS_SECTION, "vsync", (int)DisplayServer.WindowGetVsyncMode());
-            ConfigFileApi.SetValue(GRAPHICS_SECTION, "antialiasing_2d", (int)GetViewport().Msaa2D);
-            ConfigFileApi.SetValue(GRAPHICS_SECTION, "antialiasing_3d", (int)GetViewport().Msaa3D);
-
-            ConfigFileApi.SetValue(GRAPHICS_SECTION, "Quality_preset", gameSettings.CurrentQualityPreset.ToString());
+            UpdateGraphicSection("fps_counter", gameSettings.FPSCounter);
+            UpdateGraphicSection("max_fps", gameSettings.MaxFPS);
+            UpdateGraphicSection("display", (int)DisplayServer.WindowGetMode());
+            UpdateGraphicSection("resolution", DisplayServer.WindowGetSize());
+            UpdateGraphicSection("vsync", (int)DisplayServer.WindowGetVsyncMode());
+            UpdateGraphicSection("antialiasing_2d", (int)GetViewport().Msaa2D);
+            UpdateGraphicSection("antialiasing_3d", (int)GetViewport().Msaa3D);
+            UpdateGraphicSection("quality_preset", gameSettings.CurrentQualityPreset.ToString());
         }
 
         public void CreateAccessibilitySection(GameSettingsResource gameSettings) {
-            ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "mouse_sensitivity", gameSettings.MouseSensitivity);
-            ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "controller_vibration", gameSettings.ControllerVibration);
-            ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "screen_brightness", gameSettings.ScreenBrightness);
-            ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "photosensitive", gameSettings.PhotoSensitive);
-            ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "screenshake", gameSettings.ScreenShake);
+            UpdateAccessibilitySection("controller_vibration", gameSettings.ControllerVibration);
+            UpdateAccessibilitySection("screen_brightness", gameSettings.ScreenBrightness);
+            UpdateAccessibilitySection("photosensitive", gameSettings.PhotoSensitive);
+            UpdateAccessibilitySection("screenshake", gameSettings.ScreenShake);
         }
         #endregion
 
-        public void UpdateLocalization(GameSettingsResource gameSettings) {
+        public void CreateLocalizationSection(GameSettingsResource gameSettings) {
             ConfigFileApi.SetValue(LOCALIZATION_SECTION, "current_language", (int)gameSettings.CurrentLanguage);
         }
 
@@ -264,6 +263,35 @@ namespace GodotExtensionatorStarter {
 
         #endregion
 
+        public void ResetToFactorySettings() {
+            if (SettingsFileExists()) {
+                ConfigFileApi.Clear();
+                DirAccess.RemoveAbsolute(SettingsFilePath);
+            }
+
+            CreateSettingsFile();
+            LoadSettingsFromFile();
+
+            EmitSignal(SignalName.ResetToDefaultSettings);
+        }
+
+        public void SaveSettings() {
+            ConfigFileApi.Save(SettingsFilePath);
+        }
+
+        public void UpdateAudioSection(string key, Variant value) {
+            ConfigFileApi.SetValue(AUDIO_SECTION, key, value);
+        }
+
+        public void UpdateGraphicSection(string key, Variant value) {
+            ConfigFileApi.SetValue(GRAPHICS_SECTION, key, value);
+        }
+
+        public void UpdateAccessibilitySection(string key, Variant value) {
+            ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, key, value);
+        }
+
+
         private static void AddKeybindingEvent(string action, string[] keybindingType) {
             switch (keybindingType[0]) {
                 case "InputEventKey":
@@ -316,27 +344,6 @@ namespace GodotExtensionatorStarter {
             else
                 return InputMap.GetActions().Where((action) => !action.ToString().StartsWith("ui_")).ToList();
         }
-
-        public void ResetToFactorySettings() {
-            if(SettingsFileExists()) {
-                ConfigFileApi.Clear();
-                DirAccess.RemoveAbsolute(SettingsFilePath);
-            }
-
-            CreateSettingsFile();
-            LoadSettingsFromFile();
-
-            EmitSignal(SignalName.ResetToDefaultSettings);
-        }
-
-        public void SaveSettings() {
-            ConfigFileApi.Save(SettingsFilePath);
-        }
-
-        public void UpdateAudioSection(string key, Variant value) {
-            ConfigFileApi.SetValue(AUDIO_SECTION, key, value);
-        }
-
         private bool SettingsFileExists() => FileAccess.FileExists(SettingsFilePath);
     }
 }

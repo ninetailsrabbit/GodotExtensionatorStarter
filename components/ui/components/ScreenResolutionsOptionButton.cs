@@ -49,6 +49,8 @@ namespace GodotExtensionatorStarter {
             string[] resolution = GetItemText((int)idx).Split("x");
 
             DisplayServer.WindowSetSize(new Vector2I(resolution.First().ToInt(), resolution.Last().ToInt()));
+
+            SettingsFileHandlerAutoload.UpdateGraphicSection("resolution", DisplayServer.WindowGetSize());
         }
     }
 }

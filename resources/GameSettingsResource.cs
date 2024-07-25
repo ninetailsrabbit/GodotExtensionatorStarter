@@ -45,7 +45,7 @@ namespace GodotExtensionatorStarter {
         [Export] public bool PhotoSensitive = true;
         [Export] public bool ScreenShake = true;
         [Export] public DisplayServer.WindowMode DisplayMode = DisplayServer.WindowMode.Windowed;
-        [Export] public DisplayServer.VSyncMode Vsync = DisplayServer.VSyncMode.Disabled;
+        [Export] public DisplayServer.VSyncMode Vsync = DisplayServer.VSyncMode.Enabled;
         [Export] public Viewport.Msaa AntiaAliasing = Viewport.Msaa.Disabled;
 
         public Dictionary<string, Array<Vector2I>> Resolutions = new() {
