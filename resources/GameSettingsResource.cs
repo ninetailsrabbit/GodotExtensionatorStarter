@@ -44,9 +44,10 @@ namespace GodotExtensionatorStarter {
         //  Useful to know when to attenue flash bright or color effects on your game when this option is true.
         [Export] public bool PhotoSensitive = true;
         [Export] public bool ScreenShake = true;
-        [Export] public DisplayServer.WindowMode DisplayMode = DisplayServer.WindowMode.Windowed;
-        [Export] public DisplayServer.VSyncMode Vsync = DisplayServer.VSyncMode.Enabled;
-        [Export] public Viewport.Msaa AntiaAliasing = Viewport.Msaa.Disabled;
+        [Export] public DisplayServer.WindowMode DisplayMode = DisplayServer.WindowGetMode();
+        [Export] public DisplayServer.VSyncMode Vsync = DisplayServer.WindowGetVsyncMode();
+        [Export] public Viewport.Msaa AntiaAliasing2D = Viewport.Msaa.Disabled;
+        [Export] public Viewport.Msaa AntiaAliasing3D = Viewport.Msaa.Disabled;
 
         public Dictionary<string, Array<Vector2I>> Resolutions = new() {
           { RESOLUTION_16_9, new Array<Vector2I>() {

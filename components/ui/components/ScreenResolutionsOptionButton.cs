@@ -51,6 +51,7 @@ namespace GodotExtensionatorStarter {
             DisplayServer.WindowSetSize(new Vector2I(resolution.First().ToInt(), resolution.Last().ToInt()));
 
             SettingsFileHandlerAutoload.UpdateGraphicSection("resolution", DisplayServer.WindowGetSize());
+            SettingsFileHandlerAutoload.SaveSettings();
         }
     }
 }

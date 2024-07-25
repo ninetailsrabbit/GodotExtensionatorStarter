@@ -179,11 +179,11 @@ namespace GodotExtensionatorStarter {
         public void CreateGraphicsSection(GameSettingsResource gameSettings) {
             UpdateGraphicSection("fps_counter", gameSettings.FPSCounter);
             UpdateGraphicSection("max_fps", gameSettings.MaxFPS);
-            UpdateGraphicSection("display", (int)DisplayServer.WindowGetMode());
+            UpdateGraphicSection("display", (int)gameSettings.DisplayMode);
             UpdateGraphicSection("resolution", DisplayServer.WindowGetSize());
-            UpdateGraphicSection("vsync", (int)DisplayServer.WindowGetVsyncMode());
-            UpdateGraphicSection("antialiasing_2d", (int)GetViewport().Msaa2D);
-            UpdateGraphicSection("antialiasing_3d", (int)GetViewport().Msaa3D);
+            UpdateGraphicSection("vsync", (int)gameSettings.Vsync);
+            UpdateGraphicSection("antialiasing_2d", (int)gameSettings.AntiaAliasing2D);
+            UpdateGraphicSection("antialiasing_3d", (int)gameSettings.AntiaAliasing3D);
             UpdateGraphicSection("quality_preset", gameSettings.CurrentQualityPreset.ToString());
         }
 
