@@ -147,6 +147,28 @@ namespace GodotExtensionatorStarter {
         public static bool IsMuted(string bus = "Master") => AudioServer.IsBusMute(AudioServer.GetBusIndex(bus));
 
         /// <summary>
+        /// Mutes all available buses.
+        /// </summary>
+        public static void MuteAllBuses() {
+            foreach(string bus in EnumerateAvailableBuses())
+                MuteBus(bus);
+        }
+
+        /// <summary>
+        /// Unmutes all available buses.
+        /// </summary>
+        public static void UnmuteAllBuses() {
+            foreach (string bus in EnumerateAvailableBuses())
+                MuteBus(bus, false);
+        }
+
+        /// <summary>
+        /// Check if all the audio buses are muted for this game instance.
+        /// </summary>
+        /// <returns></returns>
+        public static bool AllBusesAreMuted() => EnumerateAvailableBuses().All(bus => IsMuted(bus));
+
+        /// <summary>
         /// Mutes or unmutes an audio bus by index.
         /// </summary>
         /// <param name="bus">The index of the audio bus to mute/unmute.</param>

@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://dxapajbsngnmj"]
+[gd_scene load_steps=4 format=3 uid="uid://dxapajbsngnmj"]
 
 [ext_resource type="Script" path="res://components/ui/menus/GameSettingsUI.cs" id="1_xv8tk"]
+[ext_resource type="Script" path="res://components/ui/components/AudioSlider.cs" id="2_7kh0q"]
+[ext_resource type="Script" path="res://components/ui/components/MuteAudioBusesCheckButton.cs" id="3_b55sj"]
 
 [node name="GameSettingsUI" type="Control"]
 layout_mode = 3
@@ -10,3 +12,155 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_xv8tk")
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0475577, 0.0475576, 0.0475576, 1)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_top = 30
+theme_override_constants/margin_right = 30
+theme_override_constants/margin_bottom = 30
+
+[node name="TabContainer" type="TabContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="Audio" type="TabBar" parent="MarginContainer/TabContainer"]
+layout_mode = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Audio"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 50
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 0
+theme_override_constants/separation = 15
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="MasterBusLabel" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Master"
+
+[node name="AudioSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("2_7kh0q")
+AudioBus = "Master"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="MusicBusLabel" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Music"
+
+[node name="AudioSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("2_7kh0q")
+AudioBus = "Music"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="SFXBusLabel" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "SFX"
+
+[node name="AudioSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("2_7kh0q")
+AudioBus = "SFX"
+
+[node name="HBoxContainer4" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="VoiceBusLabel" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Voice"
+
+[node name="AudioSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer4"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("2_7kh0q")
+AudioBus = "Voice"
+
+[node name="HBoxContainer5" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="AmbientBusLabel" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Ambient
+"
+
+[node name="AudioSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer5"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("2_7kh0q")
+AudioBus = "Ambient"
+
+[node name="HBoxContainer6" type="HBoxContainer" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 50
+
+[node name="UIBusLabel" type="Label" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "UI"
+
+[node name="AudioSlider" type="HSlider" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer/HBoxContainer6"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+script = ExtResource("2_7kh0q")
+AudioBus = "UI"
+
+[node name="MuteAudioBusesCheckButton" type="CheckButton" parent="MarginContainer/TabContainer/Audio/MarginContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 8
+text = "Mute"
+script = ExtResource("3_b55sj")

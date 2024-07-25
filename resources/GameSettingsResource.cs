@@ -14,15 +14,16 @@ namespace GodotExtensionatorStarter {
         #region Audio
         [Export]
         public Dictionary<string, float> AudioVolumes = new() {
-        {"music", 1f },
-        {"sfx", 1f },
-        {"echosfx", 1f },
-        {"voice", 1f },
-        {"ui", 1f },
-        {"ambient", 1f },
+        {"master", 0.9f },
+        {"music", 0.8f },
+        {"sfx", 0.9f },
+        {"echosfx", 0.9f },
+        {"voice", 0.7f },
+        {"ui", 0.9f },
+        {"ambient", 0.8f },
     };
 
-        public bool Muted = false;
+        public bool MutedAudio = false;
 
         #endregion
 
@@ -47,7 +48,7 @@ namespace GodotExtensionatorStarter {
         [Export] public DisplayServer.VSyncMode Vsync = DisplayServer.VSyncMode.Disabled;
         [Export] public Viewport.Msaa AntiaAliasing = Viewport.Msaa.Disabled;
 
-        public Godot.Collections.Dictionary<string, Array<Vector2I>> Resolutions = new() {
+        public Dictionary<string, Array<Vector2I>> Resolutions = new() {
           { RESOLUTION_16_9, new Array<Vector2I>() {
             new(320, 180),
             new(400, 224),

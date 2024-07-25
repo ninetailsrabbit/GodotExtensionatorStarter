@@ -21,13 +21,22 @@ namespace GodotExtensionatorStarter {
         public const string FILE_FORMAT = "ini"; //  ini or cfg
 
         public string SettingsFilePath = $"{OS.GetUserDataDir()}/settings.{FILE_FORMAT}";
-        public ConfigFile ConfigFileApi = new();
         public bool IncludeUIKeybindings = false;
+
+        public ConfigFile ConfigFileApi = new();
+        public GameSettingsResource DefaultGameSettings = new();
 
         public GamepadControllerManager GamepadControllerManager { get; set; } = default!;
 
         public override void _Ready() {
             GamepadControllerManager = this.GetAutoloadNode<GamepadControllerManager>();
+
+            if (SettingsFileExists()) {
+                LoadSettings();
+            }
+            else {
+                UpdateSettings(DefaultGameSettings);
+            }
         }
 
         public SettingsFileHandlerAutoload ChangeConfigPath(string newPath) {
@@ -44,7 +53,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public void LoadSettings(ConfigFile? configFile = null) {
-            if (configFile == null && SettingsFilePath.FilePathIsValid()) {
+            if (configFile == null && SettingsFileExists()) {
                 ConfigFileApi.Load(SettingsFilePath);
                 configFile = ConfigFileApi;
             }
@@ -57,7 +66,7 @@ namespace GodotExtensionatorStarter {
         public void UpdateSettings(GameSettingsResource gameSettings) {
             UpdateKeybindings();
             UpdateGraphics(gameSettings);
-            UpdateAudio();
+            UpdateAudio(gameSettings);
             UpdateAccessibility(gameSettings);
             UpdateAnalytics(gameSettings);
 
@@ -144,11 +153,13 @@ namespace GodotExtensionatorStarter {
             }
         }
 
-        public void UpdateAudio() {
-            foreach (string bus in AudioManager.EnumerateAvailableBuses())
-                ConfigFileApi.SetValue(AUDIO_SECTION, bus, AudioManager.Instance.GetActualVolumeDbFromBus(bus));
+        public void UpdateAudio(GameSettingsResource gameSettings) {
+            foreach (string bus in AudioManager.EnumerateAvailableBuses()) {
+                ConfigFileApi.SetValue(AUDIO_SECTION, bus, gameSettings.AudioVolumes[bus.ToLower()]);
 
-            ConfigFileApi.SetValue(AUDIO_SECTION, "muted", false);
+            }
+
+            ConfigFileApi.SetValue(AUDIO_SECTION, "muted", gameSettings.MutedAudio);
         }
 
         public void UpdateGraphics(GameSettingsResource gameSettings) {
@@ -201,8 +212,10 @@ namespace GodotExtensionatorStarter {
             bool mutedBuses = (bool)configFile.GetValue(AUDIO_SECTION, "muted");
 
             foreach (string bus in configFile.GetSectionKeys(AUDIO_SECTION)) {
-                AudioManager.ChangeVolume(bus, (float)configFile.GetValue(AUDIO_SECTION, bus));
-                AudioManager.MuteBus(bus, mutedBuses);
+                if (AudioManager.Instance.AvailableBuses.Contains(bus)) {
+                    AudioManager.ChangeVolume(bus, (float)configFile.GetValue(AUDIO_SECTION, bus));
+                    AudioManager.MuteBus(bus, mutedBuses);
+                }
             }
 
         }
@@ -286,5 +299,7 @@ namespace GodotExtensionatorStarter {
             else
                 return InputMap.GetActions().Where((action) => !action.ToString().StartsWith("ui_")).ToList();
         }
+
+        private bool SettingsFileExists() => FileAccess.FileExists(SettingsFilePath);
     }
 }
