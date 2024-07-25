@@ -49,6 +49,7 @@ namespace GodotExtensionatorStarter {
                 configFile = ConfigFileApi;
             }
 
+            LoadAudio(configFile);
             LoadKeybindings(configFile);
             LoadGraphics(configFile);
         }
@@ -146,6 +147,8 @@ namespace GodotExtensionatorStarter {
         public void UpdateAudio() {
             foreach (string bus in AudioManager.EnumerateAvailableBuses())
                 ConfigFileApi.SetValue(AUDIO_SECTION, bus, AudioManager.Instance.GetActualVolumeDbFromBus(bus));
+
+            ConfigFileApi.SetValue(AUDIO_SECTION, "muted", false);
         }
 
         public void UpdateGraphics(GameSettingsResource gameSettings) {
@@ -195,14 +198,19 @@ namespace GodotExtensionatorStarter {
         }
 
         public static void LoadAudio(ConfigFile configFile) {
-            foreach (string bus in configFile.GetSectionKeys(AUDIO_SECTION))
+            bool mutedBuses = (bool)configFile.GetValue(AUDIO_SECTION, "muted");
+
+            foreach (string bus in configFile.GetSectionKeys(AUDIO_SECTION)) {
                 AudioManager.ChangeVolume(bus, (float)configFile.GetValue(AUDIO_SECTION, bus));
+                AudioManager.MuteBus(bus, mutedBuses);
+            }
+
         }
 
         public void LoadGraphics(ConfigFile configFile) {
             foreach (string key in configFile.GetSectionKeys(GRAPHICS_SECTION)) {
                 var configValue = configFile.GetValue(GRAPHICS_SECTION, key);
-    
+
                 switch (key) {
                     case "max_fps":
                         Engine.MaxFps = (int)configValue;

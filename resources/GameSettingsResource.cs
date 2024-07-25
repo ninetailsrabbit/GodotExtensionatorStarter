@@ -13,7 +13,7 @@ namespace GodotExtensionatorStarter {
 
         #region Audio
         [Export]
-        public Godot.Collections.Dictionary<string, float> AudioVolumes = new() {
+        public Dictionary<string, float> AudioVolumes = new() {
         {"music", 1f },
         {"sfx", 1f },
         {"echosfx", 1f },
@@ -21,6 +21,9 @@ namespace GodotExtensionatorStarter {
         {"ui", 1f },
         {"ambient", 1f },
     };
+
+        public bool Muted = false;
+
         #endregion
 
         #region Gamepad
