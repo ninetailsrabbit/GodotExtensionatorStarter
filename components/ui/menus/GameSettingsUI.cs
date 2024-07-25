@@ -10,8 +10,13 @@ namespace GodotExtensionatorStarter {
 
         public Dictionary<string, AudioSlider> AudioBusesSliders = [];
 
+        public override void _ExitTree() {
+            SettingsFileHandlerAutoload.LoadedSettings -= OnLoadedSettings;
+        }
+
         public override void _EnterTree() {
             SettingsFileHandlerAutoload = this.GetAutoloadNode<SettingsFileHandlerAutoload>();
+            SettingsFileHandlerAutoload.LoadedSettings += OnLoadedSettings;
         }
 
         public override void _Ready() {
@@ -23,7 +28,11 @@ namespace GodotExtensionatorStarter {
 
         }
 
-      
+        private void OnLoadedSettings() {
+            foreach (var entry in AudioBusesSliders) {
+                entry.Value.Value = AudioManager.GetActualVolumeDbFromBus(entry.Key);
+            }
+        }
     }
 
 }

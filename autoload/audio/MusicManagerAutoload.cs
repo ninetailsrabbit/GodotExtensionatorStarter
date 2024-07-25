@@ -58,7 +58,7 @@ namespace GodotExtensionatorStarter {
                     nextAudioStreamPlayer.VolumeDb = VOLUME_DB_INAUDIBLE;
                     PlayStream(nextAudioStreamPlayer, stream);
 
-                    float volume = Mathf.LinearToDb(AudioManager.Instance.GetActualVolumeDbFromBus(nextAudioStreamPlayer.Bus));
+                    float volume = Mathf.LinearToDb(AudioManager.GetActualVolumeDbFromBus(nextAudioStreamPlayer.Bus));
 
                     Tween tween = GetTree().CreateTween();
                     tween.SetParallel(true);

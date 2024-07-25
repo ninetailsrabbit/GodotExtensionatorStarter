@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using Extensionator;
+using Godot;
 using GodotExtensionator;
 using System;
 
@@ -40,6 +41,8 @@ namespace GodotExtensionatorStarter {
 
         private void OnVolumeValueChanged(double value) {
             AudioManager.ChangeVolume(AudioBus, (float)value);
+            SettingsFileHandlerAutoload.UpdateAudioSection(AudioBus, AudioManager.GetActualVolumeDbFromBus(AudioBus));
+            SettingsFileHandlerAutoload.SaveSettings();
         }
 
 

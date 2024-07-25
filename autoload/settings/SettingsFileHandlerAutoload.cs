@@ -8,6 +8,16 @@ using System.Linq;
 namespace GodotExtensionatorStarter {
 
     public sealed partial class SettingsFileHandlerAutoload : Node {
+        #region Signals
+        [Signal]
+        public delegate void ResetToDefaultSettingsEventHandler();
+
+        [Signal]
+        public delegate void CreatedSettingsEventHandler();
+        [Signal]
+        public delegate void LoadedSettingsEventHandler();
+        #endregion
+
         public const string KEYBINDINGS_SECTION = "keybindings";
         public const string GRAPHICS_SECTION = "graphics";
         public const string AUDIO_SECTION = "audio";
@@ -31,16 +41,14 @@ namespace GodotExtensionatorStarter {
         public override void _Ready() {
             GamepadControllerManager = this.GetAutoloadNode<GamepadControllerManager>();
 
-            if (SettingsFileExists()) {
-                LoadSettings();
-            }
-            else {
-                UpdateSettings(DefaultGameSettings);
-            }
+            if (!SettingsFileExists())
+                CreateSettingsFile();
+
+            LoadSettingsFromFile();
         }
 
         public SettingsFileHandlerAutoload ChangeConfigPath(string newPath) {
-            if (!string.IsNullOrEmpty(newPath))
+            if (!string.IsNullOrEmpty(newPath) && newPath.IsAbsolutePath())
                 SettingsFilePath = newPath;
 
             return this;
@@ -52,28 +60,35 @@ namespace GodotExtensionatorStarter {
             return this;
         }
 
-        public void LoadSettings(ConfigFile? configFile = null) {
-            if (configFile == null && SettingsFileExists()) {
+        public void LoadSettingsFromFile(ConfigFile? configFile = null) {
+            if (configFile is null && SettingsFileExists()) {
+                ConfigFileApi.Clear();
                 ConfigFileApi.Load(SettingsFilePath);
-                configFile = ConfigFileApi;
             }
 
-            LoadAudio(configFile);
-            LoadKeybindings(configFile);
-            LoadGraphics(configFile);
+            LoadAudio(ConfigFileApi);
+            LoadKeybindings(ConfigFileApi);
+            LoadGraphics(ConfigFileApi);
+
+            EmitSignal(SignalName.LoadedSettings);
         }
 
-        public void UpdateSettings(GameSettingsResource gameSettings) {
-            UpdateKeybindings();
-            UpdateGraphics(gameSettings);
-            UpdateAudio(gameSettings);
-            UpdateAccessibility(gameSettings);
-            UpdateAnalytics(gameSettings);
+        public void CreateSettingsFile(GameSettingsResource? gameSettings = null) {
+            gameSettings ??= DefaultGameSettings;
 
-            ConfigFileApi.Save(SettingsFilePath);
+            CreateKeybindingsSection();
+            CreateGraphicsSection(gameSettings);
+            CreateAudioSection(gameSettings);
+            CreateAccessibilitySection(gameSettings);
+            CreateAnalyticsSection(gameSettings);
+
+            SaveSettings();
+
+            EmitSignal(SignalName.CreatedSettings);
         }
 
-        public void UpdateKeybindings() {
+        #region Create settings
+        public void CreateKeybindingsSection() {
             Godot.Collections.Dictionary<string, string> Keybindings = [];
 
             foreach (StringName action in GetInputMapActions()) {
@@ -153,16 +168,14 @@ namespace GodotExtensionatorStarter {
             }
         }
 
-        public void UpdateAudio(GameSettingsResource gameSettings) {
-            foreach (string bus in AudioManager.EnumerateAvailableBuses()) {
-                ConfigFileApi.SetValue(AUDIO_SECTION, bus, gameSettings.AudioVolumes[bus.ToLower()]);
+        public void CreateAudioSection(GameSettingsResource gameSettings) {
+            foreach (string bus in AudioManager.EnumerateAvailableBuses())
+                UpdateAudioSection(bus, gameSettings.AudioVolumes[bus.ToLower()]);
 
-            }
-
-            ConfigFileApi.SetValue(AUDIO_SECTION, "muted", gameSettings.MutedAudio);
+            UpdateAudioSection("muted", gameSettings.MutedAudio);
         }
 
-        public void UpdateGraphics(GameSettingsResource gameSettings) {
+        public void CreateGraphicsSection(GameSettingsResource gameSettings) {
             ConfigFileApi.SetValue(GRAPHICS_SECTION, "fps_counter", gameSettings.FPSCounter);
             ConfigFileApi.SetValue(GRAPHICS_SECTION, "max_fps", gameSettings.MaxFPS);
             ConfigFileApi.SetValue(GRAPHICS_SECTION, "display", (int)DisplayServer.WindowGetMode());
@@ -174,23 +187,25 @@ namespace GodotExtensionatorStarter {
             ConfigFileApi.SetValue(GRAPHICS_SECTION, "Quality_preset", gameSettings.CurrentQualityPreset.ToString());
         }
 
-        public void UpdateAccessibility(GameSettingsResource gameSettings) {
+        public void CreateAccessibilitySection(GameSettingsResource gameSettings) {
             ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "mouse_sensitivity", gameSettings.MouseSensitivity);
             ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "controller_vibration", gameSettings.ControllerVibration);
             ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "screen_brightness", gameSettings.ScreenBrightness);
             ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "photosensitive", gameSettings.PhotoSensitive);
             ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, "screenshake", gameSettings.ScreenShake);
         }
+        #endregion
 
         public void UpdateLocalization(GameSettingsResource gameSettings) {
             ConfigFileApi.SetValue(LOCALIZATION_SECTION, "current_language", (int)gameSettings.CurrentLanguage);
         }
 
-        public void UpdateAnalytics(GameSettingsResource gameSettings) {
+        public void CreateAnalyticsSection(GameSettingsResource gameSettings) {
             ConfigFileApi.SetValue(ANALYTICS_SECTION, "allow_telemetry", gameSettings.AllowTelemetry);
         }
 
 
+        #region Load settings
         public static void LoadKeybindings(ConfigFile configFile) {
             foreach (StringName action in configFile.GetSectionKeys(KEYBINDINGS_SECTION)) {
                 var keybinding = configFile.GetValue(KEYBINDINGS_SECTION, action).ToString();
@@ -247,6 +262,8 @@ namespace GodotExtensionatorStarter {
             }
         }
 
+        #endregion
+
         private static void AddKeybindingEvent(string action, string[] keybindingType) {
             switch (keybindingType[0]) {
                 case "InputEventKey":
@@ -298,6 +315,26 @@ namespace GodotExtensionatorStarter {
                 return [.. InputMap.GetActions()];
             else
                 return InputMap.GetActions().Where((action) => !action.ToString().StartsWith("ui_")).ToList();
+        }
+
+        public void ResetToFactorySettings() {
+            if(SettingsFileExists()) {
+                ConfigFileApi.Clear();
+                DirAccess.RemoveAbsolute(SettingsFilePath);
+            }
+
+            CreateSettingsFile();
+            LoadSettingsFromFile();
+
+            EmitSignal(SignalName.ResetToDefaultSettings);
+        }
+
+        public void SaveSettings() {
+            ConfigFileApi.Save(SettingsFilePath);
+        }
+
+        public void UpdateAudioSection(string key, Variant value) {
+            ConfigFileApi.SetValue(AUDIO_SECTION, key, value);
         }
 
         private bool SettingsFileExists() => FileAccess.FileExists(SettingsFilePath);

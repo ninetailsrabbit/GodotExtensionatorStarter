@@ -67,7 +67,7 @@ namespace GodotExtensionatorStarter {
         /// <remarks>
         /// This function first retrieves the index of the bus with the provided `bus` using `AudioServer.GetBusIndex`. If the bus index is -1 (not found), it logs an error message and returns 0.0f. Otherwise, it delegates the actual volume retrieval to the overloaded `GetActualVolumeDbFromBus` function with the bus index for efficiency.
         /// </remarks>
-        public float GetActualVolumeDbFromBus(string bus) {
+        public static float GetActualVolumeDbFromBus(string bus) {
             int busIndex = AudioServer.GetBusIndex(bus);
 
             if (busIndex == -1) {

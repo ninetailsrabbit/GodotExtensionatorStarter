@@ -27,6 +27,7 @@ SoundPoolAutoload="*res://autoload/audio/SoundPoolAutoload.cs"
 SaveGameManagerAutoload="*res://autoload/persistence/SaveGameManagerAutoload.cs"
 SettingsFileHandlerAutoload="*res://autoload/settings/SettingsFileHandlerAutoload.cs"
 GamepadControllerManager="*res://autoload/input/GamepadControllerManager.cs"
+WindowManager="*res://autoload/viewport/WindowManager.cs"
 
 [display]
 
