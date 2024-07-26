@@ -10,6 +10,7 @@ namespace GodotExtensionatorStarter {
 
         public Dictionary<int, Button> FPSLimitButtons = [];
 
+        private ButtonGroup FpsLimitButtonGroup { get; } = new();
         public override void _EnterTree() {
             SettingsFileHandlerAutoload = this.GetAutoloadNode<SettingsFileHandlerAutoload>();
         }
@@ -17,26 +18,29 @@ namespace GodotExtensionatorStarter {
         public override void _Ready() {
             this.QueueFreeChildren();
 
+            FpsLimitButtonGroup.Pressed += OnButtonPressed;
+
             foreach (int fpsLimit in Limits) {
-                var button = new Button { Text = fpsLimit.ToString() };
+                var button = new Button {
+                    Text = fpsLimit.ToString(),
+                    Name = fpsLimit.ToString(),
+                    ButtonGroup = FpsLimitButtonGroup,
+                    ToggleMode = true,
+                    SizeFlagsHorizontal = SizeFlags.ExpandFill
+                };
 
                 AddChild(button);
 
-                button.SizeFlagsHorizontal = SizeFlags.ExpandFill;
-                button.Pressed += () => OnButtonPressed(button, fpsLimit); ;
-
                 if (Engine.MaxFps.Equals(fpsLimit))
-                    button.GrabFocus();
+                    button.ButtonPressed = true;
             }
         }
 
-        private void OnButtonPressed(Button pressedButton, int limit) {
-            Engine.MaxFps = limit;
-            
+        private void OnButtonPressed(BaseButton button) {
+            Engine.MaxFps = ((Button)button).Text.ToInt();
+
             SettingsFileHandlerAutoload.UpdateGraphicSection("max_fps", Engine.MaxFps);
             SettingsFileHandlerAutoload.SaveSettings();
-
-            pressedButton.GrabFocus();
         }
     }
 }
