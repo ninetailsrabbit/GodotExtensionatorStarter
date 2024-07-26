@@ -26,6 +26,9 @@ namespace GodotExtensionatorStarter {
         public delegate void GamePausedEventHandler();
         [Signal]
         public delegate void GameResumedEventHandler();
+
+        [Signal]
+        public delegate void UpdatedGraphicSettingsEventHandler(int qualityPreset);
         #endregion
 
     }

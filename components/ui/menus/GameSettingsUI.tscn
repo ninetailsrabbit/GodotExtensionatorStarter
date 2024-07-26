@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://dxapajbsngnmj"]
+[gd_scene load_steps=12 format=3 uid="uid://dxapajbsngnmj"]
 
 [ext_resource type="Script" path="res://components/ui/menus/GameSettingsUI.cs" id="1_xv8tk"]
 [ext_resource type="Script" path="res://components/ui/components/AudioSlider.cs" id="2_7kh0q"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://components/ui/components/PhotosensitiveCheckBox.cs" id="8_nxsnh"]
 [ext_resource type="Script" path="res://components/ui/components/ScreenshakeCheckBox.cs" id="9_i1vnd"]
 [ext_resource type="Script" path="res://components/ui/components/DaltonismContainer.cs" id="10_x7fxl"]
+[ext_resource type="Script" path="res://components/ui/components/GraphicQualitySettings.cs" id="11_kdiu1"]
 
 [node name="GameSettingsUI" type="Control"]
 layout_mode = 3
@@ -239,7 +240,7 @@ layout_mode = 2
 
 [node name="PhotosensitiveCheckBox" type="CheckBox" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer/HBoxContainer"]
 layout_mode = 2
-text = "Photosensitive protection"
+text = "Photosensitive safe"
 script = ExtResource("8_nxsnh")
 
 [node name="VSeparator" type="VSeparator" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer/HBoxContainer"]
@@ -281,6 +282,10 @@ script = ExtResource("10_x7fxl")
 
 [node name="HSeparator" type="HSeparator" parent="MarginContainer/TabContainer/Graphics/MarginContainer/VBoxContainer"]
 layout_mode = 2
+
+[node name="GraphicQualitySettings" type="VBoxContainer" parent="MarginContainer/TabContainer/Graphics/MarginContainer/VBoxContainer"]
+layout_mode = 2
+script = ExtResource("11_kdiu1")
 
 [node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 0

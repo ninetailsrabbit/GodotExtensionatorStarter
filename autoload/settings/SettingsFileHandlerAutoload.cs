@@ -37,9 +37,11 @@ namespace GodotExtensionatorStarter {
         public GameSettingsResource DefaultGameSettings = new();
 
         public GamepadControllerManager GamepadControllerManager { get; set; } = default!;
+        public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
 
         public override void _Ready() {
             GamepadControllerManager = this.GetAutoloadNode<GamepadControllerManager>();
+            GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
 
             if (!SettingsFileExists())
                 CreateSettingsFile();
@@ -184,7 +186,7 @@ namespace GodotExtensionatorStarter {
             UpdateGraphicSection("vsync", (int)gameSettings.Vsync);
             UpdateGraphicSection("antialiasing_2d", (int)gameSettings.AntiaAliasing2D);
             UpdateGraphicSection("antialiasing_3d", (int)gameSettings.AntiaAliasing3D);
-            UpdateGraphicSection("quality_preset", gameSettings.CurrentQualityPreset.ToString());
+            UpdateGraphicSection("quality_preset", (int)gameSettings.CurrentQualityPreset);
         }
 
         public void CreateAccessibilitySection(GameSettingsResource gameSettings) {
@@ -294,6 +296,9 @@ namespace GodotExtensionatorStarter {
 
         public void UpdateGraphicSection(string key, Variant value) {
             ConfigFileApi.SetValue(GRAPHICS_SECTION, key, value);
+
+            if (key.EqualsIgnoreCase("quality_preset"))
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.UpdatedGraphicSettings, value);
         }
 
         public void UpdateAccessibilitySection(string key, Variant value) {
