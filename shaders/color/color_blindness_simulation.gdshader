@@ -16,7 +16,7 @@ Apply the shader material to a mesh and look through it
 shader_type spatial;
 render_mode unshaded;
 uniform sampler2D SCREEN_TEXTURE:hint_screen_texture;
-uniform int mode : hint_range(0,4) = 0;
+global uniform int daltonism : hint_range(0,4) = 0;
 
 const mat4 prota = mat4(
 	vec4(0.170556992,0.170556991,-0.004517144,0.0),
@@ -46,7 +46,7 @@ const mat4 trita = mat4(
 void fragment() {
 	vec4 source =texture(SCREEN_TEXTURE,SCREEN_UV).rgba;
 	vec4 target;
-	switch(mode){
+	switch(daltonism){
 		case 0:
 			target=source;   
 			break;

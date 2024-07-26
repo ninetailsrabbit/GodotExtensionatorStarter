@@ -192,6 +192,7 @@ namespace GodotExtensionatorStarter {
             UpdateAccessibilitySection("screen_brightness", gameSettings.ScreenBrightness);
             UpdateAccessibilitySection("photosensitive", gameSettings.PhotoSensitive);
             UpdateAccessibilitySection("screenshake", gameSettings.ScreenShake);
+            UpdateAccessibilitySection("daltonism", (int)gameSettings.DaltonismType);
         }
         #endregion
 
@@ -279,6 +280,14 @@ namespace GodotExtensionatorStarter {
             ConfigFileApi.Save(SettingsFilePath);
         }
 
+        #region Getters
+        public Variant GetAudioSection(string key) => ConfigFileApi.GetValue(AUDIO_SECTION, key);
+        public Variant GetGraphicSection(string key) => ConfigFileApi.GetValue(GRAPHICS_SECTION, key);
+        public Variant GetAccessibilitySection(string key) => ConfigFileApi.GetValue(ACCESSIBILITY_SECTION, key);
+
+        #endregion
+
+        #region Update
         public void UpdateAudioSection(string key, Variant value) {
             ConfigFileApi.SetValue(AUDIO_SECTION, key, value);
         }
@@ -290,6 +299,7 @@ namespace GodotExtensionatorStarter {
         public void UpdateAccessibilitySection(string key, Variant value) {
             ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, key, value);
         }
+        #endregion
 
 
         private static void AddKeybindingEvent(string action, string[] keybindingType) {

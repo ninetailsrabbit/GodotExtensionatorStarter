@@ -3,6 +3,7 @@ using Godot.Collections;
 using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
+    [GlobalClass]
     public partial class FPSLimitContainer : HBoxContainer {
 
         [Export] public int[] Limits = [0, 30, 60, 90, 144];
