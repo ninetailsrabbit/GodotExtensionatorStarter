@@ -20,6 +20,14 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Ready() {
+
+            if(OSExtension.IsSteamDeck()) {
+                Display16_10 = true;
+                Display16_9 = false;
+                Display21_9 = false;
+                Display4_3 = false;
+            }
+
             Vector2I currentWindowSize = DisplayServer.WindowGetSize();
 
             Clear();

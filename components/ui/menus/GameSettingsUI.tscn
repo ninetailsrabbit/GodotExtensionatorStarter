@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dxapajbsngnmj"]
+[gd_scene load_steps=8 format=3 uid="uid://dxapajbsngnmj"]
 
 [ext_resource type="Script" path="res://components/ui/menus/GameSettingsUI.cs" id="1_xv8tk"]
 [ext_resource type="Script" path="res://components/ui/components/AudioSlider.cs" id="2_7kh0q"]
 [ext_resource type="Script" path="res://components/ui/components/MuteAudioBusesCheckButton.cs" id="3_b55sj"]
 [ext_resource type="Script" path="res://components/ui/components/ScreenModeOptionButton.cs" id="4_1nscq"]
 [ext_resource type="Script" path="res://components/ui/components/ScreenResolutionsOptionButton.cs" id="4_aty1o"]
+[ext_resource type="Script" path="res://components/ui/components/FPSLimitContainer.cs" id="6_vdabw"]
 [ext_resource type="Script" path="res://components/ui/components/VsyncCheckbox.cs" id="6_x8lmd"]
 
 [node name="GameSettingsUI" type="Control"]
@@ -170,10 +171,10 @@ size_flags_vertical = 4
 text = "Mute"
 script = ExtResource("3_b55sj")
 
-[node name="Graphics" type="TabBar" parent="MarginContainer/TabContainer"]
+[node name="Screen" type="TabBar" parent="MarginContainer/TabContainer"]
 layout_mode = 2
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Graphics"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TabContainer/Screen"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -185,27 +186,43 @@ theme_override_constants/margin_top = 30
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Graphics/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/TabContainer/Screen/MarginContainer"]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="WindowModeLabel" type="Label" parent="MarginContainer/TabContainer/Graphics/MarginContainer/VBoxContainer"]
+[node name="WindowModeLabel" type="Label" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Window mode"
 
-[node name="ScreenModeOptionButton" type="OptionButton" parent="MarginContainer/TabContainer/Graphics/MarginContainer/VBoxContainer"]
+[node name="ScreenModeOptionButton" type="OptionButton" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
 layout_mode = 2
 script = ExtResource("4_1nscq")
 
-[node name="ResolutionLabel" type="Label" parent="MarginContainer/TabContainer/Graphics/MarginContainer/VBoxContainer"]
+[node name="ResolutionLabel" type="Label" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Resolution"
 
-[node name="ScreenResolutionsOptionButton" type="OptionButton" parent="MarginContainer/TabContainer/Graphics/MarginContainer/VBoxContainer"]
+[node name="ScreenResolutionsOptionButton" type="OptionButton" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
 layout_mode = 2
 script = ExtResource("4_aty1o")
 
-[node name="VsyncCheckbox" type="CheckBox" parent="MarginContainer/TabContainer/Graphics/MarginContainer/VBoxContainer"]
+[node name="FPSLimitLabel" type="Label" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "FPS limit"
+
+[node name="LimitFPSHBoxContainer" type="HBoxContainer" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+script = ExtResource("6_vdabw")
+
+[node name="HSeparator" type="HSeparator" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="VsyncInfoLabel" type="Label" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Vertical sync prevents screen fragmentation, but if you have a low frame rate, perhaps you can improve performance by disabling it."
+
+[node name="VsyncCheckbox" type="CheckBox" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
 layout_mode = 2
 text = "Vsync"
 script = ExtResource("6_x8lmd")

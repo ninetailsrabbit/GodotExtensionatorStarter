@@ -17,6 +17,11 @@ namespace GodotExtensionatorStarter {
         public Label MemoryInfo { get; set; } = default!;
         public Label Velocity { get; set; } = default!;
         public Label State { get; set; } = default!;
+
+        public Label OSInfo { get; set; } = default!;
+        public Label DistroInfo { get; set; } = default!;
+        public Label CPUInfo { get; set; } = default!;
+        public Label GPUInfo { get; set; } = default!;
         public FiniteStateMachine ActorFSM { get; set; } = default!;
 
         public Control ParametersPanel { get; set; } = default!;
@@ -108,6 +113,11 @@ namespace GodotExtensionatorStarter {
             MemoryInfo = GetNode<Label>("%MemoryLabel");
             Velocity = GetNode<Label>("%VelocityLabel");
             State = GetNode<Label>("%StateLabel");
+
+            OSInfo = GetNode<Label>("%OSLabel");
+            DistroInfo = GetNode<Label>("%DistroLabel");
+            CPUInfo = GetNode<Label>("%CPULabel");
+            GPUInfo = GetNode<Label>("%GPULabel");
 
             ParametersPanel = GetNode<Control>("Parameters");
             ParametersPanel.Hide();
@@ -228,9 +238,18 @@ namespace GodotExtensionatorStarter {
             DisplayVsync();
             DisplayMemory();
             DisplayVelocity();
+
+            DisplaySpecs();
+
             PrepareCameraMovementPanel();
         }
 
+        private void DisplaySpecs() {
+            OSInfo.Text = $"OS: {OS.GetName()}";
+            DistroInfo.Text = $"Distro: {OS.GetDistributionName()}";
+            CPUInfo.Text = $"CPU: {OS.GetProcessorName()}";
+            GPUInfo.Text = $"GPU: {RenderingServer.GetRenderingDevice().GetDeviceName()}";
+        }
         public override void _Process(double delta) {
             DisplayFPS();
             DisplayVsync();
