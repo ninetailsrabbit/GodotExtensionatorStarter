@@ -6,7 +6,7 @@ namespace GodotExtensionatorStarter {
     [GlobalClass]
     public partial class FPSLimitContainer : HBoxContainer {
 
-        [Export] public int[] Limits = [0, 30, 60, 90, 144];
+        [Export] public int[] Limits = [0, 30, 60, 90, 144, 240];
         public SettingsFileHandlerAutoload SettingsFileHandlerAutoload { get; set; } = null!;
 
         public Dictionary<int, Button> FPSLimitButtons = [];

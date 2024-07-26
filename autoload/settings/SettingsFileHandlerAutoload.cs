@@ -286,6 +286,7 @@ namespace GodotExtensionatorStarter {
         public Variant GetAudioSection(string key) => ConfigFileApi.GetValue(AUDIO_SECTION, key);
         public Variant GetGraphicSection(string key) => ConfigFileApi.GetValue(GRAPHICS_SECTION, key);
         public Variant GetAccessibilitySection(string key) => ConfigFileApi.GetValue(ACCESSIBILITY_SECTION, key);
+        public Variant GetAnalyticsSection(string key) => ConfigFileApi.GetValue(ANALYTICS_SECTION, key);
 
         #endregion
 
@@ -303,6 +304,10 @@ namespace GodotExtensionatorStarter {
 
         public void UpdateAccessibilitySection(string key, Variant value) {
             ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, key, value);
+        }
+
+        public void UpdateAnalyticsSection(string key, Variant value) {
+            ConfigFileApi.SetValue(ANALYTICS_SECTION, key, value);
         }
         #endregion
 
