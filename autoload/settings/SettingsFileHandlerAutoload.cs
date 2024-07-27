@@ -328,9 +328,9 @@ namespace GodotExtensionatorStarter {
 
                     var inputEventKey = new InputEventKey {
                         Keycode = OS.FindKeycodeFromString(keybindingType[1]),
-                        AltPressed = keybindingType[1].Contains("Alt", System.StringComparison.OrdinalIgnoreCase),
-                        CtrlPressed = keybindingType[1].Contains("Ctrl", System.StringComparison.OrdinalIgnoreCase),
-                        ShiftPressed = keybindingType[1].Contains("Shift", System.StringComparison.OrdinalIgnoreCase),
+                        AltPressed = !keybindingType[1].EqualsIgnoreCase("Alt") && keybindingType[1].Contains("Alt", System.StringComparison.OrdinalIgnoreCase),
+                        CtrlPressed = !keybindingType[1].EqualsIgnoreCase("Ctrl") && keybindingType[1].Contains("Ctrl", System.StringComparison.OrdinalIgnoreCase),
+                        ShiftPressed = !keybindingType[1].EqualsIgnoreCase("Shift") && keybindingType[1].Contains("Shift", System.StringComparison.OrdinalIgnoreCase),
                         MetaPressed = keybindingType[1].Contains("Meta", System.StringComparison.OrdinalIgnoreCase)
                     };
 

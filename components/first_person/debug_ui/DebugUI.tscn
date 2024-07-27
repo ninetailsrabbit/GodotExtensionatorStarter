@@ -18,7 +18,7 @@ script = ExtResource("1_rx7iq")
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
-offset_bottom = 162.0
+offset_bottom = 184.0
 grow_horizontal = 2
 mouse_filter = 2
 
@@ -27,12 +27,14 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -10.0
+offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/margin_left = 15
-theme_override_constants/margin_top = 10
-theme_override_constants/margin_right = 15
-theme_override_constants/margin_bottom = 10
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
 
 [node name="EngineVboxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
 layout_mode = 2
@@ -58,6 +60,11 @@ text = "MEMORY:"
 unique_name_in_owner = true
 layout_mode = 2
 text = "VELOCITY:"
+
+[node name="SpeedLabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "SPEED:"
 
 [node name="StateLabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true

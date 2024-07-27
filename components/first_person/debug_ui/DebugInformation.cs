@@ -17,6 +17,7 @@ namespace GodotExtensionatorStarter {
         public Label MemoryInfo { get; set; } = default!;
         public Label Velocity { get; set; } = default!;
         public Label State { get; set; } = default!;
+        public Label Speed { get; set; } = default!;
 
         public Label OSInfo { get; set; } = default!;
         public Label DistroInfo { get; set; } = default!;
@@ -112,6 +113,7 @@ namespace GodotExtensionatorStarter {
             VsyncInfo = GetNode<Label>("%VsyncLabel");
             MemoryInfo = GetNode<Label>("%MemoryLabel");
             Velocity = GetNode<Label>("%VelocityLabel");
+            Speed = GetNode<Label>("%SpeedLabel");
             State = GetNode<Label>("%StateLabel");
 
             OSInfo = GetNode<Label>("%OSLabel");
@@ -238,6 +240,7 @@ namespace GodotExtensionatorStarter {
             DisplayVsync();
             DisplayMemory();
             DisplayVelocity();
+            DisplaySpeed();
 
             DisplaySpecs();
 
@@ -255,6 +258,7 @@ namespace GodotExtensionatorStarter {
             DisplayVsync();
             DisplayMemory();
             DisplayVelocity();
+            DisplaySpeed();
         }
 
 
@@ -273,6 +277,11 @@ namespace GodotExtensionatorStarter {
         private void DisplayVelocity() {
             Velocity.Text = $"Velocity: {Actor.Velocity}";
         }
+
+        private void DisplaySpeed() {
+            Speed.Text = $"Speed: {Actor.CurrentSpeed()} kmh";
+        }
+
 
         private void PrepareCameraMovementPanel() {
             MouseSensitivitySlider.Value = Actor.CameraMovement.MouseSensitivity;
