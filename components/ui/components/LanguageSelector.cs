@@ -31,7 +31,7 @@ namespace GodotExtensionatorStarter {
 
                 if (language.Code.EqualsIgnoreCase(SettingsFileHandlerAutoload.GetLocalizationSection("current_language").ToString()))
                     Select(ItemCount - 1);
-                
+
                 LanguageByOptionButtonId.Add(id, language);
 
                 id += 1;
