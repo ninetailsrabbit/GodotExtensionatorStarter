@@ -1,18 +1,16 @@
-import os
+import os, re
 
-def walk_dir_recursively(dirpath: str):
+def find_translation_keys(dirpath: str):
     if os.path.isdir(dirpath):
         for root, _, files in os.walk(dirpath, topdown=True, followlinks=False):
-            # for dir in list(filter(lambda subdir: (not os.path.basename(subdir).startswith(".")), subdirs)):
-            #     walk_dir_recursively(dir)
-           
-            for file in list(filter(included_files, files)):
-                print(file)
+            for file in list(filter(included_files_filter, files)):
                 filepath = os.path.join(root, file)
                 scan_file_for_translation_keys(filepath)
                 
 
-def included_files(file: str) -> bool:
+def included_files_filter(file: str) -> bool:
+    included_extensions = [".tscn", ".gd", ".cs"]
+
     split_tuple = os.path.splitext(file)
     filename = split_tuple[0]
     file_extension = split_tuple[1]
@@ -22,8 +20,11 @@ def included_files(file: str) -> bool:
 
 def scan_file_for_translation_keys(filepath: str):
     files_readed.append(filepath)
-    #print(filepath)
-       
+    
+    with open(filepath, 'r', encoding="utf8") as file:
+        for line in file:
+            for translation_key in translation_keys_from(line):
+                translation_keys[translation_key] = translation_key
 
 
 def find_godot_root_dir() -> str:
@@ -42,12 +43,16 @@ def find_godot_root_dir() -> str:
             
     return root_dir
 
+def translation_keys_from(value: str):
+    return re.findall(r'\b([A-Z]+_[A-Z]+)+\b', value)
 
-included_extensions = [".tscn", ".gd", ".cs"]
+
 
 files_readed = []
 translation_keys = {}
 
 ROOT_DIR = find_godot_root_dir()
 
-walk_dir_recursively(ROOT_DIR);
+find_translation_keys(ROOT_DIR);
+
+print(translation_keys)
