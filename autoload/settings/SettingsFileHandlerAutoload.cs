@@ -199,7 +199,7 @@ namespace GodotExtensionatorStarter {
         #endregion
 
         public void CreateLocalizationSection(GameSettingsResource gameSettings) {
-            ConfigFileApi.SetValue(LOCALIZATION_SECTION, "current_language", (int)gameSettings.CurrentLanguage);
+            UpdateLocalizationSection("current_language", Localization.AvailableLanguages[gameSettings.CurrentLanguage].Code);
         }
 
         public void CreateAnalyticsSection(GameSettingsResource gameSettings) {
@@ -287,6 +287,7 @@ namespace GodotExtensionatorStarter {
         public Variant GetGraphicSection(string key) => ConfigFileApi.GetValue(GRAPHICS_SECTION, key);
         public Variant GetAccessibilitySection(string key) => ConfigFileApi.GetValue(ACCESSIBILITY_SECTION, key);
         public Variant GetAnalyticsSection(string key) => ConfigFileApi.GetValue(ANALYTICS_SECTION, key);
+        public Variant GetLocalizationSection(string key) => ConfigFileApi.GetValue(LOCALIZATION_SECTION, key);
 
         #endregion
 
@@ -308,6 +309,15 @@ namespace GodotExtensionatorStarter {
 
         public void UpdateAnalyticsSection(string key, Variant value) {
             ConfigFileApi.SetValue(ANALYTICS_SECTION, key, value);
+        }
+
+        public void UpdateLocalizationSection(string key, Variant value) {
+            ConfigFileApi.SetValue(LOCALIZATION_SECTION, key, value);
+
+            if (key.EqualsIgnoreCase("current_language")) {
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedLanguage, value);
+                TranslationServer.SetLocale((string)value);
+            }
         }
         #endregion
 

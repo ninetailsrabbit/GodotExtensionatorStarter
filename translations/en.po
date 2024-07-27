@@ -1,0 +1,82 @@
+# LANGUAGE translation for GodotExtensionatorStarter for the following files:
+# res://components/ui/menus/GameSettingsUI.tscn
+#
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: GodotExtensionatorStarter\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_MASTER"
+msgstr "Master"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_MUSIC"
+msgstr "Music"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_SFX"
+msgstr "Sound effects"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_VOICE"
+msgstr "Voice"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_AMBIENT"
+msgstr "Ambient"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_UI"
+msgstr "UI"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "MUTE_ACTION"
+msgstr "Mute"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_WINDOW_MODE"
+msgstr "Window mode"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_RESOLUTION"
+msgstr "Resolution"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_FPS_LIMIT"
+msgstr "FPS limit"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS__VSYNC_INFO"
+msgstr "Vertical sync prevents screen fragmentation, but if you have a low frame rate, perhaps you can improve performance by disabling it."
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_VSYNC"
+msgstr "Vsync"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_PHOTOSENSITIVE"
+msgstr "Photosensitive"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_SCREENSHAKE"
+msgstr "Screenshake"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_DALTONISM_INFO"
+msgstr "If you suffer from color blindness [i](protanopia, deuteranopia, tritanopia or achromatopsia)[/i] this setting may increase visual contrast."
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_TELEMETRY"
+msgstr "Allow telemetry"

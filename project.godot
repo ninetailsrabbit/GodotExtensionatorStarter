@@ -102,6 +102,11 @@ pause={
 ]
 }
 
+[internationalization]
+
+locale/translations_pot_files=PackedStringArray("res://components/ui/menus/GameSettingsUI.tscn")
+locale/test="en"
+
 [layer_names]
 
 2d_physics/layer_1="World"

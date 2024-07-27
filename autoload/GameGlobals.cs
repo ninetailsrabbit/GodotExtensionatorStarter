@@ -12,6 +12,9 @@ namespace GodotExtensionatorStarter {
         public readonly uint PiecesCollisionLayer = 128;
 
         public string NextScenePath = string.Empty;
+
+
+        public string CurrentLanguage = "en";
     }
 
 }
