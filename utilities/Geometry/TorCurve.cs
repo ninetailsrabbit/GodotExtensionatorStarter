@@ -10,7 +10,7 @@ namespace GodotExtensionatorStarter {
             x = Math.Max(0, Math.Min(1, x));
 
             var s = Math.Exp(a);
-            var s2 = 1f / (s + MathExtension.COMMON_EPSILON);
+            var s2 = 1f / (s + MathExtension.CommonEpsilon);
             var t = Math.Max(0, Math.Min(1, b));
             var u = c;
 
@@ -20,14 +20,14 @@ namespace GodotExtensionatorStarter {
             var c3 = 0d;
 
             if (x < t) {
-                c1 = (t * x) / (x + s * (t - x) + MathExtension.COMMON_EPSILON);
-                c2 = t - Math.Pow(1 / (t + MathExtension.COMMON_EPSILON), s2 - 1) * Math.Pow(Math.Abs(x - t), s2);
-                c3 = Math.Pow(1 / (t + MathExtension.COMMON_EPSILON), s - 1) * Math.Pow(x, s);
+                c1 = (t * x) / (x + s * (t - x) + MathExtension.CommonEpsilon);
+                c2 = t - Math.Pow(1 / (t + MathExtension.CommonEpsilon), s2 - 1) * Math.Pow(Math.Abs(x - t), s2);
+                c3 = Math.Pow(1 / (t + MathExtension.CommonEpsilon), s - 1) * Math.Pow(x, s);
             }
             else {
-                c1 = (1 - t) * (x - 1) / (1 - x - s * (t - x) + MathExtension.COMMON_EPSILON) + 1;
-                c2 = Math.Pow(1 / ((1 - t) + MathExtension.COMMON_EPSILON), s2 - 1) * Math.Pow(Math.Abs(x - t), s2) + t;
-                c3 = 1 - Math.Pow(1 / ((1 - t) + MathExtension.COMMON_EPSILON), s - 1) * Math.Pow(1 - x, s);
+                c1 = (1 - t) * (x - 1) / (1 - x - s * (t - x) + MathExtension.CommonEpsilon) + 1;
+                c2 = Math.Pow(1 / ((1 - t) + MathExtension.CommonEpsilon), s2 - 1) * Math.Pow(Math.Abs(x - t), s2) + t;
+                c3 = 1 - Math.Pow(1 / ((1 - t) + MathExtension.CommonEpsilon), s - 1) * Math.Pow(1 - x, s);
             }
 
             if (u <= 0)

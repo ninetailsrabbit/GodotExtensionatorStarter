@@ -17,7 +17,7 @@ namespace GodotExtensionatorStarter {
         public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
-        public const string GROUP_NAME = "piece";
+        public const string GroupName = "piece";
 
         [Export] public BoardUI BoardUI { get; set; } = null!;
         [Export] public Vector2I CellSize;
@@ -42,10 +42,10 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _EnterTree() {
-            AddToGroup(GROUP_NAME);
+            AddToGroup(GroupName);
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
 
-            BoardUI ??= (BoardUI)GetTree().GetFirstNodeInGroup(BoardUI.GROUP_NAME);
+            BoardUI ??= (BoardUI)GetTree().GetFirstNodeInGroup(BoardUI.GroupName);
             PropertyChanged += OnPropertyChanged;
             Name = $"{Piece.Type.Shape.ToPascalCase()}-{Piece.Type.GetType()}";
             IsSelected = false;

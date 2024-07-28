@@ -23,13 +23,13 @@ namespace GodotExtensionatorStarter {
         public ColorRect ColorRect { get; set; } = default!;
 
         public enum TRANSITIONS {
-            NO_TRANSITION,
-            FADE_TO_BLACK,
-            FADE_FROM_BLACK,
-            VORONOI_IN_LEFT_TO_RIGHT,
-            VORONOI_IN_RIGHT_TO_LEFT,
-            VORONOI_OUT_LEFT_TO_RIGHT,
-            VORONOI_OUT_RIGHT_TO_LEFT,
+            NoTransition,
+            FadeToBlack,
+            FadeFromBlack,
+            VoronoiInLeftToRight,
+            VoronoiInRightToLeft,
+            VoronoiOutLeftToRight,
+            VoronoiOutRightToLeft,
         }
 
         public string NextScenePath = string.Empty;
@@ -44,8 +44,8 @@ namespace GodotExtensionatorStarter {
         public async void TransitionToScene(
             string scenePath,
             bool loadingScreen = false,
-            TRANSITIONS outTransition = TRANSITIONS.FADE_TO_BLACK,
-            TRANSITIONS inTransition = TRANSITIONS.FADE_FROM_BLACK) {
+            TRANSITIONS outTransition = TRANSITIONS.FadeToBlack,
+            TRANSITIONS inTransition = TRANSITIONS.FadeFromBlack) {
 
             if (scenePath.FilePathIsValid()) {
                 PrepareTransitionAnimations(loadingScreen, outTransition, inTransition);
@@ -62,8 +62,8 @@ namespace GodotExtensionatorStarter {
         public async void TransitionToScene(
            PackedScene scene,
            bool loadingScreen = false,
-           TRANSITIONS outTransition = TRANSITIONS.FADE_TO_BLACK,
-           TRANSITIONS inTransition = TRANSITIONS.FADE_FROM_BLACK) {
+           TRANSITIONS outTransition = TRANSITIONS.FadeToBlack,
+           TRANSITIONS inTransition = TRANSITIONS.FadeFromBlack) {
 
             PrepareTransitionAnimations(loadingScreen, outTransition, inTransition);
 
@@ -113,7 +113,7 @@ namespace GodotExtensionatorStarter {
 
 
         private async Task TriggerTransition(TRANSITIONS transition) {
-            if (transition.Equals(TRANSITIONS.NO_TRANSITION))
+            if (transition.Equals(TRANSITIONS.NoTransition))
                 return;
 
             string transitionName = AnimationNameFromTransition(transition);
@@ -133,17 +133,17 @@ namespace GodotExtensionatorStarter {
             else
                 RemainingAnimations.AddRange([inTransition, outTransition]);
 
-            RemainingAnimations = (Array<TRANSITIONS>)RemainingAnimations.Where((transition) => !transition.Equals(TRANSITIONS.NO_TRANSITION));
+            RemainingAnimations = (Array<TRANSITIONS>)RemainingAnimations.Where((transition) => !transition.Equals(TRANSITIONS.NoTransition));
         }
 
         private static string AnimationNameFromTransition(TRANSITIONS transition) {
             string animationName = transition switch {
-                TRANSITIONS.FADE_TO_BLACK => "fade_to_black",
-                TRANSITIONS.FADE_FROM_BLACK => "fade_from_black",
-                TRANSITIONS.VORONOI_IN_LEFT_TO_RIGHT => "voronoi_in_left",
-                TRANSITIONS.VORONOI_IN_RIGHT_TO_LEFT => "voronoi_in_right",
-                TRANSITIONS.VORONOI_OUT_RIGHT_TO_LEFT => "voronoi_out_left",
-                TRANSITIONS.VORONOI_OUT_LEFT_TO_RIGHT => "voronoi_out_right",
+                TRANSITIONS.FadeToBlack => "fade_to_black",
+                TRANSITIONS.FadeFromBlack => "fade_from_black",
+                TRANSITIONS.VoronoiInLeftToRight => "voronoi_in_left",
+                TRANSITIONS.VoronoiInRightToLeft => "voronoi_in_right",
+                TRANSITIONS.VoronoiOutRightToLeft => "voronoi_out_left",
+                TRANSITIONS.VoronoiOutLeftToRight => "voronoi_out_right",
                 _ => string.Empty,
             };
 
@@ -151,7 +151,7 @@ namespace GodotExtensionatorStarter {
         }
 
         private void VoronoiInTransition(bool flip = false, float duration = 1f) {
-            ShaderMaterial material = Preloader.Instance.VORNOI_MATERIAL;
+            ShaderMaterial material = Preloader.Instance.VoronoiMaterial;
             material.SetShaderParameter("flip", flip);
 
             ColorRect.Material = material;
@@ -161,7 +161,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public void VoronoiOutTransition(bool flip = false, float duration = 1f) {
-            ShaderMaterial material = Preloader.Instance.VORNOI_MATERIAL;
+            ShaderMaterial material = Preloader.Instance.VoronoiMaterial;
             material.SetShaderParameter("flip", flip);
 
             ColorRect.Material = material;

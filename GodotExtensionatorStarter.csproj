@@ -19,9 +19,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Ninetailsrabbit.Extensionator" Version="0.2.2" />
-	<PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.5.7" />
-	<PackageReference Include="Ninetailsrabbit.Match3Maker" Version="1.2.3" />
+    <PackageReference Include="Ninetailsrabbit.Extensionator" Version="0.2.3" />
+	<PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.5.8" />
+	<PackageReference Include="Ninetailsrabbit.Match3Maker" Version="1.2.4" />
   </ItemGroup>
 
   <ItemGroup>

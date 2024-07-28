@@ -5,10 +5,10 @@ namespace GodotExtensionatorStarter {
 
     public partial class GameSettingsResource : Resource {
 
-        public const string RESOLUTION_16_9 = "16:9";
-        public const string RESOLUTION_4_3 = "4:3";
-        public const string RESOLUTION_16_10 = "16:10";
-        public const string RESOLUTION_21_9 = "21:9";
+        public const string Resolution16_9 = "16:9";
+        public const string Resolution4_3 = "4:3";
+        public const string Resolution16_10 = "16:10";
+        public const string Resolution21_9 = "21:9";
 
 
         #region Audio
@@ -35,7 +35,7 @@ namespace GodotExtensionatorStarter {
 
         #region Analytics
         [Export] public bool AllowTelemetry = false;
-        [Export] public Localization.LANGUAGES CurrentLanguage = Localization.LANGUAGES.ENGLISH;
+        [Export] public Localization.LANGUAGES CurrentLanguage = Localization.LANGUAGES.English;
         #endregion
 
         #region Graphics
@@ -59,7 +59,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public Dictionary<string, Array<Vector2I>> Resolutions = new() {
-          { RESOLUTION_16_9, new Array<Vector2I>() {
+          { Resolution16_9, new Array<Vector2I>() {
             new(320, 180),
             new(400, 224),
             new(640, 360),
@@ -72,19 +72,19 @@ namespace GodotExtensionatorStarter {
             new(2560, 1440),
             new(3840, 2160),
           }},
-          { RESOLUTION_4_3, new Array<Vector2I>() {
+          { Resolution4_3, new Array<Vector2I>() {
             new(512, 384),
             new(768, 576),
             new(1024, 768),
           }},
-          { RESOLUTION_16_10, new Array<Vector2I>() {
+          { Resolution16_10, new Array<Vector2I>() {
             new(960, 600),
             new(1280, 800),
             new(1680, 1050),
             new(1920, 1200),
             new(2560, 1600),
           }},
-          { RESOLUTION_21_9, new Array<Vector2I>() {
+          { Resolution21_9, new Array<Vector2I>() {
             new(1280, 540),
             new(1720, 720),
             new(2560, 1080),
@@ -100,13 +100,13 @@ namespace GodotExtensionatorStarter {
 
         // https://github.com/Calinou/godot-sponza/blob/master/scripts/settings_gui.gd
         public enum QUALITY_PRESETS {
-            LOW, MEDIUM, HIGH, ULTRA
+            Low, Medium, High, Ultra
         }
-        public QUALITY_PRESETS CurrentQualityPreset = QUALITY_PRESETS.MEDIUM;
+        public QUALITY_PRESETS CurrentQualityPreset = QUALITY_PRESETS.Medium;
 
         public System.Collections.Generic.Dictionary<QUALITY_PRESETS, GraphicQualityPreset> GraphicQualityPresets = new() {
         {
-            QUALITY_PRESETS.LOW,
+            QUALITY_PRESETS.Low,
                 new GraphicQualityPreset("For low-end PCs with integrated graphics, as well as mobile devices",
                 new() {
                 {"environment/glow_enabled", new GraphicQualityDisplay("Glow", 0, "Disabled")  },
@@ -116,7 +116,7 @@ namespace GodotExtensionatorStarter {
             })
         },
         {
-            QUALITY_PRESETS.MEDIUM,
+            QUALITY_PRESETS.Medium,
                 new GraphicQualityPreset("For mid-range PCs with slower dedicated graphics",
                 new() {
                 {"environment/glow_enabled", new GraphicQualityDisplay("Glow", 0, "Disabled")  },
@@ -126,7 +126,7 @@ namespace GodotExtensionatorStarter {
             })
         },
          {
-            QUALITY_PRESETS.HIGH,
+            QUALITY_PRESETS.High,
                 new GraphicQualityPreset("For recent PCs with mid-range dedicated graphics, or older PCs with high-end graphics",
                 new() {
                 {"environment/glow_enabled", new GraphicQualityDisplay("Glow", 1, "Enabled")  },
@@ -136,7 +136,7 @@ namespace GodotExtensionatorStarter {
             })
         },
           {
-            QUALITY_PRESETS.ULTRA,
+            QUALITY_PRESETS.Ultra,
                 new GraphicQualityPreset("For recent PCs with high-end dedicated graphics",
                 new() {
                 {"environment/glow_enabled", new GraphicQualityDisplay("Glow", 1, "Enabled")  },

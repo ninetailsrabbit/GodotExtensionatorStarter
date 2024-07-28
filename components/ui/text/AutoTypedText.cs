@@ -4,8 +4,8 @@ using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
     public partial class AutoTypedText : RichTextLabel {
-        const string BBCODE_START_FLAG = "[";
-        const string BBCODE_END_FLAG = "]";
+        const string BBcodeStartFlag = "[";
+        const string BBcodeEndFlag = "]";
 
         [Signal]
         public delegate void FinishedEventHandler();
@@ -81,12 +81,12 @@ namespace GodotExtensionatorStarter {
 
             LetterIndex += 1;
 
-            if (!BBCodeFlag && nextCharacter.Equals(BBCODE_START_FLAG))
+            if (!BBCodeFlag && nextCharacter.Equals(BBcodeStartFlag))
                 BBCodeFlag = true;
 
             if (BBCodeFlag) {
                 CurrentBBcode += nextCharacter;
-                BBCodeFlag = !nextCharacter.Equals(BBCODE_END_FLAG);
+                BBCodeFlag = !nextCharacter.Equals(BBcodeEndFlag);
 
                 DisplayLetters();
 
@@ -110,7 +110,7 @@ namespace GodotExtensionatorStarter {
 
                 if (char.IsWhiteSpace(currentCharacter))
                     TypingTimer.Start(SpaceTime);
-                else if (Extensionator.StringExtension.ASCII_PUNCTUATION.Contains(ContentToDisplay[LetterIndex]))
+                else if (Extensionator.StringExtension.AsciiPunctuation.Contains(ContentToDisplay[LetterIndex]))
                     TypingTimer.Start(PunctuationTime);
                 else
                     TypingTimer.Start(LetterTime);

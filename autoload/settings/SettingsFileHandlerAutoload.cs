@@ -18,19 +18,19 @@ namespace GodotExtensionatorStarter {
         public delegate void LoadedSettingsEventHandler();
         #endregion
 
-        public const string KEYBINDINGS_SECTION = "keybindings";
-        public const string GRAPHICS_SECTION = "graphics";
-        public const string AUDIO_SECTION = "audio";
-        public const string ACCESSIBILITY_SECTION = "accessibility";
-        public const string LOCALIZATION_SECTION = "localization";
-        public const string ANALYTICS_SECTION = "analytics";
+        public const string KeybindingsSection = "keybindings";
+        public const string GraphicsSection = "graphics";
+        public const string AudioSection = "audio";
+        public const string AccessibilitySection = "accessibility";
+        public const string LocalizationSection = "localization";
+        public const string AnalyticsSection = "analytics";
 
-        public const string KEYBINDING_SEPARATOR = "|";
-        public const string INPUT_EVENT_SEPARATOR = ":";
+        public const string KeybindingsSeparator = "|";
+        public const string InputEventSeparator = ":";
 
-        public const string FILE_FORMAT = "ini"; //  ini or cfg
+        public const string DefaultFileFormat = "ini"; //  ini or cfg
 
-        public string SettingsFilePath = $"{OS.GetUserDataDir()}/settings.{FILE_FORMAT}";
+        public string SettingsFilePath = $"{OS.GetUserDataDir()}/settings.{DefaultFileFormat}";
         public bool IncludeUIKeybindings = false;
 
         public ConfigFile ConfigFileApi = new();
@@ -57,7 +57,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public SettingsFileHandlerAutoload ReturnToDefaultConfigPath() {
-            SettingsFilePath = $"{OS.GetUserDataDir()}/settings.{FILE_FORMAT}";
+            SettingsFilePath = $"{OS.GetUserDataDir()}/settings.{DefaultFileFormat}";
 
             return this;
         }
@@ -107,13 +107,13 @@ namespace GodotExtensionatorStarter {
 
                         switch (eventMouse.ButtonIndex) {
                             case MouseButton.Left:
-                                mouseButton = $"InputEventMouseButton{INPUT_EVENT_SEPARATOR}{eventMouse.ButtonIndex}{INPUT_EVENT_SEPARATOR}LMB";
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{eventMouse.ButtonIndex}{InputEventSeparator}LMB";
                                 break;
                             case MouseButton.Middle:
-                                mouseButton = $"InputEventMouseButton{INPUT_EVENT_SEPARATOR}{eventMouse.ButtonIndex}{INPUT_EVENT_SEPARATOR}MMB";
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{eventMouse.ButtonIndex}{InputEventSeparator}MMB";
                                 break;
                             case MouseButton.Right:
-                                mouseButton = $"InputEventMouseButton{INPUT_EVENT_SEPARATOR}{eventMouse.ButtonIndex}{INPUT_EVENT_SEPARATOR}RMB";
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{eventMouse.ButtonIndex}{InputEventSeparator}RMB";
                                 break;
                         }
 
@@ -126,22 +126,22 @@ namespace GodotExtensionatorStarter {
 
                         switch (eventJoypadMotion.Axis) {
                             case JoyAxis.LeftX:
-                                joypadAxis = $"InputEventJoypadMotion{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.Axis}{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.AxisValue}{INPUT_EVENT_SEPARATOR}Left Stick {(eventJoypadMotion.AxisValue < 0 ? "Left" : "Right")}";
+                                joypadAxis = $"InputEventJoypadMotion{InputEventSeparator}{eventJoypadMotion.Axis}{InputEventSeparator}{eventJoypadMotion.AxisValue}{InputEventSeparator}Left Stick {(eventJoypadMotion.AxisValue < 0 ? "Left" : "Right")}";
                                 break;
                             case JoyAxis.LeftY:
-                                joypadAxis = $"InputEventJoypadMotion{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.Axis}{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.AxisValue}{INPUT_EVENT_SEPARATOR}Left Stick {(eventJoypadMotion.AxisValue < 0 ? "Up" : "Down")}";
+                                joypadAxis = $"InputEventJoypadMotion{InputEventSeparator}{eventJoypadMotion.Axis}{InputEventSeparator}{eventJoypadMotion.AxisValue}{InputEventSeparator}Left Stick {(eventJoypadMotion.AxisValue < 0 ? "Up" : "Down")}";
                                 break;
                             case JoyAxis.RightX:
-                                joypadAxis = $"InputEventJoypadMotion{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.Axis}{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.AxisValue}{INPUT_EVENT_SEPARATOR}Right Stick {(eventJoypadMotion.AxisValue < 0 ? "Left" : "Right")}";
+                                joypadAxis = $"InputEventJoypadMotion{InputEventSeparator}{eventJoypadMotion.Axis}{InputEventSeparator}{eventJoypadMotion.AxisValue}{InputEventSeparator}Right Stick {(eventJoypadMotion.AxisValue < 0 ? "Left" : "Right")}";
                                 break;
                             case JoyAxis.RightY:
-                                joypadAxis = $"InputEventJoypadMotion{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.Axis}{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.AxisValue}{INPUT_EVENT_SEPARATOR}Right Stick {(eventJoypadMotion.AxisValue < 0 ? "Up" : "Down")}";
+                                joypadAxis = $"InputEventJoypadMotion{InputEventSeparator}{eventJoypadMotion.Axis}{InputEventSeparator}{eventJoypadMotion.AxisValue}{InputEventSeparator}Right Stick {(eventJoypadMotion.AxisValue < 0 ? "Up" : "Down")}";
                                 break;
                             case JoyAxis.TriggerLeft:
-                                joypadAxis = $"InputEventJoypadMotion{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.Axis}{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.AxisValue}{INPUT_EVENT_SEPARATOR}Left Trigger";
+                                joypadAxis = $"InputEventJoypadMotion{InputEventSeparator}{eventJoypadMotion.Axis}{InputEventSeparator}{eventJoypadMotion.AxisValue}{InputEventSeparator}Left Trigger";
                                 break;
                             case JoyAxis.TriggerRight:
-                                joypadAxis = $"InputEventJoypadMotion{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.Axis}{INPUT_EVENT_SEPARATOR}{eventJoypadMotion.AxisValue}{INPUT_EVENT_SEPARATOR}Right Trigger";
+                                joypadAxis = $"InputEventJoypadMotion{InputEventSeparator}{eventJoypadMotion.Axis}{InputEventSeparator}{eventJoypadMotion.AxisValue}{InputEventSeparator}Right Trigger";
                                 break;
                         }
 
@@ -153,21 +153,21 @@ namespace GodotExtensionatorStarter {
                             string joypadButton = "";
 
                             if (GamepadControllerManager.CurrentControllerIsXbox() || GamepadControllerManager.CurrentControllerIsGeneric())
-                                joypadButton = $"InputEventJoypadButton{INPUT_EVENT_SEPARATOR}{eventJoypadButton.ButtonIndex}{INPUT_EVENT_SEPARATOR}{GamepadControllerManager.XBOX_BUTTON_LABELS[(int)eventJoypadButton.ButtonIndex]} Button";
+                                joypadButton = $"InputEventJoypadButton{InputEventSeparator}{eventJoypadButton.ButtonIndex}{InputEventSeparator}{GamepadControllerManager.XboxButtonLabels[(int)eventJoypadButton.ButtonIndex]} Button";
 
                             else if (GamepadControllerManager.CurrentControllerIsSwitch() || GamepadControllerManager.CurrentControllerIsSwitchJoycon())
-                                joypadButton = $"InputEventJoypadButton{INPUT_EVENT_SEPARATOR}{eventJoypadButton.ButtonIndex}{INPUT_EVENT_SEPARATOR}{GamepadControllerManager.SWITCH_BUTTON_LABELS[(int)eventJoypadButton.ButtonIndex]} Button";
+                                joypadButton = $"InputEventJoypadButton{InputEventSeparator}{eventJoypadButton.ButtonIndex}{InputEventSeparator}{GamepadControllerManager.SwitchButtonLabels[(int)eventJoypadButton.ButtonIndex]} Button";
 
                             else if (GamepadControllerManager.CurrentControllerIsPlaystation())
-                                joypadButton = $"InputEventJoypadButton{INPUT_EVENT_SEPARATOR}{eventJoypadButton.ButtonIndex}{INPUT_EVENT_SEPARATOR}{GamepadControllerManager.PLAYSTATION_BUTTON_LABELS[(int)eventJoypadButton.ButtonIndex]} Button";
+                                joypadButton = $"InputEventJoypadButton{InputEventSeparator}{eventJoypadButton.ButtonIndex}{InputEventSeparator}{GamepadControllerManager.PlaystationButtonLabels[(int)eventJoypadButton.ButtonIndex]} Button";
 
                             KeybindingsEvents.Add(joypadButton);
                         }
                     }
                 }
 
-                Keybindings[action] = string.Join(KEYBINDING_SEPARATOR, KeybindingsEvents);
-                ConfigFileApi.SetValue(KEYBINDINGS_SECTION, action, Keybindings[action]);
+                Keybindings[action] = string.Join(KeybindingsSeparator, KeybindingsEvents);
+                ConfigFileApi.SetValue(KeybindingsSection, action, Keybindings[action]);
             }
         }
 
@@ -203,34 +203,34 @@ namespace GodotExtensionatorStarter {
         }
 
         public void CreateAnalyticsSection(GameSettingsResource gameSettings) {
-            ConfigFileApi.SetValue(ANALYTICS_SECTION, "allow_telemetry", gameSettings.AllowTelemetry);
+            ConfigFileApi.SetValue(AnalyticsSection, "allow_telemetry", gameSettings.AllowTelemetry);
         }
 
 
         #region Load settings
         public static void LoadKeybindings(ConfigFile configFile) {
-            foreach (StringName action in configFile.GetSectionKeys(KEYBINDINGS_SECTION)) {
-                var keybinding = configFile.GetValue(KEYBINDINGS_SECTION, action).ToString();
+            foreach (StringName action in configFile.GetSectionKeys(KeybindingsSection)) {
+                var keybinding = configFile.GetValue(KeybindingsSection, action).ToString();
 
                 InputMap.ActionEraseEvents(action);
 
-                if (keybinding.Contains(KEYBINDING_SEPARATOR)) {
-                    foreach (string value in keybinding.Split(KEYBINDING_SEPARATOR)) {
-                        AddKeybindingEvent(action, value.Split(INPUT_EVENT_SEPARATOR));
+                if (keybinding.Contains(KeybindingsSeparator)) {
+                    foreach (string value in keybinding.Split(KeybindingsSeparator)) {
+                        AddKeybindingEvent(action, value.Split(InputEventSeparator));
                     }
                 }
                 else {
-                    AddKeybindingEvent(action, keybinding.Split(INPUT_EVENT_SEPARATOR));
+                    AddKeybindingEvent(action, keybinding.Split(InputEventSeparator));
                 }
             }
         }
 
         public static void LoadAudio(ConfigFile configFile) {
-            bool mutedBuses = (bool)configFile.GetValue(AUDIO_SECTION, "muted");
+            bool mutedBuses = (bool)configFile.GetValue(AudioSection, "muted");
 
-            foreach (string bus in configFile.GetSectionKeys(AUDIO_SECTION)) {
+            foreach (string bus in configFile.GetSectionKeys(AudioSection)) {
                 if (AudioManager.Instance.AvailableBuses.Contains(bus)) {
-                    AudioManager.ChangeVolume(bus, (float)configFile.GetValue(AUDIO_SECTION, bus));
+                    AudioManager.ChangeVolume(bus, (float)configFile.GetValue(AudioSection, bus));
                     AudioManager.MuteBus(bus, mutedBuses);
                 }
             }
@@ -238,8 +238,8 @@ namespace GodotExtensionatorStarter {
         }
 
         public void LoadGraphics(ConfigFile configFile) {
-            foreach (string key in configFile.GetSectionKeys(GRAPHICS_SECTION)) {
-                var configValue = configFile.GetValue(GRAPHICS_SECTION, key);
+            foreach (string key in configFile.GetSectionKeys(GraphicsSection)) {
+                var configValue = configFile.GetValue(GraphicsSection, key);
 
                 switch (key) {
                     case "max_fps":
@@ -283,36 +283,36 @@ namespace GodotExtensionatorStarter {
         }
 
         #region Getters
-        public Variant GetAudioSection(string key) => ConfigFileApi.GetValue(AUDIO_SECTION, key);
-        public Variant GetGraphicSection(string key) => ConfigFileApi.GetValue(GRAPHICS_SECTION, key);
-        public Variant GetAccessibilitySection(string key) => ConfigFileApi.GetValue(ACCESSIBILITY_SECTION, key);
-        public Variant GetAnalyticsSection(string key) => ConfigFileApi.GetValue(ANALYTICS_SECTION, key);
-        public Variant GetLocalizationSection(string key) => ConfigFileApi.GetValue(LOCALIZATION_SECTION, key);
+        public Variant GetAudioSection(string key) => ConfigFileApi.GetValue(AudioSection, key);
+        public Variant GetGraphicSection(string key) => ConfigFileApi.GetValue(GraphicsSection, key);
+        public Variant GetAccessibilitySection(string key) => ConfigFileApi.GetValue(AccessibilitySection, key);
+        public Variant GetAnalyticsSection(string key) => ConfigFileApi.GetValue(AnalyticsSection, key);
+        public Variant GetLocalizationSection(string key) => ConfigFileApi.GetValue(LocalizationSection, key);
 
         #endregion
 
         #region Update
         public void UpdateAudioSection(string key, Variant value) {
-            ConfigFileApi.SetValue(AUDIO_SECTION, key, value);
+            ConfigFileApi.SetValue(AudioSection, key, value);
         }
 
         public void UpdateGraphicSection(string key, Variant value) {
-            ConfigFileApi.SetValue(GRAPHICS_SECTION, key, value);
+            ConfigFileApi.SetValue(GraphicsSection, key, value);
 
             if (key.EqualsIgnoreCase("quality_preset"))
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.UpdatedGraphicSettings, value);
         }
 
         public void UpdateAccessibilitySection(string key, Variant value) {
-            ConfigFileApi.SetValue(ACCESSIBILITY_SECTION, key, value);
+            ConfigFileApi.SetValue(AccessibilitySection, key, value);
         }
 
         public void UpdateAnalyticsSection(string key, Variant value) {
-            ConfigFileApi.SetValue(ANALYTICS_SECTION, key, value);
+            ConfigFileApi.SetValue(AnalyticsSection, key, value);
         }
 
         public void UpdateLocalizationSection(string key, Variant value) {
-            ConfigFileApi.SetValue(LOCALIZATION_SECTION, key, value);
+            ConfigFileApi.SetValue(LocalizationSection, key, value);
 
             if (key.EqualsIgnoreCase("current_language")) {
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedLanguage, value);

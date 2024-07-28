@@ -22,8 +22,8 @@ namespace GodotExtensionatorStarter {
         public event FinishedStreamEventHandler? FinishedStream;
         #endregion
 
-        public const float VOLUME_DB_INAUDIBLE = -80f;
-        public const float CROSSFADE_TIME = 2f;
+        public const float VolumeDBInaudible = -80f;
+        public const float CrossfadeTime = 2f;
 
         public AudioStreamPlayer MainAudioStreamPlayer { get; set; } = default!;
         public AudioStreamPlayer SecondaryAudioStreamPlayer { get; set; } = default!;
@@ -40,8 +40,8 @@ namespace GodotExtensionatorStarter {
         /// </summary>
         /// <param name="streamName">The name of the AudioStream object to play.</param>
         /// <param name="crossfade">A flag indicating whether to use crossfading when switching streams (default: true).</param>
-        /// <param name="crossfadingTime">The duration (in seconds) for the crossfading effect (default: value of CROSSFADE_TIME constant).</param>
-        public void PlayMusic(string streamName, bool crossfade = true, float crossfadingTime = CROSSFADE_TIME) {
+        /// <param name="crossfadingTime">The duration (in seconds) for the crossfading effect (default: value of CrossfadeTime constant).</param>
+        public void PlayMusic(string streamName, bool crossfade = true, float crossfadingTime = CrossfadeTime) {
             if (MusicBank.TryGetValue(streamName, out AudioStream? stream)) {
                 if (CurrentAudioStreamPlayer.Playing && CurrentAudioStreamPlayer.Stream.Equals(stream))
                     return;
@@ -55,14 +55,14 @@ namespace GodotExtensionatorStarter {
                     if (previousStream is not null)
                         ChangedStream?.Invoke(previousStream, stream);
 
-                    nextAudioStreamPlayer.VolumeDb = VOLUME_DB_INAUDIBLE;
+                    nextAudioStreamPlayer.VolumeDb = VolumeDBInaudible;
                     PlayStream(nextAudioStreamPlayer, stream);
 
                     float volume = Mathf.LinearToDb(AudioManager.GetActualVolumeDbFromBus(nextAudioStreamPlayer.Bus));
 
                     Tween tween = GetTree().CreateTween();
                     tween.SetParallel(true);
-                    tween.TweenProperty(CurrentAudioStreamPlayer, "volume_db", VOLUME_DB_INAUDIBLE, crossfadingTime).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Linear);
+                    tween.TweenProperty(CurrentAudioStreamPlayer, "volume_db", VolumeDBInaudible, crossfadingTime).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Linear);
                     tween.TweenProperty(nextAudioStreamPlayer, "volume_db", volume, crossfadingTime).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Linear);
                     tween.Chain().TweenCallback(Callable.From(() => CurrentAudioStreamPlayer = nextAudioStreamPlayer));
 

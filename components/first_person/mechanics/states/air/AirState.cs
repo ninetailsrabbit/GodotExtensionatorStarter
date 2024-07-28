@@ -4,12 +4,12 @@ using GodotExtensionator;
 namespace GodotExtensionatorStarter {
     public partial class AirState : MachineState {
 
-        public enum AIR_CONTROL_MODE {
-            FULL, // You can move in the air with any direction and update the velocity
-            KEEP_IMPULSE // If no input direction is applied stays with the previous velocity
+        public enum AirControlMode {
+            Full, // You can move in the air with any direction and update the velocity
+            KeepImpulse // If no input direction is applied stays with the previous velocity
         }
         [Export] public FirstPersonController Actor { get; set; } = null!;
-        [Export] public AIR_CONTROL_MODE AirControlMode { get; set; } = AIR_CONTROL_MODE.FULL;
+        [Export] public AirControlMode SelectedAirControlMode { get; set; } = AirControlMode.Full;
         [Export] public string JumpInputAction { get; set; } = "jump";
         [Export] public float GravityForce { get; set; } = 12.5f;
         [Export] public float MaximumFallVelocity { get; set; } = 50f;
@@ -31,7 +31,7 @@ namespace GodotExtensionatorStarter {
         public void AirMove(double? delta = null) {
             delta ??= GetPhysicsProcessDeltaTime();
 
-            if (AirControlMode.Equals(AIR_CONTROL_MODE.FULL) || (AirControlMode.Equals(AIR_CONTROL_MODE.KEEP_IMPULSE) && Actor.MotionInput.InputDirection.IsNotZeroApprox())) {
+            if (SelectedAirControlMode.Equals(AirControlMode.Full) || (SelectedAirControlMode.Equals(AirControlMode.KeepImpulse) && Actor.MotionInput.InputDirection.IsNotZeroApprox())) {
                 var speed = Actor.MotionInput.WorldCoordinateSpaceDirection * FinalSpeed;
 
                 if (AirAcceleration > 0 && AirFriction > 0) {

@@ -4,7 +4,7 @@
         public BoardUI? BoardUI { get; set; } = default!;
 
         public override void _EnterTree() {
-            BoardUI ??= (BoardUI)GetTree().GetFirstNodeInGroup(BoardUI.GROUP_NAME);
+            BoardUI ??= (BoardUI)GetTree().GetFirstNodeInGroup(BoardUI.GroupName);
         }
     }
 }

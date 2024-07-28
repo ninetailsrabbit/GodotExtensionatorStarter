@@ -35,7 +35,7 @@ namespace GodotExtensionatorStarter {
             else
                 this.Disable();
 
-            Value = (float)SettingsFileHandlerAutoload.ConfigFileApi.GetValue(SettingsFileHandlerAutoload.AUDIO_SECTION, AudioBus);
+            Value = (float)SettingsFileHandlerAutoload.ConfigFileApi.GetValue(SettingsFileHandlerAutoload.AudioSection, AudioBus);
             IsMuted = AudioManager.IsMuted(AudioBus);
         }
 

@@ -105,7 +105,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _EnterTree() {
-            Actor ??= GetTree().GetFirstNodeInGroup(FirstPersonController.GROUP_NAME) as FirstPersonController;
+            Actor ??= GetTree().GetFirstNodeInGroup(FirstPersonController.GroupName) as FirstPersonController;
 
             ArgumentNullException.ThrowIfNull(nameof(Actor));
 
@@ -360,7 +360,7 @@ namespace GodotExtensionatorStarter {
                 FallAirAccelerationSpinBox.Value = fallState.AirAcceleration;
                 FallAirFrictionSpinBox.Value = fallState.AirFriction;
 
-                FallAirControlModeOptionButton.Selected = (int)fallState.AirControlMode;
+                FallAirControlModeOptionButton.Selected = (int)fallState.SelectedAirControlMode;
                 FallCoyoteTimeFramesSpinBox.Value = fallState.CoyoteTimeFrames;
                 FallJumpInputBufferFramesSpinBox.Value = fallState.JumpInputBufferTimeFrames;
                 FallCoyoteTimeCheckBox.ButtonPressed = fallState.CoyoteTime;
@@ -377,7 +377,7 @@ namespace GodotExtensionatorStarter {
                 JumpPeakTimeSpinBox.Value = jumpState.JumpPeakTime;
                 JumpFallTimeSpinBox.Value = jumpState.JumpFallTime;
                 JumpDistanceSpinBox.Value = jumpState.JumpDistance;
-                JumpAirControlModeOptionButton.Selected = (int)jumpState.AirControlMode;
+                JumpAirControlModeOptionButton.Selected = (int)jumpState.SelectedAirControlMode;
                 JumpShortenJumpOnInputReleaseCheckBox.ButtonPressed = jumpState.ShortenJumpOnInputRelease;
             }
 
@@ -467,7 +467,7 @@ namespace GodotExtensionatorStarter {
 
         private void OnSlideSideOptionSelected(long value) {
             if (Actor.FSM.GetState<Slide>() is Slide slideState) {
-                slideState.SlideTiltSide = (Slide.SLIDE_SIDE)value;
+                slideState.SlideTiltSide = (Slide.SlideSide)value;
             }
         }
 
@@ -500,7 +500,7 @@ namespace GodotExtensionatorStarter {
 
         private void OnFallAirControlModeOptionSelected(long value) {
             if (Actor.FSM.GetState<Fall>() is Fall fallState) {
-                fallState.AirControlMode = (Fall.AIR_CONTROL_MODE)value;
+                fallState.SelectedAirControlMode = (Fall.AirControlMode)value;
             }
         }
 
@@ -522,7 +522,7 @@ namespace GodotExtensionatorStarter {
 
         private void OnJumpAirControlModeOptionSelected(long value) {
             if (Actor.FSM.GetState<Jump>() is Jump jumpState) {
-                jumpState.AirControlMode = (Jump.AIR_CONTROL_MODE)value;
+                jumpState.SelectedAirControlMode = (Jump.AirControlMode)value;
             }
         }
 

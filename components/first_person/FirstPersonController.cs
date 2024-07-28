@@ -6,7 +6,7 @@ namespace GodotExtensionatorStarter {
 
     [Icon("res://components/first_person/mechanics/icons/first_person_controller.svg")]
     public partial class FirstPersonController : CharacterBody3D {
-        public const string GROUP_NAME = "player";
+        public const string GroupName = "player";
 
         #region Exported variables
         [ExportGroup("Input")]
@@ -105,9 +105,6 @@ namespace GodotExtensionatorStarter {
 
             return !isGrounded && oppositeToGravityVector && !StairStepper.StairsBelowRayCast3D.IsColliding();
         }
-
-        public float CurrentSpeed() 
-            => Mathf.Max(new Vector3(Velocity.X, 0f, Velocity.Z).Length(), Mathf.Clamp(Mathf.Abs(Velocity.Y), 0f, float.MaxValue));
 
         private void SwitchMouseCaptureMode() {
             if (InputExtension.IsMouseVisible())

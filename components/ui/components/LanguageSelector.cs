@@ -8,8 +8,8 @@ namespace GodotExtensionatorStarter {
     public partial class LanguageSelector : OptionButton {
 
         public Localization.LANGUAGES[] LanguagesIncluded = [
-            Localization.LANGUAGES.ENGLISH,
-            Localization.LANGUAGES.SPANISH
+            Localization.LANGUAGES.English,
+            Localization.LANGUAGES.Spanish
         ];
 
         public SettingsFileHandlerAutoload SettingsFileHandlerAutoload { get; set; } = null!;

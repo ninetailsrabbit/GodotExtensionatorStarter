@@ -24,7 +24,7 @@ namespace GodotExtensionatorStarter {
     [GlobalClass, Icon("res://components/throwables/icons/throwable_3d.svg")]
     public partial class Throwable : RigidBody3D, INotifyPropertyChanged {
 
-        const int MAXIMUM_TRANSPARENCY_ON_PULL = 255;
+        const int MaximumTransparencyOnPull = 255;
 
         #region Signals
         [Signal]
@@ -55,22 +55,21 @@ namespace GodotExtensionatorStarter {
         #region Exported variables
         [Export] public string Title = "Throwable";
         [Export] public string Description = "Can be throwed";
-        [Export] public GRAB_MODE GrabMode = GRAB_MODE.DYNAMIC;
-        [Export] public STATE State = STATE.NEUTRAL;
-        [Export] public int TransparencyOnPull = MAXIMUM_TRANSPARENCY_ON_PULL;
+        [Export] public GrabMode CurrentGrabMode = GrabMode.Dynamic;
+        [Export] public int TransparencyOnPull = MaximumTransparencyOnPull;
         [Export] public Texture2D FocusPointer { get; set; } = default!;
         [Export] public Texture2D LockedPointer { get; set; } = default!;
         #endregion
 
-        public enum GRAB_MODE {
-            DYNAMIC,
-            FREEZE
+        public enum GrabMode {
+            Dynamic,
+            Freeze
         }
 
-        public enum STATE {
-            NEUTRAL,
-            PULL,
-            THROW
+        public enum State {
+            Neutral,
+            Pull,
+            Throw
         }
 
         public GameGlobals GameGlobals { get; set; } = null!;
@@ -80,8 +79,8 @@ namespace GodotExtensionatorStarter {
         public int OriginalTransparency = 255;
 
         public Node3D? Grabber { get; set; } = default!;
+        public State CurrentState = State.Neutral;
         public Vector3 CurrentLinearVelocity = Vector3.Zero;
-        public STATE CurrentState = STATE.NEUTRAL;
         public StandardMaterial3D ActiveMaterial { get; set; } = default!;
 
         public bool BodyLocked {
@@ -111,7 +110,7 @@ namespace GodotExtensionatorStarter {
                 state.LinearVelocity = CurrentLinearVelocity;
 
             if (StateIsThrow() && state.LinearVelocity.IsZeroApprox())
-                CurrentState = STATE.NEUTRAL;
+                CurrentState = State.Neutral;
         }
 
         public void UpdateLinearVelocity(Vector3 linearVelocity) {
@@ -132,7 +131,7 @@ namespace GodotExtensionatorStarter {
 
             Reparent(grabber);
             ApplyTransparency();
-            CurrentState = STATE.PULL;
+            CurrentState = State.Pull;
 
             EmitSignal(SignalName.Pulled);
         }
@@ -148,7 +147,7 @@ namespace GodotExtensionatorStarter {
             ApplyImpulse(impulse);
 
             Grabber = null;
-            CurrentState = STATE.THROW;
+            CurrentState = State.Throw;
             RecoverTransparency();
 
             EmitSignal(SignalName.Throwed);
@@ -166,7 +165,7 @@ namespace GodotExtensionatorStarter {
             ApplyImpulse(Vector3.Zero);
 
             Grabber = null;
-            CurrentState = STATE.NEUTRAL;
+            CurrentState = State.Neutral;
             RecoverTransparency();
 
             EmitSignal(SignalName.Dropped);
@@ -182,7 +181,7 @@ namespace GodotExtensionatorStarter {
         }
 
         private void ApplyTransparency() {
-            if (TransparencyOnPull.Equals(MAXIMUM_TRANSPARENCY_ON_PULL))
+            if (TransparencyOnPull.Equals(MaximumTransparencyOnPull))
                 return;
 
             if (ActiveMaterial is not null) {
@@ -192,7 +191,7 @@ namespace GodotExtensionatorStarter {
         }
 
         private void RecoverTransparency() {
-            if (TransparencyOnPull.Equals(MAXIMUM_TRANSPARENCY_ON_PULL))
+            if (TransparencyOnPull.Equals(MaximumTransparencyOnPull))
                 return;
 
             if (ActiveMaterial is not null)
@@ -201,11 +200,11 @@ namespace GodotExtensionatorStarter {
 
 
         #region Helpers
-        public bool StateIsNeutral() => State.Equals(STATE.NEUTRAL);
-        public bool StateIsPull() => State.Equals(STATE.PULL);
-        public bool StateIsThrow() => State.Equals(STATE.THROW);
-        public bool GrabModeIsFreeze() => GrabMode.Equals(GRAB_MODE.FREEZE);
-        public bool GrabModeIsDynamic() => GrabMode.Equals(GRAB_MODE.DYNAMIC);
+        public bool StateIsNeutral() => CurrentState.Equals(State.Neutral);
+        public bool StateIsPull() => CurrentState.Equals(State.Pull);
+        public bool StateIsThrow() => CurrentState.Equals(State.Throw);
+        public bool GrabModeIsFreeze() => CurrentGrabMode.Equals(GrabMode.Freeze);
+        public bool GrabModeIsDynamic() => CurrentGrabMode.Equals(GrabMode.Dynamic);
         #endregion
 
         #region Event callbacks

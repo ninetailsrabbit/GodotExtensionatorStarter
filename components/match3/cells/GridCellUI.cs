@@ -10,7 +10,7 @@ namespace GodotExtensionatorStarter {
         public delegate void RemovedPieceEventHandler(GenericGodotWrapper<Piece> removedPiece);
         #endregion
 
-        public const string GROUP_NAME = "cell";
+        public const string GroupName = "cell";
 
         [Export] public Vector2I CellSize;
         [Export] public CompressedTexture2D OddCellTexture { get; set; } = default!;
@@ -23,7 +23,7 @@ namespace GodotExtensionatorStarter {
         public GridCell Cell { get; set; } = null!;
 
         public override void _EnterTree() {
-            AddToGroup(GROUP_NAME);
+            AddToGroup(GroupName);
             PrepareBackgroundSprite();
 
             Name = $"Cell_Column{Cell.Column}_Row{Cell.Row}";

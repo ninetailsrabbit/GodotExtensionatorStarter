@@ -8,8 +8,8 @@ namespace GodotExtensionatorStarter {
     [GlobalClass, Icon("res://components/first_person/mechanics/icons/stair_stepper_3d.svg")]
     public partial class StairStepper : Node3D {
 
-        const float CROUCH_TRANSLATE = 0.7f;
-        const float CROUCH_JUMP_ADD = 0.9f;
+        const float CrouchTranslate = 0.7f;
+        const float CrouchJumpAdd = 0.9f;
 
         [Export] public FirstPersonController Actor { get; set; } = null!;
         [Export] public Node3D CameraSmoothingPivot { get; set; } = null!;
@@ -96,7 +96,7 @@ namespace GodotExtensionatorStarter {
         public void SlideCameraPivotSmoothToOrigin(double delta) {
             if (_savedCameraPivotPositionForSmoothing is Vector3 savedPosition) {
                 CameraSmoothingPivot.GlobalPosition = CameraSmoothingPivot.GlobalPosition with { Y = savedPosition.Y };
-                CameraSmoothingPivot.Position = CameraSmoothingPivot.Position with { Y = Mathf.Clamp(CameraSmoothingPivot.Position.Y, -CROUCH_TRANSLATE, CROUCH_TRANSLATE) };
+                CameraSmoothingPivot.Position = CameraSmoothingPivot.Position with { Y = Mathf.Clamp(CameraSmoothingPivot.Position.Y, -CrouchTranslate, CrouchTranslate) };
 
                 var moveAmount = Mathf.Max(Actor.Velocity.Length() * delta, (_walkSpeed / 2) * delta);
 

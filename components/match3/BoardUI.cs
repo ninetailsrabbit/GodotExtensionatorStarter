@@ -13,11 +13,11 @@ namespace GodotExtensionatorStarter {
     public partial class BoardUI : Node2D, INotifyPropertyChanged {
         #region Preloaded scenes
         public readonly Dictionary<BoardMovements, PackedScene> PieceSceneByMovement = new() {
-            { BoardMovements.ADJACENT, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/SwapPiece.tscn") },
-            { BoardMovements.FREE_SWAP, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/SwapPiece.tscn") },
-            { BoardMovements.CROSS, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/CrossPiece.tscn") },
-            { BoardMovements.CROSS_DIAGONAL, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/CrossPiece.tscn") },
-            { BoardMovements.CONNECT_LINE, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/LineConnectorPiece.tscn") },
+            { BoardMovements.Adjacent, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/SwapPiece.tscn") },
+            { BoardMovements.FreeSwap, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/SwapPiece.tscn") },
+            { BoardMovements.Cross, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/CrossPiece.tscn") },
+            { BoardMovements.CrossDiagonal, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/CrossPiece.tscn") },
+            { BoardMovements.ConnectLine, GD.Load<PackedScene>("res://components/match3/pieces/swap_modes/LineConnectorPiece.tscn") },
         };
 
         public readonly PackedScene GridCellUIScene = GD.Load<PackedScene>("res://components/match3/cells/GridCellUI.tscn");
@@ -56,13 +56,13 @@ namespace GodotExtensionatorStarter {
         public event PropertyChangedEventHandler? PropertyChanged;
         #endregion
 
-        public const string GROUP_NAME = "match3-board";
+        public const string GroupName = "match3-board";
         public enum BoardMovements {
-            ADJACENT,
-            FREE_SWAP,
-            CROSS,
-            CROSS_DIAGONAL,
-            CONNECT_LINE,
+            Adjacent,
+            FreeSwap,
+            Cross,
+            CrossDiagonal,
+            ConnectLine,
         }
 
         #region Exported variables
@@ -104,7 +104,7 @@ namespace GodotExtensionatorStarter {
             get => _gridWidth;
             set {
                 if (_gridWidth != value) {
-                    _gridWidth = Mathf.Max(value, Board.MIN_GRID_WIDTH);
+                    _gridWidth = Mathf.Max(value, Board.MinGridWidth);
                     DrawPreviewGrid();
                 }
             }
@@ -115,7 +115,7 @@ namespace GodotExtensionatorStarter {
             get => _gridHeight;
             set {
                 if (_gridHeight != value) {
-                    _gridHeight = Mathf.Max(value, Board.MIN_GRID_HEIGHT);
+                    _gridHeight = Mathf.Max(value, Board.MinGridHeight);
                     DrawPreviewGrid();
                 }
             }
@@ -152,8 +152,8 @@ namespace GodotExtensionatorStarter {
         [Export] public int MaxMatch = 5;
         [Export] public int MinSpecialMatch = 2;
         [Export] public int MaxSpecialMatch = 2;
-        [Export] public BoardMovements SwapMode = BoardMovements.ADJACENT;
-        [Export] public Board.FILL_MODES FillMode = Board.FILL_MODES.FALL_DOWN;
+        [Export] public BoardMovements SwapMode = BoardMovements.Adjacent;
+        [Export] public Board.FillModes FillMode = Board.FillModes.FallDown;
         #endregion
 
         #region Class variables
@@ -166,26 +166,26 @@ namespace GodotExtensionatorStarter {
         public FiniteStateMachine FiniteStateMachine { get; set; } = null!;
 
         public Dictionary<BoardMovements, IBoardCellHighlighter> DefaultBoardCellHighlighters { get; set; } = new() {
-            { BoardMovements.ADJACENT, new SwapAdjacentCellHighlighter()},
-            { BoardMovements.FREE_SWAP, new SwapFreeCellHighlighter()},
-            { BoardMovements.CROSS, new CrossCellHighlighter()},
-            { BoardMovements.CROSS_DIAGONAL, new CrossDiagonalCellHighlighter()},
-            { BoardMovements.CONNECT_LINE, new LineConnectorCellHighlighter()},
+            { BoardMovements.Adjacent, new SwapAdjacentCellHighlighter()},
+            { BoardMovements.FreeSwap, new SwapFreeCellHighlighter()},
+            { BoardMovements.Cross, new CrossCellHighlighter()},
+            { BoardMovements.CrossDiagonal, new CrossDiagonalCellHighlighter()},
+            { BoardMovements.ConnectLine, new LineConnectorCellHighlighter()},
         };
         public Dictionary<BoardMovements, IPieceAnimator> DefaultBoardPieceAnimators { get; set; } = new() {
-            {BoardMovements.ADJACENT, new SwapAdjacentPieceAnimator() },
-            {BoardMovements.FREE_SWAP, new SwapFreePieceAnimator() },
-            {BoardMovements.CROSS, new SwapCrossPieceAnimator() },
-            {BoardMovements.CROSS_DIAGONAL, new SwapCrossDiagonalPieceAnimator() },
-            {BoardMovements.CONNECT_LINE, new LineConnectorPieceAnimator() },
+            {BoardMovements.Adjacent, new SwapAdjacentPieceAnimator() },
+            {BoardMovements.FreeSwap, new SwapFreePieceAnimator() },
+            {BoardMovements.Cross, new SwapCrossPieceAnimator() },
+            {BoardMovements.CrossDiagonal, new SwapCrossDiagonalPieceAnimator() },
+            {BoardMovements.ConnectLine, new LineConnectorPieceAnimator() },
         };
 
         public Dictionary<BoardMovements, ISequenceConsumer> DefaultSequenceConsumers { get; set; } = new() {
-            {BoardMovements.ADJACENT, new DefaultSequenceConsumer() },
-            {BoardMovements.FREE_SWAP, new DefaultSequenceConsumer() },
-            {BoardMovements.CROSS, new DefaultSequenceConsumer() },
-            {BoardMovements.CROSS_DIAGONAL, new DefaultSequenceConsumer() },
-            {BoardMovements.CONNECT_LINE, new DefaultSequenceConsumer() },
+            {BoardMovements.Adjacent, new DefaultSequenceConsumer() },
+            {BoardMovements.FreeSwap, new DefaultSequenceConsumer() },
+            {BoardMovements.Cross, new DefaultSequenceConsumer() },
+            {BoardMovements.CrossDiagonal, new DefaultSequenceConsumer() },
+            {BoardMovements.ConnectLine, new DefaultSequenceConsumer() },
         };
 
         public IBoardCellHighlighter CurrentCellHighlighter {
@@ -260,7 +260,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _EnterTree() {
-            AddToGroup(GROUP_NAME);
+            AddToGroup(GroupName);
 
             if (!Engine.IsEditorHint()) {
                 RemovePreviewSprites();
@@ -495,18 +495,18 @@ namespace GodotExtensionatorStarter {
         #region Swap
         public void SwapPiecesRequest(GridCell fromGridCell, GridCell toGridCell) {
             switch (SwapMode) {
-                case BoardMovements.ADJACENT:
+                case BoardMovements.Adjacent:
                     SwapAdjacent(fromGridCell, toGridCell);
                     break;
 
-                case BoardMovements.FREE_SWAP:
+                case BoardMovements.FreeSwap:
                     SwapFree(fromGridCell, toGridCell);
                     break;
 
-                case BoardMovements.CROSS:
+                case BoardMovements.Cross:
                     SwapCross(fromGridCell, toGridCell);
                     break;
-                case BoardMovements.CROSS_DIAGONAL:
+                case BoardMovements.CrossDiagonal:
                     SwapCrossDiagonal(fromGridCell, toGridCell);
                     break;
             }
@@ -619,8 +619,8 @@ namespace GodotExtensionatorStarter {
         #endregion
 
         #region Helpers
-        public List<PieceUI> DrawedPieces() => GetTree().GetNodesInGroup(PieceUI.GROUP_NAME).Cast<PieceUI>().ToList();
-        public List<GridCellUI> DrawedCells() => GetTree().GetNodesInGroup(GridCellUI.GROUP_NAME).Cast<GridCellUI>().ToList();
+        public List<PieceUI> DrawedPieces() => GetTree().GetNodesInGroup(PieceUI.GroupName).Cast<PieceUI>().ToList();
+        public List<GridCellUI> DrawedCells() => GetTree().GetNodesInGroup(GridCellUI.GroupName).Cast<GridCellUI>().ToList();
 
         public void Lock() {
             Locked = true;
@@ -648,8 +648,8 @@ namespace GodotExtensionatorStarter {
             if (Board.Locked)
                 return;
 
-            if (SwapMode.Equals(BoardMovements.CONNECT_LINE)) {
-                Sequence matches = new(pieces.Select(piece => GridCellUIFromPiece(piece).Cell).ToList(), Sequence.SHAPES.LINE_CONNECTED);
+            if (SwapMode.Equals(BoardMovements.ConnectLine)) {
+                Sequence matches = new(pieces.Select(piece => GridCellUIFromPiece(piece).Cell).ToList(), Sequence.Shapes.LineConnected);
 
                 if (matches.Size() >= MinMatch)
                     FiniteStateMachine.ChangeStateTo<Consume>(new() { { "matches", new List<Sequence>() { matches } } });
@@ -661,7 +661,7 @@ namespace GodotExtensionatorStarter {
             DrawBoard();
 
             GridCellsFlattened = GetTree()
-                .GetNodesInGroup(GridCellUI.GROUP_NAME)
+                .GetNodesInGroup(GridCellUI.GroupName)
                 .Cast<GridCellUI>()
                 .Select(cell => cell)
                 .ToList();
