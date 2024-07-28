@@ -228,7 +228,7 @@ layout_mode = 2
 
 [node name="VsyncInfoLabel" type="Label" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
 layout_mode = 2
-text = "SETTINGS__VSYNC_INFO"
+text = "SETTINGS_VSYNC_INFO"
 
 [node name="VsyncCheckbox" type="CheckBox" parent="MarginContainer/TabContainer/Screen/MarginContainer/VBoxContainer"]
 layout_mode = 2
