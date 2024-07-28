@@ -21,10 +21,10 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Ready() {
-            UpdateGraphicSettings((GameSettingsResource.QUALITY_PRESETS)(int)SettingsFileHandlerAutoload.GetGraphicSection("quality_preset"));
+            UpdateGraphicSettings((GameSettingsResource.QualityPresets)(int)SettingsFileHandlerAutoload.GetGraphicSection("quality_preset"));
         }
 
-        private void UpdateGraphicSettings(GameSettingsResource.QUALITY_PRESETS preset) {
+        private void UpdateGraphicSettings(GameSettingsResource.QualityPresets preset) {
             var qualityPresets = SettingsFileHandlerAutoload.DefaultGameSettings.GraphicQualityPresets;
             var selectedQualityPreset = qualityPresets[preset];
 
@@ -39,7 +39,7 @@ namespace GodotExtensionatorStarter {
             GetViewport().Msaa3D = antialiasingMode;
         }
         private void OnUpdatedGraphicSettings(int qualityPreset) {
-            UpdateGraphicSettings((GameSettingsResource.QUALITY_PRESETS)qualityPreset);
+            UpdateGraphicSettings((GameSettingsResource.QualityPresets)qualityPreset);
         }
 
 

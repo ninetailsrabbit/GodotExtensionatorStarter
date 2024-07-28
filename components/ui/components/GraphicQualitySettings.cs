@@ -44,12 +44,12 @@ namespace GodotExtensionatorStarter {
 
                 hboxContainer.AddChild(button);
 
-                if (entry.Key.Equals((GameSettingsResource.QUALITY_PRESETS)(int)SettingsFileHandlerAutoload.GetGraphicSection("quality_preset")))
+                if (entry.Key.Equals((GameSettingsResource.QualityPresets)(int)SettingsFileHandlerAutoload.GetGraphicSection("quality_preset")))
                     button.ButtonPressed = true;
             }
         }
         private void OnQualityPresetButtonPressed(BaseButton button) {
-            var qualityPreset = (GameSettingsResource.QUALITY_PRESETS)(int.Parse(((Button)button).Name));
+            var qualityPreset = (GameSettingsResource.QualityPresets)(int.Parse(((Button)button).Name));
 
             SettingsFileHandlerAutoload.UpdateGraphicSection("quality_preset", (int)qualityPreset);
             SettingsFileHandlerAutoload.SaveSettings();

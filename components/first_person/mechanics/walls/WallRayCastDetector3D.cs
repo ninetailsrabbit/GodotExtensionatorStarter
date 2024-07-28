@@ -4,11 +4,11 @@ namespace FirstPersonTemplate {
 
     [GlobalClass, Icon("res://components/first_person/mechanics/icons/wall_detector.svg")]
     public partial class WallRayCastDetector3D : Node3D {
-        public enum WALL_SIDES {
-            FRONT,
-            RIGHT,
-            LEFT,
-            BACK
+        public enum WallSides {
+            Front,
+            Right,
+            Left,
+            Back
         }
 
         [Export] public float SeparationFromOrigin = 0.15f;

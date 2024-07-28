@@ -99,14 +99,14 @@ namespace GodotExtensionatorStarter {
         public int MaxFPS = 0; // Unlimited
 
         // https://github.com/Calinou/godot-sponza/blob/master/scripts/settings_gui.gd
-        public enum QUALITY_PRESETS {
+        public enum QualityPresets {
             Low, Medium, High, Ultra
         }
-        public QUALITY_PRESETS CurrentQualityPreset = QUALITY_PRESETS.Medium;
+        public QualityPresets CurrentQualityPreset = QualityPresets.Medium;
 
-        public System.Collections.Generic.Dictionary<QUALITY_PRESETS, GraphicQualityPreset> GraphicQualityPresets = new() {
+        public System.Collections.Generic.Dictionary<QualityPresets, GraphicQualityPreset> GraphicQualityPresets = new() {
         {
-            QUALITY_PRESETS.Low,
+            QualityPresets.Low,
                 new GraphicQualityPreset("For low-end PCs with integrated graphics, as well as mobile devices",
                 new() {
                 {"environment/glow_enabled", new GraphicQualityDisplay("Glow", 0, "Disabled")  },
@@ -116,7 +116,7 @@ namespace GodotExtensionatorStarter {
             })
         },
         {
-            QUALITY_PRESETS.Medium,
+            QualityPresets.Medium,
                 new GraphicQualityPreset("For mid-range PCs with slower dedicated graphics",
                 new() {
                 {"environment/glow_enabled", new GraphicQualityDisplay("Glow", 0, "Disabled")  },
@@ -126,7 +126,7 @@ namespace GodotExtensionatorStarter {
             })
         },
          {
-            QUALITY_PRESETS.High,
+            QualityPresets.High,
                 new GraphicQualityPreset("For recent PCs with mid-range dedicated graphics, or older PCs with high-end graphics",
                 new() {
                 {"environment/glow_enabled", new GraphicQualityDisplay("Glow", 1, "Enabled")  },
@@ -136,7 +136,7 @@ namespace GodotExtensionatorStarter {
             })
         },
           {
-            QUALITY_PRESETS.Ultra,
+            QualityPresets.Ultra,
                 new GraphicQualityPreset("For recent PCs with high-end dedicated graphics",
                 new() {
                 {"environment/glow_enabled", new GraphicQualityDisplay("Glow", 1, "Enabled")  },
