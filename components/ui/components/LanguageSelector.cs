@@ -40,7 +40,7 @@ namespace GodotExtensionatorStarter {
 
         private void OnLanguageSelected(long idx) {
             Language currentLanguage = LanguageByOptionButtonId[GetItemId((int)idx)];
-            SettingsFileHandlerAutoload.UpdateLocalizationSection("current_language", currentLanguage.Code);
+            SettingsFileHandlerAutoload.UpdateLocalizationSection("current_language", currentLanguage.IsoCode);
             SettingsFileHandlerAutoload.SaveSettings();
         }
     }
