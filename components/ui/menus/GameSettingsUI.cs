@@ -23,7 +23,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Ready() {
-        
+            PrepareTabBars();
             MuteAudioBusesCheckButton = GetNode<MuteAudioBusesCheckButton>($"%{nameof(MuteAudioBusesCheckButton)}");
 
             foreach (var audioSlider in this.GetAllChildren<AudioSlider>()) {
@@ -38,6 +38,7 @@ namespace GodotExtensionatorStarter {
             var GraphicsTabBar = GetNode<TabBar>("%Graphics");
             var GeneralTabBar = GetNode<TabBar>("%General");
 
+            GD.Print(ScreenTabBar, " " + Tr("SCREEN_TAB"));
             AudioTabBar.Name = Tr("AUDIO_TAB");
             ScreenTabBar.Name = Tr("SCREEN_TAB");
             GraphicsTabBar.Name = Tr("GRAPHICS_TAB");

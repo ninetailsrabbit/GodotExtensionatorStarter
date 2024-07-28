@@ -232,4 +232,3 @@ script = ExtResource("14_xlj0y")
 JumpHeight = 3.5
 JumpDistance = 2.5
 Actor = NodePath("../../..")
-AirControlMode = null

@@ -1,5 +1,4 @@
-# LANGUAGE translation for GodotExtensionatorStarter for the following files:
-# res://components/ui/menus/GameSettingsUI.tscn
+# GodotExtensionatorStarter - Translation template:
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -11,66 +10,79 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8-bit\n"
 
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "SCREEN_TAB"
+msgstr "SCREEN_TAB"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "AUDIO_TAB"
+msgstr "AUDIO_TAB"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "GRAPHICS_TAB"
+msgstr "GRAPHICS_TAB"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "GENERAL_TAB"
+msgstr "GENERAL_TAB"
+
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MASTER"
-msgstr ""
+msgstr "BUS_MASTER"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MUSIC"
-msgstr ""
+msgstr "BUS_MUSIC"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_SFX"
-msgstr ""
+msgstr "BUS_SFX"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_VOICE"
-msgstr ""
+msgstr "BUS_VOICE"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_AMBIENT"
-msgstr ""
+msgstr "BUS_AMBIENT"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_UI"
-msgstr ""
+msgstr "BUS_UI"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "MUTE_ACTION"
-msgstr ""
+msgstr "MUTE_ACTION"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_WINDOW_MODE"
-msgstr ""
+msgstr "SETTINGS_WINDOW_MODE"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_RESOLUTION"
-msgstr ""
+msgstr "SETTINGS_RESOLUTION"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_FPS_LIMIT"
-msgstr ""
-
-#: components/ui/menus/GameSettingsUI.tscn
-msgid "SETTINGS__VSYNC_INFO"
-msgstr ""
+msgstr "SETTINGS_FPS_LIMIT"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
-msgstr ""
+msgstr "SETTINGS_VSYNC"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_PHOTOSENSITIVE"
-msgstr ""
+msgstr "SETTINGS_PHOTOSENSITIVE"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_SCREENSHAKE"
-msgstr ""
+msgstr "SETTINGS_SCREENSHAKE"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
-msgstr ""
+msgstr "SETTINGS_DALTONISM_INFO"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_TELEMETRY"
-msgstr ""
+msgstr "SETTINGS_TELEMETRY"

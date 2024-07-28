@@ -1,5 +1,4 @@
-# LANGUAGE translation for GodotExtensionatorStarter for the following files:
-# res://components/ui/menus/GameSettingsUI.tscn
+# GodotExtensionatorStarter - Translation template:
 #
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
@@ -17,66 +16,78 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
+#: components/ui/menus/GameSettingsUI.cs
+msgid "AUDIO_TAB"
+msgstr "Audio"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "SCREEN_TAB"
+msgstr "Screen polla"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "GRAPHICS_TAB"
+msgstr "GRAPHICS_TAB"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "GENERAL_TAB"
+msgstr "GENERAL_TAB"
+
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MASTER"
-msgstr "Master"
+msgstr "BUS_MASTER"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MUSIC"
-msgstr "Music"
+msgstr "BUS_MUSIC"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_SFX"
-msgstr "Sound effects"
+msgstr "BUS_SFX"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_VOICE"
-msgstr "Voice"
+msgstr "BUS_VOICE"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_AMBIENT"
-msgstr "Ambient"
+msgstr "BUS_AMBIENT"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_UI"
-msgstr "UI"
+msgstr "BUS_UI"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "MUTE_ACTION"
-msgstr "Mute"
+msgstr "MUTE_ACTION"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_WINDOW_MODE"
-msgstr "Window mode"
+msgstr "SETTINGS_WINDOW_MODE"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_RESOLUTION"
-msgstr "Resolution"
+msgstr "SETTINGS_RESOLUTION"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_FPS_LIMIT"
-msgstr "FPS limit"
-
-#: components/ui/menus/GameSettingsUI.tscn
-msgid "SETTINGS__VSYNC_INFO"
-msgstr "Vertical sync prevents screen fragmentation, but if you have a low frame rate, perhaps you can improve performance by disabling it."
+msgstr "SETTINGS_FPS_LIMIT"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
-msgstr "Vsync"
+msgstr "SETTINGS_VSYNC"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_PHOTOSENSITIVE"
-msgstr "Photosensitive"
+msgstr "SETTINGS_PHOTOSENSITIVE"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_SCREENSHAKE"
-msgstr "Screenshake"
+msgstr "SETTINGS_SCREENSHAKE"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
-msgstr "If you suffer from color blindness [i](protanopia, deuteranopia, tritanopia or achromatopsia)[/i] this setting may increase visual contrast."
+msgstr "SETTINGS_DALTONISM_INFO"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_TELEMETRY"
-msgstr "Allow telemetry"
+msgstr "SETTINGS_TELEMETRY"
