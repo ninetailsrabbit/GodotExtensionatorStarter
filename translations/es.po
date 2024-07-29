@@ -1,108 +1,128 @@
 # GodotExtensionatorStarter - Translation template:
 #
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Automatically generated, 2024.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: GodotExtensionatorStarter\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8-bit\n"
-
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
-msgstr "AUDIO_TAB"
+msgstr "Sonido"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "SCREEN_TAB"
-msgstr "SCREEN_TAB"
+msgstr "Pantalla"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "GRAPHICS_TAB"
-msgstr "GRAPHICS_TAB"
+msgstr "Gráficos"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "GENERAL_TAB"
-msgstr "GENERAL_TAB"
+msgstr "General"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MASTER"
-msgstr "BUS_MASTER"
+msgstr "Master"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MUSIC"
-msgstr "BUS_MUSIC"
+msgstr "Música"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_SFX"
-msgstr "BUS_SFX"
+msgstr "Efectos sonido"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_VOICE"
-msgstr "BUS_VOICE"
+msgstr "Voces"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_AMBIENT"
-msgstr "BUS_AMBIENT"
+msgstr "Ambiente"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_UI"
-msgstr "BUS_UI"
+msgstr "Interfaz"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "MUTE_ACTION"
-msgstr "MUTE_ACTION"
+msgstr "Mutear"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_WINDOW_MODE"
-msgstr "SETTINGS_WINDOW_MODE"
+msgstr "Modo de pantalla"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_RESOLUTION"
-msgstr "SETTINGS_RESOLUTION"
+msgstr "Resolución"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_FPS_LIMIT"
-msgstr "SETTINGS_FPS_LIMIT"
+msgstr "Límite de FPS"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC_INFO"
-msgstr "SETTINGS_VSYNC_INFO"
+msgstr ""
+"La sincronización vertical previene la fragmentación de la "
+"pantalla, pero si tienes una tasa de fotogramas baja, quizás "
+"puedas mejorar el rendimiento desactivándola."
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
-msgstr "SETTINGS_VSYNC"
+msgstr "Vsync"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_PHOTOSENSITIVE"
-msgstr "SETTINGS_PHOTOSENSITIVE"
+msgstr "Fotosensible"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_SCREENSHAKE"
-msgstr "SETTINGS_SCREENSHAKE"
+msgstr "Temblor de camara"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
-msgstr "SETTINGS_DALTONISM_INFO"
+msgstr ""
+"Si sufres de daltonismo [i](protanopía, deuteranopía, "
+"tritanopía o achromatopsia)[/i] este ajuste puede aumentar "
+"el contraste visual"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_TELEMETRY"
-msgstr "SETTINGS_TELEMETRY"
+msgstr "Permitir telemetría"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_TITLE"
-msgstr "PHOTOSENSITIVE_TITLE"
+msgstr "ADVERTENCIA DE CONVULSIONES FOTOSENSIBLES"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_SUBTITLE"
-msgstr "PHOTOSENSITIVE_SUBTITLE"
+msgstr "Por favor, lea antes de jugar"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT"
-msgstr "PHOTOSENSITIVE_CONTENT"
+msgstr ""
+"Un pequeño porcentaje de personas puede experimentar "
+"convulsiones cuando se expone a ciertas imágenes visuales, "
+"luces intermitentes, patrones o fondos que pueden aparecer "
+"en los videojuegos. Las personas que no han tenido "
+"antecedentes de convulsiones o epilepsia hasta la fecha "
+"pueden estar sin diagnosticar y pueden llegar a experimentar "
+"convulsiones mientras juegan videojuegos."
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
-msgstr "PHOTOSENSITIVE_CONTENT_2"
+msgstr ""
+"Deja de jugar inmediatamente y consulta a un profesional "
+"médico si experimentas algún síntoma o comienzas a sentirte "
+"mal mientras juegas [TÍTULO DEL JUEGO]."
