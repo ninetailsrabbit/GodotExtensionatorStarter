@@ -33,6 +33,21 @@ namespace GodotExtensionatorStarter {
             }
         }
 
+        public override void _PhysicsProcess(double delta) {
+            Interactable3D? detectedInteractable = IsColliding() ? GetCollider() as Interactable3D : null;
+
+            if (detectedInteractable is not null) {
+                if ((CurrentInteractable is null || (CurrentInteractable is not null && CurrentInteractable.Equals(detectedInteractable))) && !Focused) {
+                    Focus(detectedInteractable);
+                }
+            }
+            else {
+                if (Focused && !Interacting && CurrentInteractable is not null) {
+                    UnFocus(CurrentInteractable);
+                }
+            }
+        }
+
         public void Interact(GodotObject interactable) {
             if (interactable is Interactable3D _interactable) {
 

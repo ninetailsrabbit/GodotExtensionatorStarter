@@ -64,13 +64,15 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _EnterTree() {
+            AddToGroup(GroupName);
+
             MotionInput = new(this);
 
             AnimationPlayer = GetNode<AnimationPlayer>(nameof(AnimationPlayer));
             StandShape = GetNode<CollisionShape3D>(nameof(StandShape));
             CrouchShape = GetNode<CollisionShape3D>(nameof(CrouchShape));
             CrawlShape = GetNode<CollisionShape3D>(nameof(CrawlShape));
-            CeilShapeCast = GetNode<ShapeCast3D>("%CeilShapeCast");
+            CeilShapeCast = GetNode<ShapeCast3D>($"%{nameof(CeilShapeCast)}");
 
             MouseRayCastInteractor = GetNode<MouseRayCastInteractor>(nameof(MouseRayCastInteractor));
 
@@ -172,6 +174,7 @@ namespace GodotExtensionatorStarter {
                     break;
             }
         }
+
 
         #endregion
     }

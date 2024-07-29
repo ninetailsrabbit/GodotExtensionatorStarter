@@ -6,9 +6,12 @@ namespace GodotExtensionatorStarter {
 
     [GlobalClass, Icon("res://components/interaction/interactor_3d.svg")]
     public partial class MouseRayCastInteractor : Node3D, IInteractor {
+ 
+        #region Exported parameters
         [Export] public Camera3D OriginCamera { get; set; } = default!;
         [Export] public float RayLength = 1000f;
         [Export] public MouseButton InteractButton = MouseButton.Left;
+        #endregion
 
         public Interactable3D? CurrentInteractable;
         public bool Focused = false;
@@ -31,6 +34,7 @@ namespace GodotExtensionatorStarter {
         
         public override void _Ready() {
             Debug.Assert(OriginCamera is not null, "MouseRayCastInteractor: This node needs a Camera3D to create the mouse raycast");
+            SetProcessInput(OriginCamera is not null);
             SetProcess(OriginCamera is not null);
 
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
@@ -41,7 +45,7 @@ namespace GodotExtensionatorStarter {
             Interactable3D? detectedInteractable = GetDetectedInteractable();
 
             if (detectedInteractable is not null) {
-                if (CurrentInteractable is not null && !CurrentInteractable.Equals(detectedInteractable) && !Focused) {
+                if ( (CurrentInteractable is null || (CurrentInteractable is not null && !CurrentInteractable.Equals(detectedInteractable))) && !Focused) {
                     Focus(detectedInteractable);
                 }
                 else {
