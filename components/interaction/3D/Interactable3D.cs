@@ -85,6 +85,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Ready() {
+            FocusPointer ??= Preloader.Instance.DefaultFocusPointer;
 
             Priority = 3;
             CollisionLayer = GameGlobals.InteractablesCollisionLayer;

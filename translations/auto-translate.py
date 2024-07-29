@@ -1,6 +1,5 @@
 import os, re, subprocess
 
-
 def create_template_pot_file(translation_keys: dict):
      with open(os.path.join(CURRENT_DIR, translation_template_name), 'w+', encoding="utf8") as file:
         file.write('''# GodotExtensionatorStarter - Translation template:

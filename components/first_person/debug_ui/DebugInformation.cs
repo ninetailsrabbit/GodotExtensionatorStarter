@@ -10,7 +10,7 @@ namespace GodotExtensionatorStarter {
     public partial class DebugInformation : Control {
 
         [Export] public FirstPersonController Actor { get; set; } = null!;
-        [Export] public string PauseAction = "pause";
+        [Export] public string OpenDebugMenuInputAction = "open_debug_ui";
 
         public Label FPSInfo { get; set; } = default!;
         public Label VsyncInfo { get; set; } = default!;
@@ -83,7 +83,7 @@ namespace GodotExtensionatorStarter {
 
         private Dictionary<string, List<PropertyInfo>> StatesProperties = [];
         public override void _UnhandledInput(InputEvent @event) {
-            if (Input.IsActionJustPressed(PauseAction)) {
+            if (Input.IsActionJustPressed(OpenDebugMenuInputAction)) {
                 if (ParametersPanel.Visible)
                     GetTree().ResumeGame();
                 else

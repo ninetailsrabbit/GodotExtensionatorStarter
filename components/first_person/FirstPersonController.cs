@@ -11,6 +11,7 @@ namespace GodotExtensionatorStarter {
         #region Exported variables
         [ExportGroup("Input")]
         [Export] public string[] MouseModeSwitchInputs = ["ui_cancel"];
+        [Export] public bool PointClickController = false;
 
         [ExportGroup("Mechanics")]
         [Export] public bool Run = true;
@@ -46,7 +47,6 @@ namespace GodotExtensionatorStarter {
         public StairStepper StairStepper { get; private set; } = default!;
 
         public FiniteStateMachine FSM { get; private set; } = default!;
-        public MouseRayCastInteractor MouseRayCastInteractor { get; private set; } = default!;
         public TransformedInput MotionInput { get; private set; } = default!;
         #endregion
 
@@ -74,8 +74,6 @@ namespace GodotExtensionatorStarter {
             CrawlShape = GetNode<CollisionShape3D>(nameof(CrawlShape));
             CeilShapeCast = GetNode<ShapeCast3D>($"%{nameof(CeilShapeCast)}");
 
-            MouseRayCastInteractor = GetNode<MouseRayCastInteractor>(nameof(MouseRayCastInteractor));
-
             FSM = GetNode<FiniteStateMachine>(nameof(FiniteStateMachine));
             CameraMovement = this.FirstNodeOfClass<CameraMovement>();
             HeadBob = this.FirstNodeOfClass<HeadBob>();
@@ -90,7 +88,12 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Ready() {
-            InputExtension.CaptureMouse();
+            SetProcessUnhandledInput(!PointClickController);
+
+            if (!PointClickController) {
+                InputExtension.CaptureMouse();
+            }
+
         }
 
         public override void _PhysicsProcess(double delta) {
@@ -111,14 +114,12 @@ namespace GodotExtensionatorStarter {
             return !isGrounded && oppositeToGravityVector && !StairStepper.StairsBelowRayCast3D.IsColliding();
         }
 
-        private void SwitchMouseCaptureMode() {
+        private static void SwitchMouseCaptureMode() {
             if (InputExtension.IsMouseVisible()) {
                 InputExtension.CaptureMouse();
-                MouseRayCastInteractor.Disable();
             }
             else {
                 InputExtension.ShowMouseCursor();
-                MouseRayCastInteractor.Enable();
             }
 
 

@@ -19,6 +19,9 @@ namespace GodotExtensionatorStarter {
         public delegate void LockPlayerEventHandler();
         [Signal]
         public delegate void UnlockPlayerEventHandler();
+
+        [Signal]
+        public delegate void PointClickMovementRequestedEventHandler();
         #endregion
 
         #region Game

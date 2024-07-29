@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=28 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/HeadBob.cs" id="4_ur46t"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/walls/WallRayCastDetector3D.cs" id="6_t0ij4"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/stairs/StairStepper.cs" id="7_11x7o"]
+[ext_resource type="Script" path="res://components/interaction/point_and_click/PointClick3D.cs" id="7_gvjht"]
 [ext_resource type="Script" path="res://components/interaction/3D/MouseRayCastInteractor.cs" id="7_kj3nj"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Walk.cs" id="8_5flmd"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Run.cs" id="9_v3glq"]
@@ -96,6 +97,12 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.00191653, 0)
 collision_layer = 2
 collision_mask = 5
 script = ExtResource("1_xrc74")
+Crawl = false
+WallRun = false
+WallJump = false
+WallClimb = false
+Surf = false
+Swim = false
 
 [node name="Debug" type="CanvasLayer" parent="."]
 layer = 2
@@ -154,9 +161,15 @@ script = ExtResource("4_ur46t")
 Actor = NodePath("..")
 Head = NodePath("../Head/Eyes")
 
-[node name="MouseRayCastInteractor" type="Node3D" parent="." node_paths=PackedStringArray("OriginCamera")]
+[node name="PointClick3D" type="Node3D" parent="." node_paths=PackedStringArray("FirstPersonController", "MouseRayCastInteractor")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.994501, 0)
+script = ExtResource("7_gvjht")
+FirstPersonController = NodePath("..")
+MouseRayCastInteractor = NodePath("MouseRayCastInteractor")
+
+[node name="MouseRayCastInteractor" type="Node3D" parent="PointClick3D" node_paths=PackedStringArray("OriginCamera")]
 script = ExtResource("7_kj3nj")
-OriginCamera = NodePath("../Head/Eyes/Camera3D")
+OriginCamera = NodePath("../../Head/Eyes/Camera3D")
 RayLength = 200.0
 
 [node name="WallRayCastDetector3D" type="Node3D" parent="."]
