@@ -28,11 +28,13 @@ namespace GodotExtensionatorStarter {
             }
         }
 
+        
         public override void _Ready() {
             Debug.Assert(OriginCamera is not null, "MouseRayCastInteractor: This node needs a Camera3D to create the mouse raycast");
             SetProcess(OriginCamera is not null);
 
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
+
         }
 
         public override void _Process(double delta) {
@@ -62,7 +64,10 @@ namespace GodotExtensionatorStarter {
 
                 var result = worldSpace.IntersectRay(rayQuery);
 
-                return (Interactable3D)result["collider"];
+                if (result.TryGetValue("collider", out var interactable))
+                    return (Interactable3D)interactable;
+
+                return null;
             }
 
             return null;

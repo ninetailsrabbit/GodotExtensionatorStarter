@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://2df7eofiqpkx"]
+[gd_scene load_steps=10 format=3 uid="uid://2df7eofiqpkx"]
 
 [ext_resource type="PackedScene" uid="uid://bu4wye7x6eoel" path="res://components/first_person/FirstPersonController.tscn" id="1_72rvj"]
+[ext_resource type="Script" path="res://components/interaction/3D/Interactable3D.cs" id="2_sebiw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,6 +21,10 @@ albedo_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84v6g"]
 albedo_color = Color(1, 1, 0.34902, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_mxn30"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gvb0u"]
 
 [node name="TestLevel" type="Node3D"]
 
@@ -49,3 +54,53 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.44505, 2.01502, -8.09855)
 use_collision = true
 size = Vector3(3.57965, 0.320679, 2.98901)
 material = SubResource("StandardMaterial3D_84v6g")
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.6554, 1.5434, -1.0394)
+use_collision = true
+size = Vector3(5.84839, 4.08679, 9.74457)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGBox3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0125427, 0.0329285, 0.0680885)
+operation = 2
+size = Vector3(5.31085, 4.15265, 9.23882)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81814, 0.0849323, -0.0350037)
+operation = 2
+size = Vector3(0.439514, 2.41166, 1.57172)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D4"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.280289, 0.0849323, -4.69614)
+operation = 2
+size = Vector3(0.439514, 2.41166, 1.57172)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="."]
+transform = Transform3D(-0.0813122, 0, 0.996689, 0, 1, 0, -0.996689, 0, -0.0813122, 12.1689, 1.5434, -8.77196)
+use_collision = true
+size = Vector3(5.84839, 4.08679, 9.74457)
+
+[node name="CSGBox3D5" type="CSGBox3D" parent="CSGBox3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0125427, 0.0329285, 0.0680885)
+operation = 2
+size = Vector3(5.31085, 4.15265, 9.23882)
+
+[node name="CSGBox3D" type="CSGBox3D" parent="CSGBox3D5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.81814, 0.0849323, -0.0350037)
+operation = 2
+size = Vector3(0.439514, 2.41166, 1.57172)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="CSGBox3D5"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.280289, 0.0849323, -4.69614)
+operation = 2
+size = Vector3(0.439514, 2.41166, 1.57172)
+
+[node name="InteractionMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.99628, 0.928321, 1.08244)
+mesh = SubResource("BoxMesh_mxn30")
+
+[node name="Interactable3D" type="Area3D" parent="InteractionMesh"]
+script = ExtResource("2_sebiw")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionMesh/Interactable3D"]
+shape = SubResource("BoxShape3D_gvb0u")

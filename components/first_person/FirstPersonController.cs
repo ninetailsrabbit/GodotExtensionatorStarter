@@ -46,6 +46,7 @@ namespace GodotExtensionatorStarter {
         public StairStepper StairStepper { get; private set; } = default!;
 
         public FiniteStateMachine FSM { get; private set; } = default!;
+        public MouseRayCastInteractor MouseRayCastInteractor { get; private set; } = default!;
         public TransformedInput MotionInput { get; private set; } = default!;
         #endregion
 
@@ -70,6 +71,8 @@ namespace GodotExtensionatorStarter {
             CrouchShape = GetNode<CollisionShape3D>(nameof(CrouchShape));
             CrawlShape = GetNode<CollisionShape3D>(nameof(CrawlShape));
             CeilShapeCast = GetNode<ShapeCast3D>("%CeilShapeCast");
+
+            MouseRayCastInteractor = GetNode<MouseRayCastInteractor>(nameof(MouseRayCastInteractor));
 
             FSM = GetNode<FiniteStateMachine>(nameof(FiniteStateMachine));
             CameraMovement = this.FirstNodeOfClass<CameraMovement>();
@@ -107,10 +110,16 @@ namespace GodotExtensionatorStarter {
         }
 
         private void SwitchMouseCaptureMode() {
-            if (InputExtension.IsMouseVisible())
+            if (InputExtension.IsMouseVisible()) {
                 InputExtension.CaptureMouse();
-            else
+                MouseRayCastInteractor.Disable();
+            }
+            else {
                 InputExtension.ShowMouseCursor();
+                MouseRayCastInteractor.Enable();
+            }
+
+
         }
 
         #region Signal callbacks
