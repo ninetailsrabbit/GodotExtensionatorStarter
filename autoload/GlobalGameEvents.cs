@@ -21,7 +21,7 @@ namespace GodotExtensionatorStarter {
         public delegate void UnlockPlayerEventHandler();
 
         [Signal]
-        public delegate void PointClickMovementRequestedEventHandler();
+        public delegate void PointClickMovementRequestedEventHandler(Marker3D marker);
         #endregion
 
         #region Game

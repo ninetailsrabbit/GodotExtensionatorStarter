@@ -11,7 +11,6 @@ namespace GodotExtensionatorStarter {
         #region Exported variables
         [ExportGroup("Input")]
         [Export] public string[] MouseModeSwitchInputs = ["ui_cancel"];
-        [Export] public bool PointClickController = false;
 
         [ExportGroup("Mechanics")]
         [Export] public bool Run = true;
@@ -88,12 +87,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Ready() {
-            SetProcessUnhandledInput(!PointClickController);
-
-            if (!PointClickController) {
-                InputExtension.CaptureMouse();
-            }
-
+            InputExtension.CaptureMouse();
         }
 
         public override void _PhysicsProcess(double delta) {

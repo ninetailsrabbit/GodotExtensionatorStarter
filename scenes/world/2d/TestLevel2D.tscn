@@ -1,0 +1,25 @@
+[gd_scene load_steps=4 format=3 uid="uid://djxu5bnr5a1c5"]
+
+[ext_resource type="Script" path="res://scenes/world/2d/TestLevel2D.cs" id="1_cjan3"]
+[ext_resource type="Texture2D" uid="uid://dhkfnxou72pom" path="res://icon.svg" id="2_e1vh6"]
+[ext_resource type="Script" path="res://components/rpg/projectiles/ArcProjectile.cs" id="3_ij2gh"]
+
+[node name="TestLevel2D" type="Node2D"]
+script = ExtResource("1_cjan3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(215, 351)
+texture = ExtResource("2_e1vh6")
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(860, 335)
+
+[node name="ArcProjectile" type="Node2D" parent="." node_paths=PackedStringArray("Projectile")]
+position = Vector2(351, 383)
+script = ExtResource("3_ij2gh")
+Projectile = NodePath("Sprite2D")
+TimeMultiplier = 20.0
+
+[node name="Sprite2D" type="Sprite2D" parent="ArcProjectile"]
+scale = Vector2(0.421875, 0.484375)
+texture = ExtResource("2_e1vh6")

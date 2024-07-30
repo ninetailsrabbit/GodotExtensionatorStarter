@@ -1,7 +1,6 @@
-[gd_scene load_steps=10 format=3 uid="uid://2df7eofiqpkx"]
+[gd_scene load_steps=7 format=3 uid="uid://2df7eofiqpkx"]
 
 [ext_resource type="PackedScene" uid="uid://bu4wye7x6eoel" path="res://components/first_person/FirstPersonController.tscn" id="1_72rvj"]
-[ext_resource type="Script" path="res://components/interaction/3D/Interactable3D.cs" id="2_sebiw"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -22,10 +21,6 @@ albedo_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84v6g"]
 albedo_color = Color(1, 1, 0.34902, 1)
 
-[sub_resource type="BoxMesh" id="BoxMesh_mxn30"]
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_gvb0u"]
-
 [node name="TestLevel" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -36,11 +31,12 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 shadow_enabled = true
 
 [node name="FirstPersonController" parent="." instance=ExtResource("1_72rvj")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.502634, -3.28627)
+transform = Transform3D(-0.0354495, -0.000233869, -0.999371, 0.000525319, 1, -0.000252654, 0.999371, -0.000533947, -0.0354494, 0, 0.502634, -3.28627)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9318, 0, -14.3109)
 use_collision = true
-size = Vector3(50, 1, 50)
+size = Vector3(107.284, 1, 93.6624)
 material = SubResource("StandardMaterial3D_lbybo")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
@@ -94,13 +90,3 @@ size = Vector3(0.439514, 2.41166, 1.57172)
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.280289, 0.0849323, -4.69614)
 operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
-
-[node name="InteractionMesh" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 6.99628, 0.928321, 1.08244)
-mesh = SubResource("BoxMesh_mxn30")
-
-[node name="Interactable3D" type="Area3D" parent="InteractionMesh"]
-script = ExtResource("2_sebiw")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="InteractionMesh/Interactable3D"]
-shape = SubResource("BoxShape3D_gvb0u")

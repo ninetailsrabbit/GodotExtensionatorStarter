@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm3mgrdyc4cl1"
-path="res://.godot/imported/point_click_3d.svg-0cecc683b9377a13cb3da7c3dacd85c3.ctex"
+uid="uid://cmjh4ntywvhou"
+path="res://.godot/imported/arcprojectile.svg-e7361ecf4fcb2d00f5a268edd98c603a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://components/interaction/point_and_click/point_click_3d.svg"
-dest_files=["res://.godot/imported/point_click_3d.svg-0cecc683b9377a13cb3da7c3dacd85c3.ctex"]
+source_file="res://components/rpg/projectiles/arcprojectile.svg"
+dest_files=["res://.godot/imported/arcprojectile.svg-e7361ecf4fcb2d00f5a268edd98c603a.ctex"]
 
 [params]
 
