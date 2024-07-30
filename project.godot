@@ -28,6 +28,7 @@ SaveGameManagerAutoload="*res://autoload/persistence/SaveGameManagerAutoload.cs"
 SettingsFileHandlerAutoload="*res://autoload/settings/SettingsFileHandlerAutoload.cs"
 GamepadControllerManager="*res://autoload/input/GamepadControllerManager.cs"
 WindowManager="*res://autoload/viewport/WindowManager.cs"
+GlobalFade="*res://autoload/viewport/GlobalFade.tscn"
 
 [display]
 

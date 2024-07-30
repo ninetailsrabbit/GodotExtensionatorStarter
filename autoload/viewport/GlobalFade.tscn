@@ -1,0 +1,28 @@
+[gd_scene load_steps=2 format=3 uid="uid://ceihfg02oqcrp"]
+
+[ext_resource type="Script" path="res://autoload/viewport/GlobalFade.cs" id="1_7qql0"]
+
+[node name="GlobalFade" type="Node"]
+script = ExtResource("1_7qql0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="FadeBackground" type="ColorRect" parent="CanvasLayer/Control"]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.0156863, 0.0156863, 0.0156863, 1)

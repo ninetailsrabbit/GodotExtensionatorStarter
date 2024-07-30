@@ -20,8 +20,6 @@ namespace GodotExtensionatorStarter {
         [Signal]
         public delegate void UnlockPlayerEventHandler();
 
-        [Signal]
-        public delegate void PointClickMovementRequestedEventHandler(Marker3D marker);
         #endregion
 
         #region Game
@@ -35,6 +33,7 @@ namespace GodotExtensionatorStarter {
 
         [Signal]
         public delegate void UpdatedGraphicSettingsEventHandler(int qualityPreset);
+
         #endregion
 
     }

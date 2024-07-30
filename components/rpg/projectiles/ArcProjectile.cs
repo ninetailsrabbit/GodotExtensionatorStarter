@@ -30,7 +30,7 @@ namespace GodotExtensionatorStarter {
                     var xAxis = _initialSpeed * Mathf.Cos(_throwAngle) * _time;
 
                     GlobalPosition = _initialPosition + _throwDirection * xAxis;
-                    Projectile.Position = Projectile.Position with { Y = -zAxis };
+                    Projectile.Position = Projectile.Position with { Y = -zAxis }; //Only move the projectile in the Y axis
                 }
                 else {
                     _launched = false;
