@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <PackageReference Include="Ninetailsrabbit.Extensionator" Version="0.2.3" />
-	<PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.6.1" />
+	<PackageReference Include="Ninetailsrabbit.GodotExtensionator" Version="0.6.2" />
 	<PackageReference Include="Ninetailsrabbit.Match3Maker" Version="1.2.4" />
   </ItemGroup>
 

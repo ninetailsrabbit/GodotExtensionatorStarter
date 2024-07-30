@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://2df7eofiqpkx"]
 
-[ext_resource type="PackedScene" uid="uid://bu4wye7x6eoel" path="res://components/first_person/FirstPersonController.tscn" id="1_72rvj"]
+[ext_resource type="PackedScene" uid="uid://b01ettgh4fl37" path="res://components/first_person/point_n_click/PointNClickController.tscn" id="2_puqhl"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -29,9 +29,6 @@ environment = SubResource("Environment_e0feo")
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
 shadow_enabled = true
-
-[node name="FirstPersonController" parent="." instance=ExtResource("1_72rvj")]
-transform = Transform3D(-0.0354495, -0.000233869, -0.999371, 0.000525319, 1, -0.000252654, 0.999371, -0.000533947, -0.0354494, 0, 0.502634, -3.28627)
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 15.9318, 0, -14.3109)
@@ -90,3 +87,6 @@ size = Vector3(0.439514, 2.41166, 1.57172)
 transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.280289, 0.0849323, -4.69614)
 operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
+
+[node name="PointNClickController" parent="." instance=ExtResource("2_puqhl")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.89038, 1.11419, 0)

@@ -16,7 +16,6 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
             SettingsFileHandlerAutoload = this.GetAutoloadNode<SettingsFileHandlerAutoload>();
-
             GlobalGameEvents.UpdatedGraphicSettings += OnUpdatedGraphicSettings;
         }
 

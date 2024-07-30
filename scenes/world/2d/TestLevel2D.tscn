@@ -5,10 +5,16 @@
 [ext_resource type="Script" path="res://components/rpg/projectiles/ArcProjectile.cs" id="3_ij2gh"]
 
 [node name="TestLevel2D" type="Node2D"]
+position = Vector2(-1, 0)
 script = ExtResource("1_cjan3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(215, 351)
+texture = ExtResource("2_e1vh6")
+
+[node name="ToFollow" type="Sprite2D" parent="."]
+position = Vector2(517, 286)
+scale = Vector2(0.414063, 0.390625)
 texture = ExtResource("2_e1vh6")
 
 [node name="Marker2D" type="Marker2D" parent="."]
@@ -22,4 +28,9 @@ TimeMultiplier = 20.0
 
 [node name="Sprite2D" type="Sprite2D" parent="ArcProjectile"]
 scale = Vector2(0.421875, 0.484375)
+texture = ExtResource("2_e1vh6")
+
+[node name="Sprite2D2" type="Sprite2D" parent="ArcProjectile"]
+position = Vector2(0, 42)
+scale = Vector2(0.703125, 0.148437)
 texture = ExtResource("2_e1vh6")
