@@ -1,6 +1,8 @@
-[gd_scene load_steps=7 format=3 uid="uid://2df7eofiqpkx"]
+[gd_scene load_steps=10 format=3 uid="uid://2df7eofiqpkx"]
 
+[ext_resource type="Script" path="res://components/first_person/point_n_click/PointNClickInteraction.cs" id="2_8yo64"]
 [ext_resource type="PackedScene" uid="uid://b01ettgh4fl37" path="res://components/first_person/point_n_click/PointNClickController.tscn" id="2_puqhl"]
+[ext_resource type="Script" path="res://components/interaction/3D/Interactable3D.cs" id="4_s6iyf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -20,6 +22,9 @@ albedo_color = Color(0.0383972, 0.0383972, 0.0383972, 1)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84v6g"]
 albedo_color = Color(1, 1, 0.34902, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_3g2vq"]
+radius = 0.811647
 
 [node name="TestLevel" type="Node3D"]
 
@@ -89,4 +94,19 @@ operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
 
 [node name="PointNClickController" parent="." instance=ExtResource("2_puqhl")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.89038, 1.11419, 0)
+transform = Transform3D(0.333544, 0, -0.942735, 0, 1, 0, 0.942735, 0, 0.333544, 4.89038, 1.11419, 0)
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.79565, 1.40617, -1.08139)
+
+[node name="PointNClickInteraction" type="Node3D" parent="Marker3D" node_paths=PackedStringArray("PointNClickController")]
+script = ExtResource("2_8yo64")
+PointNClickController = NodePath("../../PointNClickController")
+SelectedInteractionType = 0
+
+[node name="Interactable3D" type="Area3D" parent="Marker3D/PointNClickInteraction"]
+script = ExtResource("4_s6iyf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Marker3D/PointNClickInteraction/Interactable3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0874329, 0, 0)
+shape = SubResource("SphereShape3D_3g2vq")

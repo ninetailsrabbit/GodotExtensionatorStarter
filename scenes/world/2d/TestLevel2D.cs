@@ -11,13 +11,18 @@ namespace GodotExtensionatorStarter {
         public ArcProjectile arc { get; set; } = default!;
 
         public GlobalFade GlobalFade { get; set; } = default!;
+
+        public double elapsed = 0d;
+
         public override void _Input(InputEvent @event) {
             
         }
 
         public override void _Process(double delta) {
+            elapsed += delta;
+
             toFollow.GlobalPosition = toFollow.GetGlobalMousePosition();
-            sprite.RotateToward(toFollow);
+            sprite.RotateToward(toFollow, (float)elapsed);
 
         }
         public override void _Ready() {

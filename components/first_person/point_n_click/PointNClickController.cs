@@ -7,8 +7,11 @@ namespace GodotExtensionatorStarter {
     [Icon("res://components/first_person/point_n_click/point_click_3d.svg")]
     public partial class PointNClickController : Node3D {
 
-        [Export] public float StandingStatureInMeters = 1.75f;
+        public const string GroupName = "point_and_click_controller";
 
+        [Export] public float StandingStatureInMeters = 1.75f;
+        [Export] public string DefaultAnimation = "idle";
+        [Export] public bool UseAnimations = true;
         public GlobalFade GlobalFade { get; set; } = default!;
         public AnimationPlayer AnimationPlayer { get; set; } = null!;
         public MouseRayCastInteractor MouseRayCastInteractor { get; set; } = null!;
@@ -17,8 +20,12 @@ namespace GodotExtensionatorStarter {
         public Camera3D Camera3D { get; set; } = null!;
 
         public Vector3 OriginalEyesPosition = Vector3.Zero;
+        public Vector3 OriginalEyesRotation = Vector3.Zero;
+
 
         public override void _EnterTree() {
+            AddToGroup(GroupName);
+
             GlobalFade = this.GetAutoloadNode<GlobalFade>();
             AnimationPlayer = GetNode<AnimationPlayer>(nameof(AnimationPlayer));
             MouseRayCastInteractor = GetNode<MouseRayCastInteractor>(nameof(MouseRayCastInteractor));
@@ -33,17 +40,32 @@ namespace GodotExtensionatorStarter {
         public override void _Ready() {
             Position = Position with { Y = StandingStatureInMeters };
             OriginalEyesPosition = Eyes.Position;
+            OriginalEyesRotation = Eyes.Rotation;
 
             Camera3D.MakeCurrent();
-            AnimationPlayer.Play("idle");
+            RunAnimation(DefaultAnimation);
+        }
+
+        public void ResetEyesPosition() {
+            AnimationPlayer.Stop();
+
+            var tween = CreateTween();
+            tween.TweenProperty(Eyes, "rotation", OriginalEyesRotation, 0.5f).SetEase(Tween.EaseType.Out);
+        }
+
+        private void RunAnimation(string animationName) {
+            if (UseAnimations)
+                AnimationPlayer.Play(animationName);
         }
 
         private void OnFadeStarted() {
+            ResetEyesPosition();
             MouseRayCastInteractor.Disable();
         }
 
         private void OnFadeFinished() {
             MouseRayCastInteractor.Enable();
+            RunAnimation(DefaultAnimation);
         }
     }
 }

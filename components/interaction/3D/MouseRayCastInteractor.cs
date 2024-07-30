@@ -6,11 +6,12 @@ namespace GodotExtensionatorStarter {
 
     [GlobalClass, Icon("res://components/interaction/interactor_3d.svg")]
     public partial class MouseRayCastInteractor : Node3D, IInteractor {
- 
+
         #region Exported parameters
         [Export] public Camera3D OriginCamera { get; set; } = default!;
         [Export] public float RayLength = 1000f;
         [Export] public MouseButton InteractButton = MouseButton.Left;
+        [Export] public CompressedTexture2D DefaultCursor { get; set; } = Preloader.Instance.CursorPointerC;
         #endregion
 
         public Interactable3D? CurrentInteractable;
@@ -31,8 +32,10 @@ namespace GodotExtensionatorStarter {
             }
         }
 
-        
+
         public override void _Ready() {
+            DisplayCustomCursor();
+
             Debug.Assert(OriginCamera is not null, "MouseRayCastInteractor: This node needs a Camera3D to create the mouse raycast");
             SetProcessInput(OriginCamera is not null);
             SetProcess(OriginCamera is not null);
@@ -41,11 +44,16 @@ namespace GodotExtensionatorStarter {
 
         }
 
+        public void DisplayCustomCursor() {
+            if (DefaultCursor is not null)
+                Input.SetCustomMouseCursor(DefaultCursor, Input.CursorShape.Arrow, DefaultCursor.GetSize() / 2);
+        }
+
         public override void _Process(double delta) {
             Interactable3D? detectedInteractable = GetDetectedInteractable();
 
             if (detectedInteractable is not null) {
-                if ( (CurrentInteractable is null || (CurrentInteractable is not null && !CurrentInteractable.Equals(detectedInteractable))) && !Focused) {
+                if ((CurrentInteractable is null || (CurrentInteractable is not null && !CurrentInteractable.Equals(detectedInteractable))) && !Focused) {
                     Focus(detectedInteractable);
                 }
                 else {
@@ -95,6 +103,7 @@ namespace GodotExtensionatorStarter {
         }
         public void CancelInteract(GodotObject interactable) {
             if (interactable is Interactable3D _interactable) {
+                DisplayCustomCursor();
                 Interacting = false;
 
                 _interactable.EmitSignalSafe(Interactable3D.SignalName.CanceledInteraction, this);
@@ -113,7 +122,7 @@ namespace GodotExtensionatorStarter {
 
         public void UnFocus(GodotObject interactable) {
             if (interactable is Interactable3D _interactable) {
-
+                DisplayCustomCursor();
                 CurrentInteractable = null;
                 Focused = false;
 
