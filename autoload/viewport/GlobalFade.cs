@@ -48,7 +48,7 @@ namespace GodotExtensionatorStarter {
 
                 EmitSignal(SignalName.FadeStarted);
 
-                FadeBackground.Color = color ?? DefaultFadeColor;
+                FadeBackground.Color = color ?? FadeBackground.Color;
 
                 var tween = CreateTween();
                 tween.TweenProperty(FadeBackground, "modulate:a", 0, duration)
