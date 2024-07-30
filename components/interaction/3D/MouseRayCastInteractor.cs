@@ -53,13 +53,13 @@ namespace GodotExtensionatorStarter {
             Interactable3D? detectedInteractable = GetDetectedInteractable();
 
             if (detectedInteractable is not null) {
-                if ((CurrentInteractable is null || (CurrentInteractable is not null && !CurrentInteractable.Equals(detectedInteractable))) && !Focused) {
+                if (CurrentInteractable is null && !Focused) {
                     Focus(detectedInteractable);
                 }
-                else {
-                    if (Focused && !Interacting && CurrentInteractable is not null)
-                        UnFocus(CurrentInteractable);
-                }
+            }
+            else {
+                if (Focused && !Interacting)
+                    UnFocus(CurrentInteractable);
             }
         }
 
@@ -112,7 +112,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public void Focus(GodotObject interactable) {
-            if (interactable is Interactable3D _interactable) {
+            if (interactable is Interactable3D _interactable && !_interactable.Equals(CurrentInteractable)) {
                 CurrentInteractable = _interactable;
                 Focused = true;
 
@@ -121,7 +121,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public void UnFocus(GodotObject interactable) {
-            if (interactable is Interactable3D _interactable) {
+            if (interactable is Interactable3D _interactable && CurrentInteractable is not null) {
                 DisplayCustomCursor();
                 CurrentInteractable = null;
                 Focused = false;
