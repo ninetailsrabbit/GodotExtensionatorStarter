@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://b8ty10pqehy5w"]
+
+[ext_resource type="Script" path="res://autoload/camera/GlobalCameraShifter.cs" id="1_hq541"]
+
+[node name="GlobalCameraShifter" type="Node"]
+script = ExtResource("1_hq541")
+
+[node name="GlobalCameraTransition2D" type="Camera2D" parent="."]
+
+[node name="GlobalCameraTransition3D" type="Camera3D" parent="."]

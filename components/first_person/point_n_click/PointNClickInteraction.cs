@@ -14,6 +14,7 @@ namespace GodotExtensionatorStarter {
             ZOOM,
             SCAN,
             CINEMATIC,
+            CAMERA_SHIFT,
             DIALOGUE
         }
 
@@ -37,8 +38,6 @@ namespace GodotExtensionatorStarter {
         public GameGlobals GameGlobals { get; set; } = default!;
         public Interactable3D Interactable3D { get; set; } = null!;
         public Marker3D TargetPositionMarker { get; set; } = default!;
-
-        public bool IsActorHere = false;
 
         public override void _ExitTree() {
             Interactable3D.Focused -= OnFocused;
@@ -71,16 +70,14 @@ namespace GodotExtensionatorStarter {
             InputExtension.ShowMouseCursor();
         }
 
-        public void MoveActorToNewPosition(Marker3D targetPosition) {
-            IsActorHere = true;
+        public async void MoveActorToThisPointClickInteractionPosition() {
+            GlobalFade.FadeIn(FadeTimeOnMovement);
+            await ToSignal(GlobalFade, GlobalFade.SignalName.FadeFinished);
 
-            var originalParent = Actor.GetParent();
-            Actor.Reparent(TargetPositionMarker, false);
-            Actor.Position = Vector3.Zero;
-            Actor.Rotation = Vector3.Zero;
-
-            Actor.Reparent(originalParent);
+            Actor.AlignWithNode(TargetPositionMarker);
             Actor.ApplyStandingStature();
+
+            GlobalFade.FadeOut(FadeTimeOnMovement);
         }
 
         private void CreateActorDetectorArea() {
@@ -131,15 +128,10 @@ namespace GodotExtensionatorStarter {
             Actor.MouseRayCastInteractor.DisplayCustomCursor();
         }
 
-        private async void OnInteracted(GodotObject interactor) {
+        private void OnInteracted(GodotObject interactor) {
             switch (SelectedInteractionType) {
                 case InteractionType.MOVEMENT:
-                    GlobalFade.FadeIn(FadeTimeOnMovement);
-                    await ToSignal(GlobalFade, GlobalFade.SignalName.FadeFinished);
-
-                    MoveActorToNewPosition(TargetPositionMarker);
-
-                    GlobalFade.FadeOut(FadeTimeOnMovement);
+                    MoveActorToThisPointClickInteractionPosition();
                     break;
             }
         }

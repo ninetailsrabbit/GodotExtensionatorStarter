@@ -29,6 +29,7 @@ SettingsFileHandlerAutoload="*res://autoload/settings/SettingsFileHandlerAutoloa
 GamepadControllerManager="*res://autoload/input/GamepadControllerManager.cs"
 WindowManager="*res://autoload/viewport/WindowManager.cs"
 GlobalFade="*res://autoload/viewport/GlobalFade.tscn"
+GlobalCameraShifter="*res://autoload/camera/GlobalCameraShifter.tscn"
 
 [display]
 
