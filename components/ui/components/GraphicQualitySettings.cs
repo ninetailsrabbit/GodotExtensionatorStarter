@@ -1,4 +1,5 @@
 ﻿using Godot;
+using Godot.Collections;
 using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
@@ -7,10 +8,20 @@ namespace GodotExtensionatorStarter {
 
         public SettingsFileHandlerAutoload SettingsFileHandlerAutoload { get; set; } = null!;
 
+        public Dictionary<GameSettingsResource.QualityPresets, string> Translations = [];
+
         private ButtonGroup QualityPresetButtonGroup { get; } = new();
+
 
         public override void _EnterTree() {
             SettingsFileHandlerAutoload = this.GetAutoloadNode<SettingsFileHandlerAutoload>();
+
+            Translations = new() {
+                { GameSettingsResource.QualityPresets.Low, Tr("QUALITY_LOW")},
+                { GameSettingsResource.QualityPresets.Medium, Tr("QUALITY_MEDIUM")},
+                { GameSettingsResource.QualityPresets.High, Tr("QUALITY_HIGH")},
+                { GameSettingsResource.QualityPresets.Ultra, Tr("QUALITY_ULTRA")},
+            };
         }
 
         public override void _Ready() {
@@ -23,7 +34,7 @@ namespace GodotExtensionatorStarter {
 
         private void CreateGraphicQualityPresetButtons() {
 
-            AddChild(new Label() { Text = "Graphics quality" });
+            AddChild(new Label() { Text = Tr("GRAPHICS_QUALITY") });
 
             HBoxContainer hboxContainer = new();
             AddChild(hboxContainer);

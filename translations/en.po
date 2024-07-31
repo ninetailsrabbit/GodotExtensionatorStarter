@@ -16,6 +16,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
+#: components/ui/components/DaltonismContainer.cs
+msgid "GENERAL_NO"
+msgstr "No"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "Deuteranopia"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "Protanopia"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "Tritanopia"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "Achromatopsia"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_LOW"
+msgstr "Low"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_MEDIUM"
+msgstr "Medium"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_HIGH"
+msgstr "High"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_ULTRA"
+msgstr "Ultra"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "Graphics quality"
+
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
 msgstr "Audio"
@@ -92,7 +132,9 @@ msgstr "Screenshake"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
-msgstr "If you suffer from color blindness [i](protanopia, deuteranopia, tritanopiaor achromatopsia)[/i] this setting may increase visual contrast."
+msgstr ""
+"If you suffer from color blindness [i](protanopia, deuteranopia, "
+"tritanopiaor achromatopsia)[/i] this setting may increase visual contrast."
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_LANGUAGE"

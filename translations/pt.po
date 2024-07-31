@@ -15,6 +15,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
+#: components/ui/components/DaltonismContainer.cs
+msgid "GENERAL_NO"
+msgstr "Não"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "Deuteranopia"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "Protanopia"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "Tritanopia"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "Acromatopsia"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_LOW"
+msgstr "Baixo"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_MEDIUM"
+msgstr "Médio"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_HIGH"
+msgstr "Alto"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_ULTRA"
+msgstr "Ultra"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "Qualidade gráfica"
+
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
 msgstr "Áudio"
@@ -74,9 +114,8 @@ msgstr "Limite de FPS"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC_INFO"
 msgstr ""
-"A sincronização vertical previne a fragmentação do ecrã, mas "
-"se tiver uma taxa de quadros baixa, poderá melhorar o "
-"desempenho desativando-a"
+"A sincronização vertical previne a fragmentação do ecrã, mas se tiver uma "
+"taxa de quadros baixa, poderá melhorar o desempenho desativando-a"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
@@ -93,9 +132,8 @@ msgstr "Tremor de ecrã"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
 msgstr ""
-"Se sofrer de daltonismo [i](protanopia, deuteranopia, "
-"tritanopia ou acromatopsia)[/i] esta definição pode aumentar "
-"o contraste visual"
+"Se sofrer de daltonismo [i](protanopia, deuteranopia, tritanopia ou "
+"acromatopsia)[/i] esta definição pode aumentar o contraste visual"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_LANGUAGE"
@@ -124,20 +162,17 @@ msgstr "Por favor, leia antes de jogar"
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT"
 msgstr ""
-"Uma pequena percentagem de indivíduos pode experimentar uma "
-"convulsão quando exposta a certas imagens visuais, luzes "
-"piscantes, padrões ou fundos que podem aparecer em "
-"videojogos. Indivíduos que não tenham antecedentes de "
-"quaisquer convulsões epiléticas até à data podem estar não "
-"diagnosticados e podem passar a experimentar convulsões "
-"enquanto jogam videojogos"
+"Uma pequena percentagem de indivíduos pode experimentar uma convulsão quando "
+"exposta a certas imagens visuais, luzes piscantes, padrões ou fundos que "
+"podem aparecer em videojogos. Indivíduos que não tenham antecedentes de "
+"quaisquer convulsões epiléticas até à data podem estar não diagnosticados e "
+"podem passar a experimentar convulsões enquanto jogam videojogos"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr ""
-"Pare de jogar imediatamente e consulte um médico se "
-"experimentar quaisquer sintomas ou começar a sentir-se mal "
-"enquanto joga [TÍTULO DO JOGO]"
+"Pare de jogar imediatamente e consulte um médico se experimentar quaisquer "
+"sintomas ou começar a sentir-se mal enquanto joga [TÍTULO DO JOGO]"
 
 #~ msgid "CAMERA_SHIFT"
 #~ msgstr "CAMERA_SHIFT"

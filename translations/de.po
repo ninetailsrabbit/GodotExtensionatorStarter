@@ -15,6 +15,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
+#: components/ui/components/DaltonismContainer.cs
+msgid "GENERAL_NO"
+msgstr "Nein"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "Deuteranopie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "Protanopie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "Tritanopie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "Achromatopsie"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_LOW"
+msgstr "Niedrig"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_MEDIUM"
+msgstr "Mittel"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_HIGH"
+msgstr "Hoch"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_ULTRA"
+msgstr "Ultra"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "Grafikqualität"
+
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
 msgstr "Audio"
@@ -74,9 +114,8 @@ msgstr "Framerate-begrenzung"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC_INFO"
 msgstr ""
-"Vertikale Synchronisierung verhindert "
-"Bildschirmfragmentierung, aber wenn Sie eine niedrige "
-"Bildrate haben, können Sie die Leistung möglicherweise "
+"Vertikale Synchronisierung verhindert Bildschirmfragmentierung, aber wenn "
+"Sie eine niedrige Bildrate haben, können Sie die Leistung möglicherweise "
 "verbessern, indem Sie sie deaktivieren."
 
 #: components/ui/menus/GameSettingsUI.tscn
@@ -94,9 +133,9 @@ msgstr "Bildschirmwackeln"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
 msgstr ""
-"Wenn Sie an Farbblindheit leiden [i](Protanopie, "
-"Deuteranopie, Tritanopie oder Achromatopsie)[/i], kann diese "
-"Einstellung den visuellen Kontrast erhöhen"
+"Wenn Sie an Farbblindheit leiden [i](Protanopie, Deuteranopie, Tritanopie "
+"oder Achromatopsie)[/i], kann diese Einstellung den visuellen Kontrast "
+"erhöhen"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_LANGUAGE"
@@ -125,19 +164,17 @@ msgstr "Bitte lesen Sie vor dem Spielen"
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT"
 msgstr ""
-"Ein kleiner Prozentsatz von Personen kann einen Anfall "
-"erleiden, wenn sie bestimmten visuellen Bildern, blinkenden "
-"Lichtern, Mustern oder Hintergründen ausgesetzt wird, die in "
-"Videospielen erscheinen können. Personen, die bisher keine "
-"Epilepsieanfälle hatten, können undiagnostiziert sein und "
-"während des Spielens von Videospielen Anfälle erleiden."
+"Ein kleiner Prozentsatz von Personen kann einen Anfall erleiden, wenn sie "
+"bestimmten visuellen Bildern, blinkenden Lichtern, Mustern oder "
+"Hintergründen ausgesetzt wird, die in Videospielen erscheinen können. "
+"Personen, die bisher keine Epilepsieanfälle hatten, können undiagnostiziert "
+"sein und während des Spielens von Videospielen Anfälle erleiden."
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr ""
-"Beenden Sie das Spiel sofort und konsultieren Sie einen "
-"Arzt, wenn Sie während des Spielens [SPIELTITEL] Symptome "
-"verspüren oder sich unwohl fühlen"
+"Beenden Sie das Spiel sofort und konsultieren Sie einen Arzt, wenn Sie "
+"während des Spielens [SPIELTITEL] Symptome verspüren oder sich unwohl fühlen"
 
 #~ msgid "CAMERA_SHIFT"
 #~ msgstr "CAMERA_SHIFT"

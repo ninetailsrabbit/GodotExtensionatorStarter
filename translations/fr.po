@@ -15,6 +15,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
+#: components/ui/components/DaltonismContainer.cs
+msgid "GENERAL_NO"
+msgstr "Non"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "Deutéranopie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "Protanopie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "Tritanopie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "Achromatopsie"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_LOW"
+msgstr "Bas"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_MEDIUM"
+msgstr "Moyen"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_HIGH"
+msgstr "Haut"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_ULTRA"
+msgstr "Ultra"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "Qualité graphique"
+
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
 msgstr "Audio"
@@ -74,10 +114,9 @@ msgstr "Limite FPS"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC_INFO"
 msgstr ""
-"La synchronisation verticale prévient la fragmentation de "
-"l'écran, mais si vous avez un faible taux de "
-"rafraîchissement, vous pouvez peut-être améliorer les "
-"performances en la désactivant."
+"La synchronisation verticale prévient la fragmentation de l'écran, mais si "
+"vous avez un faible taux de rafraîchissement, vous pouvez peut-être "
+"améliorer les performances en la désactivant."
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
@@ -94,9 +133,8 @@ msgstr "Secousse d'écran"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
 msgstr ""
-" Si vous souffrez de daltonisme [i](protanopie, "
-"deutéranopie, tritanopie ou achromatopsie)[/i], ce réglage "
-"peut augmenter le contraste visuel"
+" Si vous souffrez de daltonisme [i](protanopie, deutéranopie, tritanopie ou "
+"achromatopsie)[/i], ce réglage peut augmenter le contraste visuel"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_LANGUAGE"
@@ -125,20 +163,19 @@ msgstr "Veuillez lire avant de jouer"
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT"
 msgstr ""
-"Un petit pourcentage de personnes peuvent éprouver une crise "
-"lorsqu'elles sont exposées à certaines images visuelles, "
-"lumières clignotantes, motifs ou arrière-plans qui peuvent "
-"apparaître dans les jeux vidéo. Les personnes n'ayant aucun "
-"antécédent de crises d'épilepsie à ce jour peuvent être non "
-"diagnostiquées et peuvent continuer à faire des crises en "
-"jouant aux jeux vidéo"
+"Un petit pourcentage de personnes peuvent éprouver une crise lorsqu'elles "
+"sont exposées à certaines images visuelles, lumières clignotantes, motifs ou "
+"arrière-plans qui peuvent apparaître dans les jeux vidéo. Les personnes "
+"n'ayant aucun antécédent de crises d'épilepsie à ce jour peuvent être non "
+"diagnostiquées et peuvent continuer à faire des crises en jouant aux jeux "
+"vidéo"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr ""
-" Arrêtez immédiatement de jouer et consultez un médecin si "
-"vous ressentez des symptômes ou commencez à vous sentir mal "
-"pendant que vous jouez à [TITRE DU JEU]"
+" Arrêtez immédiatement de jouer et consultez un médecin si vous ressentez "
+"des symptômes ou commencez à vous sentir mal pendant que vous jouez à [TITRE "
+"DU JEU]"
 
 #~ msgid "CAMERA_SHIFT"
 #~ msgstr "CAMERA_SHIFT"

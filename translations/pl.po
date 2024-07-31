@@ -15,6 +15,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
+#: components/ui/components/DaltonismContainer.cs
+msgid "GENERAL_NO"
+msgstr "Nie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "Deuteranopia"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "Protanopia"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "Tritanopia"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "Achromatopsia"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_LOW"
+msgstr "Niski"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_MEDIUM"
+msgstr "Średni"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_HIGH"
+msgstr "Wysoki"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_ULTRA"
+msgstr "Ultra"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "Jakość grafiki"
+
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
 msgstr "Audio"
@@ -74,9 +114,8 @@ msgstr "Ograniczenie FPS"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC_INFO"
 msgstr ""
-"Synchronizacja pionowa zapobiega rozrywaniu obrazu, ale "
-"jeśli masz niską liczbę klatek na sekundę, możesz poprawić "
-"wydajność, wyłączając ją"
+"Synchronizacja pionowa zapobiega rozrywaniu obrazu, ale jeśli masz niską "
+"liczbę klatek na sekundę, możesz poprawić wydajność, wyłączając ją"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
@@ -93,9 +132,8 @@ msgstr "Trzęsienie ekranu"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
 msgstr ""
-"Jeśli cierpisz na daltonizm [i](protanopia, deuteranopia, "
-"tritanopia lub achromatopsia)[/i], to ustawienie może "
-"zwiększyć kontrast obrazu"
+"Jeśli cierpisz na daltonizm [i](protanopia, deuteranopia, tritanopia lub "
+"achromatopsia)[/i], to ustawienie może zwiększyć kontrast obrazu"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_LANGUAGE"
@@ -124,16 +162,13 @@ msgstr "Proszę przeczytać przed rozpoczęciem gry"
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT"
 msgstr ""
-"Niewielki procent osób może doświadczyć napadu padaczki "
-"podczas oglądania niektórych obrazów, migających świateł, "
-"wzorów lub tła, które mogą pojawiać się w grach wideo. "
-"Osoby, które wcześniej nie miały napadów padaczki, mogą być "
-"niezdiagnozowane i mogą doświadczyć napadów podczas grania w "
-"gry wideo"
+"Niewielki procent osób może doświadczyć napadu padaczki podczas oglądania "
+"niektórych obrazów, migających świateł, wzorów lub tła, które mogą pojawiać "
+"się w grach wideo. Osoby, które wcześniej nie miały napadów padaczki, mogą "
+"być niezdiagnozowane i mogą doświadczyć napadów podczas grania w gry wideo"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr ""
-"Natychmiast przerwij grę i skonsultuj się z lekarzem, jeśli "
-"wystąpią jakiekolwiek objawy lub poczujesz się źle podczas "
-"gry [TYTUŁ GRY]"
+"Natychmiast przerwij grę i skonsultuj się z lekarzem, jeśli wystąpią "
+"jakiekolwiek objawy lub poczujesz się źle podczas gry [TYTUŁ GRY]"

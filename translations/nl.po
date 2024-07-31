@@ -15,6 +15,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
+#: components/ui/components/DaltonismContainer.cs
+msgid "GENERAL_NO"
+msgstr "Nee"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "Deuteranopie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "Protanopie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "Tritanopie"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "Achromatopsie"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_LOW"
+msgstr "Laag"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_MEDIUM"
+msgstr "Middel"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_HIGH"
+msgstr "Hoog"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_ULTRA"
+msgstr "Ultra"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "Grafische kwaliteit"
+
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
 msgstr "Audio"
@@ -74,9 +114,8 @@ msgstr " FPS-limiet"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC_INFO"
 msgstr ""
-"Verticale synchronisatie voorkomt beeldruis, maar als je een "
-"lage framerate hebt, kun je de prestaties mogelijk "
-"verbeteren door deze uit te schakelen"
+"Verticale synchronisatie voorkomt beeldruis, maar als je een lage framerate "
+"hebt, kun je de prestaties mogelijk verbeteren door deze uit te schakelen"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
@@ -93,9 +132,8 @@ msgstr "Schermtrilling"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
 msgstr ""
-"Als u kleurenblind bent [i](protanopie, deuteranopie, "
-"tritanopie of achromatopsie)[/i] kan deze instelling het "
-"beeldcontrast verhogen"
+"Als u kleurenblind bent [i](protanopie, deuteranopie, tritanopie of "
+"achromatopsie)[/i] kan deze instelling het beeldcontrast verhogen"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_LANGUAGE"
@@ -124,16 +162,14 @@ msgstr "Lees voor het spelen"
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT"
 msgstr ""
-"Een klein percentage van de mensen kan een aanval krijgen "
-"bij blootstelling aan bepaalde visuele beelden, flitsende "
-"lichten, patronen of achtergronden die kunnen voorkomen in "
-"videogames. Mensen die tot nu toe geen epileptische "
-"aanvallen hebben gehad, kunnen ongediagnosticeerd zijn en "
-"kunnen tijdens het spelen van videogames aanvallen krijgen"
+"Een klein percentage van de mensen kan een aanval krijgen bij blootstelling "
+"aan bepaalde visuele beelden, flitsende lichten, patronen of achtergronden "
+"die kunnen voorkomen in videogames. Mensen die tot nu toe geen epileptische "
+"aanvallen hebben gehad, kunnen ongediagnosticeerd zijn en kunnen tijdens het "
+"spelen van videogames aanvallen krijgen"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr ""
-"Stop onmiddellijk met spelen en raadpleeg een arts als u "
-"symptomen ervaart of zich onwel voelt tijdens het spelen van "
-"[SPELTITEL]"
+"Stop onmiddellijk met spelen en raadpleeg een arts als u symptomen ervaart "
+"of zich onwel voelt tijdens het spelen van [SPELTITEL]"

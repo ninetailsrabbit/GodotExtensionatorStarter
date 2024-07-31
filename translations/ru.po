@@ -15,6 +15,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
+#: components/ui/components/DaltonismContainer.cs
+msgid "GENERAL_NO"
+msgstr "Нет"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "Дейтеранопия"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "Протанопия"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "Тританопия"
+
+#: components/ui/components/DaltonismContainer.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "Ахроматопсия"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_LOW"
+msgstr "Низкий"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_MEDIUM"
+msgstr "Средний"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_HIGH"
+msgstr "Высокий"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "QUALITY_ULTRA"
+msgstr "Ультра"
+
+#: components/ui/components/GraphicQualitySettings.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "Качество графики"
+
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
 msgstr "Аудио"
@@ -74,9 +114,8 @@ msgstr "Ограничение FPS"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC_INFO"
 msgstr ""
-"Вертикальная синхронизация предотвращает разрывы экрана, но "
-"если у вас низкая частота кадров, вы можете повысить "
-"производительность, отключив ее"
+"Вертикальная синхронизация предотвращает разрывы экрана, но если у вас "
+"низкая частота кадров, вы можете повысить производительность, отключив ее"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
@@ -93,9 +132,8 @@ msgstr "Дрожание экрана"
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
 msgstr ""
-"Если вы страдаете дальтонизмом [i](протанопия, дейтеранопия, "
-"тританопия или ахроматопсия)[/i], этот параметр может "
-"повысить визуальный контраст"
+"Если вы страдаете дальтонизмом [i](протанопия, дейтеранопия, тританопия или "
+"ахроматопсия)[/i], этот параметр может повысить визуальный контраст"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_LANGUAGE"
@@ -124,16 +162,14 @@ msgstr "Пожалуйста, прочтите перед игрой"
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT"
 msgstr ""
-"Небольшой процент людей может испытывать припадки при "
-"воздействии определенных визуальных образов, мигающих огней, "
-"узоров или фонов, которые могут появляться в видеоиграх. "
-"Люди, у которых ранее не было припадков эпилепсии, могут "
-"быть не диагностированы и могут испытывать припадки во время "
-"игры в видеоигры"
+"Небольшой процент людей может испытывать припадки при воздействии "
+"определенных визуальных образов, мигающих огней, узоров или фонов, которые "
+"могут появляться в видеоиграх. Люди, у которых ранее не было припадков "
+"эпилепсии, могут быть не диагностированы и могут испытывать припадки во "
+"время игры в видеоигры"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr ""
-"Немедленно прекратите игру и обратитесь к врачу, если у вас "
-"появятся какие-либо симптомы или вы почувствуете себя плохо "
-"во время игры [НАЗВАНИЕ ИГРЫ]"
+"Немедленно прекратите игру и обратитесь к врачу, если у вас появятся какие-"
+"либо симптомы или вы почувствуете себя плохо во время игры [НАЗВАНИЕ ИГРЫ]"
