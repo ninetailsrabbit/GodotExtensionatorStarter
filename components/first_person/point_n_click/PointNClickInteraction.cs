@@ -5,6 +5,9 @@ using System.Collections.Generic;
 namespace GodotExtensionatorStarter {
     [GlobalClass, Icon("res://components/first_person/point_n_click/point_click_3d.svg")]
     public partial class PointNClickInteraction : Node3D {
+
+        public const string GroupName = "point_and_click_interaction";
+
         public enum InteractionType {
             MOVEMENT,
             GRAB,
@@ -24,13 +27,18 @@ namespace GodotExtensionatorStarter {
         };
 
         [Export] public PointNClickController Actor { get; set; } = default!;
-        [Export] public InteractionType SelectedInteractionType = InteractionType.SCAN;
+        [Export] public InteractionType SelectedInteractionType = InteractionType.MOVEMENT;
         [Export] public Input.CursorShape SelectedCursorShape = Input.CursorShape.Arrow;
         [Export] public CompressedTexture2D FocusCursor { get; set; } = default!;
+        [Export] public float FadeTimeOnMovement = 0.5f;
+
 
         public GlobalFade GlobalFade { get; set; } = default!;
+        public GameGlobals GameGlobals { get; set; } = default!;
         public Interactable3D Interactable3D { get; set; } = null!;
         public Marker3D TargetPositionMarker { get; set; } = default!;
+
+        public bool IsActorHere = false;
 
         public override void _ExitTree() {
             Interactable3D.Focused -= OnFocused;
@@ -40,7 +48,11 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _EnterTree() {
+            AddToGroup(GroupName);
+
             GlobalFade = this.GetAutoloadNode<GlobalFade>();
+            GameGlobals = this.GetAutoloadNode<GameGlobals>();
+
             Actor ??= GetTree().GetFirstNodeInGroup(PointNClickController.GroupName) as PointNClickController;
 
             Interactable3D = GetNode<Interactable3D>(nameof(Interactable3D));
@@ -54,10 +66,14 @@ namespace GodotExtensionatorStarter {
             if (SelectedInteractionType.Equals(InteractionType.MOVEMENT))
                 TargetPositionMarker = this.FirstNodeOfType<Marker3D>();
 
+            CreateActorDetectorArea();
+
             InputExtension.ShowMouseCursor();
         }
 
         public void MoveActorToNewPosition(Marker3D targetPosition) {
+            IsActorHere = true;
+
             var originalParent = Actor.GetParent();
             Actor.Reparent(TargetPositionMarker, false);
             Actor.Position = Vector3.Zero;
@@ -66,6 +82,45 @@ namespace GodotExtensionatorStarter {
             Actor.Reparent(originalParent);
             Actor.ApplyStandingStature();
         }
+
+        private void CreateActorDetectorArea() {
+            Area3D detector = new() {
+                Name = "ActorAreaDetector",
+                Monitoring = true,
+                Monitorable = false,
+                Priority = 1,
+                CollisionLayer = 0,
+                CollisionMask = GameGlobals.PlayerCollisionLayer
+            };
+
+            CollisionShape3D shape = new() { Shape = new SphereShape3D() { Radius = 0.8f } };
+
+            AddChild(detector);
+            detector.AddChild(shape);
+
+            detector.AreaEntered += OnActorDetected;
+            detector.AreaExited += OnActorExited;
+        }
+
+        private void OnActorDetected(Area3D _) {
+            if (IsMovement())
+                Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, false);
+        }
+
+        private void OnActorExited(Area3D _) {
+            if (IsMovement())
+                Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, true);
+        }
+
+
+        #region Helpers
+        public bool IsMovement() => SelectedInteractionType.Equals(InteractionType.MOVEMENT);
+        public bool IsGrab() => SelectedInteractionType.Equals(InteractionType.GRAB);
+        public bool IsScan() => SelectedInteractionType.Equals(InteractionType.SCAN);
+        public bool IsDialogue() => SelectedInteractionType.Equals(InteractionType.DIALOGUE);
+        public bool IsZoom() => SelectedInteractionType.Equals(InteractionType.ZOOM);
+        public bool IsCinematic() => SelectedInteractionType.Equals(InteractionType.CINEMATIC);
+        #endregion
 
         private void OnFocused(GodotObject interactor) {
             if (FocusCursor is not null) {
@@ -79,12 +134,12 @@ namespace GodotExtensionatorStarter {
         private async void OnInteracted(GodotObject interactor) {
             switch (SelectedInteractionType) {
                 case InteractionType.MOVEMENT:
-                    GlobalFade.FadeIn(0.5f);
+                    GlobalFade.FadeIn(FadeTimeOnMovement);
                     await ToSignal(GlobalFade, GlobalFade.SignalName.FadeFinished);
 
                     MoveActorToNewPosition(TargetPositionMarker);
 
-                    GlobalFade.FadeOut(0.5f);
+                    GlobalFade.FadeOut(FadeTimeOnMovement);
                     break;
             }
         }

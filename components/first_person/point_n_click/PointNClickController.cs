@@ -13,6 +13,7 @@ namespace GodotExtensionatorStarter {
         [Export] public string DefaultAnimation = "idle";
         [Export] public bool UseAnimations = true;
         public GlobalFade GlobalFade { get; set; } = default!;
+        public GameGlobals GameGlobals { get; set; } = default!;
         public AnimationPlayer AnimationPlayer { get; set; } = null!;
         public MouseRayCastInteractor MouseRayCastInteractor { get; set; } = null!;
 
@@ -27,6 +28,7 @@ namespace GodotExtensionatorStarter {
             AddToGroup(GroupName);
 
             GlobalFade = this.GetAutoloadNode<GlobalFade>();
+
             AnimationPlayer = GetNode<AnimationPlayer>(nameof(AnimationPlayer));
             MouseRayCastInteractor = GetNode<MouseRayCastInteractor>(nameof(MouseRayCastInteractor));
             Eyes = GetNode<Node3D>($"%{nameof(Eyes)}");
@@ -39,6 +41,7 @@ namespace GodotExtensionatorStarter {
 
         public override void _Ready() {
             ApplyStandingStature();
+
             OriginalEyesPosition = Eyes.Position;
             OriginalEyesRotation = Eyes.Rotation;
 
