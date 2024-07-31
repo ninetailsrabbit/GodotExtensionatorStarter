@@ -252,7 +252,7 @@ namespace GodotExtensionatorStarter {
             OSInfo.Text = $"OS: {OS.GetName()}";
             DistroInfo.Text = $"Distro: {OS.GetDistributionName()}";
             CPUInfo.Text = $"CPU: {OS.GetProcessorName()}";
-            GPUInfo.Text = $"GPU: {RenderingServer.GetRenderingDevice().GetDeviceName()}";
+            GPUInfo.Text = $"GPU: {RenderingServer.GetVideoAdapterName()}";
         }
         public override void _Process(double delta) {
             DisplayFPS();
