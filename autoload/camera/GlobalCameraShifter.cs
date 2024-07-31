@@ -124,7 +124,7 @@ namespace GodotExtensionatorStarter {
                     break;
 
                 case Camera3D.ProjectionType.Perspective:
-                    TransitionTween3D.TweenProperty(GlobalCameraTransition3D, Camera3D.PropertyName.Fov.ToString(), to.GlobalTransform, (double)duration).From(GlobalCameraTransition3D.Fov);
+                    TransitionTween3D.TweenProperty(GlobalCameraTransition3D, Camera3D.PropertyName.Fov.ToString(), to.Fov, (double)duration).From(GlobalCameraTransition3D.Fov);
 
                     break;
             }

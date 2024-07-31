@@ -32,11 +32,14 @@ namespace GodotExtensionatorStarter {
         [Export] public Input.CursorShape SelectedCursorShape = Input.CursorShape.Arrow;
         [Export] public CompressedTexture2D FocusCursor { get; set; } = default!;
         [Export] public float FadeTimeOnMovement = 0.5f;
+        [Export] public float CameraShiftTransitionDuration = 1f;
 
 
+        public GlobalCameraShifter GlobalCameraShifter { get; set; } = default!;
         public GlobalFade GlobalFade { get; set; } = default!;
         public GameGlobals GameGlobals { get; set; } = default!;
         public Interactable3D Interactable3D { get; set; } = null!;
+        public Camera3D CameraToShift { get; set; } = null!;
         public Marker3D TargetPositionMarker { get; set; } = default!;
 
         public override void _ExitTree() {
@@ -49,10 +52,12 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             AddToGroup(GroupName);
 
+            GlobalCameraShifter = this.GetAutoloadNode<GlobalCameraShifter>();
             GlobalFade = this.GetAutoloadNode<GlobalFade>();
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
 
             Actor ??= GetTree().GetFirstNodeInGroup(PointNClickController.GroupName) as PointNClickController;
+            CameraToShift ??= this.FirstNodeOfType<Camera3D>();
 
             Interactable3D = GetNode<Interactable3D>(nameof(Interactable3D));
             Interactable3D.Focused += OnFocused;
@@ -80,6 +85,18 @@ namespace GodotExtensionatorStarter {
             GlobalFade.FadeOut(FadeTimeOnMovement);
         }
 
+        public void MoveActorWithCameraShift() {
+            if (IsCameraShift() && CameraToShift is not null) {
+                GlobalCameraShifter.TransitionToRequestedCamera3D(Actor.Camera3D, CameraToShift, CameraShiftTransitionDuration);
+            }
+        }
+
+        public void ReturnBackToActorCamera() {
+            if (IsCameraShift() && CameraToShift is not null) {
+                GlobalCameraShifter.TransitionToFirstCameraThroughAllSteps3D();
+            }
+        }
+
         private void CreateActorDetectorArea() {
             Area3D detector = new() {
                 Name = "ActorAreaDetector",
@@ -100,12 +117,12 @@ namespace GodotExtensionatorStarter {
         }
 
         private void OnActorDetected(Area3D _) {
-            if (IsMovement())
+            if (IsMovement() || IsCameraShift())
                 Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, false);
         }
 
         private void OnActorExited(Area3D _) {
-            if (IsMovement())
+            if (IsMovement() || IsCameraShift())
                 Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, true);
         }
 
@@ -117,6 +134,7 @@ namespace GodotExtensionatorStarter {
         public bool IsDialogue() => SelectedInteractionType.Equals(InteractionType.DIALOGUE);
         public bool IsZoom() => SelectedInteractionType.Equals(InteractionType.ZOOM);
         public bool IsCinematic() => SelectedInteractionType.Equals(InteractionType.CINEMATIC);
+        public bool IsCameraShift() => SelectedInteractionType.Equals(InteractionType.CAMERA_SHIFT);
         #endregion
 
         private void OnFocused(GodotObject interactor) {

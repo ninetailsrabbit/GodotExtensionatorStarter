@@ -98,7 +98,7 @@ operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
 
 [node name="PointNClickController" parent="." instance=ExtResource("2_puqhl")]
-transform = Transform3D(0.409844, 0, -0.912156, 0, 1, 0, 0.912156, 0, 0.409844, 5.07153, 1.11419, -0.681421)
+transform = Transform3D(0.994053, 0, -0.108902, 0, 1, 0, 0.108902, 0, 0.994053, 12.0356, 1.11419, -0.681421)
 
 [node name="PointNClickInteraction" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.79565, 1.40617, -1.08139)
@@ -115,11 +115,17 @@ shape = SubResource("SphereShape3D_3g2vq")
 transform = Transform3D(0.258178, 0, -0.966097, 0, 1, 0, 0.966097, 0, 0.258178, -0.123101, 0, 0)
 gizmo_extents = 0.87
 
+[node name="Camera3D" type="Camera3D" parent="PointNClickInteraction"]
+transform = Transform3D(0.399053, 0, -0.916928, 0, 1, 0, 0.916928, 0, 0.399053, 0, 0, 0)
+
 [node name="PointNClickInteraction2" type="Node3D" parent="." node_paths=PackedStringArray("Actor")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3492, 1.40617, -5.32819)
 script = ExtResource("2_8yo64")
 Actor = NodePath("../PointNClickController")
 FocusCursor = ExtResource("4_8v3fd")
+
+[node name="Camera3D" type="Camera3D" parent="PointNClickInteraction2"]
+transform = Transform3D(0.992747, -0.120205, -0.00209462, 0.10811, 0.88497, 0.452925, -0.05259, -0.449866, 0.891546, 0, 0.878788, 0)
 
 [node name="Interactable3D" type="Area3D" parent="PointNClickInteraction2"]
 script = ExtResource("4_s6iyf")
