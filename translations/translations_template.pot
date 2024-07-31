@@ -88,6 +88,18 @@ msgid "SETTINGS_DALTONISM_INFO"
 msgstr "SETTINGS_DALTONISM_INFO"
 
 #: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_LANGUAGE"
+msgstr "SETTINGS_LANGUAGE"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SUBTITLES_LANGUAGE"
+msgstr "SUBTITLES_LANGUAGE"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "VOICES_LANGUAGE"
+msgstr "VOICES_LANGUAGE"
+
+#: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_TELEMETRY"
 msgstr "SETTINGS_TELEMETRY"
 

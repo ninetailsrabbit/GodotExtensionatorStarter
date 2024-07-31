@@ -79,7 +79,7 @@ def translation_keys_from(value: str):
     return re.findall(r'\b[A-Z0-9]+(?:_[A-Z0-9]+)+\b', value)
 
 
-locales = ['en', 'es', 'fr', 'de', 'it', 'pt']
+locales = ['en', 'es', 'fr', 'de', 'it', 'pt', 'pl', 'ru','nl']
 translation_template_name = 'translations_template.pot'
 files_readed = []
 translation_keys = {}

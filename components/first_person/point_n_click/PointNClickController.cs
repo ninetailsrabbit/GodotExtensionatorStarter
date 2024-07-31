@@ -53,7 +53,7 @@ namespace GodotExtensionatorStarter {
             AnimationPlayer.Stop();
 
             var tween = CreateTween();
-            tween.TweenProperty(Eyes, "rotation", OriginalEyesRotation, 0.5f).SetEase(Tween.EaseType.Out);
+            tween.TweenProperty(Eyes, Node3D.PropertyName.Rotation.ToString(), OriginalEyesRotation, 0.5f).SetEase(Tween.EaseType.Out);
         }
 
         public void ApplyStandingStature() {

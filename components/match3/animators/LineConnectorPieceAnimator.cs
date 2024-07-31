@@ -8,7 +8,7 @@ namespace GodotExtensionatorStarter {
             var tween = CreateTween().SetParallel(true);
 
             foreach (var piece in BoardUI.PiecesFromSequence(sequence)) {
-                tween.TweenProperty(piece, "scale", Vector2.Zero, 0.45f).SetEase(Tween.EaseType.Out);
+                tween.TweenProperty(piece, Node2D.PropertyName.Scale.ToString(), Vector2.Zero, 0.45f).SetEase(Tween.EaseType.Out);
             }
 
             await ToSignal(tween, Tween.SignalName.Finished);
@@ -18,7 +18,7 @@ namespace GodotExtensionatorStarter {
             var fallDistance = piece.CellSize.Y * BoardUI.GridHeight;
 
             Tween tween = CreateTween();
-            tween.TweenProperty(piece, "global_position", piece.GlobalPosition, 0.25f).SetTrans(Tween.TransitionType.Quad)
+            tween.TweenProperty(piece, Node2D.PropertyName.GlobalPosition.ToString(), piece.GlobalPosition, 0.25f).SetTrans(Tween.TransitionType.Quad)
                 .From(new Vector2(piece.GlobalPosition.X, piece.GlobalPosition.Y - fallDistance));
 
             await ToSignal(tween, Tween.SignalName.Finished);
@@ -26,7 +26,7 @@ namespace GodotExtensionatorStarter {
 
         public async Task FallDownPiece(PieceUI piece, GridCellUI emptyGridCell) {
             Tween tween = CreateTween();
-            tween.TweenProperty(piece, "global_position", emptyGridCell.GlobalPosition, 0.15f)
+            tween.TweenProperty(piece, Node2D.PropertyName.GlobalPosition.ToString(), emptyGridCell.GlobalPosition, 0.15f)
                 .SetEase(Tween.EaseType.Out)
                 .SetTrans(Tween.TransitionType.Linear);
 

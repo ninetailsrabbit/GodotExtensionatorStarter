@@ -92,13 +92,23 @@ msgstr "Screenshake"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
-msgstr ""
-"If you suffer from color blindness [i](protanopia, deuteranopia, tritanopia "
-"or achromatopsia)[/i] this setting may increase visual contrast."
+msgstr "If you suffer from color blindness [i](protanopia, deuteranopia, tritanopiaor achromatopsia)[/i] this setting may increase visual contrast."
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_LANGUAGE"
+msgstr "Language"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SUBTITLES_LANGUAGE"
+msgstr "Subtitles language"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "VOICES_LANGUAGE"
+msgstr "Voices language"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_TELEMETRY"
-msgstr "Telemetry"
+msgstr "Allow telemetry"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_TITLE"
@@ -121,5 +131,5 @@ msgstr ""
 msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr ""
 "Immediately stop playing and consult a medical professional if you "
-"experience any symptoms or begin to feel unwell whilst playing [TITLE OF "
-"THE GAME]"
+"experience any symptoms or begin to feel unwell whilst playing [TITLE OF THE "
+"GAME]"

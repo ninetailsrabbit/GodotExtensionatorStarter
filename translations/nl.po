@@ -9,7 +9,7 @@ msgstr ""
 "PO-Revision-Date: \n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: es\n"
+"Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -17,19 +17,19 @@ msgstr ""
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
-msgstr "Sonido"
+msgstr "Audio"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "SCREEN_TAB"
-msgstr "Pantalla"
+msgstr "Scherm"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "GRAPHICS_TAB"
-msgstr "Gráficos"
+msgstr "Grafische instellingen"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "GENERAL_TAB"
-msgstr "General"
+msgstr "Algemeen"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MASTER"
@@ -37,105 +37,103 @@ msgstr "Master"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MUSIC"
-msgstr "Música"
+msgstr "Muziek"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_SFX"
-msgstr "Efectos sonido"
+msgstr "Geluidseffecten"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_VOICE"
-msgstr "Voces"
+msgstr "Stem"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_AMBIENT"
-msgstr "Ambiente"
+msgstr "Ambiance"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_UI"
-msgstr "Interfaz"
+msgstr "Gebruikersinterface"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "MUTE_ACTION"
-msgstr "Mutear"
+msgstr "Dempen"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_WINDOW_MODE"
-msgstr "Modo de pantalla"
+msgstr " Venstermodus"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_RESOLUTION"
-msgstr "Resolución"
+msgstr "Resolutie"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_FPS_LIMIT"
-msgstr "Límite de FPS"
+msgstr " FPS-limiet"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC_INFO"
 msgstr ""
-"La sincronización vertical previene la fragmentación de la pantalla, pero si "
-"tienes una tasa de fotogramas baja, quizás puedas mejorar el rendimiento "
-"desactivándola."
+"Verticale synchronisatie voorkomt beeldruis, maar als je een "
+"lage framerate hebt, kun je de prestaties mogelijk "
+"verbeteren door deze uit te schakelen"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
-msgstr "Vsync"
+msgstr "Verticale synchronisatie"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_PHOTOSENSITIVE"
-msgstr "Fotosensible"
+msgstr "Veilig voor lichtgevoelige personen"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_SCREENSHAKE"
-msgstr "Temblor de camara"
+msgstr "Schermtrilling"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
 msgstr ""
-"Si sufres de daltonismo [i](protanopía, deuteranopía, tritanopía o "
-"achromatopsia)[/i] este ajuste puede aumentar el contraste visual"
+"Als u kleurenblind bent [i](protanopie, deuteranopie, "
+"tritanopie of achromatopsie)[/i] kan deze instelling het "
+"beeldcontrast verhogen"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_LANGUAGE"
-msgstr "Idioma"
+msgstr "Taal"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SUBTITLES_LANGUAGE"
-msgstr "Idioma subtítulos"
+msgstr "Ondertiteltaal"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "VOICES_LANGUAGE"
-msgstr "Idioma voces"
+msgstr "Stemtaal"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_TELEMETRY"
-msgstr "Permitir telemetría"
+msgstr "Telemetrie toestaan"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_TITLE"
-msgstr "ADVERTENCIA DE CONVULSIONES FOTOSENSIBLES"
+msgstr "WAARSCHUWING VOOR LICHTGEVOELIGE AANVALLEN"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_SUBTITLE"
-msgstr "Por favor, lea antes de jugar"
+msgstr "Lees voor het spelen"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT"
 msgstr ""
-"Un pequeño porcentaje de personas puede experimentar convulsiones cuando se "
-"expone a ciertas imágenes visuales, luces intermitentes, patrones o fondos "
-"que pueden aparecer en los videojuegos. Las personas que no han tenido "
-"antecedentes de convulsiones o epilepsia hasta la fecha pueden estar sin "
-"diagnosticar y pueden llegar a experimentar convulsiones mientras juegan "
-"videojuegos."
+"Een klein percentage van de mensen kan een aanval krijgen "
+"bij blootstelling aan bepaalde visuele beelden, flitsende "
+"lichten, patronen of achtergronden die kunnen voorkomen in "
+"videogames. Mensen die tot nu toe geen epileptische "
+"aanvallen hebben gehad, kunnen ongediagnosticeerd zijn en "
+"kunnen tijdens het spelen van videogames aanvallen krijgen"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr ""
-"Deja de jugar inmediatamente y consulta a un profesional médico si "
-"experimentas algún síntoma o comienzas a sentirte mal mientras juegas "
-"[TÍTULO DEL JUEGO]."
-
-#~ msgid "CAMERA_SHIFT"
-#~ msgstr "CAMERA_SHIFT"
+"Stop onmiddellijk met spelen en raadpleeg een arts als u "
+"symptomen ervaart of zich onwel voelt tijdens het spelen van "
+"[SPELTITEL]"

@@ -15,6 +15,9 @@ namespace GodotExtensionatorStarter {
             Localization.LANGUAGES.Portuguese,
             Localization.LANGUAGES.Italian,
             Localization.LANGUAGES.French,
+            Localization.LANGUAGES.Polish,
+            Localization.LANGUAGES.Dutch,
+            Localization.LANGUAGES.Russian  
         ];
         public SettingsFileHandlerAutoload SettingsFileHandlerAutoload { get; set; } = null!;
 

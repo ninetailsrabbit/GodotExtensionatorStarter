@@ -62,8 +62,8 @@ namespace GodotExtensionatorStarter {
 
                     Tween tween = GetTree().CreateTween();
                     tween.SetParallel(true);
-                    tween.TweenProperty(CurrentAudioStreamPlayer, "volume_db", VolumeDBInaudible, crossfadingTime).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Linear);
-                    tween.TweenProperty(nextAudioStreamPlayer, "volume_db", volume, crossfadingTime).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Linear);
+                    tween.TweenProperty(CurrentAudioStreamPlayer, AudioStreamPlayer.PropertyName.VolumeDb.ToString(), VolumeDBInaudible, crossfadingTime).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Linear);
+                    tween.TweenProperty(nextAudioStreamPlayer, AudioStreamPlayer.PropertyName.VolumeDb.ToString(), volume, crossfadingTime).SetEase(Tween.EaseType.Out).SetTrans(Tween.TransitionType.Linear);
                     tween.Chain().TweenCallback(Callable.From(() => CurrentAudioStreamPlayer = nextAudioStreamPlayer));
 
                     return;

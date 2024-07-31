@@ -10,6 +10,7 @@ namespace GodotExtensionatorStarter {
             English,
             Czech,
             Danish,
+            Dutch,
             German,
             Greek,
             Esperanto,
@@ -38,6 +39,7 @@ namespace GodotExtensionatorStarter {
         { LANGUAGES.French, new Language("fr", "fr_FR", "Français", "French") },
         { LANGUAGES.Czech, new Language("cs", "cs_CZ", "Czech", "Czech") },
         { LANGUAGES.Danish, new Language("da", "da_DK", "Dansk", "Danish") },
+        { LANGUAGES.Dutch, new Language("nl", "nl_NL", "Nederlands", "Dutch") },
         { LANGUAGES.German, new Language("de", "de_DE", "Deutsch", "German") },
         { LANGUAGES.Greek, new Language("el", "el_GR", "Ελληνικά", "Greek") },
         { LANGUAGES.Esperanto, new Language("eo", "eo_UY", "Esperanto", "Esperanto") },
@@ -69,6 +71,7 @@ namespace GodotExtensionatorStarter {
         public static Language French() => AvailableLanguages[LANGUAGES.French];
         public static Language Czech() => AvailableLanguages[LANGUAGES.Czech];
         public static Language Danish() => AvailableLanguages[LANGUAGES.Danish];
+        public static Language Dutch() => AvailableLanguages[LANGUAGES.Dutch];
         public static Language German() => AvailableLanguages[LANGUAGES.German];
         public static Language Greek() => AvailableLanguages[LANGUAGES.Greek];
         public static Language Esperanto() => AvailableLanguages[LANGUAGES.Esperanto];

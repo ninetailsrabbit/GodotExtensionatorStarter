@@ -9,26 +9,26 @@ namespace GodotExtensionatorStarter {
         public const string GroupName = "point_and_click_interaction";
 
         public enum InteractionType {
-            MOVEMENT,
-            GRAB,
-            ZOOM,
-            SCAN,
-            CINEMATIC,
-            CAMERA_SHIFT,
-            DIALOGUE
+            Movement,
+            Grab,
+            Zoom,
+            Scan,
+            Cinematic,
+            CameraShift,
+            Dialogue
         }
 
         public Dictionary<InteractionType, CompressedTexture2D> DefaultCursors = new() {
-            {InteractionType.MOVEMENT, Preloader.Instance.CursorStep },
-            {InteractionType.GRAB, Preloader.Instance.CursorHandThinOpen },
-            {InteractionType.ZOOM, Preloader.Instance.CursorZoom },
-            {InteractionType.SCAN, Preloader.Instance.CursorZoom },
-            {InteractionType.DIALOGUE, Preloader.Instance.CursorDialogue },
-            {InteractionType.CINEMATIC, Preloader.Instance.CursorHelp},
+            {InteractionType.Movement, Preloader.Instance.CursorStep },
+            {InteractionType.Grab, Preloader.Instance.CursorHandThinOpen },
+            {InteractionType.Zoom, Preloader.Instance.CursorZoom },
+            {InteractionType.Scan, Preloader.Instance.CursorZoom },
+            {InteractionType.Dialogue, Preloader.Instance.CursorDialogue },
+            {InteractionType.Cinematic, Preloader.Instance.CursorHelp},
         };
 
         [Export] public PointNClickController Actor { get; set; } = default!;
-        [Export] public InteractionType SelectedInteractionType = InteractionType.MOVEMENT;
+        [Export] public InteractionType SelectedInteractionType = InteractionType.Movement;
         [Export] public Input.CursorShape SelectedCursorShape = Input.CursorShape.Arrow;
         [Export] public CompressedTexture2D FocusCursor { get; set; } = default!;
         [Export] public float FadeTimeOnMovement = 0.5f;
@@ -67,7 +67,7 @@ namespace GodotExtensionatorStarter {
 
             FocusCursor ??= DefaultCursors[SelectedInteractionType];
 
-            if (SelectedInteractionType.Equals(InteractionType.MOVEMENT))
+            if (SelectedInteractionType.Equals(InteractionType.Movement))
                 TargetPositionMarker = this.FirstNodeOfType<Marker3D>();
 
             CreateActorDetectorArea();
@@ -130,13 +130,13 @@ namespace GodotExtensionatorStarter {
 
 
         #region Helpers
-        public bool IsMovement() => SelectedInteractionType.Equals(InteractionType.MOVEMENT);
-        public bool IsGrab() => SelectedInteractionType.Equals(InteractionType.GRAB);
-        public bool IsScan() => SelectedInteractionType.Equals(InteractionType.SCAN);
-        public bool IsDialogue() => SelectedInteractionType.Equals(InteractionType.DIALOGUE);
-        public bool IsZoom() => SelectedInteractionType.Equals(InteractionType.ZOOM);
-        public bool IsCinematic() => SelectedInteractionType.Equals(InteractionType.CINEMATIC);
-        public bool IsCameraShift() => SelectedInteractionType.Equals(InteractionType.CAMERA_SHIFT);
+        public bool IsMovement() => SelectedInteractionType.Equals(InteractionType.Movement);
+        public bool IsGrab() => SelectedInteractionType.Equals(InteractionType.Grab);
+        public bool IsScan() => SelectedInteractionType.Equals(InteractionType.Scan);
+        public bool IsDialogue() => SelectedInteractionType.Equals(InteractionType.Dialogue);
+        public bool IsZoom() => SelectedInteractionType.Equals(InteractionType.Zoom);
+        public bool IsCinematic() => SelectedInteractionType.Equals(InteractionType.Cinematic);
+        public bool IsCameraShift() => SelectedInteractionType.Equals(InteractionType.CameraShift);
         #endregion
 
         private void OnFocused(GodotObject interactor) {
@@ -150,7 +150,7 @@ namespace GodotExtensionatorStarter {
 
         private void OnInteracted(GodotObject interactor) {
             switch (SelectedInteractionType) {
-                case InteractionType.MOVEMENT:
+                case InteractionType.Movement:
                     MoveActorToThisPointClickInteractionPosition();
                     break;
             }

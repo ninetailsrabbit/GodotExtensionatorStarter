@@ -1,0 +1,139 @@
+# GodotExtensionatorStarter - Translation template:
+#
+# Automatically generated, 2024.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: GodotExtensionatorStarter\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Automatically generated\n"
+"Language-Team: none\n"
+"Language: ru\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "AUDIO_TAB"
+msgstr "Аудио"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "SCREEN_TAB"
+msgstr "Экран"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "GRAPHICS_TAB"
+msgstr "Графика"
+
+#: components/ui/menus/GameSettingsUI.cs
+msgid "GENERAL_TAB"
+msgstr "Общие"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_MASTER"
+msgstr "Мастер"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_MUSIC"
+msgstr "Музыка"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_SFX"
+msgstr "Звуковые эффекты"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_VOICE"
+msgstr "Голос"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_AMBIENT"
+msgstr "Атмосфера"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "BUS_UI"
+msgstr "Интерфейс пользователя"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "MUTE_ACTION"
+msgstr "Отключить звук"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_WINDOW_MODE"
+msgstr "Режим окна"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_RESOLUTION"
+msgstr "Разрешение"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_FPS_LIMIT"
+msgstr "Ограничение FPS"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_VSYNC_INFO"
+msgstr ""
+"Вертикальная синхронизация предотвращает разрывы экрана, но "
+"если у вас низкая частота кадров, вы можете повысить "
+"производительность, отключив ее"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_VSYNC"
+msgstr "Вертикальная синхронизация"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_PHOTOSENSITIVE"
+msgstr "Безопасный для светочувствительных людей"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_SCREENSHAKE"
+msgstr "Дрожание экрана"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_DALTONISM_INFO"
+msgstr ""
+"Если вы страдаете дальтонизмом [i](протанопия, дейтеранопия, "
+"тританопия или ахроматопсия)[/i], этот параметр может "
+"повысить визуальный контраст"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_LANGUAGE"
+msgstr "Язык"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SUBTITLES_LANGUAGE"
+msgstr "Язык субтитров"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "VOICES_LANGUAGE"
+msgstr "Язык озвучки"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_TELEMETRY"
+msgstr "Разрешить телеметрию"
+
+#: scenes/main/main.tscn
+msgid "PHOTOSENSITIVE_TITLE"
+msgstr "ПРЕДУПРЕЖДЕНИЕ О СВЕТОЧУВСТВИТЕЛЬНЫХ ПРИПАДКАХ"
+
+#: scenes/main/main.tscn
+msgid "PHOTOSENSITIVE_SUBTITLE"
+msgstr "Пожалуйста, прочтите перед игрой"
+
+#: scenes/main/main.tscn
+msgid "PHOTOSENSITIVE_CONTENT"
+msgstr ""
+"Небольшой процент людей может испытывать припадки при "
+"воздействии определенных визуальных образов, мигающих огней, "
+"узоров или фонов, которые могут появляться в видеоиграх. "
+"Люди, у которых ранее не было припадков эпилепсии, могут "
+"быть не диагностированы и могут испытывать припадки во время "
+"игры в видеоигры"
+
+#: scenes/main/main.tscn
+msgid "PHOTOSENSITIVE_CONTENT_2"
+msgstr ""
+"Немедленно прекратите игру и обратитесь к врачу, если у вас "
+"появятся какие-либо симптомы или вы почувствуете себя плохо "
+"во время игры [НАЗВАНИЕ ИГРЫ]"

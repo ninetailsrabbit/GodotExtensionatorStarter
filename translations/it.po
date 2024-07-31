@@ -5,106 +5,139 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: GodotExtensionatorStarter\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
 "Last-Translator: Automatically generated\n"
 "Language-Team: none\n"
-"Language: C:\\Users\\there\\Desktop\\GameDevelopment\\Plugins"
-"\\GodotExtensionatorStarter\\translations\\it\n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4.4\n"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "AUDIO_TAB"
-msgstr "AUDIO_TAB"
+msgstr "Audio"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "SCREEN_TAB"
-msgstr "SCREEN_TAB"
+msgstr "Schermo"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "GRAPHICS_TAB"
-msgstr "GRAPHICS_TAB"
+msgstr "Grafica"
 
 #: components/ui/menus/GameSettingsUI.cs
 msgid "GENERAL_TAB"
-msgstr "GENERAL_TAB"
+msgstr "Generale"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MASTER"
-msgstr "BUS_MASTER"
+msgstr "Master"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MUSIC"
-msgstr "BUS_MUSIC"
+msgstr "Musica"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_SFX"
-msgstr "BUS_SFX"
+msgstr "Effetti sonori"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_VOICE"
-msgstr "BUS_VOICE"
+msgstr "Voce"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_AMBIENT"
-msgstr "BUS_AMBIENT"
+msgstr "Ambiente"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_UI"
-msgstr "BUS_UI"
+msgstr "Interfaccia utente"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "MUTE_ACTION"
-msgstr "MUTE_ACTION"
+msgstr "Muto"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_WINDOW_MODE"
-msgstr "SETTINGS_WINDOW_MODE"
+msgstr "Modalità finestra"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_RESOLUTION"
-msgstr "SETTINGS_RESOLUTION"
+msgstr "Risoluzione"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_FPS_LIMIT"
-msgstr "SETTINGS_FPS_LIMIT"
+msgstr "Limite FPS"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC_INFO"
-msgstr "SETTINGS_VSYNC_INFO"
+msgstr ""
+"La sincronizzazione verticale previene la frammentazione "
+"dello schermo, ma se hai un frame rate basso, potresti "
+"migliorare le prestazioni disabilitandola"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_VSYNC"
-msgstr "SETTINGS_VSYNC"
+msgstr "Vsync"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_PHOTOSENSITIVE"
-msgstr "SETTINGS_PHOTOSENSITIVE"
+msgstr "Sicuro fotosensibile"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_SCREENSHAKE"
-msgstr "SETTINGS_SCREENSHAKE"
+msgstr "Scuotimento dello schermo"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_DALTONISM_INFO"
-msgstr "SETTINGS_DALTONISM_INFO"
+msgstr ""
+"Se soffri di daltonismo [i](protanopia, deuteranopia, "
+"tritanopia o acromatopsia)[/i] questa impostazione può "
+"aumentare il contrasto visivo."
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_LANGUAGE"
+msgstr "Lingua"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SUBTITLES_LANGUAGE"
+msgstr "Lingua sottotitoli"
+
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "VOICES_LANGUAGE"
+msgstr "Lingua voci"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "SETTINGS_TELEMETRY"
-msgstr "SETTINGS_TELEMETRY"
+msgstr "Consenti telemetria"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_TITLE"
-msgstr "PHOTOSENSITIVE_TITLE"
+msgstr "AVVERTENZA PER LE CONVULSIONI FOTOSENSIBILI"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_SUBTITLE"
-msgstr "PHOTOSENSITIVE_SUBTITLE"
+msgstr "Leggere prima di giocare"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT"
-msgstr "PHOTOSENSITIVE_CONTENT"
+msgstr ""
+"Una piccola percentuale di individui può sperimentare una "
+"crisi quando esposta a determinate immagini visive, luci "
+"lampeggianti, modelli o sfondi che possono apparire nei "
+"videogiochi. Le persone che non hanno avuto una storia di "
+"convulsioni epilettiche fino ad oggi potrebbero essere non "
+"diagnosticate e potrebbero continuare a sperimentare "
+"convulsioni mentre giocano ai videogiochi"
 
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
-msgstr "PHOTOSENSITIVE_CONTENT_2"
+msgstr ""
+"Interrompere immediatamente il gioco e consultare un medico "
+"se si verificano sintomi o si inizia a sentirsi male durante "
+"il gioco [TITOLO DEL GIOCO]"
+
+#~ msgid "CAMERA_SHIFT"
+#~ msgstr "CAMERA_SHIFT"

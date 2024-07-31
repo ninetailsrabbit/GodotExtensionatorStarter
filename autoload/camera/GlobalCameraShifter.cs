@@ -1,5 +1,6 @@
 using Extensionator;
 using Godot;
+using GodotExtensionator;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -36,6 +37,9 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             GlobalCameraTransition2D = GetNode<Camera2D>(nameof(GlobalCameraTransition2D));
             GlobalCameraTransition3D = GetNode<Camera3D>(nameof(GlobalCameraTransition3D));
+
+            GlobalCameraTransition2D.Enabled = false;
+            GlobalCameraTransition3D.Disable();
         }
 
         public async void TransitionToRequestedCamera2D(Camera2D from, Camera2D to, float? duration = null, bool recordTransition = true) {
@@ -43,6 +47,8 @@ namespace GodotExtensionatorStarter {
 
             if (IsTransitioning2D())
                 return;
+
+            GlobalCameraTransition2D.Enabled = true;
 
             EmitSignal(SignalName.Transition2DStarted);
 
@@ -71,6 +77,8 @@ namespace GodotExtensionatorStarter {
 
             EmitSignal(SignalName.Transition2DFinished);
 
+            GlobalCameraTransition2D.Enabled = false;
+
         }
 
         public async void TransitionToRequestedCamera3D(Camera3D from, Camera3D to, float? duration = null, bool recordTransition = true) {
@@ -81,6 +89,7 @@ namespace GodotExtensionatorStarter {
 
             EmitSignal(SignalName.Transition3DStarted);
 
+            GlobalCameraTransition3D.Enable();
             GlobalCameraTransition3D.MakeCurrent();
             GlobalCameraTransition3D.Projection = to.Projection;
 
@@ -138,6 +147,8 @@ namespace GodotExtensionatorStarter {
             to.MakeCurrent();
 
             EmitSignal(SignalName.Transition3DFinished);
+
+            GlobalCameraTransition3D.Disable();
 
         }
 
