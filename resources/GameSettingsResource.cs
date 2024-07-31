@@ -106,7 +106,7 @@ namespace GodotExtensionatorStarter {
         public enum QualityPresets {
             Low, Medium, High, Ultra
         }
-        public QualityPresets CurrentQualityPreset = QualityPresets.Medium;
+        public QualityPresets CurrentQualityPreset = HardwareChecker.AutoDiscoverGraphicsQuality();
 
         public System.Collections.Generic.Dictionary<QualityPresets, GraphicQualityPreset> GraphicQualityPresets = new() {
         {
