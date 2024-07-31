@@ -23,12 +23,14 @@ namespace GodotExtensionatorStarter {
             {InteractionType.CINEMATIC, Preloader.Instance.CursorHelp},
         };
 
-        [Export] public PointNClickController PointNClickController { get; set; } = default!;
+        [Export] public PointNClickController Actor { get; set; } = default!;
         [Export] public InteractionType SelectedInteractionType = InteractionType.SCAN;
         [Export] public Input.CursorShape SelectedCursorShape = Input.CursorShape.Arrow;
         [Export] public CompressedTexture2D FocusCursor { get; set; } = default!;
 
+        public GlobalFade GlobalFade { get; set; } = default!;
         public Interactable3D Interactable3D { get; set; } = null!;
+        public Marker3D TargetPositionMarker { get; set; } = default!;
 
         public override void _ExitTree() {
             Interactable3D.Focused -= OnFocused;
@@ -38,7 +40,8 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _EnterTree() {
-            PointNClickController ??= GetTree().GetFirstNodeInGroup(PointNClickController.GroupName) as PointNClickController;
+            GlobalFade = this.GetAutoloadNode<GlobalFade>();
+            Actor ??= GetTree().GetFirstNodeInGroup(PointNClickController.GroupName) as PointNClickController;
 
             Interactable3D = GetNode<Interactable3D>(nameof(Interactable3D));
             Interactable3D.Focused += OnFocused;
@@ -48,28 +51,46 @@ namespace GodotExtensionatorStarter {
 
             FocusCursor ??= DefaultCursors[SelectedInteractionType];
 
+            if (SelectedInteractionType.Equals(InteractionType.MOVEMENT))
+                TargetPositionMarker = this.FirstNodeOfType<Marker3D>();
+
             InputExtension.ShowMouseCursor();
         }
 
+        public void MoveActorToNewPosition(Marker3D targetPosition) {
+            var originalParent = Actor.GetParent();
+            Actor.Reparent(TargetPositionMarker, false);
+            Actor.Position = Vector3.Zero;
+            Actor.Rotation = Vector3.Zero;
+
+            Actor.Reparent(originalParent);
+            Actor.ApplyStandingStature();
+        }
 
         private void OnFocused(GodotObject interactor) {
-            GD.Print("FOCUS");
             if (FocusCursor is not null) {
                 Input.SetCustomMouseCursor(FocusCursor, SelectedCursorShape, FocusCursor.GetSize() / 2);
             }
         }
         private void OnUnFocused(GodotObject interactor) {
-            GD.Print("UNFOCUS");
-
-            PointNClickController.MouseRayCastInteractor.DisplayCustomCursor();
+            Actor.MouseRayCastInteractor.DisplayCustomCursor();
         }
 
-        private void OnInteracted(GodotObject interactor) {
+        private async void OnInteracted(GodotObject interactor) {
+            switch (SelectedInteractionType) {
+                case InteractionType.MOVEMENT:
+                    GlobalFade.FadeIn(0.5f);
+                    await ToSignal(GlobalFade, GlobalFade.SignalName.FadeFinished);
 
+                    MoveActorToNewPosition(TargetPositionMarker);
+
+                    GlobalFade.FadeOut(0.5f);
+                    break;
+            }
         }
 
         private void OnCanceledInteraction(GodotObject interactor) {
-
+            Actor.MouseRayCastInteractor.DisplayCustomCursor();
         }
     }
 }

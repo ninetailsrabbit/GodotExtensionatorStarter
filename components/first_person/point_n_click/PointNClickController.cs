@@ -38,11 +38,11 @@ namespace GodotExtensionatorStarter {
 
 
         public override void _Ready() {
-            Position = Position with { Y = StandingStatureInMeters };
+            ApplyStandingStature();
             OriginalEyesPosition = Eyes.Position;
             OriginalEyesRotation = Eyes.Rotation;
 
-            //Camera3D.MakeCurrent();
+            Camera3D.MakeCurrent();
             RunAnimation(DefaultAnimation);
         }
 
@@ -51,6 +51,10 @@ namespace GodotExtensionatorStarter {
 
             var tween = CreateTween();
             tween.TweenProperty(Eyes, "rotation", OriginalEyesRotation, 0.5f).SetEase(Tween.EaseType.Out);
+        }
+
+        public void ApplyStandingStature() {
+            Position = Position with { Y = StandingStatureInMeters };
         }
 
         private void RunAnimation(string animationName) {
