@@ -14,6 +14,7 @@ namespace GodotExtensionatorStarter {
         [Export] public CompressedTexture2D DefaultCursor { get; set; } = Preloader.Instance.CursorPointerC;
         #endregion
 
+        public Camera3D CurrentCamera { get; set; } = default!;
         public Interactable3D? CurrentInteractable;
         public bool Focused = false;
         public bool Interacting = false;
@@ -22,7 +23,7 @@ namespace GodotExtensionatorStarter {
         public GameGlobals GameGlobals { get; set; } = default!;
 
         public override void _Input(InputEvent @event) {
-            if (OriginCamera is not null && @event is InputEventMouse mouse) {
+            if (CurrentCamera is not null && @event is InputEventMouse mouse) {
                 MousePosition = mouse.Position;
 
                 if (IsProcessing() && (InteractButton.Equals(MouseButton.Left) && @event.IsMouseLeftClick()) ||
@@ -41,7 +42,7 @@ namespace GodotExtensionatorStarter {
             SetProcess(OriginCamera is not null);
 
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
-
+            CurrentCamera = OriginCamera;
         }
 
         public void DisplayCustomCursor() {
@@ -67,8 +68,8 @@ namespace GodotExtensionatorStarter {
             if (InputExtension.IsMouseVisible()) {
 
                 PhysicsDirectSpaceState3D worldSpace = GetWorld3D().DirectSpaceState;
-                Vector3 from = OriginCamera.ProjectRayOrigin(MousePosition);
-                Vector3 to = from + OriginCamera.ProjectRayNormal(MousePosition) * RayLength;
+                Vector3 from = CurrentCamera.ProjectRayOrigin(MousePosition);
+                Vector3 to = from + CurrentCamera.ProjectRayNormal(MousePosition) * RayLength;
 
                 PhysicsRayQueryParameters3D rayQuery = PhysicsRayQueryParameters3D.Create(from, to, GameGlobals.InteractablesCollisionLayer);
                 rayQuery.CollideWithAreas = true;
@@ -83,6 +84,14 @@ namespace GodotExtensionatorStarter {
             }
 
             return null;
+        }
+
+        public void ChangeCameraTo(Camera3D camera) {
+            CurrentCamera = camera;
+        }
+
+        public void ReturnToOriginalCamera() {
+            ChangeCameraTo(OriginCamera);
         }
 
         public void Enable() {

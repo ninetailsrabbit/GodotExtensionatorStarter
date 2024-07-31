@@ -88,12 +88,14 @@ namespace GodotExtensionatorStarter {
         public void MoveActorWithCameraShift() {
             if (IsCameraShift() && CameraToShift is not null) {
                 GlobalCameraShifter.TransitionToRequestedCamera3D(Actor.Camera3D, CameraToShift, CameraShiftTransitionDuration);
+                Actor.MouseRayCastInteractor.ChangeCameraTo(CameraToShift);
             }
         }
 
-        public void ReturnBackToActorCamera() {
+        public void BackToActorOriginalCamera() {
             if (IsCameraShift() && CameraToShift is not null) {
                 GlobalCameraShifter.TransitionToFirstCameraThroughAllSteps3D();
+                Actor.MouseRayCastInteractor.ReturnToOriginalCamera();
             }
         }
 
