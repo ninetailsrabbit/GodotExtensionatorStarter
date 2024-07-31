@@ -142,6 +142,7 @@ shape = SubResource("CapsuleShape3D_1dytl")
 [node name="Eyes" type="Node3D" parent="Head"]
 
 [node name="Camera3D" type="Camera3D" parent="Head/Eyes"]
+current = true
 
 [node name="CameraMovement" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "Camera", "PivotPoint")]
 script = ExtResource("3_7s15c")

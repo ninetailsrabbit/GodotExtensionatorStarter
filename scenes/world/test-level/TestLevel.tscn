@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://2df7eofiqpkx"]
+[gd_scene load_steps=11 format=3 uid="uid://2df7eofiqpkx"]
 
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointNClickInteraction.cs" id="2_8yo64"]
 [ext_resource type="PackedScene" uid="uid://b01ettgh4fl37" path="res://components/first_person/point_n_click/PointNClickController.tscn" id="2_puqhl"]
+[ext_resource type="PackedScene" uid="uid://bu4wye7x6eoel" path="res://components/first_person/FirstPersonController.tscn" id="4_0vpnr"]
 [ext_resource type="Script" path="res://components/interaction/3D/Interactable3D.cs" id="4_s6iyf"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
@@ -93,7 +94,10 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.280
 operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
 
+[node name="FirstPersonController" parent="." instance=ExtResource("4_0vpnr")]
+
 [node name="PointNClickController" parent="." instance=ExtResource("2_puqhl")]
+process_mode = 4
 transform = Transform3D(0.333544, 0, -0.942735, 0, 1, 0, 0.942735, 0, 0.333544, 4.89038, 1.11419, 0)
 
 [node name="Marker3D" type="Marker3D" parent="."]

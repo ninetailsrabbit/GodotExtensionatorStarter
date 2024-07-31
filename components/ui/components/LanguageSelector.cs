@@ -6,12 +6,16 @@ using System.Collections.Generic;
 namespace GodotExtensionatorStarter {
     [GlobalClass]
     public partial class LanguageSelector : OptionButton {
+        [Export(PropertyHint.Enum, "current_language,voices_language,subtitles_language")] public string LanguageSettingRelated = "Game language";
 
         public Localization.LANGUAGES[] LanguagesIncluded = [
-            Localization.LANGUAGES.English,
-            Localization.LANGUAGES.Spanish
+         Localization.LANGUAGES.English,
+            Localization.LANGUAGES.Spanish,
+            Localization.LANGUAGES.German,
+            Localization.LANGUAGES.Portuguese,
+            Localization.LANGUAGES.Italian,
+            Localization.LANGUAGES.French,
         ];
-
         public SettingsFileHandlerAutoload SettingsFileHandlerAutoload { get; set; } = null!;
 
         public Dictionary<int, Language> LanguageByOptionButtonId = [];
@@ -29,7 +33,7 @@ namespace GodotExtensionatorStarter {
 
                 AddItem(language.NativeName, id);
 
-                if (language.Code.EqualsIgnoreCase(SettingsFileHandlerAutoload.GetLocalizationSection("current_language").ToString()))
+                if (language.IsoCode.EqualsIgnoreCase(SettingsFileHandlerAutoload.GetLocalizationSection(LanguageSettingRelated).ToString()))
                     Select(ItemCount - 1);
 
                 LanguageByOptionButtonId.Add(id, language);
@@ -40,7 +44,7 @@ namespace GodotExtensionatorStarter {
 
         private void OnLanguageSelected(long idx) {
             Language currentLanguage = LanguageByOptionButtonId[GetItemId((int)idx)];
-            SettingsFileHandlerAutoload.UpdateLocalizationSection("current_language", currentLanguage.IsoCode);
+            SettingsFileHandlerAutoload.UpdateLocalizationSection(LanguageSettingRelated, currentLanguage.IsoCode);
             SettingsFileHandlerAutoload.SaveSettings();
         }
     }

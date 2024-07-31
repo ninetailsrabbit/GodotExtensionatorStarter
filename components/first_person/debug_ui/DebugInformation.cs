@@ -83,6 +83,7 @@ namespace GodotExtensionatorStarter {
 
         private Dictionary<string, List<PropertyInfo>> StatesProperties = [];
         public override void _UnhandledInput(InputEvent @event) {
+
             if (Input.IsActionJustPressed(OpenDebugMenuInputAction)) {
                 if (ParametersPanel.Visible)
                     GetTree().ResumeGame();

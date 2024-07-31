@@ -30,6 +30,10 @@ namespace GodotExtensionatorStarter {
 
         [Signal]
         public delegate void ChangedLanguageEventHandler(string language);
+        [Signal]
+        public delegate void ChangedSubtitlesLanguageEventHandler(string language);
+        [Signal]
+        public delegate void ChangedVoiceLanguageEventHandler(string language);
 
         [Signal]
         public delegate void UpdatedGraphicSettingsEventHandler(int qualityPreset);

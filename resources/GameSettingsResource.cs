@@ -35,8 +35,12 @@ namespace GodotExtensionatorStarter {
 
         #region Analytics
         [Export] public bool AllowTelemetry = false;
-        [Export] public Localization.LANGUAGES CurrentLanguage = Localization.LANGUAGES.English;
         #endregion
+
+        [Export] public Localization.LANGUAGES CurrentLanguage = Localization.LANGUAGES.English;
+        [Export] public Localization.LANGUAGES SubtitlesLanguage = Localization.LANGUAGES.English;
+        [Export] public Localization.LANGUAGES VoicesLanguage = Localization.LANGUAGES.English;
+        [Export] public bool SubtitlesEnabled = false;
 
         #region Graphics
         // Is intended for modify the value of the WorldEnviroment parameter 'tonemap_exposure'

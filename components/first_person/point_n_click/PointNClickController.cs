@@ -42,7 +42,7 @@ namespace GodotExtensionatorStarter {
             OriginalEyesPosition = Eyes.Position;
             OriginalEyesRotation = Eyes.Rotation;
 
-            Camera3D.MakeCurrent();
+            //Camera3D.MakeCurrent();
             RunAnimation(DefaultAnimation);
         }
 

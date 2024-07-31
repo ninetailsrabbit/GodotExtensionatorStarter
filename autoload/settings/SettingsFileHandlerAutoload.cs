@@ -4,6 +4,7 @@ using Godot.Collections;
 using GodotExtensionator;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace GodotExtensionatorStarter {
 
@@ -98,9 +99,9 @@ namespace GodotExtensionatorStarter {
                 Array<string> KeybindingsEvents = [];
 
                 foreach (InputEvent inputEvent in InputExtension.GetAllInputsForAction(action)) {
-
+                    
                     if (inputEvent is InputEventKey eventKey)
-                        KeybindingsEvents.Add($"InputEventKey:{InputExtension.ReadableKey(eventKey)}");
+                        KeybindingsEvents.Add($"InputEventKey:{WhiteSpaceRegex().Replace(InputExtension.ReadableKey(eventKey), "")}");
 
                     if (inputEvent is InputEventMouseButton eventMouse) {
                         string mouseButton = "";
@@ -199,7 +200,10 @@ namespace GodotExtensionatorStarter {
         #endregion
 
         public void CreateLocalizationSection(GameSettingsResource gameSettings) {
-            UpdateLocalizationSection("current_language", Localization.AvailableLanguages[gameSettings.CurrentLanguage].Code);
+            UpdateLocalizationSection("current_language", Localization.AvailableLanguages[gameSettings.CurrentLanguage].IsoCode);
+            UpdateLocalizationSection("voices_language", Localization.AvailableLanguages[gameSettings.VoicesLanguage].IsoCode);
+            UpdateLocalizationSection("subtitles", gameSettings.SubtitlesEnabled);
+            UpdateLocalizationSection("subtitles_language", Localization.AvailableLanguages[gameSettings.SubtitlesLanguage].IsoCode);
         }
 
         public void CreateAnalyticsSection(GameSettingsResource gameSettings) {
@@ -318,16 +322,24 @@ namespace GodotExtensionatorStarter {
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedLanguage, value);
                 TranslationServer.SetLocale((string)value);
             }
+
+            if (key.EqualsIgnoreCase("subtitles_language")) {
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedSubtitlesLanguage, value);
+            }
+
+            if (key.EqualsIgnoreCase("voices_language")) {
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedVoiceLanguage, value);
+            }
         }
         #endregion
 
 
         private static void AddKeybindingEvent(string action, string[] keybindingType) {
+
             switch (keybindingType[0]) {
                 case "InputEventKey":
-
                     var inputEventKey = new InputEventKey {
-                        Keycode = OS.FindKeycodeFromString(keybindingType[1]),
+                        Keycode = OS.FindKeycodeFromString(KeybindingModifiersRegex().Replace(keybindingType[1], "").StripEdges()),
                         AltPressed = !keybindingType[1].EqualsIgnoreCase("Alt") && keybindingType[1].Contains("Alt", System.StringComparison.OrdinalIgnoreCase),
                         CtrlPressed = !keybindingType[1].EqualsIgnoreCase("Ctrl") && keybindingType[1].Contains("Ctrl", System.StringComparison.OrdinalIgnoreCase),
                         ShiftPressed = !keybindingType[1].EqualsIgnoreCase("Shift") && keybindingType[1].Contains("Shift", System.StringComparison.OrdinalIgnoreCase),
@@ -375,5 +387,11 @@ namespace GodotExtensionatorStarter {
                 return InputMap.GetActions().Where((action) => !action.ToString().StartsWith("ui_")).ToList();
         }
         private bool SettingsFileExists() => FileAccess.FileExists(SettingsFilePath);
+
+        [GeneratedRegex(@"\s+")]
+        private static partial Regex WhiteSpaceRegex();
+
+        [GeneratedRegex(@"\b[(Shift|Alt|Ctrl)\+]+\b")]
+        private static partial Regex KeybindingModifiersRegex();
     }
 }
