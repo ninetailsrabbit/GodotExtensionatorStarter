@@ -11,7 +11,9 @@ namespace GodotExtensionatorStarter {
         [Export] public Camera3D OriginCamera { get; set; } = default!;
         [Export] public float RayLength = 1000f;
         [Export] public MouseButton InteractButton = MouseButton.Left;
+        [Export] public string[] InputActionsToCancelInteraction = ["cancel_interaction"];
         [Export] public CompressedTexture2D DefaultCursor { get; set; } = Preloader.Instance.CursorPointerC;
+
         #endregion
 
         public Camera3D CurrentCamera { get; set; } = default!;
@@ -31,9 +33,12 @@ namespace GodotExtensionatorStarter {
                     Interact(CurrentInteractable);
                 }
             }
+
+            if (InputExtension.IsAnyActionJustPressed(InputActionsToCancelInteraction) && CurrentInteractable is not null)
+                CancelInteract(CurrentInteractable);
+
+
         }
-
-
         public override void _Ready() {
             DisplayCustomCursor();
 
@@ -112,8 +117,8 @@ namespace GodotExtensionatorStarter {
         }
         public void CancelInteract(GodotObject interactable) {
             if (interactable is Interactable3D _interactable) {
-                DisplayCustomCursor();
                 Interacting = false;
+                UnFocus(interactable);
 
                 _interactable.EmitSignalSafe(Interactable3D.SignalName.CanceledInteraction, this);
             }
@@ -130,7 +135,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public void UnFocus(GodotObject interactable) {
-            if (interactable is Interactable3D _interactable && CurrentInteractable is not null) {
+            if (interactable is Interactable3D _interactable && CurrentInteractable is not null && !Interacting) {
                 DisplayCustomCursor();
                 CurrentInteractable = null;
                 Focused = false;
@@ -138,6 +143,5 @@ namespace GodotExtensionatorStarter {
                 _interactable.EmitSignalSafe(Interactable3D.SignalName.UnFocused, this);
             }
         }
-
     }
 }

@@ -11,11 +11,27 @@ namespace GodotExtensionatorStarter {
 
         [Export] public float StandingStatureInMeters = 1.75f;
         [Export] public string DefaultAnimation = "idle";
-        [Export] public bool UseAnimations = true;
+        [Export]
+        public bool UseAnimations {
+            get => _useAnimations; set {
+                if (_useAnimations != value) {
+                    _useAnimations = value;
+
+                    if (UseAnimations) {
+                        RunAnimation(DefaultAnimation);
+                    }
+                    else {
+                        AnimationPlayer.Stop();
+                    }
+                }
+            }
+        }
         public GlobalFade GlobalFade { get; set; } = default!;
         public GameGlobals GameGlobals { get; set; } = default!;
         public AnimationPlayer AnimationPlayer { get; set; } = null!;
         public MouseRayCastInteractor MouseRayCastInteractor { get; set; } = null!;
+
+        public Marker3D ScanObjectMarker { get; set; } = null!;
 
         public Node3D Eyes { get; set; } = null!;
         public Camera3D Camera3D { get; set; } = null!;
@@ -23,7 +39,7 @@ namespace GodotExtensionatorStarter {
         public Vector3 OriginalEyesPosition = Vector3.Zero;
         public Vector3 OriginalEyesRotation = Vector3.Zero;
 
-
+        private bool _useAnimations = true;
         public override void _EnterTree() {
             AddToGroup(GroupName);
 
@@ -31,6 +47,7 @@ namespace GodotExtensionatorStarter {
 
             AnimationPlayer = GetNode<AnimationPlayer>(nameof(AnimationPlayer));
             MouseRayCastInteractor = GetNode<MouseRayCastInteractor>(nameof(MouseRayCastInteractor));
+            ScanObjectMarker = GetNode<Marker3D>(nameof(ScanObjectMarker));
             Eyes = GetNode<Node3D>($"%{nameof(Eyes)}");
             Camera3D = GetNode<Camera3D>($"%{nameof(Camera3D)}");
 

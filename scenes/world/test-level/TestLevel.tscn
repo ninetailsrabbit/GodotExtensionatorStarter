@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://2df7eofiqpkx"]
+[gd_scene load_steps=14 format=3 uid="uid://2df7eofiqpkx"]
 
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointNClickInteraction.cs" id="2_8yo64"]
 [ext_resource type="PackedScene" uid="uid://b01ettgh4fl37" path="res://components/first_person/point_n_click/PointNClickController.tscn" id="2_puqhl"]
@@ -29,6 +29,12 @@ radius = 0.811647
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_mnydr"]
 radius = 0.811647
+
+[sub_resource type="BoxMesh" id="BoxMesh_oopeq"]
+size = Vector3(0.3, 0.2, 0.3)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_0lxeb"]
+size = Vector3(0.391209, 0.310059, 0.351776)
 
 [node name="TestLevel" type="Node3D"]
 
@@ -98,7 +104,7 @@ operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
 
 [node name="PointNClickController" parent="." instance=ExtResource("2_puqhl")]
-transform = Transform3D(0.994053, 0, -0.108902, 0, 1, 0, 0.108902, 0, 0.994053, 12.0356, 1.11419, -0.681421)
+transform = Transform3D(-0.17272, 0, -0.984971, 0, 1, 0, 0.984971, 0, -0.17272, 2.09939, 1.11419, -0.681421)
 
 [node name="PointNClickInteraction" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.79565, 1.40617, -1.08139)
@@ -137,3 +143,20 @@ shape = SubResource("SphereShape3D_mnydr")
 [node name="TargetPositionMarker" type="Marker3D" parent="PointNClickInteraction2"]
 transform = Transform3D(0.999401, 0, 0.0346029, 0, 1, 0, -0.0346029, 0, 0.999401, 0.12247, 0, 0)
 gizmo_extents = 0.87
+
+[node name="ScanObject" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.78551, 0.835963, 0)
+mesh = SubResource("BoxMesh_oopeq")
+
+[node name="PointNClickInteraction" type="Node3D" parent="ScanObject" node_paths=PackedStringArray("Actor")]
+script = ExtResource("2_8yo64")
+Actor = NodePath("../../PointNClickController")
+SelectedInteractionType = 3
+
+[node name="Interactable3D" type="Area3D" parent="ScanObject/PointNClickInteraction"]
+script = ExtResource("4_s6iyf")
+Scannable = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ScanObject/PointNClickInteraction/Interactable3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00580406, 0.0505371, -0.00837708)
+shape = SubResource("BoxShape3D_0lxeb")

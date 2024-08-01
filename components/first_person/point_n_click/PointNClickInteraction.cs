@@ -31,6 +31,7 @@ namespace GodotExtensionatorStarter {
         [Export] public InteractionType SelectedInteractionType = InteractionType.Movement;
         [Export] public Input.CursorShape SelectedCursorShape = Input.CursorShape.Arrow;
         [Export] public CompressedTexture2D FocusCursor { get; set; } = default!;
+        [Export] public Node3D ObjectToScan { get; set; } = default!;
         [Export] public float FadeTimeOnMovement = 0.5f;
         [Export] public float CameraShiftTransitionDuration = 1f;
 
@@ -41,6 +42,11 @@ namespace GodotExtensionatorStarter {
         public Interactable3D Interactable3D { get; set; } = null!;
         public Camera3D CameraToShift { get; set; } = null!;
         public Marker3D TargetPositionMarker { get; set; } = default!;
+
+        private bool IsScanningObject = false;
+
+        private Vector3 OriginalScanObjectPosition = Vector3.Zero;
+        private Node? OriginalScanObjectParent { get; set; } = default!;
 
         public override void _ExitTree() {
             Interactable3D.Focused -= OnFocused;
@@ -67,8 +73,12 @@ namespace GodotExtensionatorStarter {
 
             FocusCursor ??= DefaultCursors[SelectedInteractionType];
 
-            if (SelectedInteractionType.Equals(InteractionType.Movement))
+            if (IsMovement())
                 TargetPositionMarker = this.FirstNodeOfType<Marker3D>();
+
+            if (IsScan()) {
+                ObjectToScan ??= GetParent<Node3D>();
+            }
 
             CreateActorDetectorArea();
 
@@ -97,6 +107,26 @@ namespace GodotExtensionatorStarter {
                 GlobalCameraShifter.TransitionToFirstCameraThroughAllSteps3D();
                 Actor.MouseRayCastInteractor.ReturnToOriginalCamera();
             }
+        }
+
+        public void ScanWorldObject() {
+            Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, false);
+
+
+            var scanObjectMarker = Actor.ScanObjectMarker;
+
+            OriginalScanObjectParent = ObjectToScan.GetParent();
+            OriginalScanObjectPosition = ObjectToScan.Position;
+
+            IsScanningObject = true;
+            Actor.UseAnimations = false;
+            
+            ObjectToScan.Reparent(scanObjectMarker);
+
+            var tween = CreateTween();
+            tween.TweenProperty(ObjectToScan, Node3D.PropertyName.Position.ToString(), Vector3.Zero, 0.5f)
+                .SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Sine);
+
         }
 
         private void CreateActorDetectorArea() {
@@ -153,11 +183,26 @@ namespace GodotExtensionatorStarter {
                 case InteractionType.Movement:
                     MoveActorToThisPointClickInteractionPosition();
                     break;
+                case InteractionType.Scan:
+                    ScanWorldObject();
+                    break;
             }
         }
 
         private void OnCanceledInteraction(GodotObject interactor) {
             Actor.MouseRayCastInteractor.DisplayCustomCursor();
+            Actor.UseAnimations = true;
+
+            if (IsScan()) {
+                ObjectToScan.Reparent(OriginalScanObjectParent);
+
+                var tween = CreateTween();
+                tween.TweenProperty(ObjectToScan, Node3D.PropertyName.Position.ToString(), OriginalScanObjectPosition, 0.5f)
+                    .SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Sine);
+
+                IsScanningObject = false;
+                Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, true);
+            }
         }
     }
 }

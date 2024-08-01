@@ -99,22 +99,24 @@ namespace GodotExtensionatorStarter {
                 Array<string> KeybindingsEvents = [];
 
                 foreach (InputEvent inputEvent in InputExtension.GetAllInputsForAction(action)) {
-                    
                     if (inputEvent is InputEventKey eventKey)
                         KeybindingsEvents.Add($"InputEventKey:{WhiteSpaceRegex().Replace(InputExtension.ReadableKey(eventKey), "")}");
+
+
+
 
                     if (inputEvent is InputEventMouseButton eventMouse) {
                         string mouseButton = "";
 
                         switch (eventMouse.ButtonIndex) {
                             case MouseButton.Left:
-                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{eventMouse.ButtonIndex}{InputEventSeparator}LMB";
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{(int)eventMouse.ButtonIndex}{InputEventSeparator}LMB";
                                 break;
                             case MouseButton.Middle:
-                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{eventMouse.ButtonIndex}{InputEventSeparator}MMB";
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{(int)eventMouse.ButtonIndex}{InputEventSeparator}MMB";
                                 break;
                             case MouseButton.Right:
-                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{eventMouse.ButtonIndex}{InputEventSeparator}RMB";
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{(int)eventMouse.ButtonIndex}{InputEventSeparator}RMB";
                                 break;
                         }
 
@@ -319,17 +321,17 @@ namespace GodotExtensionatorStarter {
             ConfigFileApi.SetValue(LocalizationSection, key, value);
 
             if (key.EqualsIgnoreCase("current_language")) {
-                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedLanguage, value);
-                TranslationServer.SetLocale((string)value);
+                TranslationServer.SetLocale(value.ToString());
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedLanguage, value.ToString());
                 GlobalGameEvents.UpdateAllTranslatables();
             }
 
             if (key.EqualsIgnoreCase("subtitles_language")) {
-                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedSubtitlesLanguage, value);
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedSubtitlesLanguage, value.ToString());
             }
 
             if (key.EqualsIgnoreCase("voices_language")) {
-                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedVoiceLanguage, value);
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedVoiceLanguage, value.ToString());
             }
         }
         #endregion
