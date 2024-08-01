@@ -18,11 +18,11 @@ namespace GodotExtensionatorStarter {
             SettingsFileHandlerAutoload = this.GetAutoloadNode<SettingsFileHandlerAutoload>();
 
             Translations = new() {
-                { GameSettingsResource.DaltonismTypes.NO, "GENERAL_NO"},
-                { GameSettingsResource.DaltonismTypes.DEUTERANOPIA, "DALTONISM_DEUTERANOPIA"},
-                { GameSettingsResource.DaltonismTypes.PROTANOPIA, "DALTONISM_PROTANOPIA"},
-                { GameSettingsResource.DaltonismTypes.TRITANOPIA, "DALTONISM_TRITANOPIA"},
-                { GameSettingsResource.DaltonismTypes.ACHROMATOPSIA, "DALTONISM_ACHROMATOPSIA"},
+                { GameSettingsResource.DaltonismTypes.NO, Localization.NoTranslationKey},
+                { GameSettingsResource.DaltonismTypes.DEUTERANOPIA, Localization.DeuteranopiaTranslationKey},
+                { GameSettingsResource.DaltonismTypes.PROTANOPIA, Localization.ProtanopiaTranslationKey},
+                { GameSettingsResource.DaltonismTypes.TRITANOPIA, Localization.TritanopiaTranslationKey},
+                { GameSettingsResource.DaltonismTypes.ACHROMATOPSIA, Localization.AchromatopsiaTranslationKey},
             };
         }
 
@@ -60,9 +60,8 @@ namespace GodotExtensionatorStarter {
         }
 
         public void OnLocaleChanged() {
-            foreach (var entry in DaltonismButtons) {
+            foreach (var entry in DaltonismButtons)
                 entry.Value.Text = Tr(Translations[entry.Key]);
-            }
         }
     }
 }

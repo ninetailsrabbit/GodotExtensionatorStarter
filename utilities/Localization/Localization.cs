@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace GodotExtensionatorStarter {
-
     public record Language(string Code, string IsoCode, string NativeName, string EnglishName);
     public static class Localization {
         public enum LANGUAGES {
@@ -62,11 +61,14 @@ namespace GodotExtensionatorStarter {
         { LANGUAGES.Ukrainian, new Language("uk", "uk_UA", "Українська", "Ukrainian") },
     };
 
+        #region Helpers
         public static Language FindByCode(string code) => AvailableLanguages.Values.First(language => language.Code.EqualsIgnoreCase(code));
         public static Language FindByIsoCode(string isoCode) => AvailableLanguages.Values.First(language => language.IsoCode.EqualsIgnoreCase(isoCode));
         public static Language FindByNativeName(string nativeName) => AvailableLanguages.Values.First(language => language.NativeName.EqualsIgnoreCase(nativeName));
         public static Language FindByEnglishName(string englishName) => AvailableLanguages.Values.First(language => language.EnglishName.EqualsIgnoreCase(englishName));
+        #endregion
 
+        #region Language functions
         public static Language English() => AvailableLanguages[LANGUAGES.English];
         public static Language French() => AvailableLanguages[LANGUAGES.French];
         public static Language Czech() => AvailableLanguages[LANGUAGES.Czech];
@@ -91,6 +93,30 @@ namespace GodotExtensionatorStarter {
         public static Language Turkish() => AvailableLanguages[LANGUAGES.Turkish];
         public static Language Japanese() => AvailableLanguages[LANGUAGES.Japanese];
         public static Language Ukrainian() => AvailableLanguages[LANGUAGES.Ukrainian];
+        #endregion
+
+        #region Translation keys
+        //Here lives all the keys that are pretended to be used with Tr()
+        public static readonly string NoTranslationKey = "GENERAL_NO";
+        public static readonly string YesTranslationKey = "GENERAL_YES";
+
+        public static readonly string AudioTabTranslationKey = "AUDIO_TAB";
+        public static readonly string ScreenTabTranslationKey = "SCREEN_TAB";
+        public static readonly string GraphicsTabTranslationKey = "GRAPHICS_TAB";
+        public static readonly string GeneralTabTranslationKeyTr = "GENERAL_TAB";
+
+        public static readonly string DeuteranopiaTranslationKey = "DALTONISM_DEUTERANOPIA";
+        public static readonly string ProtanopiaTranslationKey = "DALTONISM_PROTANOPIA";
+        public static readonly string TritanopiaTranslationKey = "DALTONISM_TRITANOPIA";
+        public static readonly string AchromatopsiaTranslationKey = "DALTONISM_ACHROMATOPSIA";
+
+        public static readonly string GraphicsQualityTranslationKey = "GRAPHICS_QUALITY";
+
+        public static readonly string QualityLowTranslationKey = "QUALITY_LOW";
+        public static readonly string QualityMediumTranslationKey = "QUALITY_MEDIUM";
+        public static readonly string QualityHighTranslationKey = "QUALITY_HIGH";
+        public static readonly string QualityUltraTranslationKey = "QUALITY_ULTRA";
+        #endregion
     }
 
 }

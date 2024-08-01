@@ -4,12 +4,13 @@ using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
     [GlobalClass]
-    public partial class GraphicQualitySettings : VBoxContainer {
+    public partial class GraphicQualitySettings : VBoxContainer, ITranslatable {
 
         public SettingsFileHandlerAutoload SettingsFileHandlerAutoload { get; set; } = null!;
 
-        public Dictionary<GameSettingsResource.QualityPresets, string> Translations = [];
+        public Dictionary<GameSettingsResource.QualityPresets, Button> QualityPresetButtons = [];
 
+        public Dictionary<GameSettingsResource.QualityPresets, string> Translations = [];
         private ButtonGroup QualityPresetButtonGroup { get; } = new();
 
 
@@ -17,10 +18,10 @@ namespace GodotExtensionatorStarter {
             SettingsFileHandlerAutoload = this.GetAutoloadNode<SettingsFileHandlerAutoload>();
 
             Translations = new() {
-                { GameSettingsResource.QualityPresets.Low, Tr("QUALITY_LOW")},
-                { GameSettingsResource.QualityPresets.Medium, Tr("QUALITY_MEDIUM")},
-                { GameSettingsResource.QualityPresets.High, Tr("QUALITY_HIGH")},
-                { GameSettingsResource.QualityPresets.Ultra, Tr("QUALITY_ULTRA")},
+                { GameSettingsResource.QualityPresets.Low, Localization.QualityLowTranslationKey},
+                { GameSettingsResource.QualityPresets.Medium, Localization.QualityMediumTranslationKey},
+                { GameSettingsResource.QualityPresets.High, Localization.QualityHighTranslationKey},
+                { GameSettingsResource.QualityPresets.Ultra, Localization.QualityUltraTranslationKey},
             };
         }
 
@@ -34,7 +35,7 @@ namespace GodotExtensionatorStarter {
 
         private void CreateGraphicQualityPresetButtons() {
 
-            AddChild(new Label() { Text = Tr("GRAPHICS_QUALITY") });
+            AddChild(new Label() { Name = "GraphicsQualityLabel", Text = Tr(Localization.GraphicsQualityTranslationKey) });
 
             HBoxContainer hboxContainer = new();
             AddChild(hboxContainer);
@@ -53,6 +54,8 @@ namespace GodotExtensionatorStarter {
                     SizeFlagsHorizontal = SizeFlags.ExpandFill
                 };
 
+                QualityPresetButtons.Add(entry.Key, button);
+
                 hboxContainer.AddChild(button);
 
                 if (entry.Key.Equals((GameSettingsResource.QualityPresets)(int)SettingsFileHandlerAutoload.GetGraphicSection("quality_preset")))
@@ -64,6 +67,14 @@ namespace GodotExtensionatorStarter {
 
             SettingsFileHandlerAutoload.UpdateGraphicSection("quality_preset", (int)qualityPreset);
             SettingsFileHandlerAutoload.SaveSettings();
+        }
+
+        public void OnLocaleChanged() {
+            GetNode<Label>("GraphicsQualityLabel").Text = Tr(Localization.GraphicsQualityTranslationKey);
+
+            foreach (var entry in QualityPresetButtons) {
+                entry.Value.Text = Tr(Translations[entry.Key]);
+            }
         }
     }
 }

@@ -39,14 +39,13 @@ namespace GodotExtensionatorStarter {
             foreach (var audioSlider in this.GetAllChildren<AudioSlider>()) {
                 AudioBusesSliders.Add(audioSlider.AudioBus, audioSlider);
             }
-
         }
 
         private void PrepareTabBars() {
-            AudioTabBar.Name = Tr("AUDIO_TAB");
-            ScreenTabBar.Name = Tr("SCREEN_TAB");
-            GraphicsTabBar.Name = Tr("GRAPHICS_TAB");
-            GeneralTabBar.Name = Tr("GENERAL_TAB");
+            AudioTabBar.Name = Tr(Localization.AudioTabTranslationKey);
+            ScreenTabBar.Name = Tr(Localization.ScreenTabTranslationKey);
+            GraphicsTabBar.Name = Tr(Localization.GraphicsTabTranslationKey);
+            GeneralTabBar.Name = Tr(Localization.AchromatopsiaTranslationKey);
         }
 
         private void OnLoadedSettings() {
