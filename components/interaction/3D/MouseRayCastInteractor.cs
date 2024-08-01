@@ -11,6 +11,8 @@ namespace GodotExtensionatorStarter {
         [Export] public Camera3D OriginCamera { get; set; } = default!;
         [Export] public float RayLength = 1000f;
         [Export] public MouseButton InteractButton = MouseButton.Left;
+        [Export] public string[] InputActionsToInteract = ["interact"];
+
         [Export] public string[] InputActionsToCancelInteraction = ["cancel_interaction"];
         [Export] public CompressedTexture2D DefaultCursor { get; set; } = Preloader.Instance.CursorPointerC;
 
@@ -29,7 +31,8 @@ namespace GodotExtensionatorStarter {
                 MousePosition = mouse.Position;
 
                 if (IsProcessing() && (InteractButton.Equals(MouseButton.Left) && @event.IsMouseLeftClick()) ||
-                    (InteractButton.Equals(MouseButton.Right) && @event.IsMouseRightClick())) {
+                    (InteractButton.Equals(MouseButton.Right) && @event.IsMouseRightClick()) ||
+                    InputExtension.IsAnyActionJustPressed(InputActionsToInteract)) {
                     Interact(CurrentInteractable);
                 }
             }
@@ -84,8 +87,6 @@ namespace GodotExtensionatorStarter {
 
                 if (result.TryGetValue("collider", out var interactable))
                     return (Interactable3D)interactable;
-
-                return null;
             }
 
             return null;

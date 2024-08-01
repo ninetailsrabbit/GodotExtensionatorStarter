@@ -110,9 +110,9 @@ namespace GodotExtensionatorStarter {
                 .Where(node => node is PointAndClickMovement pointNClick && !pointNClick.Equals(pointAndClickMovement))
                 .Cast<PointAndClickMovement>()
                 .ToList()
-                .ForEach(pointAndClick => pointAndClick.Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, true));
+                .ForEach(pointAndClick => pointAndClick.Interactable3D.Enable());
 
-            pointAndClickMovement.Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, false);
+            pointAndClickMovement.Interactable3D.Disable();
         }
 
     }
