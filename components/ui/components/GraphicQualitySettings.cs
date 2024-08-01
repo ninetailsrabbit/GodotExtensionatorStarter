@@ -23,6 +23,8 @@ namespace GodotExtensionatorStarter {
                 { GameSettingsResource.QualityPresets.High, Localization.QualityHighTranslationKey},
                 { GameSettingsResource.QualityPresets.Ultra, Localization.QualityUltraTranslationKey},
             };
+
+            AddChild(new Label() { Name = "GraphicsQualityLabel", Text = Tr(Localization.GraphicsQualityTranslationKey) });
         }
 
         public override void _Ready() {
@@ -34,9 +36,6 @@ namespace GodotExtensionatorStarter {
         }
 
         private void CreateGraphicQualityPresetButtons() {
-
-            AddChild(new Label() { Name = "GraphicsQualityLabel", Text = Tr(Localization.GraphicsQualityTranslationKey) });
-
             HBoxContainer hboxContainer = new();
             AddChild(hboxContainer);
             hboxContainer.AnchorsPreset = AnchorsPreset = (int)LayoutPreset.TopWide;
@@ -70,10 +69,12 @@ namespace GodotExtensionatorStarter {
         }
 
         public void OnLocaleChanged() {
-            GetNode<Label>("GraphicsQualityLabel").Text = Tr(Localization.GraphicsQualityTranslationKey);
+            if(IsInsideTree()) {
+                GetNode<Label>("GraphicsQualityLabel").Text = Tr(Localization.GraphicsQualityTranslationKey);
 
-            foreach (var entry in QualityPresetButtons) {
-                entry.Value.Text = Tr(Translations[entry.Key]);
+                foreach (var entry in QualityPresetButtons) {
+                    entry.Value.Text = Tr(Translations[entry.Key]);
+                }
             }
         }
     }

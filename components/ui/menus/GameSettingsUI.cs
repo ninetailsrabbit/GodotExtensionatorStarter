@@ -45,7 +45,7 @@ namespace GodotExtensionatorStarter {
             AudioTabBar.Name = Tr(Localization.AudioTabTranslationKey);
             ScreenTabBar.Name = Tr(Localization.ScreenTabTranslationKey);
             GraphicsTabBar.Name = Tr(Localization.GraphicsTabTranslationKey);
-            GeneralTabBar.Name = Tr(Localization.AchromatopsiaTranslationKey);
+            GeneralTabBar.Name = Tr(Localization.GeneralTabTranslationKeyTr);
         }
 
         private void OnLoadedSettings() {

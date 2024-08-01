@@ -72,6 +72,7 @@ namespace GodotExtensionatorStarter {
             LoadAudio(ConfigFileApi);
             LoadKeybindings(ConfigFileApi);
             LoadGraphics(ConfigFileApi);
+            LoadLocalization(ConfigFileApi);
 
             EmitSignal(SignalName.LoadedSettings);
         }
@@ -270,6 +271,27 @@ namespace GodotExtensionatorStarter {
             }
         }
 
+        public void LoadLocalization(ConfigFile configFile) {
+            foreach (string key in configFile.GetSectionKeys(LocalizationSection)) {
+                var configValue = configFile.GetValue(LocalizationSection, key);
+
+                switch (key) {
+                    case "current_language":
+                        TranslationServer.SetLocale(configValue.ToString());
+                        GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedLanguage, configValue.ToString());
+                        break;
+
+                    case "subtitles_language":
+                        // TODO - UPDATE WHEN SUBTITLES IMPLEMENTED
+                        break;
+
+                    case "voices_language":
+                        // TODO - UPDATE WHEN VOICES IMPLEMENTED
+
+                        break;
+                }
+            }
+        }
         #endregion
 
         public void ResetToFactorySettings() {

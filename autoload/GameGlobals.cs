@@ -14,7 +14,6 @@ namespace GodotExtensionatorStarter {
         public string NextScenePath = string.Empty;
 
 
-        public string CurrentLanguage = "en";
     }
 
 }
