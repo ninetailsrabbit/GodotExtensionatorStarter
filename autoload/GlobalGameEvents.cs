@@ -42,6 +42,11 @@ namespace GodotExtensionatorStarter {
 
         #endregion
 
+        #region Point and click
+        [Signal]
+        public delegate void ActorMovedToPointAndClickPositionEventHandler(PointAndClickMovement pointAndClick);
+        #endregion
+
         public override void _Notification(int what) {
             if (what == NotificationTranslationChanged) {
                 UpdateAllTranslatables();

@@ -1,5 +1,6 @@
 using Godot;
 using GodotExtensionator;
+using System.Linq;
 
 
 namespace GodotExtensionatorStarter {
@@ -28,6 +29,7 @@ namespace GodotExtensionatorStarter {
         }
         public GlobalFade GlobalFade { get; set; } = default!;
         public GameGlobals GameGlobals { get; set; } = default!;
+        public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
         public AnimationPlayer AnimationPlayer { get; set; } = null!;
         public MouseRayCastInteractor MouseRayCastInteractor { get; set; } = null!;
 
@@ -40,10 +42,19 @@ namespace GodotExtensionatorStarter {
         public Vector3 OriginalEyesRotation = Vector3.Zero;
 
         private bool _useAnimations = true;
+
+        public override void _ExitTree() {
+            GlobalFade.FadeStarted -= OnFadeStarted;
+            GlobalFade.FadeFinished -= OnFadeFinished;
+
+            GlobalGameEvents.ActorMovedToPointAndClickPosition -= OnPointAndClickMovement;
+
+        }
         public override void _EnterTree() {
             AddToGroup(GroupName);
 
             GlobalFade = this.GetAutoloadNode<GlobalFade>();
+            GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
 
             AnimationPlayer = GetNode<AnimationPlayer>(nameof(AnimationPlayer));
             MouseRayCastInteractor = GetNode<MouseRayCastInteractor>(nameof(MouseRayCastInteractor));
@@ -53,6 +64,8 @@ namespace GodotExtensionatorStarter {
 
             GlobalFade.FadeStarted += OnFadeStarted;
             GlobalFade.FadeFinished += OnFadeFinished;
+
+            GlobalGameEvents.ActorMovedToPointAndClickPosition += OnPointAndClickMovement;
         }
 
 
@@ -91,5 +104,16 @@ namespace GodotExtensionatorStarter {
             MouseRayCastInteractor.Enable();
             RunAnimation(DefaultAnimation);
         }
+
+        private void OnPointAndClickMovement(PointAndClickMovement pointAndClickMovement) {
+            GetTree().Root.GetAllChildren()
+                .Where(node => node is PointAndClickMovement pointNClick && !pointNClick.Equals(pointAndClickMovement))
+                .Cast<PointAndClickMovement>()
+                .ToList()
+                .ForEach(pointAndClick => pointAndClick.Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, true));
+
+            pointAndClickMovement.Interactable3D.SetDeferred(Area3D.PropertyName.Monitorable, false);
+        }
+
     }
 }
