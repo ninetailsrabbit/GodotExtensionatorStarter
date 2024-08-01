@@ -3,7 +3,7 @@ using GodotExtensionator;
 using System.Collections.Generic;
 
 namespace GodotExtensionatorStarter {
-    public partial class GameSettingsUI : Control {
+    public partial class GameSettingsUI : Control, ITranslatable {
 
         public GameGlobals GameGlobals { get; set; } = null!;
         public SettingsFileHandlerAutoload SettingsFileHandlerAutoload { get; set; } = null!;
@@ -11,12 +11,22 @@ namespace GodotExtensionatorStarter {
 
         public Dictionary<string, AudioSlider> AudioBusesSliders = [];
 
+        public TabBar AudioTabBar { get; set; } = default!;
+        public TabBar ScreenTabBar { get; set; } = default!;
+        public TabBar GraphicsTabBar { get; set; } = default!;
+        public TabBar GeneralTabBar { get; set; } = default!;
+
         public override void _ExitTree() {
             SettingsFileHandlerAutoload.LoadedSettings -= OnLoadedSettings;
         }
 
         public override void _EnterTree() {
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
+
+            AudioTabBar = GetNode<TabBar>("%Audio");
+            ScreenTabBar = GetNode<TabBar>("%Screen");
+            GraphicsTabBar = GetNode<TabBar>("%Graphics");
+            GeneralTabBar = GetNode<TabBar>("%General");
 
             SettingsFileHandlerAutoload = this.GetAutoloadNode<SettingsFileHandlerAutoload>();
             SettingsFileHandlerAutoload.LoadedSettings += OnLoadedSettings;
@@ -33,11 +43,6 @@ namespace GodotExtensionatorStarter {
         }
 
         private void PrepareTabBars() {
-            var AudioTabBar = GetNode<TabBar>("%Audio");
-            var ScreenTabBar = GetNode<TabBar>("%Screen");
-            var GraphicsTabBar = GetNode<TabBar>("%Graphics");
-            var GeneralTabBar = GetNode<TabBar>("%General");
-
             AudioTabBar.Name = Tr("AUDIO_TAB");
             ScreenTabBar.Name = Tr("SCREEN_TAB");
             GraphicsTabBar.Name = Tr("GRAPHICS_TAB");
@@ -48,6 +53,10 @@ namespace GodotExtensionatorStarter {
             foreach (var entry in AudioBusesSliders) {
                 entry.Value.Value = AudioManager.GetActualVolumeDbFromBus(entry.Key);
             }
+        }
+
+        public void OnLocaleChanged() {
+            PrepareTabBars();
         }
     }
 

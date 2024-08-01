@@ -321,6 +321,7 @@ namespace GodotExtensionatorStarter {
             if (key.EqualsIgnoreCase("current_language")) {
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedLanguage, value);
                 TranslationServer.SetLocale((string)value);
+                GlobalGameEvents.UpdateAllTranslatables();
             }
 
             if (key.EqualsIgnoreCase("subtitles_language")) {

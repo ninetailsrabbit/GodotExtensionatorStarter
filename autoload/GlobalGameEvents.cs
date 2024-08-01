@@ -1,4 +1,6 @@
 ﻿using Godot;
+using GodotExtensionator;
+using System.Linq;
 
 namespace GodotExtensionatorStarter {
     public partial class GlobalGameEvents : Node {
@@ -39,6 +41,20 @@ namespace GodotExtensionatorStarter {
         public delegate void UpdatedGraphicSettingsEventHandler(int qualityPreset);
 
         #endregion
+
+        public override void _Notification(int what) {
+            if (what == NotificationTranslationChanged) {
+                UpdateAllTranslatables();
+            }
+        }
+
+        public void UpdateAllTranslatables() {
+            GetTree().Root.GetAllChildren<Node>()
+                .Where(node => node is ITranslatable)
+                .Cast<ITranslatable>()
+                .ToList()
+                .ForEach(translatable => translatable.OnLocaleChanged());
+        }
 
     }
 

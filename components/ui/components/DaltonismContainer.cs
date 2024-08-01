@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace GodotExtensionatorStarter {
     [GlobalClass]
-    public partial class DaltonismContainer : HBoxContainer {
+    public partial class DaltonismContainer : HBoxContainer, ITranslatable {
         public SettingsFileHandlerAutoload SettingsFileHandlerAutoload { get; set; } = null!;
 
-        public Dictionary<int, Button> DaltonismButtons = [];
+        public Dictionary<GameSettingsResource.DaltonismTypes, Button> DaltonismButtons = [];
         public Dictionary<GameSettingsResource.DaltonismTypes, string> Translations = [];
 
         private ButtonGroup DaltonismButtonGroup { get; } = new();
@@ -18,11 +18,11 @@ namespace GodotExtensionatorStarter {
             SettingsFileHandlerAutoload = this.GetAutoloadNode<SettingsFileHandlerAutoload>();
 
             Translations = new() {
-                { GameSettingsResource.DaltonismTypes.NO, Tr("GENERAL_NO")},
-                { GameSettingsResource.DaltonismTypes.DEUTERANOPIA, Tr("DALTONISM_DEUTERANOPIA")},
-                { GameSettingsResource.DaltonismTypes.PROTANOPIA, Tr("DALTONISM_PROTANOPIA")},
-                { GameSettingsResource.DaltonismTypes.TRITANOPIA, Tr("DALTONISM_TRITANOPIA")},
-                { GameSettingsResource.DaltonismTypes.ACHROMATOPSIA, Tr("DALTONISM_ACHROMATOPSIA")},
+                { GameSettingsResource.DaltonismTypes.NO, "GENERAL_NO"},
+                { GameSettingsResource.DaltonismTypes.DEUTERANOPIA, "DALTONISM_DEUTERANOPIA"},
+                { GameSettingsResource.DaltonismTypes.PROTANOPIA, "DALTONISM_PROTANOPIA"},
+                { GameSettingsResource.DaltonismTypes.TRITANOPIA, "DALTONISM_TRITANOPIA"},
+                { GameSettingsResource.DaltonismTypes.ACHROMATOPSIA, "DALTONISM_ACHROMATOPSIA"},
             };
         }
 
@@ -34,12 +34,14 @@ namespace GodotExtensionatorStarter {
 
             foreach (var daltonismType in daltonismTypes) {
                 var button = new Button {
-                    Text = Translations[daltonismType],
+                    Text = Tr(Translations[daltonismType]),
                     Name = $"{(int)daltonismType}",
                     ButtonGroup = DaltonismButtonGroup,
                     ToggleMode = true,
                     SizeFlagsHorizontal = SizeFlags.ExpandFill
                 };
+
+                DaltonismButtons.Add(daltonismType, button);
 
                 AddChild(button);
 
@@ -55,6 +57,12 @@ namespace GodotExtensionatorStarter {
 
             SettingsFileHandlerAutoload.UpdateAccessibilitySection("daltonism", daltonismType);
             SettingsFileHandlerAutoload.SaveSettings();
+        }
+
+        public void OnLocaleChanged() {
+            foreach (var entry in DaltonismButtons) {
+                entry.Value.Text = Tr(Translations[entry.Key]);
+            }
         }
     }
 }
