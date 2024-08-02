@@ -3,9 +3,10 @@ using Godot;
 using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
+    [GlobalClass]
     public partial class AutoTypedText : RichTextLabel {
-        const string BBcodeStartFlag = "[";
-        const string BBcodeEndFlag = "]";
+        const char BBcodeStartFlag = '[';
+        const char BBcodeEndFlag = ']';
 
         [Signal]
         public delegate void FinishedEventHandler();
@@ -19,17 +20,13 @@ namespace GodotExtensionatorStarter {
         [Export] public float SpaceTime = 0.06f;
         [Export] public float PunctuationTime = 0.2f;
 
-        public int LetterIndex = 0;
+        public int LetterIndex = -1;
         public Timer TypingTimer { get; set; } = default!;
         public string CurrentBBcode = string.Empty;
         public bool BBCodeFlag = false;
         public bool IsTyping = false;
         public bool TypingFinished = false;
 
-
-        public AutoTypedText(string text) {
-            ContentToDisplay = text;
-        }
 
         public override void _UnhandledInput(InputEvent @event) {
             if (!TypingFinished) {
@@ -54,16 +51,10 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Ready() {
-            if (ContentToDisplay.IsEmpty()) {
-                GD.PushWarning($"AutoTypedText: The TypedText node {Name} needs a content to display, this node will be removed");
-                this.Remove();
-                return;
-            }
-
             BbcodeEnabled = true;
             FitContent = true;
 
-            if (!ManualStart) {
+            if (!ManualStart && ContentToDisplay.Length > 0) {
                 DisplayLetters();
             }
         }
@@ -72,17 +63,21 @@ namespace GodotExtensionatorStarter {
             if (TypingFinished)
                 return;
 
-            if (LetterIndex >= ContentToDisplay.Length)
+            LetterIndex += 1;
+
+            if (LetterIndex > ContentToDisplay.Length - 1) {
                 EmitSignal(SignalName.Finished);
+                return;
+            }
 
             IsTyping = true;
 
             char nextCharacter = ContentToDisplay[LetterIndex];
 
-            LetterIndex += 1;
-
-            if (!BBCodeFlag && nextCharacter.Equals(BBcodeStartFlag))
+            if (!BBCodeFlag && nextCharacter.Equals(BBcodeStartFlag)) {
+                TypingTimer.Stop();
                 BBCodeFlag = true;
+            }
 
             if (BBCodeFlag) {
                 CurrentBBcode += nextCharacter;
@@ -105,7 +100,7 @@ namespace GodotExtensionatorStarter {
 
             Text += nextCharacter;
 
-            if (LetterIndex <= ContentToDisplay.Length) {
+            if (LetterIndex <= ContentToDisplay.Length - 1) {
                 char currentCharacter = ContentToDisplay[LetterIndex];
 
                 if (char.IsWhiteSpace(currentCharacter))
@@ -114,6 +109,14 @@ namespace GodotExtensionatorStarter {
                     TypingTimer.Start(PunctuationTime);
                 else
                     TypingTimer.Start(LetterTime);
+            }
+        }
+
+        public void ReloadText(string text) {
+            if (!IsTyping) {
+                SetProcessUnhandledInput(true);
+                ContentToDisplay = text;
+                DisplayLetters();
             }
         }
 
@@ -126,7 +129,7 @@ namespace GodotExtensionatorStarter {
         }
 
         private void OnFinishedContentDisplay() {
-            LetterIndex = 0;
+            LetterIndex = -1;
             ContentToDisplay = string.Empty;
             IsTyping = false;
             TypingFinished = true;

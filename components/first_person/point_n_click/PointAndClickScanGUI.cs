@@ -5,7 +5,7 @@ using System;
 
 
 namespace GodotExtensionatorStarter {
-    public partial class PointAndClickScanGUI : Control {
+    public partial class PointAndClickScanGUI : Control, ITranslatable {
 
         [Export] public PackedScene ScanViewport3DScene = GD.Load<PackedScene>("res://components/first_person/point_n_click/ScanViewport3D.tscn");
 
@@ -15,6 +15,7 @@ namespace GodotExtensionatorStarter {
         public RichTextLabel TitleLabel { get; set; } = null!;
         public Label DescriptionLabel { get; set; } = null!;
 
+        public Interactable3D? CurrentInteractable { get; set; } = default!;
 
         public override void _ExitTree() {
             GlobalGameEvents.ActorScannedObject -= OnPointAndClickObjectScanned;
@@ -23,6 +24,7 @@ namespace GodotExtensionatorStarter {
 
         public override void _EnterTree() {
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
+
 
             ScanSubViewport = GetNode<SubViewport>($"%{nameof(ScanSubViewport)}");
             TitleLabel = GetNode<RichTextLabel>($"%{nameof(TitleLabel)}");
@@ -38,8 +40,20 @@ namespace GodotExtensionatorStarter {
             ArgumentNullException.ThrowIfNull(Actor);
         }
 
+        private void DisplayScanInformation(Interactable3D? interactable = null) {
+            interactable ??= CurrentInteractable;
+
+            if (interactable is not null) {
+                TitleLabel.Text = Tr(interactable.Title);
+                DescriptionLabel.Text = Tr(interactable.Description);
+                DescriptionLabel.AdjustText();
+            }
+        }
+
         private void OnPointAndClickObjectScanned(PointAndClickObjectScanner pointAndClickObjectScanner) {
             if (ScanSubViewport.GetChildCount().IsZero()) {
+                CurrentInteractable = pointAndClickObjectScanner.Interactable3D;
+
                 Node3D TargetToScan = (Node3D)pointAndClickObjectScanner.TargetObjectToScan.Duplicate();
 
                 ScanViewport scanViewport = ScanViewport3DScene.Instantiate<ScanViewport>();
@@ -57,9 +71,7 @@ namespace GodotExtensionatorStarter {
 
                 Actor.MouseRayCastInteractor.ChangeCameraTo(scanViewport.ScanCamera);
 
-                TitleLabel.Text = pointAndClickObjectScanner.Interactable3D.Title;
-                DescriptionLabel.Text = pointAndClickObjectScanner.Interactable3D.Description;
-                DescriptionLabel.AdjustText();
+                DisplayScanInformation(pointAndClickObjectScanner.Interactable3D);
             }
         }
 
@@ -73,8 +85,13 @@ namespace GodotExtensionatorStarter {
                 TitleLabel.Text = string.Empty;
                 DescriptionLabel.Text = string.Empty;
                 Actor.MouseRayCastInteractor.ReturnToOriginalCamera();
-            }
 
+                CurrentInteractable = null;
+            }
+        }
+
+        public void OnLocaleChanged() {
+            DisplayScanInformation();
         }
     }
 

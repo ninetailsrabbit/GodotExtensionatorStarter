@@ -164,8 +164,8 @@ mesh = SubResource("BoxMesh_1ao1g")
 [node name="Interactable3D" type="Area3D" parent="PointAndClickObjectScanner"]
 script = ExtResource("4_s6iyf")
 KeepInteractableWhenUnFocus = true
-Title = "Cubo amarillo"
-Description = "Me meto este cubo por el culo y me da un placer extremo, apreta [E] para vomitar"
+Title = "YELLOW_CUBE"
+Description = "YELLOW_CUBE_INFORMATION"
 Category = 2
 Scannable = true
 
