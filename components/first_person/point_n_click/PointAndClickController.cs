@@ -6,7 +6,7 @@ using System.Linq;
 namespace GodotExtensionatorStarter {
 
     [Icon("res://components/first_person/point_n_click/point_click_3d.svg")]
-    public partial class PointNClickController : Node3D {
+    public partial class PointAndClickController : Node3D {
 
         public const string GroupName = "point_and_click_controller";
 

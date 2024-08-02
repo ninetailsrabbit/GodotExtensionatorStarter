@@ -10,7 +10,7 @@ namespace GodotExtensionatorStarter {
         [Export] public PackedScene ScanViewport3DScene = GD.Load<PackedScene>("res://components/first_person/point_n_click/ScanViewport3D.tscn");
 
         public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
-        public PointNClickController Actor { get; set; } = null!;
+        public PointAndClickController Actor { get; set; } = null!;
         public SubViewport ScanSubViewport { get; set; } = null!;
         public RichTextLabel TitleLabel { get; set; } = null!;
         public Label DescriptionLabel { get; set; } = null!;
@@ -34,7 +34,7 @@ namespace GodotExtensionatorStarter {
 
 
         public override void _Ready() {
-            Actor ??= GetTree().GetFirstNodeInGroup(PointNClickController.GroupName) as PointNClickController;
+            Actor ??= GetTree().GetFirstNodeInGroup(PointAndClickController.GroupName) as PointAndClickController;
             ArgumentNullException.ThrowIfNull(Actor);
         }
 

@@ -6,7 +6,7 @@ namespace GodotExtensionatorStarter {
         public Marker3D Marker3D { get; set; } = default!;
         public MouseRotatorComponent3D MouseRotatorComponent3D { get; set; } = default!;
         public Camera3D ScanCamera { get; set; } = default!;
-        public PointNClickController Actor { get; set; } = null!;
+        public PointAndClickController Actor { get; set; } = null!;
 
         public override void _EnterTree() {
             Marker3D = GetNode<Marker3D>(nameof(Marker3D));
@@ -19,7 +19,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _Ready() {
-            Actor ??= GetTree().GetFirstNodeInGroup(PointNClickController.GroupName) as PointNClickController;
+            Actor ??= GetTree().GetFirstNodeInGroup(PointAndClickController.GroupName) as PointAndClickController;
             ArgumentNullException.ThrowIfNull(Actor);
         }
 

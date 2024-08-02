@@ -9,7 +9,7 @@ namespace GodotExtensionatorStarter {
         public const string GroupName = "point_and_click_interaction";
 
         [Export] public StringName InteractionId = string.Empty;
-        [Export] public PointNClickController Actor { get; set; } = default!;
+        [Export] public PointAndClickController Actor { get; set; } = default!;
 
         [Export] public Input.CursorShape SelectedCursorShape = Input.CursorShape.Arrow;
         [Export] public CompressedTexture2D FocusCursor { get; set; } = default!;
@@ -36,7 +36,7 @@ namespace GodotExtensionatorStarter {
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
             GlobalCameraShifter = this.GetAutoloadNode<GlobalCameraShifter>();
 
-            Actor ??= GetTree().GetFirstNodeInGroup(PointNClickController.GroupName) as PointNClickController;
+            Actor ??= GetTree().GetFirstNodeInGroup(PointAndClickController.GroupName) as PointAndClickController;
 
             Interactable3D = this.FirstNodeOfClass<Interactable3D>();
 
@@ -47,8 +47,6 @@ namespace GodotExtensionatorStarter {
             Interactable3D.CanceledInteraction += OnCanceledInteraction;
             Interactable3D.Interacted += OnInteracted;
         }
-
-
 
         protected virtual void OnFocused(GodotObject interactor) {
             if (FocusCursor is not null)

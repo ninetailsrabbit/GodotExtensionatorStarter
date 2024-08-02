@@ -1,6 +1,6 @@
 [gd_scene load_steps=8 format=3 uid="uid://b01ettgh4fl37"]
 
-[ext_resource type="Script" path="res://components/first_person/point_n_click/PointNClickController.cs" id="1_es0u5"]
+[ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickController.cs" id="1_b4jp0"]
 [ext_resource type="Script" path="res://components/interaction/3D/MouseRayCastInteractor.cs" id="2_rhpgc"]
 [ext_resource type="PackedScene" uid="uid://boa6oj3q31yqn" path="res://components/first_person/point_n_click/PointAndClickScanGUI.tscn" id="2_rw6hd"]
 
@@ -46,8 +46,8 @@ _data = {
 dof_blur_far_enabled = true
 dof_blur_far_distance = 2.0
 
-[node name="PointNClickController" type="Node3D"]
-script = ExtResource("1_es0u5")
+[node name="PointAndClickController" type="Node3D"]
+script = ExtResource("1_b4jp0")
 
 [node name="InteractionLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -75,3 +75,4 @@ unique_name_in_owner = true
 [node name="Camera3D" type="Camera3D" parent="Head/Eyes"]
 unique_name_in_owner = true
 attributes = SubResource("CameraAttributesPractical_5ishy")
+current = true

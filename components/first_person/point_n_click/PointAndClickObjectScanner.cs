@@ -13,7 +13,7 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             base._EnterTree();
 
-            FocusCursor ??= Preloader.Instance.CursorLook;
+            FocusCursor ??= Preloader.Instance.CursorZoom;
 
             ArgumentNullException.ThrowIfNull(TargetObjectToScan);
 
