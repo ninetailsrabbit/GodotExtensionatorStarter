@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=3 uid="uid://2df7eofiqpkx"]
+[gd_scene load_steps=18 format=3 uid="uid://2df7eofiqpkx"]
 
 [ext_resource type="PackedScene" uid="uid://b01ettgh4fl37" path="res://components/first_person/point_n_click/PointNClickController.tscn" id="2_puqhl"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickMovement.cs" id="2_py680"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickObjectScanner.cs" id="4_gi2vb"]
 [ext_resource type="Script" path="res://components/interaction/3D/Interactable3D.cs" id="4_s6iyf"]
+[ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickCameraShifter.cs" id="5_5terb"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -39,6 +40,12 @@ size = Vector3(0.2, 0.2, 0.2)
 [sub_resource type="BoxShape3D" id="BoxShape3D_vyi3v"]
 size = Vector3(0.344696, 0.231934, 0.27002)
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_8lo4i"]
+radius = 0.819787
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ewsfj"]
+radius = 0.913896
+
 [node name="TestLevel" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -56,6 +63,12 @@ material = SubResource("StandardMaterial3D_lbybo")
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.28983, 1.53618, -8.09855)
+use_collision = true
+size = Vector3(3.57965, 0.320679, 2.98901)
+material = SubResource("StandardMaterial3D_84v6g")
+
+[node name="CSGBox3D6" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.122337, -0.992489, 0, 0.992489, 0.122337, 5.21691, 4.9194, -9.60015)
 use_collision = true
 size = Vector3(3.57965, 0.320679, 2.98901)
 material = SubResource("StandardMaterial3D_84v6g")
@@ -107,10 +120,10 @@ operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
 
 [node name="PointNClickController" parent="." instance=ExtResource("2_puqhl")]
-transform = Transform3D(0.167113, 0, -0.985938, 0, 1, 0, 0.985938, 0, 0.167113, 4.91684, 1.11419, -0.179841)
+transform = Transform3D(0.861275, 0, -0.50814, 0, 1, 0, 0.50814, 0, 0.861275, 3.36263, 1.11419, 1.54979)
 
 [node name="PointAndClickMovement" type="Node3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.079, 1.71341, -1.11792)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.6217, 1.71341, -1.11792)
 script = ExtResource("2_py680")
 InteractionId = &"door"
 
@@ -123,7 +136,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.472799)
 shape = SubResource("SphereShape3D_uc0uk")
 
 [node name="Marker3D" type="Marker3D" parent="PointAndClickMovement"]
-transform = Transform3D(0.827473, 0, 0.561506, 0, 1, 0, -0.561506, 0, 0.827473, 3.62128, 0, 0.242204)
+transform = Transform3D(0.961574, 0, -0.274547, 0, 1, 0, 0.274547, 0, 0.961574, 0.0250006, 0, 0.242204)
 
 [node name="PointAndClickMovement2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 12.3806, 1.50514, -5.68798)
@@ -142,7 +155,6 @@ transform = Transform3D(-0.903769, 0, 0.428021, 0, 1, 0, -0.428021, 0, -0.903769
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.55418, 1.00821, -0.370012)
 script = ExtResource("4_gi2vb")
 TargetObjectToScan = NodePath("MeshInstance3D")
-CanBeRotated = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PointAndClickObjectScanner"]
 transform = Transform3D(-0.307722, 0, -0.951476, 0, 1, 0, 0.951476, 0, -0.307722, 0, 0, 0)
@@ -151,6 +163,7 @@ mesh = SubResource("BoxMesh_1ao1g")
 
 [node name="Interactable3D" type="Area3D" parent="PointAndClickObjectScanner"]
 script = ExtResource("4_s6iyf")
+KeepInteractableWhenUnFocus = true
 Title = "Cubo amarillo"
 Description = "Me meto este cubo por el culo y me da un placer extremo, apreta [E] para vomitar"
 Category = 2
@@ -158,3 +171,30 @@ Scannable = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PointAndClickObjectScanner/Interactable3D"]
 shape = SubResource("BoxShape3D_vyi3v")
+
+[node name="PointAndClickCameraShifter" type="Node3D" parent="."]
+transform = Transform3D(0.211153, 0.325964, -0.9215, -0.0728048, 0.945382, 0.31773, 0.974738, 0, 0.223352, 5.8335, 4.92005, -7.65028)
+script = ExtResource("5_5terb")
+
+[node name="Interactable3D" type="Area3D" parent="PointAndClickCameraShifter"]
+script = ExtResource("4_s6iyf")
+KeepInteractableWhenUnFocus = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PointAndClickCameraShifter/Interactable3D"]
+shape = SubResource("SphereShape3D_8lo4i")
+
+[node name="Camera3D" type="Camera3D" parent="PointAndClickCameraShifter"]
+transform = Transform3D(1, -7.80372e-09, 2.98023e-08, 7.45058e-09, 1, -5.96046e-08, -2.98023e-08, 2.97214e-08, 1, 0.257096, 0.396888, -1.122)
+
+[node name="PointAndClickCameraShifter2" type="Node3D" parent="."]
+transform = Transform3D(-0.619327, 0, 0.785133, 0, 1, 0, -0.785133, 0, -0.619327, 15.5972, 2.87055, -9.7101)
+script = ExtResource("5_5terb")
+
+[node name="Camera3D" type="Camera3D" parent="PointAndClickCameraShifter2"]
+transform = Transform3D(0.991882, 0.126745, 0.0102914, -0.126745, 0.978835, 0.160677, 0.0102915, -0.160677, 0.986953, 0, 0, 0)
+
+[node name="Interactable3D" type="Area3D" parent="PointAndClickCameraShifter2"]
+script = ExtResource("4_s6iyf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PointAndClickCameraShifter2/Interactable3D"]
+shape = SubResource("SphereShape3D_ewsfj")

@@ -118,10 +118,14 @@ namespace GodotExtensionatorStarter {
         }
         public void CancelInteract(GodotObject interactable) {
             if (interactable is Interactable3D _interactable) {
+                DisplayCustomCursor();
+
                 Interacting = false;
-                UnFocus(interactable);
+                Focused = false;
 
                 _interactable.EmitSignalSafe(Interactable3D.SignalName.CanceledInteraction, this);
+
+                CurrentInteractable = null;
             }
 
         }
@@ -136,9 +140,12 @@ namespace GodotExtensionatorStarter {
         }
 
         public void UnFocus(GodotObject interactable) {
-            if (interactable is Interactable3D _interactable && CurrentInteractable is not null && !Interacting) {
+            if (interactable is Interactable3D _interactable && CurrentInteractable is not null) {
                 DisplayCustomCursor();
-                CurrentInteractable = null;
+
+                if(!CurrentInteractable.KeepInteractableWhenUnFocus)
+                    CurrentInteractable = null;
+
                 Focused = false;
 
                 _interactable.EmitSignalSafe(Interactable3D.SignalName.UnFocused, this);

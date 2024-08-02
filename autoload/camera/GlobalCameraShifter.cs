@@ -32,7 +32,7 @@ namespace GodotExtensionatorStarter {
         public Tween TransitionTween3D { get; set; } = default!;
 
         public bool IsTransitioning2D() => TransitionTween2D is not null && TransitionTween2D.IsRunning();
-        public bool IsTransitioning3D() => TransitionTween2D is not null && TransitionTween3D.IsRunning();
+        public bool IsTransitioning3D() => TransitionTween3D is not null && TransitionTween3D.IsRunning();
 
         public override void _EnterTree() {
             GlobalCameraTransition2D = GetNode<Camera2D>(nameof(GlobalCameraTransition2D));

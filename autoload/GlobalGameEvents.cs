@@ -44,6 +44,10 @@ namespace GodotExtensionatorStarter {
 
         #region Point and click
         [Signal]
+        public delegate void PointAndClickInteractedEventHandler(PointAndClickInteraction pointAndClick);
+        [Signal]
+        public delegate void PointAndClickInteractionCanceledEventHandler(PointAndClickInteraction pointAndClick);
+        [Signal]
         public delegate void ActorMovedToPointAndClickPositionEventHandler(PointAndClickMovement pointAndClick);
         [Signal]
         public delegate void ActorScannedObjectEventHandler(PointAndClickObjectScanner pointAndClick);

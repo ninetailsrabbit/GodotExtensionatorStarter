@@ -31,6 +31,7 @@ namespace GodotExtensionatorStarter {
 
         // Set to zero to use infinitely this interactable
         [Export] public int NumberOfTimesYouCanInteract = 0;
+        [Export] public bool KeepInteractableWhenUnFocus = false;
 
         [ExportGroup("Pointers")]
         [Export] public CompressedTexture2D FocusPointer { get; set; } = default!;

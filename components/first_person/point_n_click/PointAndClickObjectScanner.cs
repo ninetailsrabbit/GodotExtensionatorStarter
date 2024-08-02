@@ -24,6 +24,7 @@ namespace GodotExtensionatorStarter {
 
         protected override void OnInteracted(GodotObject interactor) {
             if (interactor is MouseRayCastInteractor) {
+                base.OnInteracted(interactor);
 
                 Actor.UseAnimations = false;
                 Actor.InteractionLayer.Show();

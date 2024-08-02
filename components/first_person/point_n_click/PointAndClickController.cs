@@ -53,7 +53,8 @@ namespace GodotExtensionatorStarter {
             GlobalFade.FadeStarted -= OnFadeStarted;
             GlobalFade.FadeFinished -= OnFadeFinished;
 
-            GlobalGameEvents.ActorMovedToPointAndClickPosition -= OnPointAndClickMovement;
+            GlobalGameEvents.ActorMovedToPointAndClickPosition -= OnPointAndClickInteracted;
+            GlobalGameEvents.PointAndClickInteractionCanceled -= OnPointAndClickCanceledInteraction;
             GlobalGameEvents.ActorScannedObject -= OnPointAndClickObjectScanned;
             GlobalGameEvents.ActorCanceledScan -= OnPointAndClickScanCanceled;
         }
@@ -76,7 +77,8 @@ namespace GodotExtensionatorStarter {
             GlobalFade.FadeStarted += OnFadeStarted;
             GlobalFade.FadeFinished += OnFadeFinished;
 
-            GlobalGameEvents.ActorMovedToPointAndClickPosition += OnPointAndClickMovement;
+            GlobalGameEvents.PointAndClickInteracted += OnPointAndClickInteracted;
+            GlobalGameEvents.PointAndClickInteractionCanceled += OnPointAndClickCanceledInteraction;
             GlobalGameEvents.ActorScannedObject += OnPointAndClickObjectScanned;
             GlobalGameEvents.ActorCanceledScan += OnPointAndClickScanCanceled;
         }
@@ -124,26 +126,30 @@ namespace GodotExtensionatorStarter {
             RunAnimation(DefaultAnimation);
         }
 
-        private void OnPointAndClickMovement(PointAndClickMovement pointAndClickMovement) {
+        private void OnPointAndClickInteracted(PointAndClickInteraction pointAndClickInteraction) {
             GetTree().Root.GetAllChildren()
-                .Where(node => node is PointAndClickMovement pointNClick && !pointNClick.Equals(pointAndClickMovement))
-                .Cast<PointAndClickMovement>()
+                .Where(node => node is PointAndClickInteraction pointNClick && !pointNClick.Equals(pointAndClickInteraction))
+                .Cast<PointAndClickInteraction>()
                 .ToList()
                 .ForEach(pointAndClick => pointAndClick.Interactable3D.Enable());
 
-            pointAndClickMovement.Interactable3D.Disable();
+            pointAndClickInteraction.Interactable3D.Disable();
         }
 
 
-        private void OnPointAndClickObjectScanned(PointAndClickObjectScanner pointAndClickObjectScanner) {
-            pointAndClickObjectScanner.Interactable3D.Disable();
+        private void OnPointAndClickCanceledInteraction(PointAndClickInteraction pointAndClickInteraction) {
+            pointAndClickInteraction.Interactable3D.Enable();
+            GD.Print("ON CANCEL ", MouseRayCastInteractor.CurrentInteractable);
 
+
+        }
+        private void OnPointAndClickObjectScanned(PointAndClickObjectScanner pointAndClickObjectScanner) {
             EnableCameraBlur(BlurCameraOnScan);
         }
 
         private void OnPointAndClickScanCanceled(PointAndClickObjectScanner pointAndClickObjectScanner) {
             EnableCameraBlur(false);
-            pointAndClickObjectScanner.Interactable3D.Enable();
+            GD.Print("ON SCAN CANCEL ", MouseRayCastInteractor.CurrentInteractable);
         }
     }
 }

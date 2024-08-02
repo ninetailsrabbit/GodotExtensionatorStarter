@@ -53,9 +53,12 @@ namespace GodotExtensionatorStarter {
             Actor.MouseRayCastInteractor.DisplayCustomCursor();
         }
 
-        protected virtual void OnInteracted(GodotObject interactor) { }
+        protected virtual void OnInteracted(GodotObject interactor) {
+            GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.PointAndClickInteracted, this);
+        }
 
         protected virtual void OnCanceledInteraction(GodotObject interactor) {
+            GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.PointAndClickInteractionCanceled, this);
             Actor.MouseRayCastInteractor.DisplayCustomCursor();
         }
     }

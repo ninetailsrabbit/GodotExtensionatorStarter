@@ -1,9 +1,9 @@
 ﻿using Godot;
 using GodotExtensionator;
 using System;
-using System.Linq;
 
 namespace GodotExtensionatorStarter {
+    [GlobalClass, Icon("res://components/first_person/point_n_click/point_click_3d.svg")]
     public partial class PointAndClickCameraShifter : PointAndClickInteraction {
 
         [Export] public Camera3D CameraToShift { get; set; } = null!;
@@ -21,19 +21,28 @@ namespace GodotExtensionatorStarter {
             CameraToShift ??= this.FirstNodeOfType<Camera3D>();
 
             ArgumentNullException.ThrowIfNull(CameraToShift);
+
         }
 
 
         protected override void OnInteracted(GodotObject interactor) {
-            if (interactor is MouseRayCastInteractor) {
+            if (interactor is MouseRayCastInteractor &&
+                !GlobalCameraShifter.IsTransitioning3D() &&
+                !GetViewport().GetCamera3D().Equals(CameraToShift)) {
+
+                base.OnInteracted(interactor);
+
                 GlobalCameraShifter.TransitionToRequestedCamera3D(Actor.Camera3D, CameraToShift, TransitionDuration);
                 Actor.MouseRayCastInteractor.ChangeCameraTo(CameraToShift);
             }
         }
 
         protected override void OnCanceledInteraction(GodotObject interactor) {
-            if (interactor is MouseRayCastInteractor) {
-                Actor.MouseRayCastInteractor.ChangeCameraTo(GlobalCameraShifter.TransitionSteps3D.Last().From);
+            if (interactor is MouseRayCastInteractor && !GlobalCameraShifter.IsTransitioning3D()) {
+
+                base.OnCanceledInteraction(interactor);
+
+                Actor.MouseRayCastInteractor.ReturnToOriginalCamera();
                 GlobalCameraShifter.TransitionToPreviousCamera3D();
             }
         }

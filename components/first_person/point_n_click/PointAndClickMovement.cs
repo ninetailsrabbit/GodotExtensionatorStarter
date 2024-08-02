@@ -29,6 +29,9 @@ namespace GodotExtensionatorStarter {
             Actor.AlignWithNode(TargetPositionMarker);
             Actor.ApplyStandingStature();
 
+            Actor.Camera3D.MakeCurrent();
+            Actor.MouseRayCastInteractor.ReturnToOriginalCamera();
+
             GlobalFade.FadeOut(FadeTimeOnMovement);
 
             EmitSignal(SignalName.ActorMovedToThisPosition, TargetPositionMarker);
@@ -38,6 +41,8 @@ namespace GodotExtensionatorStarter {
 
         protected override void OnInteracted(GodotObject interactor) {
             if (interactor is MouseRayCastInteractor) {
+                base.OnInteracted(interactor);
+
                 MoveActorToThisPoint();
             }
         }
