@@ -145,6 +145,7 @@ TargetObjectToScan = NodePath("MeshInstance3D")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PointAndClickObjectScanner"]
 transform = Transform3D(-0.307722, 0, -0.951476, 0, 1, 0, 0.951476, 0, -0.307722, 0, 0, 0)
+layers = 4
 mesh = SubResource("BoxMesh_1ao1g")
 
 [node name="Interactable3D" type="Area3D" parent="PointAndClickObjectScanner"]

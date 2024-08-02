@@ -1,4 +1,6 @@
-﻿using Godot;
+﻿using Extensionator;
+using Godot;
+using GodotExtensionator;
 using System;
 
 namespace GodotExtensionatorStarter {
@@ -7,11 +9,7 @@ namespace GodotExtensionatorStarter {
     public partial class PointAndClickObjectScanner : PointAndClickInteraction {
 
         [Export] public Node3D TargetObjectToScan { get; set; } = null!;
-        [Export] public float DistanceFromCamera = 0.75f;
-
-        public bool IsScanningObject = false;
-
-        public Node OriginalParent { get; set; } = default!;
+        [Export] public PackedScene ScanViewportScene = GD.Load<PackedScene>("res://components/first_person/point_n_click/ScanViewport.tscn");
 
         public override void _EnterTree() {
             base._EnterTree();
@@ -20,31 +18,33 @@ namespace GodotExtensionatorStarter {
 
             ArgumentNullException.ThrowIfNull(TargetObjectToScan);
 
-            OriginalParent = TargetObjectToScan.GetParent();
-
             Interactable3D.Scannable = true;
         }
 
         protected override void OnInteracted(GodotObject interactor) {
-            TargetObjectToScan.Reparent(Actor.Camera3D);
+            if (interactor is MouseRayCastInteractor mouseInteractor) {
+                Actor.UseAnimations = false;
+                Actor.InteractionLayer.Show();
 
-            var tween = CreateTween();
-            tween.TweenProperty(TargetObjectToScan, Node3D.PropertyName.Position.ToString(), Vector3.Forward * DistanceFromCamera, 0.65f).From(TargetObjectToScan.Position)
-                .SetEase(Tween.EaseType.In).SetTrans(Tween.TransitionType.Linear);
+                if (Actor.ScanSubViewport.GetChildCount().IsZero()) {
+                    ScanViewport scanViewport = ScanViewportScene.Instantiate<ScanViewport>();
+                    scanViewport.GetNode<Marker3D>(nameof(Marker3D)).AddChild(TargetObjectToScan.Duplicate());
 
-            Actor.UseAnimations = false;
+                    Actor.ScanSubViewport.AddChild(scanViewport);
+
+                    GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ActorScannedObject, this);
+                }
+            }
         }
 
         protected override void OnCanceledInteraction(GodotObject interactor) {
             base.OnCanceledInteraction(interactor);
 
-            TargetObjectToScan.Reparent(OriginalParent);
-
-            var tween = CreateTween();
-            tween.TweenProperty(TargetObjectToScan, Node3D.PropertyName.Position.ToString(), Vector3.Zero, 0.55f)
-                .SetEase(Tween.EaseType.OutIn).SetTrans(Tween.TransitionType.Sine);
-
+            Actor.ScanSubViewport.RemoveAndQueueFreeChildren();
+            Actor.InteractionLayer.Hide();
             Actor.UseAnimations = true;
+            GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ActorCanceledScan, this);
+
         }
     }
 }

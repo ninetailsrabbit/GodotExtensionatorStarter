@@ -45,6 +45,10 @@ namespace GodotExtensionatorStarter {
         #region Point and click
         [Signal]
         public delegate void ActorMovedToPointAndClickPositionEventHandler(PointAndClickMovement pointAndClick);
+        [Signal]
+        public delegate void ActorScannedObjectEventHandler(PointAndClickObjectScanner pointAndClick);
+        [Signal]
+        public delegate void ActorCanceledScanEventHandler(PointAndClickObjectScanner pointAndClick);
         #endregion
 
         public override void _Notification(int what) {

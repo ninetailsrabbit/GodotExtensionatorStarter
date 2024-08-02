@@ -27,12 +27,18 @@ namespace GodotExtensionatorStarter {
                 }
             }
         }
+        [Export] public bool BlurCameraOnScan = true;
+
+
         public GlobalFade GlobalFade { get; set; } = default!;
         public GameGlobals GameGlobals { get; set; } = default!;
         public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
         public AnimationPlayer AnimationPlayer { get; set; } = null!;
         public MouseRayCastInteractor MouseRayCastInteractor { get; set; } = null!;
 
+        public CanvasLayer InteractionLayer { get; set; } = null!;
+
+        public SubViewport ScanSubViewport { get; set; } = null!;
         public Marker3D ScanObjectMarker { get; set; } = null!;
 
         public Node3D Eyes { get; set; } = null!;
@@ -48,8 +54,10 @@ namespace GodotExtensionatorStarter {
             GlobalFade.FadeFinished -= OnFadeFinished;
 
             GlobalGameEvents.ActorMovedToPointAndClickPosition -= OnPointAndClickMovement;
-
+            GlobalGameEvents.ActorScannedObject -= OnPointAndClickObjectScanned;
+            GlobalGameEvents.ActorCanceledScan -= OnPointAndClickScanCanceled;
         }
+
         public override void _EnterTree() {
             AddToGroup(GroupName);
 
@@ -61,11 +69,17 @@ namespace GodotExtensionatorStarter {
             ScanObjectMarker = GetNode<Marker3D>(nameof(ScanObjectMarker));
             Eyes = GetNode<Node3D>($"%{nameof(Eyes)}");
             Camera3D = GetNode<Camera3D>($"%{nameof(Camera3D)}");
+            ScanSubViewport = GetNode<SubViewport>($"%{nameof(ScanSubViewport)}");
+            InteractionLayer = GetNode<CanvasLayer>($"{nameof(InteractionLayer)}");
+
+            InteractionLayer.Hide();
 
             GlobalFade.FadeStarted += OnFadeStarted;
             GlobalFade.FadeFinished += OnFadeFinished;
 
             GlobalGameEvents.ActorMovedToPointAndClickPosition += OnPointAndClickMovement;
+            GlobalGameEvents.ActorScannedObject += OnPointAndClickObjectScanned;
+            GlobalGameEvents.ActorCanceledScan += OnPointAndClickScanCanceled;
         }
 
 
@@ -76,6 +90,8 @@ namespace GodotExtensionatorStarter {
             OriginalEyesRotation = Eyes.Rotation;
 
             Camera3D.MakeCurrent();
+            EnableCameraBlur(false);
+
             RunAnimation(DefaultAnimation);
         }
 
@@ -88,6 +104,10 @@ namespace GodotExtensionatorStarter {
 
         public void ApplyStandingStature() {
             Position = Position with { Y = StandingStatureInMeters };
+        }
+
+        public void EnableCameraBlur(bool enabled = true) {
+            ((CameraAttributesPractical)Camera3D.Attributes).DofBlurFarEnabled = enabled;
         }
 
         private void RunAnimation(string animationName) {
@@ -115,5 +135,13 @@ namespace GodotExtensionatorStarter {
             pointAndClickMovement.Interactable3D.Disable();
         }
 
+
+        private void OnPointAndClickObjectScanned(PointAndClickObjectScanner pointAndClickObjectScanner) {
+            EnableCameraBlur(BlurCameraOnScan);
+        }
+
+        private void OnPointAndClickScanCanceled(PointAndClickObjectScanner pointAndClickObjectScanner) {
+            EnableCameraBlur(false);
+        }
     }
 }
