@@ -69,7 +69,6 @@ namespace GodotExtensionatorStarter {
             ScanObjectMarker = GetNode<Marker3D>(nameof(ScanObjectMarker));
             Eyes = GetNode<Node3D>($"%{nameof(Eyes)}");
             Camera3D = GetNode<Camera3D>($"%{nameof(Camera3D)}");
-            ScanSubViewport = GetNode<SubViewport>($"%{nameof(ScanSubViewport)}");
             InteractionLayer = GetNode<CanvasLayer>($"{nameof(InteractionLayer)}");
 
             InteractionLayer.Hide();

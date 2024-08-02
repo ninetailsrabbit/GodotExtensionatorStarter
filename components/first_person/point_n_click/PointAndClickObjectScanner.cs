@@ -1,6 +1,4 @@
-﻿using Extensionator;
-using Godot;
-using GodotExtensionator;
+﻿using Godot;
 using System;
 
 namespace GodotExtensionatorStarter {
@@ -9,8 +7,9 @@ namespace GodotExtensionatorStarter {
     public partial class PointAndClickObjectScanner : PointAndClickInteraction {
 
         [Export] public Node3D TargetObjectToScan { get; set; } = null!;
-        [Export] public PackedScene ScanViewportScene = GD.Load<PackedScene>("res://components/first_person/point_n_click/ScanViewport.tscn");
-
+        [Export] public PackedScene ScanViewport3DScene = GD.Load<PackedScene>("res://components/first_person/point_n_click/ScanViewport3D.tscn");
+        [Export] public CompressedTexture2D InteractCursor = Preloader.Instance.CursorHandThinOpen;
+        [Export] public CompressedTexture2D ScanRotateCursor { get; set; } = Preloader.Instance.CursorHandThinClosed;
         public override void _EnterTree() {
             base._EnterTree();
 
@@ -22,29 +21,25 @@ namespace GodotExtensionatorStarter {
         }
 
         protected override void OnInteracted(GodotObject interactor) {
-            if (interactor is MouseRayCastInteractor mouseInteractor) {
+            if (interactor is MouseRayCastInteractor) {
+
                 Actor.UseAnimations = false;
                 Actor.InteractionLayer.Show();
 
-                if (Actor.ScanSubViewport.GetChildCount().IsZero()) {
-                    ScanViewport scanViewport = ScanViewportScene.Instantiate<ScanViewport>();
-                    scanViewport.GetNode<Marker3D>(nameof(Marker3D)).AddChild(TargetObjectToScan.Duplicate());
-
-                    Actor.ScanSubViewport.AddChild(scanViewport);
-
-                    GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ActorScannedObject, this);
-                }
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ActorScannedObject, this);
             }
         }
 
         protected override void OnCanceledInteraction(GodotObject interactor) {
-            base.OnCanceledInteraction(interactor);
+            if (interactor is MouseRayCastInteractor) {
 
-            Actor.ScanSubViewport.RemoveAndQueueFreeChildren();
-            Actor.InteractionLayer.Hide();
-            Actor.UseAnimations = true;
-            GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ActorCanceledScan, this);
+                base.OnCanceledInteraction(interactor);
 
+                Actor.UseAnimations = true;
+                Actor.InteractionLayer.Hide();
+
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ActorCanceledScan, this);
+            }
         }
     }
 }

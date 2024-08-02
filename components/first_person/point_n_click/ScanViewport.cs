@@ -1,31 +1,36 @@
 using Godot;
-using GodotExtensionatorStarter;
 using System;
 
-public partial class ScanViewport : Node3D
-{
-	public Marker3D Marker3D { get; set; } = default!;
-	public MouseRotatorComponent3D MouseRotatorComponent3D { get; set; } = default!;
+namespace GodotExtensionatorStarter {
+    public partial class ScanViewport : Node3D {
+        public Marker3D Marker3D { get; set; } = default!;
+        public MouseRotatorComponent3D MouseRotatorComponent3D { get; set; } = default!;
+        public Camera3D ScanCamera { get; set; } = default!;
+        public PointNClickController Actor { get; set; } = null!;
 
-    public override void _EnterTree()
-	{
-		Marker3D = GetNode<Marker3D>(nameof(Marker3D));
-        MouseRotatorComponent3D = GetNode<MouseRotatorComponent3D>(nameof(MouseRotatorComponent3D));
+        public override void _EnterTree() {
+            Marker3D = GetNode<Marker3D>(nameof(Marker3D));
+            MouseRotatorComponent3D = GetNode<MouseRotatorComponent3D>(nameof(MouseRotatorComponent3D));
+            ScanCamera = GetNode<Camera3D>(nameof(Camera3D));
 
-        Marker3D.ChildEnteredTree += OnMarkerChildEntered;
-        Marker3D.ChildExitingTree += OnMarkerChildExited;
-    }
-
-
-	private void OnMarkerChildEntered(Node child) {
-		if (child is Node3D _child) {
-			MouseRotatorComponent3D.Target = _child;
-		}
-	}
-
-    private void OnMarkerChildExited(Node child) {
-        if (child is Node3D) {
-            MouseRotatorComponent3D.Target = null;
+            ArgumentNullException.ThrowIfNull(Marker3D);
+            ArgumentNullException.ThrowIfNull(MouseRotatorComponent3D);
+            ArgumentNullException.ThrowIfNull(ScanCamera);
         }
+
+        public override void _Ready() {
+            Actor ??= GetTree().GetFirstNodeInGroup(PointNClickController.GroupName) as PointNClickController;
+            ArgumentNullException.ThrowIfNull(Actor);
+        }
+
+        public void ChangeMouseCursor(CompressedTexture2D? cursorTexture) {
+            if (cursorTexture is not null)
+                MouseRotatorComponent3D.SelectedCursor = cursorTexture;
+        }
+        public void ChangeMouseRotatorCursor(CompressedTexture2D? cursorTexture) {
+            if (cursorTexture is not null)
+                MouseRotatorComponent3D.SelectedRotateCursor = cursorTexture;
+        }
+
     }
 }

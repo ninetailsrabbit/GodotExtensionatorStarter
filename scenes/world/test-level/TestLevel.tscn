@@ -150,6 +150,9 @@ mesh = SubResource("BoxMesh_1ao1g")
 
 [node name="Interactable3D" type="Area3D" parent="PointAndClickObjectScanner"]
 script = ExtResource("4_s6iyf")
+Title = "Cubo amarillo"
+Description = "Me meto este cubo por el culo y me da un placer extremo, apreta [E] para vomitar"
+Category = 2
 Scannable = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PointAndClickObjectScanner/Interactable3D"]

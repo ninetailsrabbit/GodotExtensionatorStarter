@@ -19,6 +19,7 @@ namespace GodotExtensionatorStarter {
         public CompressedTexture2D CursorPointerC = GD.Load<CompressedTexture2D>("res://assets/cursors/pointer_c.png");
         public CompressedTexture2D CursorStep = GD.Load<CompressedTexture2D>("res://assets/cursors/steps.png");
         public CompressedTexture2D CursorHandThinOpen = GD.Load<CompressedTexture2D>("res://assets/cursors/hand_thin_open.png");
+        public CompressedTexture2D CursorHandThinClosed = GD.Load<CompressedTexture2D>("res://assets/cursors/hand_thin_closed.png");
         public CompressedTexture2D CursorZoom = GD.Load<CompressedTexture2D>("res://assets/cursors/zoom.png");
         public CompressedTexture2D CursorLook = GD.Load<CompressedTexture2D>("res://assets/cursors/look_c.png");
         public CompressedTexture2D CursorLock = GD.Load<CompressedTexture2D>("res://assets/cursors/lock.png");

@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointNClickController.cs" id="1_es0u5"]
 [ext_resource type="Script" path="res://components/interaction/3D/MouseRayCastInteractor.cs" id="2_rhpgc"]
+[ext_resource type="PackedScene" uid="uid://boa6oj3q31yqn" path="res://components/first_person/point_n_click/PointAndClickScanGUI.tscn" id="2_rw6hd"]
 
 [sub_resource type="Animation" id="Animation_anwnj"]
 length = 0.001
@@ -45,16 +46,13 @@ _data = {
 dof_blur_far_enabled = true
 dof_blur_far_distance = 2.0
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n2ga5"]
-bg_color = Color(0.835294, 0.835294, 0.32549, 1)
-border_width_left = 1
-border_width_top = 1
-border_width_right = 1
-border_width_bottom = 1
-border_color = Color(0.8, 0.8, 0.384314, 1)
-
 [node name="PointNClickController" type="Node3D"]
 script = ExtResource("1_es0u5")
+
+[node name="InteractionLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="PointAndClickScanGUI" parent="InteractionLayer" instance=ExtResource("2_rw6hd")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -77,71 +75,3 @@ unique_name_in_owner = true
 [node name="Camera3D" type="Camera3D" parent="Head/Eyes"]
 unique_name_in_owner = true
 attributes = SubResource("CameraAttributesPractical_5ishy")
-
-[node name="InteractionLayer" type="CanvasLayer" parent="."]
-layer = 2
-
-[node name="Control" type="Control" parent="InteractionLayer"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="InteractionLayer/Control"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0313726, 0.0313726, 0.0313726, 0.368627)
-
-[node name="ScanViewport" type="CenterContainer" parent="InteractionLayer/Control"]
-unique_name_in_owner = true
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="InteractionLayer/Control/ScanViewport"]
-layout_mode = 2
-
-[node name="ScanSubViewport" type="SubViewport" parent="InteractionLayer/Control/ScanViewport/SubViewportContainer"]
-unique_name_in_owner = true
-transparent_bg = true
-handle_input_locally = false
-render_target_update_mode = 4
-
-[node name="VBoxContainer" type="VBoxContainer" parent="InteractionLayer/Control"]
-layout_mode = 1
-anchors_preset = 11
-anchor_left = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_left = -213.0
-offset_top = 40.0
-offset_right = -27.0
-offset_bottom = -49.0
-grow_horizontal = 0
-grow_vertical = 2
-theme_override_constants/separation = 5
-
-[node name="Title" type="RichTextLabel" parent="InteractionLayer/Control/VBoxContainer"]
-layout_mode = 2
-bbcode_enabled = true
-text = "Knife"
-fit_content = true
-
-[node name="HSeparator" type="HSeparator" parent="InteractionLayer/Control/VBoxContainer"]
-layout_mode = 2
-theme_override_styles/separator = SubResource("StyleBoxFlat_n2ga5")
-
-[node name="Description" type="RichTextLabel" parent="InteractionLayer/Control/VBoxContainer"]
-layout_mode = 2
-bbcode_enabled = true
-text = "Raja cuellos y piernas peludas"
-fit_content = true

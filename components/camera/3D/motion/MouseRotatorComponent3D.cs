@@ -11,7 +11,11 @@ namespace GodotExtensionatorStarter {
         [Export] public MouseButton MouseRotationButton = MouseButton.Left;
         [Export] public bool KeepPressedToRotate = true;
         [Export] public bool ResetRotationOnRelease = false;
+        [Export] public CompressedTexture2D DefaultCursor = Preloader.Instance.CursorHandThinOpen;
+        [Export] public CompressedTexture2D DefaultRotateCursor = Preloader.Instance.CursorHandThinClosed;
 
+        public CompressedTexture2D SelectedCursor { get; set; } = default!;
+        public CompressedTexture2D SelectedRotateCursor { get; set; } = default!;
 
         private Vector3 _originalRotation = Vector3.Zero;
         private Tween ResetRotationTween { get; set; } = default!;
@@ -20,17 +24,24 @@ namespace GodotExtensionatorStarter {
             if (Target is not null) {
 
                 if (@event is InputEventMouseMotion mouseMotion && MouseMovementDetected(@event)) {
+                    Input.SetCustomMouseCursor(SelectedRotateCursor, Input.CursorShape.Arrow, SelectedRotateCursor.GetSize() / 2);
+
                     var mouseInput = ((InputEventMouseMotion)mouseMotion.XformedBy(GetTree().Root.GetFinalTransform())).Relative;
 
                     Target.RotateX(mouseInput.Y * (MouseSensitivity / 1000f));
                     Target.RotateY(mouseInput.X * (MouseSensitivity / 1000f));
                 }
 
-                if (ResetRotationOnRelease && !Target.Rotation.IsEqualApprox(_originalRotation) && MouseReleaseDetected(@event)) {
+                if (MouseReleaseDetected(@event)) {
+                    Input.SetCustomMouseCursor(SelectedCursor, Input.CursorShape.Arrow, SelectedCursor.GetSize() / 2);
                     ResetTargetRotation();
                 }
 
             }
+        }
+
+        public override void _EnterTree() {
+            ResetToDefaultCursors();
         }
 
         public override void _Ready() {
@@ -41,6 +52,10 @@ namespace GodotExtensionatorStarter {
             _originalRotation = Target.Rotation;
         }
 
+        public void ResetToDefaultCursors() {
+            SelectedCursor = DefaultCursor;
+            SelectedRotateCursor = DefaultRotateCursor;
+        }
 
         private bool MouseMovementDetected(InputEvent @event) {
             return !KeepPressedToRotate ||
@@ -57,10 +72,12 @@ namespace GodotExtensionatorStarter {
         }
 
         private void ResetTargetRotation() {
-            if ((ResetRotationTween is null || (ResetRotationTween is not null && !ResetRotationTween.IsRunning()))) {
-                ResetRotationTween = CreateTween();
-                ResetRotationTween.TweenProperty(Target, Node3D.PropertyName.Rotation.ToString(), _originalRotation, 0.5f).From(Target.Rotation)
-                    .SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.In);
+            if (Target is not null) {
+                if (ResetRotationOnRelease && !Target.Rotation.IsEqualApprox(_originalRotation) && (ResetRotationTween is null || (ResetRotationTween is not null && !ResetRotationTween.IsRunning()))) {
+                    ResetRotationTween = CreateTween();
+                    ResetRotationTween.TweenProperty(Target, Node3D.PropertyName.Rotation.ToString(), _originalRotation, 0.5f).From(Target.Rotation)
+                        .SetTrans(Tween.TransitionType.Quad).SetEase(Tween.EaseType.In);
+                }
             }
         }
 
