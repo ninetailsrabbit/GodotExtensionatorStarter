@@ -40,10 +40,14 @@ namespace GodotExtensionatorStarter {
 
         private void OnPointAndClickObjectScanned(PointAndClickObjectScanner pointAndClickObjectScanner) {
             if (ScanSubViewport.GetChildCount().IsZero()) {
+                Node3D TargetToScan = (Node3D)pointAndClickObjectScanner.TargetObjectToScan.Duplicate();
+
                 ScanViewport scanViewport = ScanViewport3DScene.Instantiate<ScanViewport>();
-                scanViewport.GetNode<Marker3D>(nameof(Marker3D)).AddChild(pointAndClickObjectScanner.TargetObjectToScan.Duplicate());
+                scanViewport.GetNode<Marker3D>(nameof(Marker3D)).AddChild(TargetToScan);
 
                 ScanSubViewport.AddChild(scanViewport);
+
+                scanViewport.MouseRotatorComponent3D.Target = TargetToScan;
 
                 scanViewport.ChangeMouseCursor(pointAndClickObjectScanner.InteractCursor);
                 scanViewport.ChangeMouseRotatorCursor(pointAndClickObjectScanner.ScanRotateCursor);
