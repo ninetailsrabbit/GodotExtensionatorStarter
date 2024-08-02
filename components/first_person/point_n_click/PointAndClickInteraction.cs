@@ -16,8 +16,6 @@ namespace GodotExtensionatorStarter {
 
         public GameGlobals GameGlobals { get; set; } = default!;
         public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
-        public GlobalFade GlobalFade { get; set; } = default!;
-        public GlobalCameraShifter GlobalCameraShifter { get; set; } = default!;
 
         public Interactable3D Interactable3D { get; set; } = null!;
 
@@ -31,10 +29,8 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             AddToGroup(GroupName);
 
-            GlobalFade = this.GetAutoloadNode<GlobalFade>();
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
-            GlobalCameraShifter = this.GetAutoloadNode<GlobalCameraShifter>();
 
             Actor ??= GetTree().GetFirstNodeInGroup(PointAndClickController.GroupName) as PointAndClickController;
 

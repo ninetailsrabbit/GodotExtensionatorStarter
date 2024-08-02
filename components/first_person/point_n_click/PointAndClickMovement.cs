@@ -9,10 +9,13 @@ namespace GodotExtensionatorStarter {
 
         [Export] public float FadeTimeOnMovement = 0.5f;
 
+        public GlobalFade GlobalFade { get; set; } = default!;
         public Marker3D TargetPositionMarker { get; set; } = null!;
 
         public override void _EnterTree() {
             base._EnterTree();
+
+            GlobalFade = this.GetAutoloadNode<GlobalFade>();
 
             FocusCursor ??= Preloader.Instance.CursorStep;
 
