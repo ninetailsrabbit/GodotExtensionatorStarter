@@ -23,6 +23,9 @@ namespace GodotExtensionatorStarter {
             ArgumentNullException.ThrowIfNull(Actor);
         }
 
+        public void SetCurrentMouseCursor(CompressedTexture2D cursorTexture) {
+            Input.SetCustomMouseCursor(cursorTexture, Input.CursorShape.Arrow, cursorTexture.GetSize() / 2);
+        }
         public void ChangeMouseCursor(CompressedTexture2D? cursorTexture) {
             if (cursorTexture is not null)
                 MouseRotatorComponent3D.SelectedCursor = cursorTexture;

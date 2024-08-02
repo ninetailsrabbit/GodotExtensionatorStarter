@@ -10,6 +10,8 @@ namespace GodotExtensionatorStarter {
         [Export] public PackedScene ScanViewport3DScene = GD.Load<PackedScene>("res://components/first_person/point_n_click/ScanViewport3D.tscn");
         [Export] public CompressedTexture2D InteractCursor = Preloader.Instance.CursorHandThinOpen;
         [Export] public CompressedTexture2D ScanRotateCursor { get; set; } = Preloader.Instance.CursorHandThinClosed;
+        [Export] public bool CanBeRotated = true;
+
         public override void _EnterTree() {
             base._EnterTree();
 

@@ -48,7 +48,10 @@ namespace GodotExtensionatorStarter {
                 ScanSubViewport.AddChild(scanViewport);
 
                 scanViewport.MouseRotatorComponent3D.Target = TargetToScan;
+                scanViewport.MouseRotatorComponent3D.SetProcessInput(pointAndClickObjectScanner.CanBeRotated);
+                scanViewport.MouseRotatorComponent3D.SetProcessUnhandledInput(pointAndClickObjectScanner.CanBeRotated);
 
+                scanViewport.SetCurrentMouseCursor(pointAndClickObjectScanner.InteractCursor);
                 scanViewport.ChangeMouseCursor(pointAndClickObjectScanner.InteractCursor);
                 scanViewport.ChangeMouseRotatorCursor(pointAndClickObjectScanner.ScanRotateCursor);
 

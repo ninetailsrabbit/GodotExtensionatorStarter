@@ -142,6 +142,7 @@ transform = Transform3D(-0.903769, 0, 0.428021, 0, 1, 0, -0.428021, 0, -0.903769
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.55418, 1.00821, -0.370012)
 script = ExtResource("4_gi2vb")
 TargetObjectToScan = NodePath("MeshInstance3D")
+CanBeRotated = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="PointAndClickObjectScanner"]
 transform = Transform3D(-0.307722, 0, -0.951476, 0, 1, 0, 0.951476, 0, -0.307722, 0, 0, 0)

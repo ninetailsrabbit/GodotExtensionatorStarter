@@ -136,11 +136,14 @@ namespace GodotExtensionatorStarter {
 
 
         private void OnPointAndClickObjectScanned(PointAndClickObjectScanner pointAndClickObjectScanner) {
+            pointAndClickObjectScanner.Interactable3D.Disable();
+
             EnableCameraBlur(BlurCameraOnScan);
         }
 
         private void OnPointAndClickScanCanceled(PointAndClickObjectScanner pointAndClickObjectScanner) {
             EnableCameraBlur(false);
+            pointAndClickObjectScanner.Interactable3D.Enable();
         }
     }
 }
