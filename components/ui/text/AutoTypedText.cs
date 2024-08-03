@@ -9,6 +9,8 @@ namespace GodotExtensionatorStarter {
         const char BBcodeEndFlag = ']';
 
         [Signal]
+        public delegate void SkippedEventHandler();
+        [Signal]
         public delegate void FinishedEventHandler();
 
         [Export] public string ContentToDisplay = string.Empty;
@@ -115,7 +117,9 @@ namespace GodotExtensionatorStarter {
         public void ReloadText(string text) {
             if (!IsTyping) {
                 SetProcessUnhandledInput(true);
+                Text = string.Empty;
                 ContentToDisplay = text;
+                TypingFinished = false;
                 DisplayLetters();
             }
         }
@@ -124,6 +128,7 @@ namespace GodotExtensionatorStarter {
             if (IsTyping) {
                 Text = string.Empty;
                 AppendText(ContentToDisplay);
+                EmitSignal(SignalName.Skipped);
                 EmitSignal(SignalName.Finished);
             }
         }

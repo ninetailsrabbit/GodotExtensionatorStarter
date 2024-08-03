@@ -45,12 +45,14 @@ namespace GodotExtensionatorStarter {
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
         }
 
+
         public override void _Ready() {
             AudioStreamPlayer = GetNode<AudioStreamPlayer>(nameof(AudioStreamPlayer));
             AutoTypedText = GetNode<AutoTypedText>($"%{nameof(AutoTypedText)}");
 
             ArgumentNullException.ThrowIfNull(AutoTypedText);
 
+            AutoTypedText.Skipped += OnSkippedSubtitleBlock;
             AutoTypedText.Finished += OnFinishedSubtitleBlockDisplay;
 
             AutoTypedText.ManualStart = false;
@@ -59,7 +61,7 @@ namespace GodotExtensionatorStarter {
 
             LoadDialogueBlocks([
                 new DialogueBlock("id1", "porque esta puerta esta cerrada, no lo recuerdo joder", voiceOne),
-                new DialogueBlock("id2", "Voy a darme un ba o en mi cuuerpo asqueroso por favor", voiceTwo),
+                new DialogueBlock("id2", "Voy a darme un bano en mi cuuerpo asqueroso por favor", voiceTwo),
 
             ]);
         }
@@ -112,6 +114,10 @@ namespace GodotExtensionatorStarter {
                 DisplayNextSubtitleBlock();
             }
 
+        }
+
+        private void OnSkippedSubtitleBlock() {
+            AudioStreamPlayer.Stop();
         }
     }
 
