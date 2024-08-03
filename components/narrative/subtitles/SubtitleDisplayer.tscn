@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://bu6bqupq6ngdd"]
 
-[ext_resource type="Script" path="res://components/narrative/subtitles/SubtitleDisplayer.cs" id="1_l1neb"]
+[ext_resource type="Script" path="res://components/narrative/subtitles/SubtitleDisplayer.cs" id="1_nlds8"]
 [ext_resource type="Script" path="res://components/ui/text/AutoTypedText.cs" id="2_6tggs"]
 
 [node name="SubtitleDisplayer" type="Control"]
@@ -10,7 +10,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-script = ExtResource("1_l1neb")
+script = ExtResource("1_nlds8")
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -45,3 +45,6 @@ theme_override_constants/margin_bottom = 15
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("2_6tggs")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Voice"

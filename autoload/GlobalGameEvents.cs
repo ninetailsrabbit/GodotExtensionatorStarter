@@ -40,11 +40,21 @@ namespace GodotExtensionatorStarter {
         [Signal]
         public delegate void UpdatedGraphicSettingsEventHandler(int qualityPreset);
 
-        [Signal]
-        public delegate void SubtitleDisplayStartedEventHandler(GenericGodotWrapper<DialogueBlock> block);
-        [Signal]
-        public delegate void SubtitleDisplayFinishedEventHandler(GenericGodotWrapper<DialogueBlock> block);
+        public delegate void SubtitleDisplayStartedEventHandler(DialogueBlock block);
+        public delegate void SubtitleDisplayFinishedEventHandler(DialogueBlock block);
 
+        public event SubtitleDisplayStartedEventHandler? SubtitleDisplayStarted;
+        public event SubtitleDisplayFinishedEventHandler? SubtitleDisplayFinished;
+
+        public void EmitSubtitleDisplayStarted(DialogueBlock block) {
+            SubtitleDisplayStarted?.Invoke(block);
+        }
+        public void EmitSubtitleDisplayFinished(DialogueBlock block) {
+            SubtitleDisplayFinished?.Invoke(block);
+        }
+
+        [Signal]
+        public delegate void SubtitleBlocksFinishedToDisplayEventHandler();
         #endregion
 
         #region Point and click

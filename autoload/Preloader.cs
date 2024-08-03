@@ -26,5 +26,7 @@ namespace GodotExtensionatorStarter {
         public CompressedTexture2D CursorDialogue = GD.Load<CompressedTexture2D>("res://assets/cursors/message_dots_square.png");
         public CompressedTexture2D CursorHelp = GD.Load<CompressedTexture2D>("res://assets/cursors/cursor_help.png");
         #endregion
+
+
     }
 }
