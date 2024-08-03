@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://b01ettgh4fl37"]
+[gd_scene load_steps=9 format=3 uid="uid://b01ettgh4fl37"]
 
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickController.cs" id="1_b4jp0"]
 [ext_resource type="Script" path="res://components/interaction/3D/MouseRayCastInteractor.cs" id="2_rhpgc"]
 [ext_resource type="PackedScene" uid="uid://boa6oj3q31yqn" path="res://components/first_person/point_n_click/PointAndClickScanGUI.tscn" id="2_rw6hd"]
+[ext_resource type="PackedScene" uid="uid://bu6bqupq6ngdd" path="res://components/narrative/subtitles/SubtitleDisplayer.tscn" id="3_ohs4r"]
 
 [sub_resource type="Animation" id="Animation_anwnj"]
 length = 0.001
@@ -53,6 +54,11 @@ script = ExtResource("1_b4jp0")
 layer = 2
 
 [node name="PointAndClickScanGUI" parent="InteractionLayer" instance=ExtResource("2_rw6hd")]
+
+[node name="SubtitlesLayer" type="CanvasLayer" parent="."]
+layer = 3
+
+[node name="SubtitleDisplayer" parent="SubtitlesLayer" instance=ExtResource("3_ohs4r")]
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

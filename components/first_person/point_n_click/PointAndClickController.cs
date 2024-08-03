@@ -35,8 +35,8 @@ namespace GodotExtensionatorStarter {
         public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
         public AnimationPlayer AnimationPlayer { get; set; } = null!;
         public MouseRayCastInteractor MouseRayCastInteractor { get; set; } = null!;
-
         public CanvasLayer InteractionLayer { get; set; } = null!;
+        public CanvasLayer SubtitlesLayer { get; set; } = null!;
 
         public SubViewport ScanSubViewport { get; set; } = null!;
         public Marker3D ScanObjectMarker { get; set; } = null!;
@@ -57,7 +57,12 @@ namespace GodotExtensionatorStarter {
             GlobalGameEvents.PointAndClickInteractionCanceled -= OnPointAndClickCanceledInteraction;
             GlobalGameEvents.ActorScannedObject -= OnPointAndClickObjectScanned;
             GlobalGameEvents.ActorCanceledScan -= OnPointAndClickScanCanceled;
+
+            GlobalGameEvents.ChangedSubtitlesDisplayOption -= OnChangedSubtitleDisplayOption;
+            GlobalGameEvents.SubtitleBlocksStartedToDisplay -= OnSubtitleBlocksStartedToDisplay;
+            GlobalGameEvents.SubtitleBlocksFinishedToDisplay -= OnSubtitleBlocksFinishedToDisplay;
         }
+
 
         public override void _EnterTree() {
             AddToGroup(GroupName);
@@ -71,8 +76,10 @@ namespace GodotExtensionatorStarter {
             Eyes = GetNode<Node3D>($"%{nameof(Eyes)}");
             Camera3D = GetNode<Camera3D>($"%{nameof(Camera3D)}");
             InteractionLayer = GetNode<CanvasLayer>($"{nameof(InteractionLayer)}");
+            SubtitlesLayer = GetNode<CanvasLayer>($"{nameof(SubtitlesLayer)}");
 
             InteractionLayer.Hide();
+            SubtitlesLayer.Hide();
 
             GlobalFade.FadeStarted += OnFadeStarted;
             GlobalFade.FadeFinished += OnFadeFinished;
@@ -81,9 +88,22 @@ namespace GodotExtensionatorStarter {
             GlobalGameEvents.PointAndClickInteractionCanceled += OnPointAndClickCanceledInteraction;
             GlobalGameEvents.ActorScannedObject += OnPointAndClickObjectScanned;
             GlobalGameEvents.ActorCanceledScan += OnPointAndClickScanCanceled;
+
+            GlobalGameEvents.ChangedSubtitlesDisplayOption += OnChangedSubtitleDisplayOption;
+            GlobalGameEvents.SubtitleBlocksStartedToDisplay += OnSubtitleBlocksStartedToDisplay;
+            GlobalGameEvents.SubtitleBlocksFinishedToDisplay += OnSubtitleBlocksFinishedToDisplay;
+
         }
 
 
+        public override void _Input(InputEvent @event) {
+            if(Input.IsActionJustPressed("pause")) {
+                GlobalGameEvents.EmitSubtitlesRequested([
+                    new DialogueBlock("id100", "jajajjaja un subtitulo payaso"),
+                    new DialogueBlock("id2", "QUE TAL SI NOS COMEMOS LA BOCA ATONTAO, LETS FIGHT JAJAJAJAJ FAKJFAJKFAJKFJLAJA"),
+                ]);
+            }
+        }
         public override void _Ready() {
             ApplyStandingStature();
 
@@ -139,17 +159,33 @@ namespace GodotExtensionatorStarter {
 
         private void OnPointAndClickCanceledInteraction(PointAndClickInteraction pointAndClickInteraction) {
             pointAndClickInteraction.Interactable3D.Enable();
-            GD.Print("ON CANCEL ", MouseRayCastInteractor.CurrentInteractable);
-
-
         }
+
         private void OnPointAndClickObjectScanned(PointAndClickObjectScanner pointAndClickObjectScanner) {
             EnableCameraBlur(BlurCameraOnScan);
         }
 
         private void OnPointAndClickScanCanceled(PointAndClickObjectScanner pointAndClickObjectScanner) {
             EnableCameraBlur(false);
-            GD.Print("ON SCAN CANCEL ", MouseRayCastInteractor.CurrentInteractable);
         }
+
+        private void OnChangedSubtitleDisplayOption(bool enabled) {
+            if (enabled) {
+                SubtitlesLayer.Enable();
+            }
+            else {
+                SubtitlesLayer.Hide();
+                SubtitlesLayer.Disable();
+            }
+        }
+
+        private void OnSubtitleBlocksStartedToDisplay() {
+            SubtitlesLayer.Show();
+        }
+
+        private void OnSubtitleBlocksFinishedToDisplay() {
+            SubtitlesLayer.Hide();
+        }
+
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Godot;
 using GodotExtensionator;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace GodotExtensionatorStarter {
@@ -33,6 +34,8 @@ namespace GodotExtensionatorStarter {
         [Signal]
         public delegate void ChangedLanguageEventHandler(string language);
         [Signal]
+        public delegate void ChangedSubtitlesDisplayOptionEventHandler(bool enabled);
+        [Signal]
         public delegate void ChangedSubtitlesLanguageEventHandler(string language);
         [Signal]
         public delegate void ChangedVoiceLanguageEventHandler(string language);
@@ -42,9 +45,11 @@ namespace GodotExtensionatorStarter {
 
         public delegate void SubtitleDisplayStartedEventHandler(DialogueBlock block);
         public delegate void SubtitleDisplayFinishedEventHandler(DialogueBlock block);
+        public delegate void SubtitlesRequestedEventHandler(IEnumerable<DialogueBlock> dialogueBlocks);
 
         public event SubtitleDisplayStartedEventHandler? SubtitleDisplayStarted;
         public event SubtitleDisplayFinishedEventHandler? SubtitleDisplayFinished;
+        public event SubtitlesRequestedEventHandler? SubtitlesRequested;
 
         public void EmitSubtitleDisplayStarted(DialogueBlock block) {
             SubtitleDisplayStarted?.Invoke(block);
@@ -53,6 +58,12 @@ namespace GodotExtensionatorStarter {
             SubtitleDisplayFinished?.Invoke(block);
         }
 
+        public void EmitSubtitlesRequested(IEnumerable<DialogueBlock> dialogueBlocks) {
+            SubtitlesRequested?.Invoke(dialogueBlocks);
+        }
+
+        [Signal]
+        public delegate void SubtitleBlocksStartedToDisplayEventHandler();
         [Signal]
         public delegate void SubtitleBlocksFinishedToDisplayEventHandler();
         #endregion

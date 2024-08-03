@@ -348,6 +348,9 @@ namespace GodotExtensionatorStarter {
                 GlobalGameEvents.UpdateAllTranslatables();
             }
 
+            if (key.EqualsIgnoreCase("subtitles")) {
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedSubtitlesDisplayOption, (bool)value);
+            }
             if (key.EqualsIgnoreCase("subtitles_language")) {
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ChangedSubtitlesLanguage, value.ToString());
             }
