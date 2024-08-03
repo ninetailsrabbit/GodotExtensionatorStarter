@@ -1,7 +1,9 @@
-[gd_scene load_steps=3 format=3 uid="uid://bu6bqupq6ngdd"]
+[gd_scene load_steps=5 format=3 uid="uid://bu6bqupq6ngdd"]
 
 [ext_resource type="Script" path="res://components/narrative/subtitles/SubtitleDisplayer.cs" id="1_nlds8"]
 [ext_resource type="Script" path="res://components/ui/text/AutoTypedText.cs" id="2_6tggs"]
+[ext_resource type="AudioStream" uid="uid://c6w2klst50ssj" path="res://assets/sounds/dialog-text/retro_v5.wav" id="7_3jchh"]
+[ext_resource type="Script" path="res://components/audio/sound_queue/SoundQueue.cs" id="9_grwir"]
 
 [node name="SubtitleDisplayer" type="Control"]
 layout_mode = 3
@@ -11,8 +13,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_nlds8")
-AutoTypeCanBeSkipped = true
-ManualSubtitleTransition = true
+UseTypeSounds = true
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -47,6 +48,15 @@ theme_override_constants/margin_bottom = 15
 unique_name_in_owner = true
 layout_mode = 2
 script = ExtResource("2_6tggs")
+CanBeSkipped = false
+
+[node name="SoundQueue" type="Node" parent="MarginContainer/DisplaySubtitleZone/MarginContainer/AutoTypedText"]
+script = ExtResource("9_grwir")
+QueueCount = 5
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="MarginContainer/DisplaySubtitleZone/MarginContainer/AutoTypedText/SoundQueue"]
+stream = ExtResource("7_3jchh")
+bus = &"SFX"
 
 [node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Voice"

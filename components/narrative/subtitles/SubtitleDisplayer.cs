@@ -8,8 +8,9 @@ using System.Linq;
 
 namespace GodotExtensionatorStarter {
 
-    public readonly struct DialogueBlock(string id, string text, bool autoType = true, AudioStream? voiceStream = null) {
+    public readonly struct DialogueBlock(string id, string speaker, string text, bool autoType = true, AudioStream? voiceStream = null) {
         public string Id { get; } = id;
+        public string Speaker { get; } = speaker;
         public string Text { get; } = text;
         public bool AutoType { get; } = autoType;
         public AudioStream? VoiceStream { get; } = voiceStream;
@@ -30,8 +31,8 @@ namespace GodotExtensionatorStarter {
         [Export] public bool AutoTypeCanBeSkipped = false;
         [Export] public bool ManualSubtitleTransition = false;
         [Export] public float TimeBetweenBlocks = 1f;
+        [Export] public bool UseTypeSounds = false;
         [Export] public string[] InputActionsToTransition = ["ui_accept"];
-
         public enum SubtitleState {
             WAITING_FOR_INPUT,
             DISPLAYING,
@@ -87,19 +88,21 @@ namespace GodotExtensionatorStarter {
 
         public override void _Ready() {
             AudioStreamPlayer = GetNode<AudioStreamPlayer>(nameof(AudioStreamPlayer));
-            BetweenBlocksTimer = GetNode<Timer>(nameof(BetweenBlocksTimer));
+            AudioStreamPlayer.Bus = "Voice";
 
+            BetweenBlocksTimer = GetNode<Timer>(nameof(BetweenBlocksTimer));
             BetweenBlocksTimer.WaitTime = MathF.Max(0.05f, TimeBetweenBlocks);
             BetweenBlocksTimer.Autostart = false;
             BetweenBlocksTimer.OneShot = true;
             BetweenBlocksTimer.Timeout += OnBetweenBlocksTimerTimeout;
 
             AutoTypedText = GetNode<AutoTypedText>($"%{nameof(AutoTypedText)}");
-
             ArgumentNullException.ThrowIfNull(AutoTypedText);
 
+            AutoTypedText.UseTypeSounds = UseTypeSounds;
             AutoTypedText.ManualStart = false;
             AutoTypedText.CanBeSkipped = AutoTypeCanBeSkipped;
+
             AutoTypedText.Skipped += OnSkippedSubtitleBlock;
             AutoTypedText.Finished += OnFinishedSubtitleBlockDisplay;
 
@@ -139,6 +142,7 @@ namespace GodotExtensionatorStarter {
 
 
             if (DialogueBlocks.PopFront() is DialogueBlock nextSubtitle) {
+
                 if (CurrentDialogueBlock is DialogueBlock currentDialogueBlock) {
                     SubtitleDisplayFinished?.Invoke(currentDialogueBlock);
                     GlobalGameEvents.EmitSubtitleDisplayFinished(currentDialogueBlock);

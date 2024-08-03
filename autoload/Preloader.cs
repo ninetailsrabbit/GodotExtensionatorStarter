@@ -27,6 +27,8 @@ namespace GodotExtensionatorStarter {
         public CompressedTexture2D CursorHelp = GD.Load<CompressedTexture2D>("res://assets/cursors/cursor_help.png");
         #endregion
 
-
+        #region Sounds
+        
+        #endregion
     }
 }

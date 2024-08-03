@@ -20,6 +20,7 @@ namespace GodotExtensionatorStarter {
         [Export] public float LetterTime = 0.03f;
         [Export] public float SpaceTime = 0.06f;
         [Export] public float PunctuationTime = 0.2f;
+        [Export] public bool UseTypeSounds = false;
 
         public int LetterIndex = -1;
         public Timer TypingTimer { get; set; } = default!;
@@ -29,6 +30,7 @@ namespace GodotExtensionatorStarter {
         public bool IsSkipped = false;
         public bool TypingFinished = false;
 
+        private SoundQueue TypeSoundQueue { get; set; } = default!;
 
         public override void _Input(InputEvent @event) {
             if (!TypingFinished) {
@@ -47,6 +49,8 @@ namespace GodotExtensionatorStarter {
             Finished -= OnFinishedContentDisplay;
         }
         public override void _EnterTree() {
+            TypeSoundQueue = this.FirstNodeOfClass<SoundQueue>();
+
             Finished += OnFinishedContentDisplay;
 
             CreateTypingTimer();
@@ -55,10 +59,6 @@ namespace GodotExtensionatorStarter {
         public override void _Ready() {
             BbcodeEnabled = true;
             FitContent = true;
-
-            if (!ManualStart && ContentToDisplay.Length > 0) {
-                DisplayLetters();
-            }
         }
 
         public void DisplayLetters() {
@@ -100,6 +100,8 @@ namespace GodotExtensionatorStarter {
                 }
             }
 
+            PlayTypingSound();
+
             Text += nextCharacter;
 
             if (LetterIndex <= ContentToDisplay.Length - 1) {
@@ -111,6 +113,12 @@ namespace GodotExtensionatorStarter {
                     TypingTimer.Start(PunctuationTime);
                 else
                     TypingTimer.Start(LetterTime);
+            }
+        }
+
+        public void PlayTypingSound() {
+            if (UseTypeSounds && IsInstanceValid(TypeSoundQueue)) {
+                TypeSoundQueue.PlaySoundWithPitchRange(1f, 1.2f);
             }
         }
 
@@ -131,6 +139,8 @@ namespace GodotExtensionatorStarter {
                 IsTyping = false;
                 TypingFinished = true;
                 IsSkipped = true;
+                LetterIndex = -1;
+
                 SetProcessInput(false);
                 AppendText(ContentToDisplay);
 
@@ -141,14 +151,20 @@ namespace GodotExtensionatorStarter {
         }
 
         private void OnFinishedContentDisplay() {
-            LetterIndex = -1;
             ContentToDisplay = string.Empty;
             IsTyping = false;
             TypingFinished = true;
+            LetterIndex = -1;
+
             SetProcessInput(false);
 
             if (IsInstanceValid(TypingTimer))
                 TypingTimer.Stop();
+
+            if (IsInstanceValid(TypeSoundQueue)) {
+                TypeSoundQueue.StopSounds();
+            }
+
         }
 
         private void CreateTypingTimer() {

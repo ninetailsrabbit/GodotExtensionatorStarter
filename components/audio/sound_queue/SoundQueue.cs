@@ -189,6 +189,17 @@ namespace GodotExtensionatorStarter {
                 _next %= AudioStreamPlayers3D.Count;
             }
         }
+
+        public void StopSounds() {
+            foreach (var audioStreamPlayer in AudioStreamPlayers)
+                audioStreamPlayer.Stop();
+
+            foreach (var audioStreamPlayer in AudioStreamPlayers2D)
+                audioStreamPlayer.Stop();
+
+            foreach (var audioStreamPlayer in AudioStreamPlayers3D)
+                audioStreamPlayer.Stop();
+        }
         #endregion
 
         #region Helpers
