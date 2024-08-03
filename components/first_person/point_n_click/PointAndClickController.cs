@@ -99,8 +99,8 @@ namespace GodotExtensionatorStarter {
         public override void _Input(InputEvent @event) {
             if(Input.IsActionJustPressed("pause")) {
                 GlobalGameEvents.EmitSubtitlesRequested([
-                    new DialogueBlock("id100", "jajajjaja un subtitulo payaso"),
-                    new DialogueBlock("id2", "QUE TAL SI NOS COMEMOS LA BOCA ATONTAO, LETS FIGHT JAJAJAJAJ FAKJFAJKFAJKFJLAJA"),
+                    new DialogueBlock("id100", "jajajjaja un subtitulo payaso", false),
+                    new DialogueBlock("id2", "QUE TAL SI NOS COMEMOS LA BOCA ATONTAO, LETS FIGHT JAJAJAJAJ FAKJFAJKFAJKFJLAJA", true),
                 ]);
             }
         }

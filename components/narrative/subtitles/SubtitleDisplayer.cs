@@ -8,9 +8,10 @@ using System.Linq;
 
 namespace GodotExtensionatorStarter {
 
-    public readonly struct DialogueBlock(string id, string text, AudioStream? voiceStream = null) {
+    public readonly struct DialogueBlock(string id, string text, bool autoType = true, AudioStream? voiceStream = null) {
         public string Id { get; } = id;
         public string Text { get; } = text;
+        public bool AutoType { get; } = autoType;
         public AudioStream? VoiceStream { get; } = voiceStream;
     }
     public partial class SubtitleDisplayer : Control {
@@ -26,7 +27,7 @@ namespace GodotExtensionatorStarter {
         [Signal]
         public delegate void SubtitleBlocksFinishedToDisplayEventHandler();
 
-        [Export] public bool CanBeSkipped = false;
+        [Export] public bool AutoTypeCanBeSkipped = false;
         [Export] public bool ManualSubtitleTransition = false;
         [Export] public float TimeBetweenBlocks = 1f;
         [Export] public string[] InputActionsToTransition = ["ui_accept"];
@@ -63,6 +64,7 @@ namespace GodotExtensionatorStarter {
         public override void _ExitTree() {
             GlobalGameEvents.SubtitlesRequested -= OnSubtitlesRequested;
 
+            AutoTypedText.Skipped -= OnSkippedSubtitleBlock;
             AutoTypedText.Finished -= OnFinishedSubtitleBlockDisplay;
         }
 
@@ -74,9 +76,12 @@ namespace GodotExtensionatorStarter {
         public override void _Input(InputEvent @event) {
             if (ManualSubtitleTransition &&
                 CurrentSubtitleState.Equals(SubtitleState.WAITING_FOR_INPUT) &&
-                InputExtension.IsAnyActionJustPressed(InputActionsToTransition)) {
+                InputExtension.IsAnyActionJustPressed(InputActionsToTransition) && !AutoTypedText.IsSkipped) {
                 DisplayNextSubtitleBlock();
             }
+
+            if(AutoTypeCanBeSkipped && AutoTypedText.IsSkipped)
+                AutoTypedText.IsSkipped = false;
         }
 
 
@@ -94,7 +99,7 @@ namespace GodotExtensionatorStarter {
             ArgumentNullException.ThrowIfNull(AutoTypedText);
 
             AutoTypedText.ManualStart = false;
-            AutoTypedText.CanBeSkipped = CanBeSkipped;
+            AutoTypedText.CanBeSkipped = AutoTypeCanBeSkipped;
             AutoTypedText.Skipped += OnSkippedSubtitleBlock;
             AutoTypedText.Finished += OnFinishedSubtitleBlockDisplay;
 
@@ -132,12 +137,14 @@ namespace GodotExtensionatorStarter {
                 return;
             }
 
+
             if (DialogueBlocks.PopFront() is DialogueBlock nextSubtitle) {
                 if (CurrentDialogueBlock is DialogueBlock currentDialogueBlock) {
                     SubtitleDisplayFinished?.Invoke(currentDialogueBlock);
                     GlobalGameEvents.EmitSubtitleDisplayFinished(currentDialogueBlock);
                 }
 
+                CurrentSubtitleState = SubtitleState.DISPLAYING;
                 CurrentDialogueBlock = nextSubtitle;
 
                 SubtitleDisplayStarted?.Invoke(nextSubtitle);
@@ -149,7 +156,14 @@ namespace GodotExtensionatorStarter {
                     AudioStreamPlayer.Play();
                 }
 
-                AutoTypedText.ReloadText(Tr(nextSubtitle.Text));
+                if (nextSubtitle.AutoType) {
+                    AutoTypedText.ReloadText(Tr(nextSubtitle.Text));
+                }
+                else {
+                    AutoTypedText.Text = Tr(nextSubtitle.Text);
+                    AutoTypedText.EmitSignal(AutoTypedText.SignalName.Finished);
+                }
+
             }
         }
 
@@ -160,22 +174,24 @@ namespace GodotExtensionatorStarter {
         private async void OnFinishedSubtitleBlockDisplay() {
             if (AudioStreamPlayer.Playing && !AudioManager.IsStreamLooped(AudioStreamPlayer.Stream)) {
                 await ToSignal(AudioStreamPlayer, AudioStreamPlayer.SignalName.Finished);
-
             }
 
-            if (!ManualSubtitleTransition)
+            if (ManualSubtitleTransition)
+                CurrentSubtitleState = SubtitleState.WAITING_FOR_INPUT;
+            else
                 BetweenBlocksTimer.Start();
         }
 
         private void OnBetweenBlocksTimerTimeout() {
-            if (ManualSubtitleTransition)
-                CurrentSubtitleState = SubtitleState.WAITING_FOR_INPUT;
-            else
-                DisplayNextSubtitleBlock();
+            DisplayNextSubtitleBlock();
         }
 
         private void OnSkippedSubtitleBlock() {
             AudioStreamPlayer.Stop();
+
+            if (ManualSubtitleTransition)
+                CurrentSubtitleState = SubtitleState.WAITING_FOR_INPUT;
+
         }
     }
 

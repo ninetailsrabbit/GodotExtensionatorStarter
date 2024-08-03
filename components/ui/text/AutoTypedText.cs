@@ -1,5 +1,4 @@
-﻿using Extensionator;
-using Godot;
+﻿using Godot;
 using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
@@ -27,10 +26,11 @@ namespace GodotExtensionatorStarter {
         public string CurrentBBcode = string.Empty;
         public bool BBCodeFlag = false;
         public bool IsTyping = false;
+        public bool IsSkipped = false;
         public bool TypingFinished = false;
 
 
-        public override void _UnhandledInput(InputEvent @event) {
+        public override void _Input(InputEvent @event) {
             if (!TypingFinished) {
 
                 if (IsTyping) {
@@ -116,10 +116,11 @@ namespace GodotExtensionatorStarter {
 
         public void ReloadText(string text) {
             if (!IsTyping) {
-                SetProcessUnhandledInput(true);
+                SetProcessInput(true);
                 Text = string.Empty;
                 ContentToDisplay = text;
                 TypingFinished = false;
+                IsSkipped = false;
                 DisplayLetters();
             }
         }
@@ -127,9 +128,15 @@ namespace GodotExtensionatorStarter {
         public void Skip() {
             if (IsTyping) {
                 Text = string.Empty;
+                IsTyping = false;
+                TypingFinished = true;
+                IsSkipped = true;
+                SetProcessInput(false);
                 AppendText(ContentToDisplay);
+
+                ContentToDisplay = string.Empty;
+
                 EmitSignal(SignalName.Skipped);
-                EmitSignal(SignalName.Finished);
             }
         }
 
@@ -138,7 +145,7 @@ namespace GodotExtensionatorStarter {
             ContentToDisplay = string.Empty;
             IsTyping = false;
             TypingFinished = true;
-            SetProcessUnhandledInput(false);
+            SetProcessInput(false);
 
             if (IsInstanceValid(TypingTimer))
                 TypingTimer.Stop();
