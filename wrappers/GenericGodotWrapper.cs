@@ -6,7 +6,7 @@ namespace GodotExtensionatorStarter {
     /// </summary>
     /// <typeparam name="T">The type of the custom class to be wrapped. 
     /// Must be a class (reference type).</typeparam>
-    public sealed partial class GenericGodotWrapper<T>(T value) : RefCounted where T : class {
+    public sealed partial class GenericGodotWrapper<T>(T value) : RefCounted where T : struct {
         public object Value = value;
     }
 }
