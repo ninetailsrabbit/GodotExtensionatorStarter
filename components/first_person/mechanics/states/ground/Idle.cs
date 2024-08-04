@@ -11,6 +11,7 @@ namespace GodotExtensionatorStarter {
 
             Decelerate(delta);
 
+            GD.Print(Actor.MotionInput.InputDirection);
             if (Actor.MotionInput.InputDirection.IsNotZeroApprox())
                 FSM?.ChangeStateTo<Walk>();
 

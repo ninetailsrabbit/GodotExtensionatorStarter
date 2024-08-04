@@ -52,11 +52,11 @@ namespace GodotExtensionatorStarter {
             TypeSoundQueue = this.FirstNodeOfClass<SoundQueue>();
 
             Finished += OnFinishedContentDisplay;
-
-            CreateTypingTimer();
         }
 
         public override void _Ready() {
+            CreateTypingTimer();
+
             BbcodeEnabled = true;
             FitContent = true;
         }

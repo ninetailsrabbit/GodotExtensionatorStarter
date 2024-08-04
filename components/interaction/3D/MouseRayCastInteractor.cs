@@ -67,8 +67,10 @@ namespace GodotExtensionatorStarter {
                 }
             }
             else {
-                if (Focused && !Interacting)
+                if (Focused && !Interacting && CurrentInteractable is not null) {
                     UnFocus(CurrentInteractable);
+
+                }
             }
         }
 
@@ -79,13 +81,18 @@ namespace GodotExtensionatorStarter {
                 Vector3 from = CurrentCamera.ProjectRayOrigin(MousePosition);
                 Vector3 to = from + CurrentCamera.ProjectRayNormal(MousePosition) * RayLength;
 
-                PhysicsRayQueryParameters3D rayQuery = PhysicsRayQueryParameters3D.Create(from, to, GameGlobals.InteractablesCollisionLayer);
+                PhysicsRayQueryParameters3D rayQuery = PhysicsRayQueryParameters3D.Create(
+                    from,
+                    to,
+                    GameGlobals.WorldCollisionLayer | GameGlobals.EnemiesCollisionLayer | GameGlobals.InteractablesCollisionLayer
+                );
                 rayQuery.CollideWithAreas = true;
-                rayQuery.CollideWithBodies = false;
+                rayQuery.CollideWithBodies = true;
 
                 var result = worldSpace.IntersectRay(rayQuery);
 
-                if (result.TryGetValue("collider", out var interactable))
+
+                if (result.TryGetValue("collider", out var interactable) && (interactable.Obj as Interactable3D) is not null)
                     return (Interactable3D)interactable;
             }
 
@@ -143,10 +150,8 @@ namespace GodotExtensionatorStarter {
             if (interactable is Interactable3D _interactable && CurrentInteractable is not null) {
                 DisplayCustomCursor();
 
-                if(!CurrentInteractable.KeepInteractableWhenUnFocus)
-                    CurrentInteractable = null;
-
                 Focused = false;
+                CurrentInteractable = null;
 
                 _interactable.EmitSignalSafe(Interactable3D.SignalName.UnFocused, this);
             }

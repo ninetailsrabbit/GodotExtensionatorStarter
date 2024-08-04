@@ -366,6 +366,7 @@ namespace GodotExtensionatorStarter {
 
             switch (keybindingType[0]) {
                 case "InputEventKey":
+
                     var inputEventKey = new InputEventKey {
                         Keycode = OS.FindKeycodeFromString(KeybindingModifiersRegex().Replace(keybindingType[1], "").StripEdges()),
                         AltPressed = !keybindingType[1].EqualsIgnoreCase("Alt") && keybindingType[1].Contains("Alt", System.StringComparison.OrdinalIgnoreCase),
@@ -419,7 +420,7 @@ namespace GodotExtensionatorStarter {
         [GeneratedRegex(@"\s+")]
         private static partial Regex WhiteSpaceRegex();
 
-        [GeneratedRegex(@"\b[(Shift|Alt|Ctrl)\+]+\b")]
+        [GeneratedRegex(@"\b(Shift|Ctrl|Alt)\+\b")]
         private static partial Regex KeybindingModifiersRegex();
     }
 }

@@ -40,6 +40,7 @@ namespace GodotExtensionatorStarter {
 
                 Actor.UseAnimations = true;
                 Actor.InteractionLayer.Hide();
+                Actor.MouseRayCastInteractor.ReturnToOriginalCamera();
 
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ActorCanceledScan, this);
             }

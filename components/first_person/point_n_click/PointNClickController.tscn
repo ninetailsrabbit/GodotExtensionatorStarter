@@ -68,7 +68,7 @@ libraries = {
 [node name="MouseRayCastInteractor" type="Node3D" parent="." node_paths=PackedStringArray("OriginCamera")]
 script = ExtResource("2_rhpgc")
 OriginCamera = NodePath("../Head/Eyes/Camera3D")
-RayLength = 50.0
+RayLength = 100.0
 
 [node name="ScanObjectMarker" type="Marker3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.194898, -1.3339)

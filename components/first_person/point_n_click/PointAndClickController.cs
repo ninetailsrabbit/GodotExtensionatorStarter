@@ -1,3 +1,4 @@
+using FirstPersonTemplate;
 using Godot;
 using GodotExtensionator;
 using System.Linq;
@@ -43,6 +44,7 @@ namespace GodotExtensionatorStarter {
 
         public Node3D Eyes { get; set; } = null!;
         public Camera3D Camera3D { get; set; } = null!;
+        public CameraMovement CameraMovement { get; set; } = default!;
 
         public Vector3 OriginalEyesPosition = Vector3.Zero;
         public Vector3 OriginalEyesRotation = Vector3.Zero;
@@ -75,6 +77,8 @@ namespace GodotExtensionatorStarter {
             ScanObjectMarker = GetNode<Marker3D>(nameof(ScanObjectMarker));
             Eyes = GetNode<Node3D>($"%{nameof(Eyes)}");
             Camera3D = GetNode<Camera3D>($"%{nameof(Camera3D)}");
+            CameraMovement = this.FirstNodeOfClass<CameraMovement>();
+
             InteractionLayer = GetNode<CanvasLayer>($"{nameof(InteractionLayer)}");
             SubtitlesLayer = GetNode<CanvasLayer>($"{nameof(SubtitlesLayer)}");
 
@@ -96,14 +100,7 @@ namespace GodotExtensionatorStarter {
         }
 
 
-        public override void _Input(InputEvent @event) {
-            if (Input.IsActionJustPressed("pause")) {
-                GlobalGameEvents.EmitSubtitlesRequested([
-                    new DialogueBlock("id100",  "John doe", "jajajjaja un subtitulo payaso", true),
-                    new DialogueBlock("id2", "John doe", "QUE TAL SI NOS COMEMOS LA BOCA ATONTAO, LETS FIGHT JAJAJAJAJ FAKJFAJKFAJKFJLAJA", true),
-                ]);
-            }
-        }
+     
         public override void _Ready() {
             ApplyStandingStature();
 
@@ -129,6 +126,14 @@ namespace GodotExtensionatorStarter {
 
         public void EnableCameraBlur(bool enabled = true) {
             ((CameraAttributesPractical)Camera3D.Attributes).DofBlurFarEnabled = enabled;
+        }
+
+        public void LockCameraMovement() {
+            CameraMovement?.Lock();
+        }
+
+        public void UnlockCameraMovement() {
+            CameraMovement?.Unlock();
         }
 
         private void RunAnimation(string animationName) {
