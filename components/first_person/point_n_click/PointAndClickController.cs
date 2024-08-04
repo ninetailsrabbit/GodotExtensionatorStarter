@@ -99,8 +99,6 @@ namespace GodotExtensionatorStarter {
 
         }
 
-
-     
         public override void _Ready() {
             ApplyStandingStature();
 

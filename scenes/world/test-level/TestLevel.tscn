@@ -1,6 +1,6 @@
 [gd_scene load_steps=18 format=3 uid="uid://2df7eofiqpkx"]
 
-[ext_resource type="PackedScene" uid="uid://bu4wye7x6eoel" path="res://components/first_person/FirstPersonController.tscn" id="1_uhobs"]
+[ext_resource type="PackedScene" uid="uid://b01ettgh4fl37" path="res://components/first_person/point_n_click/PointNClickController.tscn" id="2_puqhl"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickMovement.cs" id="2_py680"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickObjectScanner.cs" id="4_gi2vb"]
 [ext_resource type="Script" path="res://components/interaction/3D/Interactable3D.cs" id="4_s6iyf"]
@@ -52,7 +52,7 @@ radius = 2.16232
 environment = SubResource("Environment_e0feo")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 0, 0)
+transform = Transform3D(-0.581054, -0.661282, -0.474429, -0.642163, 0.0143863, 0.766433, -0.500003, 0.749999, -0.43301, 0, 8.60095, 0)
 shadow_enabled = true
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
@@ -119,8 +119,8 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.280
 operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
 
-[node name="FirstPersonController" parent="." instance=ExtResource("1_uhobs")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.0074, 0)
+[node name="PointAndClickController" parent="." instance=ExtResource("2_puqhl")]
+transform = Transform3D(0.630283, 0, -0.776366, 0, 1, 0, 0.776366, 0, 0.630283, 0, 2.13779, 0)
 
 [node name="PointAndClickMovement" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.45713, 1.71341, -1.29201)
@@ -173,9 +173,11 @@ Scannable = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0687865)
 shape = SubResource("BoxShape3D_vyi3v")
 
-[node name="PointAndClickCameraShifter" type="Node3D" parent="."]
+[node name="PointAndClickCameraShifter" type="Node3D" parent="." node_paths=PackedStringArray("CameraToShift")]
 transform = Transform3D(0.211153, 0.325964, -0.9215, -0.0728048, 0.945382, 0.31773, 0.974738, 0, 0.223352, 5.8335, 4.92005, -7.65028)
 script = ExtResource("5_5terb")
+CameraToShift = NodePath("Camera3D")
+TransitionDuration = 1.2
 
 [node name="Interactable3D" type="Area3D" parent="PointAndClickCameraShifter"]
 script = ExtResource("4_s6iyf")
@@ -186,9 +188,12 @@ shape = SubResource("SphereShape3D_8lo4i")
 [node name="Camera3D" type="Camera3D" parent="PointAndClickCameraShifter"]
 transform = Transform3D(1, -7.80372e-09, 2.98023e-08, 7.45058e-09, 1, -5.96046e-08, -2.98023e-08, 2.97214e-08, 1, 0.257096, 0.396888, -1.122)
 
-[node name="PointAndClickCameraShifter2" type="Node3D" parent="."]
+[node name="PointAndClickCameraShifter2" type="Node3D" parent="." node_paths=PackedStringArray("CameraToShift", "PreviousCameraShifter")]
 transform = Transform3D(-0.619327, 0, 0.785133, 0, 1, 0, -0.785133, 0, -0.619327, 15.5972, 2.87055, -9.7101)
 script = ExtResource("5_5terb")
+CameraToShift = NodePath("Camera3D")
+TransitionDuration = 1.0
+PreviousCameraShifter = NodePath("../PointAndClickCameraShifter")
 
 [node name="Camera3D" type="Camera3D" parent="PointAndClickCameraShifter2"]
 transform = Transform3D(0.991882, 0.126745, 0.0102914, -0.126745, 0.978835, 0.160677, 0.0102915, -0.160677, 0.986953, 0, 0, 0)
