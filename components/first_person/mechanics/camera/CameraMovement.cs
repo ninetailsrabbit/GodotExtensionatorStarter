@@ -1,7 +1,6 @@
 ﻿using Extensionator;
 using Godot;
 using GodotExtensionator;
-using GodotExtensionatorStarter;
 using System;
 
 namespace FirstPersonTemplate {
@@ -12,7 +11,6 @@ namespace FirstPersonTemplate {
         [Export] public Node3D Actor { get; set; } = null!;
         [Export] public Camera3D Camera { get; set; } = default!;
         [Export] public Node3D PivotPoint { get; set; } = default!;
-        [Export] public bool LimitMovementOnlyToCaptureMode = true;
         [Export(PropertyHint.Range, "0.0, 100.0, 0.5")] public float CameraSensitivity { get; set; } = 45f;
         [Export(PropertyHint.Range, "0.1f, 20f, 0.1f")] public float MouseSensitivity { get; set; } = 3f;
         // 0 means 'no limit'
@@ -22,31 +20,34 @@ namespace FirstPersonTemplate {
 
 
         public bool Locked = false;
-        public float CurrentVerticalRotationLimit = 89f;
+        public float CurrentVerticalRotationLimit = 0f;
         public float CurrentHorizontalRotationLimit = 0f;
 
         public override void _EnterTree() {
-            Actor ??= GetParent<FirstPersonController>();
+            Actor ??= GetParent<Node3D>();
             ArgumentNullException.ThrowIfNull(nameof(Actor));
 
             Camera ??= Actor.FirstNodeOfType<Camera3D>();
             ArgumentNullException.ThrowIfNull(nameof(Camera));
-
             ArgumentNullException.ThrowIfNull(nameof(PivotPoint));
+
+            CurrentVerticalRotationLimit = CameraVerticalRotationLimit;
+            CurrentHorizontalRotationLimit = CameraHorizontalRotationLimit;
         }
 
-        public override void _UnhandledInput(InputEvent @event) {
+        public override void _Input(InputEvent @event) {
             if (Locked)
                 return;
 
-            if ((!LimitMovementOnlyToCaptureMode || (LimitMovementOnlyToCaptureMode && InputExtension.IsMouseCaptured())) &&
-                @event is InputEventMouseMotion mouseMotion) {
+            if (@event is InputEventMouseMotion mouseMotion) {
 
-                Input.UseAccumulatedInput = false;
-                RotateCamera(((InputEventMouseMotion)mouseMotion.XformedBy(GetTree().Root.GetFinalTransform())));
-            }
-            else {
-                Input.UseAccumulatedInput = true;
+                if (InputExtension.IsMouseCaptured()) {
+                    Input.UseAccumulatedInput = false;
+                    RotateCamera(((InputEventMouseMotion)mouseMotion.XformedBy(GetTree().Root.GetFinalTransform())));
+                }
+                else {
+                    Input.UseAccumulatedInput = true;
+                }
             }
         }
 

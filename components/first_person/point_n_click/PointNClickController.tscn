@@ -1,9 +1,10 @@
-[gd_scene load_steps=9 format=3 uid="uid://b01ettgh4fl37"]
+[gd_scene load_steps=10 format=3 uid="uid://b01ettgh4fl37"]
 
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickController.cs" id="1_b4jp0"]
 [ext_resource type="Script" path="res://components/interaction/3D/MouseRayCastInteractor.cs" id="2_rhpgc"]
 [ext_resource type="PackedScene" uid="uid://boa6oj3q31yqn" path="res://components/first_person/point_n_click/PointAndClickScanGUI.tscn" id="2_rw6hd"]
 [ext_resource type="PackedScene" uid="uid://bu6bqupq6ngdd" path="res://components/narrative/subtitles/SubtitleDisplayer.tscn" id="3_ohs4r"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/camera/CameraMovement.cs" id="5_dth3n"]
 
 [sub_resource type="Animation" id="Animation_anwnj"]
 length = 0.001
@@ -49,6 +50,7 @@ dof_blur_far_distance = 2.0
 
 [node name="PointAndClickController" type="Node3D"]
 script = ExtResource("1_b4jp0")
+UseAnimations = false
 
 [node name="InteractionLayer" type="CanvasLayer" parent="."]
 layer = 2
@@ -82,3 +84,9 @@ unique_name_in_owner = true
 unique_name_in_owner = true
 attributes = SubResource("CameraAttributesPractical_5ishy")
 current = true
+
+[node name="CameraMovement" type="Node3D" parent="Head" node_paths=PackedStringArray("Actor", "Camera", "PivotPoint")]
+script = ExtResource("5_dth3n")
+Actor = NodePath("../..")
+Camera = NodePath("../Eyes/Camera3D")
+PivotPoint = NodePath("../Eyes")

@@ -23,7 +23,7 @@ namespace GodotExtensionatorStarter {
                         RunAnimation(DefaultAnimation);
                     }
                     else {
-                        AnimationPlayer.Stop();
+                        AnimationPlayer?.Stop();
                     }
                 }
             }

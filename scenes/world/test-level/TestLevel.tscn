@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://2df7eofiqpkx"]
+[gd_scene load_steps=23 format=3 uid="uid://2df7eofiqpkx"]
 
 [ext_resource type="PackedScene" uid="uid://b01ettgh4fl37" path="res://components/first_person/point_n_click/PointNClickController.tscn" id="2_puqhl"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickMovement.cs" id="2_py680"]
@@ -6,6 +6,9 @@
 [ext_resource type="Script" path="res://components/interaction/3D/Interactable3D.cs" id="4_s6iyf"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickCameraShifter.cs" id="5_5terb"]
 [ext_resource type="Texture2D" uid="uid://d236brq8fuo3q" path="res://assets/cursors/cursor_help.png" id="5_6qw47"]
+[ext_resource type="Script" path="res://components/first_person/point_n_click/VisualHint3D.cs" id="6_52flb"]
+[ext_resource type="Texture2D" uid="uid://dd4rwobbo7262" path="res://assets/geometry/shapes/square/diamond.png" id="7_o5bd8"]
+[ext_resource type="Texture2D" uid="uid://b0jqy8kmi7byq" path="res://assets/geometry/shapes/square/rhombus.png" id="8_darqg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -124,7 +127,7 @@ operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
 
 [node name="PointAndClickController" parent="." instance=ExtResource("2_puqhl")]
-transform = Transform3D(0.630283, 0, -0.776366, 0, 1, 0, 0.776366, 0, 0.630283, 0, 2.13779, 0)
+transform = Transform3D(0.630283, 0, -0.776366, 0, 1, 0, 0.776366, 0, 0.630283, 3.77366, 1.28625, 3.45565)
 
 [node name="PointAndClickMovement" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.45713, 1.71341, -1.29201)
@@ -156,7 +159,7 @@ shape = SubResource("BoxShape3D_08lvj")
 transform = Transform3D(-0.903769, 0, 0.428021, 0, 1, 0, -0.428021, 0, -0.903769, 0, 0, 0.37039)
 
 [node name="PointAndClickObjectScanner" type="Node3D" parent="." node_paths=PackedStringArray("TargetObjectToScan")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7.55418, 0.96126, -0.370012)
+transform = Transform3D(0.931767, 0, -0.363056, 0, 1, 0, 0.363056, 0, 0.931767, 7.55418, 0.96126, -0.370012)
 script = ExtResource("4_gi2vb")
 TargetObjectToScan = NodePath("MeshInstance3D")
 
@@ -185,6 +188,26 @@ Scannable = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PointAndClickObjectScanner/Interactable3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0687865)
 shape = SubResource("BoxShape3D_vyi3v")
+
+[node name="VisualHint3D" type="Node3D" parent="PointAndClickObjectScanner" node_paths=PackedStringArray("ScreenLabelInformation", "ImageHint", "InteractableRelated")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0439444, 0, 0.11467)
+script = ExtResource("6_52flb")
+ScreenLabelInformation = NodePath("Label3D")
+ImageHint = NodePath("Sprite3D")
+NormalHintTexture = ExtResource("7_o5bd8")
+FocusHintTexture = ExtResource("8_darqg")
+InteractableRelated = NodePath("../Interactable3D")
+
+[node name="Sprite3D" type="Sprite3D" parent="PointAndClickObjectScanner/VisualHint3D"]
+transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
+billboard = 1
+texture = ExtResource("7_o5bd8")
+
+[node name="Label3D" type="Label3D" parent="PointAndClickObjectScanner/VisualHint3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.154782, 0)
+billboard = 1
+text = "Cubo"
+font_size = 24
 
 [node name="PointAndClickCameraShifter" type="Node3D" parent="." node_paths=PackedStringArray("CameraToShift")]
 transform = Transform3D(0.211153, 0.325964, -0.9215, -0.0728048, 0.945382, 0.31773, 0.974738, 0, 0.223352, 5.8335, 4.92005, -7.65028)
