@@ -1,10 +1,11 @@
-[gd_scene load_steps=18 format=3 uid="uid://2df7eofiqpkx"]
+[gd_scene load_steps=20 format=3 uid="uid://2df7eofiqpkx"]
 
 [ext_resource type="PackedScene" uid="uid://b01ettgh4fl37" path="res://components/first_person/point_n_click/PointNClickController.tscn" id="2_puqhl"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickMovement.cs" id="2_py680"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickObjectScanner.cs" id="4_gi2vb"]
 [ext_resource type="Script" path="res://components/interaction/3D/Interactable3D.cs" id="4_s6iyf"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickCameraShifter.cs" id="5_5terb"]
+[ext_resource type="Texture2D" uid="uid://d236brq8fuo3q" path="res://assets/cursors/cursor_help.png" id="5_6qw47"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -36,6 +37,9 @@ albedo_color = Color(1, 1, 0.368627, 1)
 [sub_resource type="BoxMesh" id="BoxMesh_1ao1g"]
 material = SubResource("StandardMaterial3D_hdri0")
 size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_nclhk"]
+radius = 0.1
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_vyi3v"]
 size = Vector3(0.5, 0.5, 0.5)
@@ -160,6 +164,15 @@ TargetObjectToScan = NodePath("MeshInstance3D")
 transform = Transform3D(-0.307722, 0, -0.951476, 0, 1, 0, 0.951476, 0, -0.307722, 0, 0, 0)
 layers = 4
 mesh = SubResource("BoxMesh_1ao1g")
+
+[node name="MiniInteractable" type="Area3D" parent="PointAndClickObjectScanner/MeshInstance3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0243328, 0, -0.00786972)
+script = ExtResource("4_s6iyf")
+FocusPointer = ExtResource("5_6qw47")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="PointAndClickObjectScanner/MeshInstance3D/MiniInteractable"]
+transform = Transform3D(1, 0, 5.96046e-08, 0, 1, 0, -5.96046e-08, 0, 1, 0.0661621, 0, 0.00265026)
+shape = SubResource("SphereShape3D_nclhk")
 
 [node name="Interactable3D" type="Area3D" parent="PointAndClickObjectScanner"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.0766159)

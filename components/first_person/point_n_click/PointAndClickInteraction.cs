@@ -34,7 +34,7 @@ namespace GodotExtensionatorStarter {
 
             Actor ??= GetTree().GetFirstNodeInGroup(PointAndClickController.GroupName) as PointAndClickController;
 
-            Interactable3D = this.FirstNodeOfClass<Interactable3D>();
+            Interactable3D = GetNode<Interactable3D>(nameof(Interactable3D));
 
             ArgumentNullException.ThrowIfNull(Interactable3D);
 

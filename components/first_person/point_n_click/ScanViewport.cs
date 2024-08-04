@@ -1,4 +1,5 @@
 using Godot;
+using GodotExtensionator;
 using System;
 
 namespace GodotExtensionatorStarter {
