@@ -4,12 +4,15 @@ using System;
 
 namespace GodotExtensionatorStarter {
     public partial class ScanViewport : Node3D {
+        public CursorManager CursorManager { get; set; } = default!;
         public Marker3D Marker3D { get; set; } = default!;
         public MouseRotatorComponent3D MouseRotatorComponent3D { get; set; } = default!;
         public Camera3D ScanCamera { get; set; } = default!;
         public PointAndClickController Actor { get; set; } = null!;
 
         public override void _EnterTree() {
+            CursorManager = this.GetAutoloadNode<CursorManager>();
+
             Marker3D = GetNode<Marker3D>(nameof(Marker3D));
             MouseRotatorComponent3D = GetNode<MouseRotatorComponent3D>(nameof(MouseRotatorComponent3D));
             ScanCamera = GetNode<Camera3D>(nameof(Camera3D));
@@ -25,7 +28,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public void SetCurrentMouseCursor(CompressedTexture2D cursorTexture) {
-            Input.SetCustomMouseCursor(cursorTexture, Input.CursorShape.Arrow, cursorTexture.GetSize() / 2);
+            CursorManager.ChangeCursorTo(cursorTexture);
         }
         public void ChangeMouseCursor(CompressedTexture2D? cursorTexture) {
             if (cursorTexture is not null)

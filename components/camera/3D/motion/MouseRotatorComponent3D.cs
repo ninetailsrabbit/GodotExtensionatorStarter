@@ -13,7 +13,7 @@ namespace GodotExtensionatorStarter {
         [Export] public bool ResetRotationOnRelease = false;
         [Export] public CompressedTexture2D DefaultCursor = Preloader.Instance.CursorHandThinOpen;
         [Export] public CompressedTexture2D DefaultRotateCursor = Preloader.Instance.CursorHandThinClosed;
-
+        public CursorManager CursorManager { get; set; } = default!;
         public CompressedTexture2D SelectedCursor { get; set; } = default!;
         public CompressedTexture2D SelectedRotateCursor { get; set; } = default!;
 
@@ -24,7 +24,7 @@ namespace GodotExtensionatorStarter {
             if (Target is not null) {
 
                 if (@event is InputEventMouseMotion mouseMotion && MouseMovementDetected(@event)) {
-                    Input.SetCustomMouseCursor(SelectedRotateCursor, Input.CursorShape.Arrow, SelectedRotateCursor.GetSize() / 2);
+                    CursorManager.ChangeCursorTo(SelectedRotateCursor);
 
                     var mouseInput = ((InputEventMouseMotion)mouseMotion.XformedBy(GetTree().Root.GetFinalTransform())).Relative;
 
@@ -33,7 +33,7 @@ namespace GodotExtensionatorStarter {
                 }
 
                 if (MouseReleaseDetected(@event)) {
-                    Input.SetCustomMouseCursor(SelectedCursor, Input.CursorShape.Arrow, SelectedCursor.GetSize() / 2);
+                    CursorManager.ChangeCursorTo(SelectedCursor);
                     ResetTargetRotation();
                 }
 
@@ -41,6 +41,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public override void _EnterTree() {
+            CursorManager = this.GetAutoloadNode<CursorManager>();
             ResetToDefaultCursors();
         }
 

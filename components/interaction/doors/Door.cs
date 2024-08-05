@@ -1,6 +1,9 @@
-﻿using Godot;
+﻿using Extensionator;
+using Godot;
+using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
+
     public abstract partial class Door : Node3D {
         #region Signals
         [Signal]
@@ -13,8 +16,6 @@ namespace GodotExtensionatorStarter {
         public delegate void UnlockedEventHandler();
         [Signal]
         public delegate void TriedToOpenLockedDoorEventHandler();
-        [Signal]
-        public delegate void WrongKeyUsedDoorEventHandler();
 
         #endregion
 
@@ -45,6 +46,8 @@ namespace GodotExtensionatorStarter {
         [Export] public string OpenDoorAnimationName = "open";
         [Export] public Interactable3D Interactable3D { get; set; } = default!;
 
+        public CursorManager CursorManager { get; set; } = default!;
+
         private bool _isOpen = false;
         private bool _isLocked = false;
 
@@ -54,9 +57,12 @@ namespace GodotExtensionatorStarter {
                 Interactable3D.Focused -= OnFocused;
                 Interactable3D.UnFocused -= OnUnFocused;
             }
+
         }
 
         public override void _EnterTree() {
+            CursorManager = this.GetAutoloadNode<CursorManager>();
+
             AnimationPlayer ??= GetNode<AnimationPlayer>(nameof(AnimationPlayer));
             Interactable3D ??= GetNode<Interactable3D>(nameof(Interactable3D));
 
@@ -68,7 +74,13 @@ namespace GodotExtensionatorStarter {
             }
         }
 
+        protected virtual bool IsOpeningUp()
+            => AnimationPlayer.CurrentAnimation.EqualsIgnoreCase(OpenDoorAnimationName) && AnimationPlayer.IsPlaying();
+
         protected virtual void Open() {
+            if (IsOpeningUp())
+                return;
+
             if (IsLocked)
                 EmitSignal(SignalName.TriedToOpenLockedDoor);
 
@@ -78,6 +90,9 @@ namespace GodotExtensionatorStarter {
             }
         }
         protected virtual async void Close() {
+            if (IsOpeningUp())
+                return;
+
             if (!IsLocked && DelayBeforeClose > 0 && IsOpen)
                 await ToSignal(GetTree().CreateTimer(DelayBeforeClose), Timer.SignalName.Timeout);
 
@@ -100,13 +115,14 @@ namespace GodotExtensionatorStarter {
         private void OnFocused(GodotObject interactor) {
             if (interactor is IInteractor) {
                 if (Interactable3D.FocusPointer is not null)
-                    Input.SetCustomMouseCursor(Interactable3D.FocusPointer, Input.CursorShape.Arrow, Interactable3D.FocusPointer.GetSize() / 2);
+                    CursorManager.ChangeCursorTo(Interactable3D.FocusPointer);
             }
         }
 
         private void OnUnFocused(GodotObject interactor) {
             if (interactor is IInteractor) {
-               // TODO - CREATE A GLOBAL CUSTOM CURSOR MANAGER TO NOT REPEAT LOGIC
+                if (Interactable3D.FocusPointer is not null)
+                    CursorManager.ReturnCursorToDefault();
             }
         }
     }

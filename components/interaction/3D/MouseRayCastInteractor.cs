@@ -14,8 +14,6 @@ namespace GodotExtensionatorStarter {
         [Export] public string[] InputActionsToInteract = ["interact"];
 
         [Export] public string[] InputActionsToCancelInteraction = ["cancel_interaction"];
-        [Export] public CompressedTexture2D DefaultCursor { get; set; } = Preloader.Instance.CursorPointerC;
-
         #endregion
 
         public Camera3D CurrentCamera { get; set; } = default!;
@@ -25,6 +23,7 @@ namespace GodotExtensionatorStarter {
         public Vector2 MousePosition;
 
         public GameGlobals GameGlobals { get; set; } = default!;
+        public CursorManager CursorManager { get; set; } = default!;
 
         public override void _Input(InputEvent @event) {
             if (CurrentCamera is not null && @event is InputEventMouse mouse) {
@@ -39,24 +38,23 @@ namespace GodotExtensionatorStarter {
 
             if (InputExtension.IsAnyActionJustPressed(InputActionsToCancelInteraction) && CurrentInteractable is not null)
                 CancelInteract(CurrentInteractable);
+        }
 
+        public override void _EnterTree() {
+            GameGlobals = this.GetAutoloadNode<GameGlobals>();
+            CursorManager = this.GetAutoloadNode<CursorManager>();
 
         }
         public override void _Ready() {
-            DisplayCustomCursor();
+            CursorManager.ReturnCursorToDefault();
 
             Debug.Assert(OriginCamera is not null, "MouseRayCastInteractor: This node needs a Camera3D to create the mouse raycast");
             SetProcessInput(OriginCamera is not null);
             SetProcess(OriginCamera is not null);
 
-            GameGlobals = this.GetAutoloadNode<GameGlobals>();
             CurrentCamera = OriginCamera;
         }
 
-        public void DisplayCustomCursor() {
-            if (DefaultCursor is not null)
-                Input.SetCustomMouseCursor(DefaultCursor, Input.CursorShape.Arrow, DefaultCursor.GetSize() / 2);
-        }
 
         public override void _Process(double delta) {
             Interactable3D? detectedInteractable = GetDetectedInteractable();
@@ -125,7 +123,7 @@ namespace GodotExtensionatorStarter {
         }
         public void CancelInteract(GodotObject interactable) {
             if (interactable is Interactable3D _interactable) {
-                DisplayCustomCursor();
+                CursorManager.ReturnCursorToDefault();
 
                 Interacting = false;
                 Focused = false;
@@ -148,7 +146,7 @@ namespace GodotExtensionatorStarter {
 
         public void UnFocus(GodotObject interactable) {
             if (interactable is Interactable3D _interactable && CurrentInteractable is not null) {
-                DisplayCustomCursor();
+                CursorManager.ReturnCursorToDefault();
 
                 Focused = false;
                 CurrentInteractable = null;

@@ -19,6 +19,7 @@ namespace GodotExtensionatorStarter {
 
         public GameGlobals GameGlobals { get; set; } = default!;
         public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
+        public CursorManager CursorManager { get; set; } = default!;
 
         public Interactable3D Interactable3D { get; set; } = null!;
 
@@ -32,6 +33,7 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             AddToGroup(GroupName);
 
+            CursorManager = this.GetAutoloadNode<CursorManager>();
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
 
@@ -49,11 +51,11 @@ namespace GodotExtensionatorStarter {
 
         protected virtual void OnFocused(GodotObject interactor) {
             if (FocusCursor is not null)
-                Input.SetCustomMouseCursor(FocusCursor, SelectedCursorShape, FocusCursor.GetSize() / 2);
+                CursorManager.ChangeCursorTo(FocusCursor, SelectedCursorShape);
         }
 
         protected virtual void OnUnFocused(GodotObject interactor) {
-            Actor.MouseRayCastInteractor.DisplayCustomCursor();
+            CursorManager.ReturnCursorToDefault();
         }
 
         protected virtual void OnInteracted(GodotObject interactor) {
@@ -68,7 +70,7 @@ namespace GodotExtensionatorStarter {
 
         protected virtual void OnCanceledInteraction(GodotObject interactor) {
             GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.PointAndClickInteractionCanceled, this);
-            Actor.MouseRayCastInteractor.DisplayCustomCursor();
+            CursorManager.ReturnCursorToDefault();
         }
     }
 }
