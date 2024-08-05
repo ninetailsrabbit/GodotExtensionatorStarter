@@ -30,6 +30,9 @@ namespace GodotExtensionatorStarter {
             TitleLabel = GetNode<RichTextLabel>($"%{nameof(TitleLabel)}");
             DescriptionLabel = GetNode<Label>($"%{nameof(DescriptionLabel)}");
 
+            TitleLabel.Text = string.Empty;
+            DescriptionLabel.Text = string.Empty;
+
             GlobalGameEvents.ActorScannedObject += OnPointAndClickObjectScanned;
             GlobalGameEvents.ActorCanceledScan += OnPointAndClickScanCanceled;
         }

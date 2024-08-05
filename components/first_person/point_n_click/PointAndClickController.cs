@@ -29,7 +29,15 @@ namespace GodotExtensionatorStarter {
             }
         }
         [Export] public bool BlurCameraOnScan = true;
-
+        [Export] public string InputActionToChangeCameraMode = "change_camera_mode";
+        [Export]
+        public bool CanMoveCamera {
+            get => _canMoveCamera;
+            set {
+                _canMoveCamera = value;
+                SetProcessInput(_canMoveCamera);
+            }
+        }
 
         public GlobalFade GlobalFade { get; set; } = default!;
         public GameGlobals GameGlobals { get; set; } = default!;
@@ -38,18 +46,56 @@ namespace GodotExtensionatorStarter {
         public MouseRayCastInteractor MouseRayCastInteractor { get; set; } = null!;
         public CanvasLayer InteractionLayer { get; set; } = null!;
         public CanvasLayer SubtitlesLayer { get; set; } = null!;
-
         public SubViewport ScanSubViewport { get; set; } = null!;
         public Marker3D ScanObjectMarker { get; set; } = null!;
-
         public Node3D Eyes { get; set; } = null!;
         public Camera3D Camera3D { get; set; } = null!;
+
         public CameraMovement CameraMovement { get; set; } = default!;
+
 
         public Vector3 OriginalEyesPosition = Vector3.Zero;
         public Vector3 OriginalEyesRotation = Vector3.Zero;
+        public enum PointAndClickCameraMode {
+            FREE_MOVEMENT,
+            STATIC
+        }
 
+        public PointAndClickCameraMode CurrentCameraMode {
+            get => _currentCameraMode;
+            set {
+                if (_currentCameraMode != value) {
+                    _currentCameraMode = value;
+
+                    if (IsNodeReady()) {
+                        switch (_currentCameraMode) {
+                            case PointAndClickCameraMode.FREE_MOVEMENT:
+                                CameraMovement.Enable();
+                                MouseRayCastInteractor.Disable();
+                                InputExtension.CaptureMouse();
+
+                                break;
+                            case PointAndClickCameraMode.STATIC:
+                                CameraMovement.Disable();
+                                MouseRayCastInteractor.Enable();
+                                Input.MouseMode = Input.MouseModeEnum.Visible;
+
+                                break;
+                            default:
+                                CameraMovement.Disable();
+                                MouseRayCastInteractor.Enable();
+                                Input.MouseMode = Input.MouseModeEnum.Visible;
+                                break;
+                        }
+                    }
+
+                }
+            }
+        }
+
+        private PointAndClickCameraMode _currentCameraMode = PointAndClickCameraMode.STATIC;
         private bool _useAnimations = true;
+        private bool _canMoveCamera = false;
 
         public override void _ExitTree() {
             GlobalFade.FadeStarted -= OnFadeStarted;
@@ -77,7 +123,7 @@ namespace GodotExtensionatorStarter {
             ScanObjectMarker = GetNode<Marker3D>(nameof(ScanObjectMarker));
             Eyes = GetNode<Node3D>($"%{nameof(Eyes)}");
             Camera3D = GetNode<Camera3D>($"%{nameof(Camera3D)}");
-            CameraMovement = this.FirstNodeOfClass<CameraMovement>();
+            CameraMovement = GetNode<CameraMovement>($"%{nameof(CameraMovement)}");
 
             InteractionLayer = GetNode<CanvasLayer>($"{nameof(InteractionLayer)}");
             SubtitlesLayer = GetNode<CanvasLayer>($"{nameof(SubtitlesLayer)}");
@@ -99,7 +145,17 @@ namespace GodotExtensionatorStarter {
 
         }
 
+        public override void _Input(InputEvent @event) {
+            if (CameraMovement is not null && CanMoveCamera && Input.IsActionJustPressed(InputActionToChangeCameraMode)) {
+                if (CurrentCameraMode.Equals(PointAndClickCameraMode.STATIC))
+                    ChangeCameraToFreeMovement();
+                else
+                    ChangeCameraToStaticMovement();
+            }
+        }
+
         public override void _Ready() {
+            ChangeCameraToStaticMovement();
             ApplyStandingStature();
 
             OriginalEyesPosition = Eyes.Position;
@@ -133,6 +189,27 @@ namespace GodotExtensionatorStarter {
         public void UnlockCameraMovement() {
             CameraMovement?.Unlock();
         }
+        public void ChangeCameraToFreeMovement() {
+            CurrentCameraMode = PointAndClickCameraMode.FREE_MOVEMENT;
+
+            AnimationPlayer?.Stop();
+        }
+
+        public void ChangeCameraToStaticMovement() {
+            CurrentCameraMode = PointAndClickCameraMode.STATIC;
+
+            if (UseAnimations)
+                RunAnimation(DefaultAnimation);
+        }
+
+        public void ReturnCameraRotationLimitToDefault() {
+            CameraMovement.ReturnToOriginalLimitRotation();
+        }
+        public void ChangeCameraRotationLimit(float horizontalRotationLimit = 0f, float verticalRotationLimit = 89f) {
+            CameraMovement.ChangeCameraHorizontalRotationLimit(horizontalRotationLimit);
+            CameraMovement.ChangeCameraVerticalRotationLimit(verticalRotationLimit);
+        }
+
 
         private void RunAnimation(string animationName) {
             if (UseAnimations)

@@ -19,9 +19,18 @@ namespace FirstPersonTemplate {
         [Export(PropertyHint.Range, "0, 360f, 0.1f")] public float CameraHorizontalRotationLimit { get; set; } = 0f;
 
 
-        public bool Locked = false;
+        public bool Locked {
+            get => _locked;
+            set {
+                _locked = value;
+                SetProcessInput(_locked);
+            }
+        }
+
         public float CurrentVerticalRotationLimit = 0f;
         public float CurrentHorizontalRotationLimit = 0f;
+
+        private bool _locked = false;
 
         public override void _EnterTree() {
             Actor ??= GetParent<Node3D>();
@@ -36,9 +45,6 @@ namespace FirstPersonTemplate {
         }
 
         public override void _Input(InputEvent @event) {
-            if (Locked)
-                return;
-
             if (@event is InputEventMouseMotion mouseMotion) {
 
                 if (InputExtension.IsMouseCaptured()) {

@@ -128,6 +128,7 @@ size = Vector3(0.439514, 2.41166, 1.57172)
 
 [node name="PointAndClickController" parent="." instance=ExtResource("2_puqhl")]
 transform = Transform3D(0.630283, 0, -0.776366, 0, 1, 0, 0.776366, 0, 0.630283, 3.77366, 1.28625, 3.45565)
+CanMoveCamera = true
 
 [node name="PointAndClickMovement" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.45713, 1.71341, -1.29201)
@@ -199,8 +200,10 @@ FocusHintTexture = ExtResource("8_darqg")
 InteractableRelated = NodePath("../Interactable3D")
 
 [node name="Sprite3D" type="Sprite3D" parent="PointAndClickObjectScanner/VisualHint3D"]
-transform = Transform3D(0.1, 0, 0, 0, 0.1, 0, 0, 0, 0.1, 0, 0, 0)
-billboard = 1
+transform = Transform3D(0.1, 0, 2.98023e-08, 0, 0.1, 0, -2.98023e-08, 0, 0.1, 0.0400448, 0, -0.135314)
+visibility_range_end = 3.0
+billboard = 2
+no_depth_test = true
 texture = ExtResource("7_o5bd8")
 
 [node name="Label3D" type="Label3D" parent="PointAndClickObjectScanner/VisualHint3D"]
