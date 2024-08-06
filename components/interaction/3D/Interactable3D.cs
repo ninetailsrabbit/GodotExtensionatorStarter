@@ -31,40 +31,50 @@ namespace GodotExtensionatorStarter {
 
         // Set to zero to use infinitely this interactable
         [Export] public int NumberOfTimesYouCanInteract = 0;
-        [Export] public bool KeepInteractableWhenUnFocus = false;
+        [Export] public bool ChangeCursor = true;
+        [Export] public bool ChangeScreenPointer = false;
 
-        [ExportGroup("Pointers")]
-        [Export] public CompressedTexture2D FocusPointer { get; set; } = default!;
-        [Export] public CompressedTexture2D InteractPointer { get; set; } = default!;
+        [ExportGroup("Pointers and cursors")]
+        [Export] public CompressedTexture2D FocusCursor { get; set; } = Preloader.Instance.CursorLook;
+        [Export] public CompressedTexture2D InteractCursor { get; set; } = default!;
+        [Export] public CompressedTexture2D FocusScreenPointer { get; set; } = Preloader.Instance.DefaultFocusPointer;
+        [Export] public CompressedTexture2D InteractScreenPointer { get; set; } = default!;
 
         [ExportGroup("Information")]
+        [Export] public StringName Id = string.Empty;
         [Export] public string Title = string.Empty;
         [Export] public string Description = string.Empty;
+        [Export] public string TranslationKey = string.Empty;
         [Export] public CATEGORY Category;
 
         [ExportGroup("Scan")]
         [Export] public bool Scannable = false;
+        [Export] public bool CanBeRotatedOnScan = false;
 
         [ExportGroup("Pickup")]
         [Export] public bool Pickable = false;
         [Export] public string PickupMessage = string.Empty;
+        [Export] public string PickupTranslationKey = string.Empty;
         [Export] public float PullPower = 20f;
         [Export] public float ThrowPower = 10f;
 
         [ExportGroup("Usable")]
         [Export] public bool Usable = false;
         [Export] public string UsableMessage = string.Empty;
+        [Export] public string UsableMessageTranslationKey = string.Empty;
 
         [ExportGroup("Inventory")]
+        [Export] public int Slots = 1;
         [Export] public bool CanBeSaved = false;
         [Export] public string InventorySaveMessage = string.Empty;
+        [Export] public string InventorySaveMessageTranslationKey = string.Empty;
 
         [ExportGroup("Player")]
-        [Export] public bool LockPlayer = false;
+        [Export] public bool LockPlayerOnInteraction = false;
 
         public GameGlobals GameGlobals { get; set; } = default!;
         public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
-
+        public CursorManager CursorManager { get; set; } = default!;
 
         public int TimesInteracted {
             get => _timesInteracted;
@@ -72,8 +82,11 @@ namespace GodotExtensionatorStarter {
                 int previousValue = TimesInteracted;
                 _timesInteracted = value;
 
-                if (previousValue != TimesInteracted && TimesInteracted.Equals(NumberOfTimesYouCanInteract))
+                if (IsNodeReady() && previousValue != TimesInteracted && TimesInteracted.Equals(NumberOfTimesYouCanInteract)) {
                     EmitSignal(SignalName.InteractionLimitReached);
+                    GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.InteractableInteractionLimitReached, this);
+                    Deactivate();
+                }
 
             }
         }
@@ -91,8 +104,7 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
-
-            FocusPointer ??= Preloader.Instance.DefaultFocusPointer;
+            CursorManager = this.GetAutoloadNode<CursorManager>();
 
             Priority = 3;
             CollisionLayer = GameGlobals.InteractablesCollisionLayer;
@@ -122,37 +134,51 @@ namespace GodotExtensionatorStarter {
         public bool IsPickable() => Pickable;
         public bool IsUsable() => Usable;
 
-        public bool CanBeSavedOnInventory() {
-            return CanBeSaved;
-        }
+        public bool CanBeSavedOnInventory() => CanBeSaved;
+
         private void OnInteracted(GodotObject interactor) {
-            if (interactor is IInteractor _) {
+            if (interactor is IInteractor _interactor) {
 
                 if (NumberOfTimesYouCanInteract.IsGreaterThanZero())
                     TimesInteracted += 1;
 
-                if (LockPlayer)
+                if (LockPlayerOnInteraction)
                     GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.LockPlayer, this);
+
+                if (_interactor is MouseRayCastInteractor && ChangeCursor && InteractCursor is not null)
+                    CursorManager.ChangeCursorTo(InteractCursor);
 
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.Interacted, interactor);
             }
         }
         private void OnCancelInteraction(GodotObject interactor) {
-            if (interactor is IInteractor _) {
-                if (LockPlayer)
+            if (interactor is IInteractor _interactor) {
+                if (LockPlayerOnInteraction)
                     GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.UnlockPlayer, this);
+
+                if (_interactor is MouseRayCastInteractor && ChangeCursor)
+                    CursorManager.ReturnCursorToDefault();
 
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.CanceledInteraction, interactor);
             }
         }
         private void OnUnFocused(GodotObject interactor) {
-            if (interactor is IInteractor _)
+            if (interactor is IInteractor _interactor) {
+                if (_interactor is MouseRayCastInteractor && ChangeCursor)
+                    CursorManager.ReturnCursorToDefault();
+
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.UnFocused, interactor);
+
+            }
         }
 
         private void OnFocused(GodotObject interactor) {
-            if (interactor is IInteractor _)
+            if (interactor is IInteractor _interactor) {
+                if (_interactor is MouseRayCastInteractor && ChangeCursor && FocusCursor is not null)
+                    CursorManager.ChangeCursorTo(FocusCursor);
+
                 GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.Focused, interactor);
+            }
 
         }
 

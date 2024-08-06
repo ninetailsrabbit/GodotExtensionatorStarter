@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxv8eytsgj061"]
+
+[ext_resource type="Script" path="res://components/map/room_creator/RoomCreator.cs" id="1_a6h5c"]
+
+[node name="RoomCreator" type="Node3D" node_paths=PackedStringArray("CSGCombinerRoot")]
+script = ExtResource("1_a6h5c")
+CSGCombinerRoot = NodePath("CSGCombiner3D")
+RoomSize = Vector3(5, 4, 7)
+
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]

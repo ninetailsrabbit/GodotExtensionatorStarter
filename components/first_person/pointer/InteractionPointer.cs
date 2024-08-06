@@ -28,7 +28,7 @@ namespace GodotExtensionatorStarter {
 
         private void OnFocusedInteractable(GodotObject _interactor) {
             if(_interactor is RayCastInteractor3D interactor) {
-                CurrentPointer.Texture = interactor?.CurrentInteractable?.FocusPointer;
+                CurrentPointer.Texture = interactor?.CurrentInteractable?.FocusScreenPointer;
             }
         }
 

@@ -17,7 +17,7 @@ namespace GodotExtensionatorStarter {
         #endregion
 
         public Camera3D CurrentCamera { get; set; } = default!;
-        public Interactable3D? CurrentInteractable;
+        public Interactable3D? CurrentInteractable { get; set; }
         public bool Focused = false;
         public bool Interacting = false;
         public Vector2 MousePosition;

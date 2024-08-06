@@ -12,20 +12,15 @@ namespace GodotExtensionatorStarter {
         [Export] public PointAndClickController Actor { get; set; } = default!;
 
         [Export] public Input.CursorShape SelectedCursorShape = Input.CursorShape.Arrow;
-        [Export] public CompressedTexture2D FocusCursor { get; set; } = default!;
         [Export(PropertyHint.Range, "0, 360f, 0.1f")] public float CameraVerticalRotationLimit { get; set; } = 89f;
         // 0 means 'no limit'
         [Export(PropertyHint.Range, "0, 360f, 0.1f")] public float CameraHorizontalRotationLimit { get; set; } = 0f;
 
         public GameGlobals GameGlobals { get; set; } = default!;
         public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
-        public CursorManager CursorManager { get; set; } = default!;
-
         public Interactable3D Interactable3D { get; set; } = null!;
 
         public override void _ExitTree() {
-            Interactable3D.Focused -= OnFocused;
-            Interactable3D.UnFocused -= OnUnFocused;
             Interactable3D.CanceledInteraction -= OnCanceledInteraction;
             Interactable3D.Interacted -= OnInteracted;
         }
@@ -33,7 +28,6 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             AddToGroup(GroupName);
 
-            CursorManager = this.GetAutoloadNode<CursorManager>();
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
 
@@ -43,19 +37,8 @@ namespace GodotExtensionatorStarter {
 
             ArgumentNullException.ThrowIfNull(Interactable3D);
 
-            Interactable3D.Focused += OnFocused;
-            Interactable3D.UnFocused += OnUnFocused;
             Interactable3D.CanceledInteraction += OnCanceledInteraction;
             Interactable3D.Interacted += OnInteracted;
-        }
-
-        protected virtual void OnFocused(GodotObject interactor) {
-            if (FocusCursor is not null)
-                CursorManager.ChangeCursorTo(FocusCursor, SelectedCursorShape);
-        }
-
-        protected virtual void OnUnFocused(GodotObject interactor) {
-            CursorManager.ReturnCursorToDefault();
         }
 
         protected virtual void OnInteracted(GodotObject interactor) {
@@ -70,7 +53,6 @@ namespace GodotExtensionatorStarter {
 
         protected virtual void OnCanceledInteraction(GodotObject interactor) {
             GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.PointAndClickInteractionCanceled, this);
-            CursorManager.ReturnCursorToDefault();
         }
     }
 }

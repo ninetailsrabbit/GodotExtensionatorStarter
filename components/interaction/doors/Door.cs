@@ -140,14 +140,14 @@ namespace GodotExtensionatorStarter {
 
         private void OnFocused(GodotObject interactor) {
             if (interactor is IInteractor) {
-                if (Interactable3D.FocusPointer is not null)
-                    CursorManager.ChangeCursorTo(Interactable3D.FocusPointer);
+                if (Interactable3D.FocusScreenPointer is not null)
+                    CursorManager.ChangeCursorTo(Interactable3D.FocusScreenPointer);
             }
         }
 
         private void OnUnFocused(GodotObject interactor) {
             if (interactor is IInteractor) {
-                if (Interactable3D.FocusPointer is not null)
+                if (Interactable3D.FocusScreenPointer is not null)
                     CursorManager.ReturnCursorToDefault();
             }
         }

@@ -25,8 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="autoload\camera\" />
-    <Folder Include="translations\" />
+    <Folder Include="components\map\room_creator\" />
   </ItemGroup>
 
 </Project>

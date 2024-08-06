@@ -17,8 +17,6 @@ namespace GodotExtensionatorStarter {
         [Export] public CompressedTexture2D FocusHintTexture { get; set; } = default!;
         [Export] public Interactable3D InteractableRelated { get; set; } = null!;
 
-
-
         public override void _ExitTree() {
             InteractableRelated.Focused -= OnFocused;
             InteractableRelated.UnFocused -= OnUnFocused;

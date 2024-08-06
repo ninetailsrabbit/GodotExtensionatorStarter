@@ -8,7 +8,7 @@ namespace GodotExtensionatorStarter {
 
         [Export] public string InputAction = "interact";
 
-        public Interactable3D? CurrentInteractable;
+        public Interactable3D? CurrentInteractable { get; set; }
         public bool Focused = false;
         public bool Interacting = false;
 

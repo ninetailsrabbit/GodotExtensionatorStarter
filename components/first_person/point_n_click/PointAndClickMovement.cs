@@ -20,8 +20,6 @@ namespace GodotExtensionatorStarter {
 
             GlobalFade = this.GetAutoloadNode<GlobalFade>();
 
-            FocusCursor ??= Preloader.Instance.CursorStep;
-
             TargetPositionMarker = this.FirstNodeOfType<Marker3D>();
 
             ArgumentNullException.ThrowIfNull(TargetPositionMarker);

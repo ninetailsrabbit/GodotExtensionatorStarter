@@ -9,17 +9,13 @@ namespace GodotExtensionatorStarter {
         [Export] public Camera3D CameraToShift { get; set; } = null!;
         [Export] public float TransitionDuration = 1.5f;
         [Export] public MouseButton ReturnToPreviousCameraButton = MouseButton.Right;
-
         [Export] public PointAndClickCameraShifter PreviousCameraShifter { get; set; } = default!;
-
         public GlobalCameraShifter GlobalCameraShifter { get; set; } = default!;
 
         public override void _EnterTree() {
             base._EnterTree();
 
             GlobalCameraShifter = this.GetAutoloadNode<GlobalCameraShifter>();
-
-            FocusCursor ??= Preloader.Instance.CursorLook;
 
             CameraToShift ??= this.FirstNodeOfType<Camera3D>();
 
