@@ -80,12 +80,18 @@ namespace GodotExtensionatorStarter {
 
         private int _timesInteracted = 0;
 
+        public override void _ExitTree() {
+            Interacted -= OnInteracted;
+            CanceledInteraction -= OnCancelInteraction;
+            Focused -= OnFocused;
+            UnFocused -= OnUnFocused;
+            InteractionLimitReached -= OnInteractionLimitedReached;
+        }
+
         public override void _EnterTree() {
             GameGlobals = this.GetAutoloadNode<GameGlobals>();
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
-        }
 
-        public override void _Ready() {
             FocusPointer ??= Preloader.Instance.DefaultFocusPointer;
 
             Priority = 3;
@@ -99,15 +105,6 @@ namespace GodotExtensionatorStarter {
             Focused += OnFocused;
             UnFocused += OnUnFocused;
             InteractionLimitReached += OnInteractionLimitedReached;
-
-        }
-
-        public override void _ExitTree() {
-            Interacted -= OnInteracted;
-            CanceledInteraction -= OnCancelInteraction;
-            Focused -= OnFocused;
-            UnFocused -= OnUnFocused;
-            InteractionLimitReached -= OnInteractionLimitedReached;
         }
 
         public void Activate() {
@@ -137,7 +134,7 @@ namespace GodotExtensionatorStarter {
                 if (LockPlayer)
                     GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.LockPlayer, this);
 
-                EmitSignal(GlobalGameEvents.SignalName.Interacted, this);
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.Interacted, interactor);
             }
         }
         private void OnCancelInteraction(GodotObject interactor) {
@@ -145,18 +142,17 @@ namespace GodotExtensionatorStarter {
                 if (LockPlayer)
                     GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.UnlockPlayer, this);
 
-                EmitSignal(GlobalGameEvents.SignalName.CanceledInteraction, this);
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.CanceledInteraction, interactor);
             }
         }
         private void OnUnFocused(GodotObject interactor) {
             if (interactor is IInteractor _)
-                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.UnFocused, this);
-
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.UnFocused, interactor);
         }
 
         private void OnFocused(GodotObject interactor) {
             if (interactor is IInteractor _)
-                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.Focused, this);
+                GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.Focused, interactor);
 
         }
 

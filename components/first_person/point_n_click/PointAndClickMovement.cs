@@ -1,5 +1,6 @@
 ﻿using Godot;
 using GodotExtensionator;
+using System;
 
 namespace GodotExtensionatorStarter {
     [GlobalClass, Icon("res://components/first_person/point_n_click/point_click_3d.svg")]
@@ -8,6 +9,7 @@ namespace GodotExtensionatorStarter {
         public delegate void ActorMovedToThisPositionEventHandler(Marker3D targetPosition);
 
         [Export] public Marker3D TargetPositionMarker { get; set; } = null!;
+        [Export] public PointAndClickMovement PreviousMovementPoint { get; set; } = default!;
 
         [Export] public float FadeTimeOnMovement = 0.5f;
 
@@ -21,30 +23,39 @@ namespace GodotExtensionatorStarter {
             FocusCursor ??= Preloader.Instance.CursorStep;
 
             TargetPositionMarker = this.FirstNodeOfType<Marker3D>();
+
+            ArgumentNullException.ThrowIfNull(TargetPositionMarker);
         }
 
-        public async void MoveActorToThisPoint() {
-            GlobalFade.FadeIn(FadeTimeOnMovement);
+        public async void MoveActorToPoint(PointAndClickMovement? targetPoint = null) {
+            targetPoint ??= this;
+
+            GlobalFade.FadeIn(targetPoint.FadeTimeOnMovement);
             await ToSignal(GlobalFade, GlobalFade.SignalName.FadeFinished);
 
-            Actor.AlignWithNode(TargetPositionMarker);
+            Actor.AlignWithNode(targetPoint.TargetPositionMarker);
             Actor.ApplyStandingStature();
 
             Actor.Camera3D.MakeCurrent();
             Actor.MouseRayCastInteractor.ReturnToOriginalCamera();
 
-            GlobalFade.FadeOut(FadeTimeOnMovement);
+            GlobalFade.FadeOut(targetPoint.FadeTimeOnMovement);
 
-            EmitSignal(SignalName.ActorMovedToThisPosition, TargetPositionMarker);
+            EmitSignal(SignalName.ActorMovedToThisPosition, targetPoint.TargetPositionMarker);
             GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.ActorMovedToPointAndClickPosition, this);
         }
 
+        public void MoveActorToPreviousPoint() {
+            if (PreviousMovementPoint is not null) {
+                MoveActorToPoint(PreviousMovementPoint);
+            }
+        }
 
         protected override void OnInteracted(GodotObject interactor) {
             if (interactor is MouseRayCastInteractor) {
                 base.OnInteracted(interactor);
 
-                MoveActorToThisPoint();
+                MoveActorToPoint();
             }
         }
     }

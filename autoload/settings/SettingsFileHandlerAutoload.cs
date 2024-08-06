@@ -119,6 +119,18 @@ namespace GodotExtensionatorStarter {
                             case MouseButton.Right:
                                 mouseButton = $"InputEventMouseButton{InputEventSeparator}{(int)eventMouse.ButtonIndex}{InputEventSeparator}RMB";
                                 break;
+                            case MouseButton.WheelDown:
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{(int)eventMouse.ButtonIndex}{InputEventSeparator}WheelDown";
+                                break;
+                            case MouseButton.WheelUp:
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{(int)eventMouse.ButtonIndex}{InputEventSeparator}WheelUp";
+                                break;
+                            case MouseButton.WheelLeft:
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{(int)eventMouse.ButtonIndex}{InputEventSeparator}WheelLeft";
+                                break;
+                            case MouseButton.WheelRight:
+                                mouseButton = $"InputEventMouseButton{InputEventSeparator}{(int)eventMouse.ButtonIndex}{InputEventSeparator}WheelRight";
+                                break;
                         }
 
                         KeybindingsEvents.Add(mouseButton);
