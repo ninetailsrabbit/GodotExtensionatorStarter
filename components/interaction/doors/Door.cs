@@ -44,6 +44,8 @@ namespace GodotExtensionatorStarter {
         [Export] public float DelayBeforeClose = 0f;
         [Export] public AnimationPlayer AnimationPlayer { get; set; } = default!;
         [Export] public string OpenDoorAnimationName = "open";
+        [Export] public string UnlockedDoorAnimationName = "unlock";
+        [Export] public string LockedDoorAnimationName = "locked";
         [Export] public Interactable3D Interactable3D { get; set; } = default!;
 
         public CursorManager CursorManager { get; set; } = default!;
@@ -58,6 +60,8 @@ namespace GodotExtensionatorStarter {
                 Interactable3D.UnFocused -= OnUnFocused;
             }
 
+            TriedToOpenLockedDoor -= OnTriedToOpenLockedDoor;
+
         }
 
         public override void _EnterTree() {
@@ -70,12 +74,29 @@ namespace GodotExtensionatorStarter {
                 Interactable3D.Interacted += OnInteracted;
                 Interactable3D.Focused += OnFocused;
                 Interactable3D.UnFocused += OnUnFocused;
-
             }
+
+            IsLocked = !KeyId.Equals(string.Empty);
+
+            TriedToOpenLockedDoor += OnTriedToOpenLockedDoor;
         }
 
-        protected virtual bool IsOpeningUp()
+        public bool IsOpeningUp()
             => AnimationPlayer.CurrentAnimation.EqualsIgnoreCase(OpenDoorAnimationName) && AnimationPlayer.IsPlaying();
+
+
+        public void UseKey(string id) {
+            if (id.Equals(KeyId)) {
+                AnimationPlayer.PlayIfExists(UnlockedDoorAnimationName);
+
+                IsLocked = false;
+
+                Open();
+            }
+            else {
+                EmitSignal(SignalName.TriedToOpenLockedDoor);
+            }
+        }
 
         protected virtual void Open() {
             if (IsOpeningUp())
@@ -102,6 +123,11 @@ namespace GodotExtensionatorStarter {
         protected virtual void Unlock() { }
         protected virtual void Lock() { }
 
+        private void OnTriedToOpenLockedDoor() {
+            if (IsLocked) {
+                AnimationPlayer.PlayIfExists(LockedDoorAnimationName);
+            }
+        }
 
         private void OnInteracted(GodotObject interactor) {
             if (interactor is IInteractor) {
