@@ -6,9 +6,10 @@
 script = ExtResource("1_a6h5c")
 CSGCombinerRoot = NodePath("CSGCombiner3D")
 MeshOutputNode = NodePath("MeshOutputNode")
-IncludeRightWall = false
 IncludeLeftWall = false
-SimplifiedCollision = true
+IncludeFrontWall = false
+IncludeBackWall = false
+TypeOfCollision = 1
 
 [node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
 

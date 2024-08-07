@@ -72,8 +72,8 @@ namespace GodotExtensionatorStarter {
         }
 
         public enum AvailableCollisions {
-            Convex,
-            Trimesh,
+            Convex, // Basic shapes
+            Trimesh, // More complex shapes that contains csg operations as substraction
         }
 
         private bool _createNewRoom = false;
