@@ -9,10 +9,10 @@ namespace GodotExtensionatorStarter {
     [Tool]
     public partial class RoomCreator : Node3D {
         [Export] public CsgCombiner3D CSGCombinerRoot { get; set; } = null!;
+        [Export] public Node3D MeshOutputNode { get; set; } = null!;
         [Export] public bool CreateNewRoom { get => _createNewRoom; set { CreateRoom(); } } // Tool button
         [Export] public bool ClearRoom { get => _clearRoom; set { ClearExistingRoom(); } } // Tool button
         [Export] public bool GenerateFinalMesh { get => _generateFinalMesh; set { GenerateRoomMesh(); } } // Tool button
-        [Export] public Node3D MeshOutputNode { get; set; } = null!;
         [ExportGroup("Include in generation")]
         [Export] public bool GenerateMaterials = true;
         [Export] public bool IncludeCeil = true;
@@ -22,12 +22,12 @@ namespace GodotExtensionatorStarter {
         [Export] public bool IncludeFrontWall = true;
         [Export] public bool IncludeBackWall = true;
         [ExportGroup("Collisions")]
-        [Export] public bool IncludeCeilCollisions = true;
-        [Export] public bool IncludeFloorCollisions = true;
-        [Export] public bool IncludeRightWallCollisions = true;
-        [Export] public bool IncludeLeftWallCollisions = true;
-        [Export] public bool IncludeFrontWallCollisions = true;
-        [Export] public bool IncludeBackWallCollisions = true;
+        [Export] public bool GenerateCollisions = true;
+        [Export] public AvailableCollisions TypeOfCollision = AvailableCollisions.Convex;
+        [Export] public bool CreateStaticBody = true;
+        [Export] public bool CleanCollision = true;
+        [Export] public bool SimplifiedCollision = false;
+
 
         [ExportGroup("Sizes")]
         [Export]
@@ -71,6 +71,11 @@ namespace GodotExtensionatorStarter {
             }
         }
 
+        public enum AvailableCollisions {
+            Convex,
+            Trimesh,
+        }
+
         private bool _createNewRoom = false;
         private bool _clearRoom = false;
         private bool _generateFinalMesh = false;
@@ -89,8 +94,8 @@ namespace GodotExtensionatorStarter {
             ArgumentNullException.ThrowIfNull(CSGCombinerRoot);
             ArgumentNullException.ThrowIfNull(MeshOutputNode);
 
-            CSGCombinerRoot.SetOwnerToEditedSceneRoot();
-            MeshOutputNode.SetOwnerToEditedSceneRoot();
+            CSGCombinerRoot?.SetOwnerToEditedSceneRoot();
+            MeshOutputNode?.SetOwnerToEditedSceneRoot();
         }
 
         public override void _Ready() {
@@ -123,12 +128,58 @@ namespace GodotExtensionatorStarter {
                     Mesh = (Mesh)meshes[1]
                 };
 
+
                 MeshOutputNode.AddChild(meshInstance);
                 meshInstance.SetOwnerToEditedSceneRoot();
 
                 for (int i = 0; i < meshInstance.Mesh.GetSurfaceCount(); i++) {
                     if (CSGCombinerRoot.GetChildOrNull<CsgBox3D>(i) is CsgBox3D roomPart) {
                         ((ArrayMesh)meshInstance.Mesh).SurfaceSetName(i, roomPart.Name);
+                    }
+                }
+
+                if (GenerateCollisions) {
+                    switch (TypeOfCollision) {
+                        case AvailableCollisions.Convex:
+                            var convexCollision = new CollisionShape3D() {
+                                Name = "ConvexCollision",
+                                Shape = meshInstance.Mesh.CreateConvexShape(CleanCollision, SimplifiedCollision)
+                            };
+
+                            if (CreateStaticBody) {
+                                var body = new StaticBody3D() { Name = "StaticBody3D"};
+                                meshInstance.AddChild(body);
+                                body.SetOwnerToEditedSceneRoot();
+                                body.AddChild(convexCollision);
+
+                            }
+                            else {
+                                meshInstance.AddChild(convexCollision);
+                            }
+
+                            convexCollision.SetOwnerToEditedSceneRoot();
+
+                            break;
+                        case AvailableCollisions.Trimesh:
+                            var trimeshCollision = new CollisionShape3D() {
+                                Name = "TrimeshCollision",
+                                Shape = meshInstance.Mesh.CreateTrimeshShape()
+                            };
+
+                            if (CreateStaticBody) {
+                                var body = new StaticBody3D() { Name = "StaticBody3D" };
+                                meshInstance.AddChild(body);
+                                body.SetOwnerToEditedSceneRoot();
+                                body.AddChild(trimeshCollision);
+                                trimeshCollision.SetOwnerToEditedSceneRoot();
+                            }
+                            else {
+                                meshInstance.AddChild(trimeshCollision);
+                            }
+
+                            trimeshCollision.SetOwnerToEditedSceneRoot();
+
+                            break;
                     }
                 }
             }
@@ -233,8 +284,8 @@ namespace GodotExtensionatorStarter {
 
         public void ClearExistingRoom() {
             if (ToolCanBeUsed()) {
-                var nodesToDelete = CSGCombinerRoot.GetAllChildren();
-                nodesToDelete.AddRange(MeshOutputNode.GetAllChildren());
+                var nodesToDelete = CSGCombinerRoot.GetChildren();
+                nodesToDelete.AddRange(MeshOutputNode.GetChildren());
 
                 foreach (var child in nodesToDelete)
                     child.Free();
