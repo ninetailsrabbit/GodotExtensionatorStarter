@@ -126,7 +126,11 @@ namespace GodotExtensionatorStarter {
                 MeshOutputNode.AddChild(meshInstance);
                 meshInstance.SetOwnerToEditedSceneRoot();
 
-                // TODO - FIND A WAY TO NAME THE SURFACES ON THE FINAL MESH 
+                for (int i = 0; i < meshInstance.Mesh.GetSurfaceCount(); i++) {
+                    if (CSGCombinerRoot.GetChildOrNull<CsgBox3D>(i) is CsgBox3D roomPart) {
+                        ((ArrayMesh)meshInstance.Mesh).SurfaceSetName(i, roomPart.Name);
+                    }
+                }
             }
 
         }
@@ -135,7 +139,6 @@ namespace GodotExtensionatorStarter {
             if (GenerateMaterials) {
                 foreach (var csgShape in CSGCombinerRoot.GetAllChildren<CsgBox3D>()) {
                     csgShape.Material = new StandardMaterial3D();
-                   
                 }
             }
 
