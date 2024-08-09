@@ -1,16 +1,132 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxv8eytsgj061"]
+[gd_scene load_steps=17 format=3 uid="uid://bxv8eytsgj061"]
 
 [ext_resource type="Script" path="res://components/map/room_creator/RoomCreator.cs" id="1_a6h5c"]
 
-[node name="RoomCreator" type="Node3D" node_paths=PackedStringArray("CSGCombinerRoot", "MeshOutputNode")]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_svw10"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qwdjo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rkxo2"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t30n6"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_46t5a"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m22cf"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_756ab"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xq1kp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_sl05y"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_one4b"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7u4lx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1egdt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vh2yl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gfv8i"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1vg6a"]
+
+[node name="RoomCreator" type="Node3D"]
 script = ExtResource("1_a6h5c")
-CSGCombinerRoot = NodePath("CSGCombiner3D")
-MeshOutputNode = NodePath("MeshOutputNode")
-IncludeLeftWall = false
-IncludeFrontWall = false
-IncludeBackWall = false
-TypeOfCollision = 1
+NumberOfRooms = 2
 
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="."]
+[node name="CsgCombinerRoot" type="CSGCombiner3D" parent="."]
 
-[node name="MeshOutputNode" type="Node3D" parent="."]
+[node name="Room1" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+size = Vector3(7.89892, 0.1, 5.67282)
+material = SubResource("StandardMaterial3D_svw10")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.52152, 0)
+size = Vector3(7.89892, 0.1, 5.67282)
+material = SubResource("StandardMaterial3D_qwdjo")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.26076, -2.83641)
+size = Vector3(7.89892, 4.52152, 0.15)
+material = SubResource("StandardMaterial3D_rkxo2")
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.26076, 2.83641)
+size = Vector3(7.89892, 4.52152, 0.15)
+material = SubResource("StandardMaterial3D_t30n6")
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.94946, 2.26076, 0)
+size = Vector3(0.15, 4.52152, 5.67282)
+material = SubResource("StandardMaterial3D_46t5a")
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.94946, 2.26076, 0)
+size = Vector3(0.15, 4.52152, 5.67282)
+material = SubResource("StandardMaterial3D_m22cf")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room1/LeftWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.26076, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_756ab")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room1/LeftWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.160761, 0)
+metadata/connected = true
+
+[node name="Room2" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 6.80535)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+size = Vector3(7.50981, 0.1, 5.29945)
+material = SubResource("StandardMaterial3D_xq1kp")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.06698, 0)
+size = Vector3(7.50981, 0.1, 5.29945)
+material = SubResource("StandardMaterial3D_sl05y")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.03349, -2.64972)
+size = Vector3(7.50981, 4.06698, 0.15)
+material = SubResource("StandardMaterial3D_one4b")
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.03349, 2.64972)
+size = Vector3(7.50981, 4.06698, 0.15)
+material = SubResource("StandardMaterial3D_7u4lx")
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.7549, 2.03349, 0)
+size = Vector3(0.15, 4.06698, 5.29945)
+material = SubResource("StandardMaterial3D_1egdt")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room2/RightWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.03349, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_vh2yl")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room2/RightWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0665113, 0)
+metadata/connected = true
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.7549, 2.03349, 0)
+size = Vector3(0.15, 4.06698, 5.29945)
+material = SubResource("StandardMaterial3D_gfv8i")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room2/LeftWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.03349, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_1vg6a")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room2/LeftWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0665113, 0)
+metadata/connected = false
