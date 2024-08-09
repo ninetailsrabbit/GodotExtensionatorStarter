@@ -113,8 +113,8 @@ namespace GodotExtensionatorStarter {
         private readonly Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<string, int>> _wallRotations = new() {
             { "FrontWall", new() { {"FrontWall", 2}, { "BackWall", 0}, { "RightWall", 1 }, { "LeftWall", -1 } } },
             { "BackWall", new() { {"FrontWall", 0}, { "BackWall", 2}, { "RightWall", -1 }, { "LeftWall", 1 } } },
-            { "RightWall", new() { {"FrontWall", 1}, { "BackWall", -1}, { "RightWall", 2 }, { "LeftWall", 0} } },
-            { "LeftWall", new() { {"FrontWall", -1}, { "BackWall", 1}, { "RightWall", 0}, { "LeftWall", 2} } },
+            { "RightWall", new() { {"FrontWall", -1}, { "BackWall", 1}, { "RightWall", 2 }, { "LeftWall", 0} } },
+            { "LeftWall", new() { {"FrontWall", 1}, { "BackWall", -1}, { "RightWall", 0}, { "LeftWall", 2} } },
         };
 
         private readonly Random _rng = new();
@@ -137,7 +137,6 @@ namespace GodotExtensionatorStarter {
 
                         LastRoom = room;
                     }
-
                 }
             }
         }
@@ -150,9 +149,10 @@ namespace GodotExtensionatorStarter {
                 var wallRoomA = roomASocket.GetParent<CsgBox3D>();
                 var wallRoomB = roomBSocket.GetParent<CsgBox3D>();
 
-                roomB.RotateY( (Mathf.Pi / 2) * _wallRotations[wallRoomB.Name.ToString()][wallRoomA.Name.ToString()]);
-                
+                var targetRotation = (Mathf.Pi / 2) * _wallRotations[wallRoomB.Name.ToString()][wallRoomA.Name.ToString()];
 
+                roomB.RotateY(targetRotation);
+                roomB.GlobalTranslate(roomASocket.GlobalPosition - roomBSocket.GlobalPosition);
 
                 roomASocket.SetMeta("connected", true);
                 roomBSocket.SetMeta("connected", true);
@@ -165,7 +165,7 @@ namespace GodotExtensionatorStarter {
 
                 CsgCombiner3D rootNodeForThisRoom = new() {
                     Name = $"Room{CsgCombinerRoot.GetChildCount() + 1}",
-                    Position = Vector3.Zero, // LastRoom?.Position ?? Vector3.Zero,
+                    Position = LastRoom?.Position ?? Vector3.Zero,
                     UseCollision = false
                 };
 
@@ -342,7 +342,7 @@ namespace GodotExtensionatorStarter {
                 Marker3D roomSocket = new() {
                     Name = $"RoomSocket{socketNumber}",
                     Position = new Vector3(0, Math.Min((doorSlot.Position.Y + DoorSize.Y / 2) + 0.1f, roomSize.Y), 0),
-                   // Rotation = doorRotation.Flip()
+                    // Rotation = doorRotation.Flip()
                 };
 
                 roomSocket.SetMeta("connected", false);
@@ -369,30 +369,6 @@ namespace GodotExtensionatorStarter {
                     _rng.NextFloat(minRoomSize.Value.X, maxRoomSize.Value.X),
                     _rng.NextFloat(minRoomSize.Value.Y, maxRoomSize.Value.Y),
                     _rng.NextFloat(minRoomSize.Value.Z, maxRoomSize.Value.Z));
-        }
-
-
-        public void AlignBridgeSocketWithRoom(CsgCombiner3D bridgeConnector, CsgCombiner3D room) {
-            var bridgeSockets = AvailableSocketsFrom(bridgeConnector);
-            Marker3D bridgeSocket = bridgeSockets.First();
-            Marker3D roomSocket = AvailableSocketsFrom(room).First();
-
-            var bridgeWall = bridgeSocket.GetParent<CsgBox3D>();
-            var roomWall = roomSocket.GetParent<CsgBox3D>();
-
-            if (bridgeSockets.Count > 1) {
-                bridgeConnector.RotateY(Mathf.Pi / 2 * _wallRotations[bridgeWall.Name.ToString()][roomWall.Name.ToString()]);
-                bridgeConnector.GlobalTranslate(bridgeSocket.GlobalPosition - roomSocket.GlobalPosition);
-            }
-            else {
-                room.RotateY(Mathf.Pi / 2 * _wallRotations[roomWall.Name.ToString()][bridgeWall.Name.ToString()]);
-                room.GlobalTranslate(roomSocket.GlobalPosition - bridgeSocket.GlobalPosition);
-
-            }
-
-
-            bridgeSocket.SetMeta("connected", true);
-            roomSocket.SetMeta("connected", true);
         }
 
         public void GenerateRoomMesh() {
