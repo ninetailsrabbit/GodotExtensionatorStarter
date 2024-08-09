@@ -17,61 +17,22 @@ namespace GodotExtensionatorStarter {
         [ExportGroup("Sizes")]
         [Export(PropertyHint.Range, "1, 1000, 1")] public int NumberOfRooms = 3;
         [Export(PropertyHint.Range, "1, 4, 1")] public int DoorsPerRoom = 2;
+        [Export] public bool UseBridgeConnectorsBetweenRooms = false;
         [Export] public Vector3 DoorSize = new(1.5f, 2f, 0.25f);
-        [Export] public Vector3 BridgeConnectorSize = new(2, 2.5f, 5f);
+        [Export] public Vector3 BridgeConnectorSize = new(2, 3f, 4f);
 
         [Export] public bool RandomizeDoorPositionInWall = false;
         [Export]
-        public Vector3 MinRoomSize {
-            get => _minRoomSize;
-            set {
-                if (_minRoomSize != value) {
-                    _minRoomSize = value;
-                    CreateRooms();
-                }
-            }
-        }
+        public Vector3 MinRoomSize = new(6f, 3.5f, 5f);
 
         [Export]
-        public Vector3 MaxRoomSize {
-            get => _maxRoomSize;
-            set {
-                if (_maxRoomSize != value) {
-                    _maxRoomSize = value;
-                    CreateRooms();
-                }
-            }
-        }
+        public Vector3 MaxRoomSize = new(10f, 5f, 6f);
         [Export]
-        public float WallThickness {
-            get => _wallThickness;
-            set {
-                if (_wallThickness != value) {
-                    _wallThickness = value;
-                    CreateRooms();
-                }
-            }
-        }
+        public float WallThickness = 0.15f;
         [Export]
-        public float CeilThickness {
-            get => _ceilThickness;
-            set {
-                if (_ceilThickness != value) {
-                    _ceilThickness = value;
-                    CreateRooms();
-                }
-            }
-        }
+        public float CeilThickness = 0.1f;
         [Export]
-        public float FloorThickness {
-            get => _floorThickness;
-            set {
-                if (_floorThickness != value) {
-                    _floorThickness = value;
-                    CreateRooms();
-                }
-            }
-        }
+        public float FloorThickness = 0.1f;
         [ExportGroup("Include in generation")]
         [Export] public bool GenerateMaterials = true;
         [Export] public bool IncludeCeil = true;
@@ -87,7 +48,6 @@ namespace GodotExtensionatorStarter {
         [Export] public bool CleanCollision = true;
         [Export] public bool SimplifiedCollision = false;
 
-
         public enum AvailableCollisions {
             Convex, // Basic shapes
             Trimesh, // More complex shapes that contains csg operations as substraction
@@ -95,19 +55,11 @@ namespace GodotExtensionatorStarter {
 
         private CsgCombiner3D? CsgCombinerRoot { get; set; } = default!;
         private CsgCombiner3D? LastRoom { get; set; } = default!;
-        private CsgCombiner3D? LastBridgeConnector { get; set; } = default!;
         private Node3D? MeshOutputNode { get; set; } = default!;
 
         private bool _createNewRoom = false;
         private bool _clearRoom = false;
         private bool _generateFinalMesh = false;
-
-        private Vector3 _minRoomSize = new(6f, 3.5f, 5f);
-        private Vector3 _maxRoomSize = new(10f, 5f, 6f);
-
-        private float _wallThickness = 0.15f;
-        private float _ceilThickness = 0.1f;
-        private float _floorThickness = 0.1f;
 
         // (Pi / 2) * wallRotation selected
         private readonly Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<string, int>> _wallRotations = new() {
@@ -127,38 +79,37 @@ namespace GodotExtensionatorStarter {
                 AddChild(CsgCombinerRoot);
                 CsgCombinerRoot.SetOwnerToEditedSceneRoot();
 
-                for (int i = 0; i < NumberOfRooms; i++) {
+                int numberOfRooms = CalculateNumberOfRooms(UseBridgeConnectorsBetweenRooms);
 
-                    if (CreateRoom(LastRoom is null ? 1 : DoorsPerRoom) is CsgCombiner3D room) {
+                for (int i = 0; i < numberOfRooms; i++) {
 
-                        if (LastRoom is not null) {
-                            ConnectRooms(LastRoom, room);
-                        }
+                    var room = UseBridgeConnectorsBetweenRooms && i % 2 != 0 ?
+                        CreateBridgeConnector(BridgeConnectorSize) :
+                        CreateRoom(LastRoom is null ? 1 : DoorsPerRoom);
 
-                        LastRoom = room;
+                    if (LastRoom is not null && room is not null) {
+                        ConnectRooms(LastRoom, room);
                     }
+
+                    LastRoom = room;
+
                 }
             }
         }
 
-        public void ConnectRooms(CsgCombiner3D roomA, CsgCombiner3D roomB) {
-            Marker3D? roomASocket = AvailableSocketsFrom(roomA).FirstOrDefault();
-            Marker3D? roomBSocket = AvailableSocketsFrom(roomB).FirstOrDefault();
+        public int CalculateNumberOfRooms(bool useBridgeConnectors = false) {
+            int numberOfRooms = NumberOfRooms;
 
-            if (roomASocket is not null && roomBSocket is not null) {
-                var wallRoomA = roomASocket.GetParent<CsgBox3D>();
-                var wallRoomB = roomBSocket.GetParent<CsgBox3D>();
+            if (useBridgeConnectors) {
+                numberOfRooms += (int)Mathf.Ceil(numberOfRooms / 2f);
 
-                var targetRotation = (Mathf.Pi / 2) * _wallRotations[wallRoomB.Name.ToString()][wallRoomA.Name.ToString()];
-
-                roomB.RotateY(targetRotation - (-roomA.Rotation.Y));
-                roomB.GlobalTranslate(roomASocket.GlobalPosition - roomBSocket.GlobalPosition);
-
-                roomASocket.SetMeta("connected", true);
-                roomBSocket.SetMeta("connected", true);
+                // When use bridge connectors the number of rooms always needs to be odd to fit the bridges
+                if (numberOfRooms % 2 == 0)
+                    numberOfRooms += 1;
             }
-        }
 
+            return numberOfRooms;
+        }
 
         public CsgCombiner3D? CreateRoom(int doorSlots = 1) {
             if (ToolCanBeUsed() && CsgCombinerRoot is not null) {
@@ -194,12 +145,17 @@ namespace GodotExtensionatorStarter {
             return null;
         }
 
-        public void CreateBridgeConnector(Vector3? bridgeSize = null) {
+        public CsgCombiner3D? CreateBridgeConnector(Vector3? bridgeSize = null) {
             if (CsgCombinerRoot is not null) {
                 bridgeSize ??= BridgeConnectorSize;
 
-                CsgCombiner3D bridgeConnector = new() { Name = $"BridgeConnector{OSExtension.GenerateRandomIdFromUnixTime()}" };
-                AddChild(bridgeConnector);
+                CsgCombiner3D bridgeConnector = new() {
+                    Name = $"BridgeConnector{OSExtension.GenerateRandomIdFromUnixTime()}",
+                    Position = LastRoom?.Position ?? Vector3.Zero,
+                    UseCollision = false
+                };
+
+                CsgCombinerRoot.AddChild(bridgeConnector);
                 bridgeConnector.SetOwnerToEditedSceneRoot();
 
                 CreateFloor(bridgeConnector, bridgeSize.Value);
@@ -209,13 +165,13 @@ namespace GodotExtensionatorStarter {
                 CreateRightWall(bridgeConnector, bridgeSize.Value);
                 CreateLeftWall(bridgeConnector, bridgeSize.Value);
 
-                CreateDoorSlotInWall(bridgeConnector.GetNode<CsgBox3D>("FrontWall"), DoorSize);
-                CreateDoorSlotInWall(bridgeConnector.GetNode<CsgBox3D>("BackWall"), DoorSize, 2);
+                CreateDoorSlotInWall(bridgeConnector.GetNode<CsgBox3D>("FrontWall"), bridgeSize.Value);
+                CreateDoorSlotInWall(bridgeConnector.GetNode<CsgBox3D>("BackWall"), bridgeSize.Value, 2);
 
-                LastBridgeConnector = bridgeConnector;
+                return bridgeConnector;
             }
 
-
+            return null;
         }
 
 
@@ -227,6 +183,25 @@ namespace GodotExtensionatorStarter {
             }
 
         }
+
+        public void ConnectRooms(CsgCombiner3D roomA, CsgCombiner3D roomB) {
+            Marker3D? roomASocket = AvailableSocketsFrom(roomA).FirstOrDefault();
+            Marker3D? roomBSocket = AvailableSocketsFrom(roomB).FirstOrDefault();
+
+            if (roomASocket is not null && roomBSocket is not null) {
+                var wallRoomA = roomASocket.GetParent<CsgBox3D>();
+                var wallRoomB = roomBSocket.GetParent<CsgBox3D>();
+
+                var targetRotation = (Mathf.Pi / 2) * _wallRotations[wallRoomB.Name.ToString()][wallRoomA.Name.ToString()];
+
+                roomB.RotateY(targetRotation - (-roomA.Rotation.Y));
+                roomB.GlobalTranslate(roomASocket.GlobalPosition - roomBSocket.GlobalPosition);
+
+                roomASocket.SetMeta("connected", true);
+                roomBSocket.SetMeta("connected", true);
+            }
+        }
+
 
         public void CreateFloor(CsgCombiner3D roomParent, Vector3 roomSize) {
             if (IncludeFloor) {
@@ -314,26 +289,27 @@ namespace GodotExtensionatorStarter {
         }
 
 
-        public void CreateDoorSlotInRandomWall(CsgCombiner3D roomParent, Vector3 roomSize, int socketNumber = 1) {
-            CsgBox3D randomWall = roomParent.GetChildren()
-                    .Where(child => child.Name.ToString().Contains("wall", System.StringComparison.OrdinalIgnoreCase) && child.GetChildCount() == 0)
-                    .Cast<CsgBox3D>()
-                    .RandomElement();
+        public IEnumerable<CsgBox3D> WallsFromRoom(CsgCombiner3D room)
+            => room.GetChildren()
+                    .Where(child => child.Name.ToString().Contains("wall", StringComparison.OrdinalIgnoreCase) && child.GetChildCount() == 0)
+                    .Cast<CsgBox3D>();
 
-            CreateDoorSlotInWall(randomWall, roomSize, socketNumber);
+        public void CreateDoorSlotInRandomWall(CsgCombiner3D roomParent, Vector3 roomSize, int socketNumber = 1) {
+            IEnumerable<CsgBox3D> availableWalls = WallsFromRoom(roomParent);
+
+            if (availableWalls.Any())
+                CreateDoorSlotInWall(availableWalls.RandomElement(), roomSize, socketNumber);
         }
 
         public void CreateDoorSlotInWall(CsgBox3D wall, Vector3 roomSize, int socketNumber = 1) {
             if (wall.GetChildCount().IsZero()) {
-
-                Vector3 doorRotation = new Vector3(0, Regex.IsMatch(wall.Name.ToString(), "(front|back)", RegexOptions.IgnoreCase) ? 0 : Mathf.Pi / 2, 0);
 
                 CsgBox3D doorSlot = new() {
                     Name = "DoorSlot",
                     Operation = CsgShape3D.OperationEnum.Subtraction,
                     Size = DoorSize,
                     Position = new Vector3(0, Vector3.Down.Y * ((roomSize.Y / 2) - (DoorSize.Y / 2)), 0),
-                    Rotation = doorRotation
+                    Rotation = new Vector3(0, Regex.IsMatch(wall.Name.ToString(), "(front|back)", RegexOptions.IgnoreCase) ? 0 : Mathf.Pi / 2, 0)
                 };
 
                 wall.AddChild(doorSlot);
@@ -342,7 +318,6 @@ namespace GodotExtensionatorStarter {
                 Marker3D roomSocket = new() {
                     Name = $"RoomSocket{socketNumber}",
                     Position = new Vector3(0, Math.Min((doorSlot.Position.Y + DoorSize.Y / 2) + 0.1f, roomSize.Y), 0),
-                    // Rotation = doorRotation.Flip()
                 };
 
                 roomSocket.SetMeta("connected", false);
@@ -448,7 +423,6 @@ namespace GodotExtensionatorStarter {
 
                 CsgCombinerRoot = null;
                 LastRoom = null;
-                LastBridgeConnector = null;
                 MeshOutputNode = null;
             }
         }
