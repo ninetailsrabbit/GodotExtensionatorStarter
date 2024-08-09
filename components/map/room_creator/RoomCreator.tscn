@@ -1,7 +1,676 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxv8eytsgj061"]
+[gd_scene load_steps=81 format=3 uid="uid://bxv8eytsgj061"]
 
 [ext_resource type="Script" path="res://components/map/room_creator/RoomCreator.cs" id="1_a6h5c"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kndg0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2416h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66kg4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ugb7o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iipgm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u2dm1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kfsqv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r4wkw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_l1lcq"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_luk27"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v0p0c"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pow06"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f8dx0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dbghl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_r8sxk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4mflr"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1wbnt"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0uw6h"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fd14d"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rc6yc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j8dsk"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mcbm5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8y1ja"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cngw4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xkld8"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_048o1"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_v2xhs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0xepm"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gvi4w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_01dpu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_x2lkp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2yihe"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_txsyo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_36xme"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xfbkc"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_esvee"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_84k1q"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nhv5o"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1odn"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5hn0s"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ba4or"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xu3rh"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mq2l7"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_be8xo"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66nby"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b64ku"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8dt8p"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xst68"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mnacs"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_e72mi"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s0m43"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oikbd"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_beqph"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_tgv6g"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fna80"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bkecv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_csjp5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xbacl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_fmyyp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xqd61"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_hb0cl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bh7t3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_2hga3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pyk1m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dl0va"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0jhxa"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ciub5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_o00cw"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iaft5"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_8ti4w"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_svh1m"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jcg8n"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4jswl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_orp50"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_66ns4"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bmh43"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_22mek"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_q6icx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ysnm3"]
+
 [node name="RoomCreator" type="Node3D"]
 script = ExtResource("1_a6h5c")
-NumberOfRooms = 2
+NumberOfRooms = 10
+
+[node name="CsgCombinerRoot" type="CSGCombiner3D" parent="."]
+
+[node name="Room1" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+size = Vector3(6.35217, 0.1, 5.06992)
+material = SubResource("StandardMaterial3D_kndg0")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.24549, 0)
+size = Vector3(6.35217, 0.1, 5.06992)
+material = SubResource("StandardMaterial3D_2416h")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.12275, -2.53496)
+size = Vector3(6.35217, 4.24549, 0.15)
+material = SubResource("StandardMaterial3D_66kg4")
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.12275, 2.53496)
+size = Vector3(6.35217, 4.24549, 0.15)
+material = SubResource("StandardMaterial3D_ugb7o")
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.17609, 2.12275, 0)
+size = Vector3(0.15, 4.24549, 5.06992)
+material = SubResource("StandardMaterial3D_iipgm")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room1/RightWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.12275, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_u2dm1")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room1/RightWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0227462, 0)
+metadata/connected = true
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.17609, 2.12275, 0)
+size = Vector3(0.15, 4.24549, 5.06992)
+material = SubResource("StandardMaterial3D_kfsqv")
+
+[node name="Room2" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, 5.85695, 0, 1.17184e-07)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+size = Vector3(7.61723, 0.1, 5.36172)
+material = SubResource("StandardMaterial3D_r4wkw")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.68149, 0)
+size = Vector3(7.61723, 0.1, 5.36172)
+material = SubResource("StandardMaterial3D_l1lcq")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.34075, -2.68086)
+size = Vector3(7.61723, 4.68149, 0.15)
+material = SubResource("StandardMaterial3D_luk27")
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.34075, 2.68086)
+size = Vector3(7.61723, 4.68149, 0.15)
+material = SubResource("StandardMaterial3D_v0p0c")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room2/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.34075, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_pow06")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room2/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.240746, 0)
+metadata/connected = true
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.80862, 2.34075, 0)
+size = Vector3(0.15, 4.68149, 5.36172)
+material = SubResource("StandardMaterial3D_f8dx0")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room2/RightWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.34075, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_dbghl")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room2/RightWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.240746, 0)
+metadata/connected = true
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.80862, 2.34075, 0)
+size = Vector3(0.15, 4.68149, 5.36172)
+material = SubResource("StandardMaterial3D_r8sxk")
+
+[node name="Room3" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 5.85695, 0, 6.51053)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room3"]
+size = Vector3(8.08525, 0.1, 5.40383)
+material = SubResource("StandardMaterial3D_4mflr")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.52834, 0)
+size = Vector3(8.08525, 0.1, 5.40383)
+material = SubResource("StandardMaterial3D_1wbnt")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.26417, -2.70192)
+size = Vector3(8.08525, 4.52834, 0.15)
+material = SubResource("StandardMaterial3D_0uw6h")
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.26417, 2.70192)
+size = Vector3(8.08525, 4.52834, 0.15)
+material = SubResource("StandardMaterial3D_fd14d")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room3/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.26417, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_rc6yc")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room3/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.164168, 0)
+metadata/connected = true
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.04262, 2.26417, 0)
+size = Vector3(0.15, 4.52834, 5.40383)
+material = SubResource("StandardMaterial3D_j8dsk")
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.04262, 2.26417, 0)
+size = Vector3(0.15, 4.52834, 5.40383)
+material = SubResource("StandardMaterial3D_mcbm5")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room3/LeftWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.26417, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_8y1ja")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room3/LeftWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.164168, 0)
+metadata/connected = true
+
+[node name="Room4" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 14.5491, 0, 6.51053)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room4"]
+size = Vector3(9.29909, 0.1, 5.08832)
+material = SubResource("StandardMaterial3D_cngw4")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.16744, 0)
+size = Vector3(9.29909, 0.1, 5.08832)
+material = SubResource("StandardMaterial3D_xkld8")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08372, -2.54416)
+size = Vector3(9.29909, 4.16744, 0.15)
+material = SubResource("StandardMaterial3D_048o1")
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.08372, 2.54416)
+size = Vector3(9.29909, 4.16744, 0.15)
+material = SubResource("StandardMaterial3D_v2xhs")
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64954, 2.08372, 0)
+size = Vector3(0.15, 4.16744, 5.08832)
+material = SubResource("StandardMaterial3D_0xepm")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room4/RightWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.08372, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_gvi4w")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room4/RightWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.016281, 0)
+metadata/connected = true
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.64954, 2.08372, 0)
+size = Vector3(0.15, 4.16744, 5.08832)
+material = SubResource("StandardMaterial3D_01dpu")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room4/LeftWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.08372, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_x2lkp")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room4/LeftWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.016281, 0)
+metadata/connected = true
+
+[node name="Room5" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(1.94707e-07, 0, 1, 0, 1, 0, -1, 0, 1.94707e-07, 22.1474, 0, 6.51053)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room5"]
+size = Vector3(8.93976, 0.1, 5.89754)
+material = SubResource("StandardMaterial3D_2yihe")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.78285, 0)
+size = Vector3(8.93976, 0.1, 5.89754)
+material = SubResource("StandardMaterial3D_txsyo")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39142, -2.94877)
+size = Vector3(8.93976, 4.78285, 0.15)
+material = SubResource("StandardMaterial3D_36xme")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room5/FrontWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.39142, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_xfbkc")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room5/FrontWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.291425, 0)
+metadata/connected = true
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.39142, 2.94877)
+size = Vector3(8.93976, 4.78285, 0.15)
+material = SubResource("StandardMaterial3D_esvee")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room5/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.39142, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_84k1q")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room5/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.291425, 0)
+metadata/connected = true
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.46988, 2.39142, 0)
+size = Vector3(0.15, 4.78285, 5.89754)
+material = SubResource("StandardMaterial3D_nhv5o")
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.46988, 2.39142, 0)
+size = Vector3(0.15, 4.78285, 5.89754)
+material = SubResource("StandardMaterial3D_c1odn")
+
+[node name="Room6" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(1.94707e-07, 0, 1, 0, 1, 0, -1, 0, 1.94707e-07, 27.7925, 0, 6.51053)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room6"]
+size = Vector3(6.46308, 0.1, 5.39269)
+material = SubResource("StandardMaterial3D_5hn0s")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.10003, 0)
+size = Vector3(6.46308, 0.1, 5.39269)
+material = SubResource("StandardMaterial3D_ba4or")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05001, -2.69634)
+size = Vector3(6.46308, 4.10003, 0.15)
+material = SubResource("StandardMaterial3D_xu3rh")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room6/FrontWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.05001, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_mq2l7")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room6/FrontWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0499862, 0)
+metadata/connected = true
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.05001, 2.69634)
+size = Vector3(6.46308, 4.10003, 0.15)
+material = SubResource("StandardMaterial3D_be8xo")
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.23154, 2.05001, 0)
+size = Vector3(0.15, 4.10003, 5.39269)
+material = SubResource("StandardMaterial3D_66nby")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room6/RightWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.05001, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_b64ku")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room6/RightWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0499862, 0)
+metadata/connected = true
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.23154, 2.05001, 0)
+size = Vector3(0.15, 4.10003, 5.39269)
+material = SubResource("StandardMaterial3D_8dt8p")
+
+[node name="Room7" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 27.7925, 0, 0.463924)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room7"]
+size = Vector3(9.84079, 0.1, 5.63013)
+material = SubResource("StandardMaterial3D_xst68")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.30128, 0)
+size = Vector3(9.84079, 0.1, 5.63013)
+material = SubResource("StandardMaterial3D_mnacs")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15064, -2.81507)
+size = Vector3(9.84079, 4.30128, 0.15)
+material = SubResource("StandardMaterial3D_e72mi")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room7/FrontWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.15064, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_s0m43")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room7/FrontWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0506391, 0)
+metadata/connected = true
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.15064, 2.81507)
+size = Vector3(9.84079, 4.30128, 0.15)
+material = SubResource("StandardMaterial3D_oikbd")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room7/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.15064, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_beqph")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room7/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0506391, 0)
+metadata/connected = true
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.9204, 2.15064, 0)
+size = Vector3(0.15, 4.30128, 5.63013)
+material = SubResource("StandardMaterial3D_tgv6g")
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.9204, 2.15064, 0)
+size = Vector3(0.15, 4.30128, 5.63013)
+material = SubResource("StandardMaterial3D_fna80")
+
+[node name="Room8" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(1, 0, -3.01992e-07, 0, 1, 0, 3.01992e-07, 0, 1, 27.7925, 0, -4.95425)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room8"]
+size = Vector3(6.01798, 0.1, 5.20621)
+material = SubResource("StandardMaterial3D_bkecv")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.20249, 0)
+size = Vector3(6.01798, 0.1, 5.20621)
+material = SubResource("StandardMaterial3D_csjp5")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.10124, -2.6031)
+size = Vector3(6.01798, 4.20249, 0.15)
+material = SubResource("StandardMaterial3D_xbacl")
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.10124, 2.6031)
+size = Vector3(6.01798, 4.20249, 0.15)
+material = SubResource("StandardMaterial3D_fmyyp")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room8/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.10124, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_xqd61")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room8/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00124326, 0)
+metadata/connected = true
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.00899, 2.10124, 0)
+size = Vector3(0.15, 4.20249, 5.20621)
+material = SubResource("StandardMaterial3D_hb0cl")
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.00899, 2.10124, 0)
+size = Vector3(0.15, 4.20249, 5.20621)
+material = SubResource("StandardMaterial3D_bh7t3")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room8/LeftWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.10124, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_2hga3")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room8/LeftWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.00124326, 0)
+metadata/connected = true
+
+[node name="Room9" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(3.13916e-07, 0, 1, 0, 1, 0, -1, 0, 3.13916e-07, 21.8162, 0, -4.95425)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room9"]
+size = Vector3(6.43007, 0.1, 5.93477)
+material = SubResource("StandardMaterial3D_pyk1m")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.91642, 0)
+size = Vector3(6.43007, 0.1, 5.93477)
+material = SubResource("StandardMaterial3D_dl0va")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95821, -2.96739)
+size = Vector3(6.43007, 3.91642, 0.15)
+material = SubResource("StandardMaterial3D_0jhxa")
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.95821, 2.96739)
+size = Vector3(6.43007, 3.91642, 0.15)
+material = SubResource("StandardMaterial3D_ciub5")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room9/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.958208, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_o00cw")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room9/BackWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141792, 0)
+metadata/connected = true
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3.21504, 1.95821, 0)
+size = Vector3(0.15, 3.91642, 5.93477)
+material = SubResource("StandardMaterial3D_iaft5")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room9/RightWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -0.958208, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_8ti4w")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room9/RightWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.141792, 0)
+metadata/connected = true
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -3.21504, 1.95821, 0)
+size = Vector3(0.15, 3.91642, 5.93477)
+material = SubResource("StandardMaterial3D_svh1m")
+
+[node name="Room10" type="CSGCombiner3D" parent="CsgCombinerRoot"]
+transform = Transform3D(-1, 0, 1.50996e-07, 0, 1, 0, -1.50996e-07, 0, -1, 21.8162, 0, -11.0067)
+
+[node name="Floor" type="CSGBox3D" parent="CsgCombinerRoot/Room10"]
+size = Vector3(8.68001, 0.1, 5.67481)
+material = SubResource("StandardMaterial3D_jcg8n")
+
+[node name="Ceil" type="CSGBox3D" parent="CsgCombinerRoot/Room10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 4.39603, 0)
+size = Vector3(8.68001, 0.1, 5.67481)
+material = SubResource("StandardMaterial3D_4jswl")
+
+[node name="FrontWall" type="CSGBox3D" parent="CsgCombinerRoot/Room10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.19802, -2.8374)
+size = Vector3(8.68001, 4.39603, 0.15)
+material = SubResource("StandardMaterial3D_orp50")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room10/FrontWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1.19802, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_66ns4")
+
+[node name="RoomSocket0" type="Marker3D" parent="CsgCombinerRoot/Room10/FrontWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0980174, 0)
+metadata/connected = true
+
+[node name="BackWall" type="CSGBox3D" parent="CsgCombinerRoot/Room10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.19802, 2.8374)
+size = Vector3(8.68001, 4.39603, 0.15)
+material = SubResource("StandardMaterial3D_bmh43")
+
+[node name="RightWall" type="CSGBox3D" parent="CsgCombinerRoot/Room10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.34, 2.19802, 0)
+size = Vector3(0.15, 4.39603, 5.67481)
+material = SubResource("StandardMaterial3D_22mek")
+
+[node name="LeftWall" type="CSGBox3D" parent="CsgCombinerRoot/Room10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -4.34, 2.19802, 0)
+size = Vector3(0.15, 4.39603, 5.67481)
+material = SubResource("StandardMaterial3D_q6icx")
+
+[node name="DoorSlot" type="CSGBox3D" parent="CsgCombinerRoot/Room10/LeftWall"]
+transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, 0, -1.19802, 0)
+operation = 2
+size = Vector3(1.5, 2, 0.25)
+material = SubResource("StandardMaterial3D_ysnm3")
+
+[node name="RoomSocket1" type="Marker3D" parent="CsgCombinerRoot/Room10/LeftWall"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0980174, 0)
+metadata/connected = false

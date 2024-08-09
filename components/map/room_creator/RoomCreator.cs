@@ -151,7 +151,7 @@ namespace GodotExtensionatorStarter {
 
                 var targetRotation = (Mathf.Pi / 2) * _wallRotations[wallRoomB.Name.ToString()][wallRoomA.Name.ToString()];
 
-                roomB.RotateY(targetRotation);
+                roomB.RotateY(targetRotation - (-roomA.Rotation.Y));
                 roomB.GlobalTranslate(roomASocket.GlobalPosition - roomBSocket.GlobalPosition);
 
                 roomASocket.SetMeta("connected", true);
