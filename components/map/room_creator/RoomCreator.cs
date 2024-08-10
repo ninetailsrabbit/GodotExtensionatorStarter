@@ -10,9 +10,13 @@ using System.Text.RegularExpressions;
 namespace GodotExtensionatorStarter {
     [Tool]
     public partial class RoomCreator : Node3D {
+
+        [Signal]
+        public delegate void RequestedGenerateRoomChunkEventHandler(int amount);
+
         [ExportGroup("Tool buttons")]
         [Export] public bool CreateNewRoom { get => _createNewRoom; set { CreateRooms(); } } // Tool button
-        [Export] public bool GenerateFinalMesh { get => _generateFinalMesh; set { GenerateRoomMesh(); } } // Tool button
+        [Export] public bool GenerateFinalMesh { get => _generateFinalMesh; set { GenerateRoomMeshes(); } } // Tool button
         [Export] public bool ClearGeneratedRooms { get => _clearRoom; set { ClearRoomsInSceneTree(); } } // Tool button
 
         [ExportGroup("Sizes")]
@@ -20,7 +24,8 @@ namespace GodotExtensionatorStarter {
         [Export(PropertyHint.Range, "1, 4, 1")] public int DoorsPerRoom = 2;
         [Export] public bool UseBridgeConnectorsBetweenRooms = false;
         [Export] public Vector3 DoorSize = new(1.5f, 2f, 0.25f);
-        [Export] public Vector3 BridgeConnectorSize = new(2, 3f, 4f);
+        [Export] public Vector3 MinBridgeConnectorSize = new(2f, 3f, 4f);
+        [Export] public Vector3 MaxBridgeConnectorSize = new(2f, 3f, 10f);
 
         [Export] public bool RandomizeDoorPositionInWall = false;
         [Export]
@@ -57,7 +62,8 @@ namespace GodotExtensionatorStarter {
 
         private CsgCombiner3D? CsgCombinerRoot { get; set; } = default!;
         private Node3D? CSGNode3DRoot { get; set; } = default!;
-        private CsgCombiner3D? LastRoom { get; set; } = default!;
+        private CsgCombiner3D? CurrentLastRoom { get; set; } = default!;
+        private CsgCombiner3D? LastRoomGeneratedFromChunk { get; set; } = default!;
         private Node3D? MeshOutputNode { get; set; } = default!;
 
         private bool _createNewRoom = false;
@@ -66,27 +72,47 @@ namespace GodotExtensionatorStarter {
 
         // (Pi / 2) * wallRotation selected
         private readonly Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<string, float>> _wallRotations = new() {
-            { "FrontWall", new() { {"FrontWall", Mathf.Pi}, { "BackWall", 0f}, { "RightWall", 1 }, { "LeftWall", -Mathf.Pi / 2 } } },
-            { "BackWall", new() { {"FrontWall", 0f}, { "BackWall", Mathf.Pi }, { "RightWall", - Mathf.Pi / 2 }, { "LeftWall",  Mathf.Pi / 2 } } },
-            { "RightWall", new() { {"FrontWall", - Mathf.Pi / 2}, { "BackWall",  Mathf.Pi / 2}, { "RightWall", Mathf.Pi }, { "LeftWall", 0f} } },
-            { "LeftWall", new() { {"FrontWall",  Mathf.Pi / 2}, { "BackWall", - Mathf.Pi / 2}, { "RightWall", 0f}, { "LeftWall", Mathf.Pi } } },
+            { "FrontWall", new() { {"FrontWall", Mathf.Pi}, { "BackWall", 0f}, { "RightWall", Mathf.Pi / 2 }, { "LeftWall", -Mathf.Pi / 2 } } },
+            { "BackWall", new() { {"FrontWall", 0f}, { "BackWall", Mathf.Pi }, { "RightWall", -Mathf.Pi / 2 }, { "LeftWall",  Mathf.Pi / 2 } } },
+            { "RightWall", new() { {"FrontWall", -Mathf.Pi / 2}, { "BackWall",  Mathf.Pi / 2}, { "RightWall", Mathf.Pi }, { "LeftWall", 0f} } },
+            { "LeftWall", new() { {"FrontWall",  Mathf.Pi / 2}, { "BackWall", -Mathf.Pi / 2}, { "RightWall", 0f}, { "LeftWall", Mathf.Pi } } },
         };
 
         private readonly Random _rng = new();
 
+        public override void _ExitTree() {
+            if (!Engine.IsEditorHint()) {
+                RequestedGenerateRoomChunk -= OnRequestedGenerateRoomChunk;
+            }
+        }
+        public override void _EnterTree() {
+            if (!Engine.IsEditorHint()) {
+                RequestedGenerateRoomChunk += OnRequestedGenerateRoomChunk;
+            }
+        }
+
+        private void OnRequestedGenerateRoomChunk(int amount) {
+            CurrentLastRoom = LastRoomGeneratedFromChunk;
+
+            CreateRooms();
+            GenerateRoomMeshes();
+        }
+
+
+
         public void CreateRooms() {
             if (ToolCanBeUsed()) {
-                ClearRoomsInSceneTree();
 
                 if (GenerateMeshPerRoom) {
-                    CSGNode3DRoot = new Node3D() { Name = nameof(CSGNode3DRoot) };
+                    CSGNode3DRoot ??= new Node3D() { Name = nameof(CSGNode3DRoot) };
                     AddChild(CSGNode3DRoot);
                     CSGNode3DRoot.SetOwnerToEditedSceneRoot();
                 }
                 else {
-                    CsgCombinerRoot = new CsgCombiner3D() { Name = nameof(CsgCombinerRoot), UseCollision = false };
+                    CsgCombinerRoot ??= new CsgCombiner3D() { Name = nameof(CsgCombinerRoot), UseCollision = false };
                     AddChild(CsgCombinerRoot);
                     CsgCombinerRoot.SetOwnerToEditedSceneRoot();
+
                 }
 
                 int numberOfRooms = CalculateNumberOfRooms(UseBridgeConnectorsBetweenRooms);
@@ -94,16 +120,17 @@ namespace GodotExtensionatorStarter {
                 for (int i = 0; i < numberOfRooms; i++) {
 
                     var room = UseBridgeConnectorsBetweenRooms && i % 2 != 0 ?
-                        CreateBridgeConnector(BridgeConnectorSize) :
-                        CreateRoom(LastRoom is null ? 1 : DoorsPerRoom);
+                        CreateBridgeConnector() :
+                        CreateRoom(CurrentLastRoom is null ? 1 : DoorsPerRoom);
 
-                    if (LastRoom is not null && room is not null) {
-                        ConnectRooms(LastRoom, room);
+                    if (CurrentLastRoom is not null && room is not null) {
+                        ConnectRooms(CurrentLastRoom, room);
                     }
 
-                    LastRoom = room;
-
+                    CurrentLastRoom = room;
                 }
+
+                LastRoomGeneratedFromChunk = CurrentLastRoom;
             }
         }
 
@@ -126,7 +153,7 @@ namespace GodotExtensionatorStarter {
 
                 CsgCombiner3D rootNodeForThisRoom = new() {
                     Name = $"Room{CsgCombinerRoot?.GetChildCount()}{CSGNode3DRoot?.GetChildCount()}",
-                    Position = LastRoom?.Position ?? Vector3.Zero,
+                    Position = CurrentLastRoom?.Position ?? Vector3.Zero,
                     UseCollision = false
                 };
 
@@ -163,11 +190,11 @@ namespace GodotExtensionatorStarter {
 
         public CsgCombiner3D? CreateBridgeConnector(Vector3? bridgeSize = null) {
             if (ToolCanBeUsed() && (GenerateMeshPerRoom && CSGNode3DRoot is not null) || (!GenerateMeshPerRoom && CsgCombinerRoot is not null)) {
-                bridgeSize ??= BridgeConnectorSize;
+                bridgeSize ??= GenerateRoomSize(MinBridgeConnectorSize, MaxBridgeConnectorSize);
 
                 CsgCombiner3D bridgeConnector = new() {
                     Name = $"BridgeConnector{OSExtension.GenerateRandomIdFromUnixTime()}",
-                    Position = LastRoom?.Position ?? Vector3.Zero,
+                    Position = CurrentLastRoom?.Position ?? Vector3.Zero,
                     UseCollision = false
                 };
 
@@ -423,7 +450,7 @@ namespace GodotExtensionatorStarter {
             }
         }
 
-        private void GenerateRoomMesh() {
+        private void GenerateRoomMeshes() {
             if (ToolCanBeUsed() && ((GenerateMeshPerRoom && CSGNode3DRoot is not null && CSGNode3DRoot.GetChildCount() > 0) || (!GenerateMeshPerRoom && CsgCombinerRoot is not null && CsgCombinerRoot.IsRootShape() && CsgCombinerRoot.GetChildCount() > 0))) {
 
                 if (MeshOutputNode is not null) {
@@ -486,10 +513,10 @@ namespace GodotExtensionatorStarter {
                 CsgCombinerRoot = null;
                 CSGNode3DRoot = null;
                 MeshOutputNode = null;
-                LastRoom = null;
+                CurrentLastRoom = null;
             }
         }
 
-        private bool ToolCanBeUsed() => Engine.IsEditorHint() && IsInsideTree();
+        private bool ToolCanBeUsed() => Engine.IsEditorHint() && IsInsideTree() || (!Engine.IsEditorHint() && IsNodeReady());
     }
 }
