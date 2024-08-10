@@ -10,9 +10,10 @@ using System.Text.RegularExpressions;
 namespace GodotExtensionatorStarter {
     [Tool]
     public partial class RoomCreator : Node3D {
+        [ExportGroup("Tool buttons")]
         [Export] public bool CreateNewRoom { get => _createNewRoom; set { CreateRooms(); } } // Tool button
-        [Export] public bool ClearRoom { get => _clearRoom; set { ClearExistingRooms(); } } // Tool button
         [Export] public bool GenerateFinalMesh { get => _generateFinalMesh; set { GenerateRoomMesh(); } } // Tool button
+        [Export] public bool ClearGeneratedRooms { get => _clearRoom; set { ClearRoomsInSceneTree(); } } // Tool button
 
         [ExportGroup("Sizes")]
         [Export(PropertyHint.Range, "1, 1000, 1")] public int NumberOfRooms = 3;
@@ -34,6 +35,7 @@ namespace GodotExtensionatorStarter {
         [Export]
         public float FloorThickness = 0.1f;
         [ExportGroup("Include in generation")]
+        [Export] public bool GenerateMeshPerRoom = false;
         [Export] public bool GenerateMaterials = true;
         [Export] public bool IncludeCeil = true;
         [Export] public bool IncludeFloor = true;
@@ -43,7 +45,7 @@ namespace GodotExtensionatorStarter {
         [Export] public bool IncludeBackWall = true;
         [ExportGroup("Collisions")]
         [Export] public bool GenerateCollisions = true;
-        [Export] public AvailableCollisions TypeOfCollision = AvailableCollisions.Convex;
+        [Export] public AvailableCollisions TypeOfCollision = AvailableCollisions.Trimesh;
         [Export] public bool CreateStaticBody = true;
         [Export] public bool CleanCollision = true;
         [Export] public bool SimplifiedCollision = false;
@@ -54,6 +56,7 @@ namespace GodotExtensionatorStarter {
         }
 
         private CsgCombiner3D? CsgCombinerRoot { get; set; } = default!;
+        private Node3D? CSGNode3DRoot { get; set; } = default!;
         private CsgCombiner3D? LastRoom { get; set; } = default!;
         private Node3D? MeshOutputNode { get; set; } = default!;
 
@@ -62,22 +65,29 @@ namespace GodotExtensionatorStarter {
         private bool _generateFinalMesh = false;
 
         // (Pi / 2) * wallRotation selected
-        private readonly Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<string, int>> _wallRotations = new() {
-            { "FrontWall", new() { {"FrontWall", 2}, { "BackWall", 0}, { "RightWall", 1 }, { "LeftWall", -1 } } },
-            { "BackWall", new() { {"FrontWall", 0}, { "BackWall", 2}, { "RightWall", -1 }, { "LeftWall", 1 } } },
-            { "RightWall", new() { {"FrontWall", -1}, { "BackWall", 1}, { "RightWall", 2 }, { "LeftWall", 0} } },
-            { "LeftWall", new() { {"FrontWall", 1}, { "BackWall", -1}, { "RightWall", 0}, { "LeftWall", 2} } },
+        private readonly Godot.Collections.Dictionary<string, Godot.Collections.Dictionary<string, float>> _wallRotations = new() {
+            { "FrontWall", new() { {"FrontWall", Mathf.Pi}, { "BackWall", 0f}, { "RightWall", 1 }, { "LeftWall", -Mathf.Pi / 2 } } },
+            { "BackWall", new() { {"FrontWall", 0f}, { "BackWall", Mathf.Pi }, { "RightWall", - Mathf.Pi / 2 }, { "LeftWall",  Mathf.Pi / 2 } } },
+            { "RightWall", new() { {"FrontWall", - Mathf.Pi / 2}, { "BackWall",  Mathf.Pi / 2}, { "RightWall", Mathf.Pi }, { "LeftWall", 0f} } },
+            { "LeftWall", new() { {"FrontWall",  Mathf.Pi / 2}, { "BackWall", - Mathf.Pi / 2}, { "RightWall", 0f}, { "LeftWall", Mathf.Pi } } },
         };
 
         private readonly Random _rng = new();
 
         public void CreateRooms() {
             if (ToolCanBeUsed()) {
-                ClearExistingRooms();
+                ClearRoomsInSceneTree();
 
-                CsgCombinerRoot = new CsgCombiner3D() { Name = nameof(CsgCombinerRoot), UseCollision = false };
-                AddChild(CsgCombinerRoot);
-                CsgCombinerRoot.SetOwnerToEditedSceneRoot();
+                if (GenerateMeshPerRoom) {
+                    CSGNode3DRoot = new Node3D() { Name = nameof(CSGNode3DRoot) };
+                    AddChild(CSGNode3DRoot);
+                    CSGNode3DRoot.SetOwnerToEditedSceneRoot();
+                }
+                else {
+                    CsgCombinerRoot = new CsgCombiner3D() { Name = nameof(CsgCombinerRoot), UseCollision = false };
+                    AddChild(CsgCombinerRoot);
+                    CsgCombinerRoot.SetOwnerToEditedSceneRoot();
+                }
 
                 int numberOfRooms = CalculateNumberOfRooms(UseBridgeConnectorsBetweenRooms);
 
@@ -103,7 +113,7 @@ namespace GodotExtensionatorStarter {
             if (useBridgeConnectors) {
                 numberOfRooms += (int)Mathf.Ceil(numberOfRooms / 2f);
 
-                // When use bridge connectors the number of rooms always needs to be odd to fit the bridges
+                // When use bridge connectors the number of rooms always needs to be odd to fit the correct bridges amount
                 if (numberOfRooms % 2 == 0)
                     numberOfRooms += 1;
             }
@@ -112,15 +122,21 @@ namespace GodotExtensionatorStarter {
         }
 
         public CsgCombiner3D? CreateRoom(int doorSlots = 1) {
-            if (ToolCanBeUsed() && CsgCombinerRoot is not null) {
+            if (ToolCanBeUsed() && (GenerateMeshPerRoom && CSGNode3DRoot is not null) || (!GenerateMeshPerRoom && CsgCombinerRoot is not null)) {
 
                 CsgCombiner3D rootNodeForThisRoom = new() {
-                    Name = $"Room{CsgCombinerRoot.GetChildCount() + 1}",
+                    Name = $"Room{CsgCombinerRoot?.GetChildCount()}{CSGNode3DRoot?.GetChildCount()}",
                     Position = LastRoom?.Position ?? Vector3.Zero,
                     UseCollision = false
                 };
 
-                CsgCombinerRoot.AddChild(rootNodeForThisRoom);
+                if (GenerateMeshPerRoom) {
+                    CSGNode3DRoot?.AddChild(rootNodeForThisRoom);
+                }
+                else {
+                    CsgCombinerRoot?.AddChild(rootNodeForThisRoom);
+                }
+
                 rootNodeForThisRoom.SetOwnerToEditedSceneRoot();
 
                 Vector3 roomSize = GenerateRoomSize(MinRoomSize, MaxRoomSize);
@@ -146,7 +162,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public CsgCombiner3D? CreateBridgeConnector(Vector3? bridgeSize = null) {
-            if (CsgCombinerRoot is not null) {
+            if (ToolCanBeUsed() && (GenerateMeshPerRoom && CSGNode3DRoot is not null) || (!GenerateMeshPerRoom && CsgCombinerRoot is not null)) {
                 bridgeSize ??= BridgeConnectorSize;
 
                 CsgCombiner3D bridgeConnector = new() {
@@ -155,7 +171,13 @@ namespace GodotExtensionatorStarter {
                     UseCollision = false
                 };
 
-                CsgCombinerRoot.AddChild(bridgeConnector);
+                if (GenerateMeshPerRoom) {
+                    CSGNode3DRoot?.AddChild(bridgeConnector);
+                }
+                else {
+                    CsgCombinerRoot?.AddChild(bridgeConnector);
+                }
+
                 bridgeConnector.SetOwnerToEditedSceneRoot();
 
                 CreateFloor(bridgeConnector, bridgeSize.Value);
@@ -175,7 +197,7 @@ namespace GodotExtensionatorStarter {
         }
 
 
-        public void CreateMaterialOnExistingCSGShapes(CsgCombiner3D roomParent) {
+        private void CreateMaterialOnExistingCSGShapes(CsgCombiner3D roomParent) {
             if (GenerateMaterials) {
                 foreach (var csgShape in roomParent.GetAllChildren<CsgBox3D>()) {
                     csgShape.Material = new StandardMaterial3D();
@@ -192,9 +214,9 @@ namespace GodotExtensionatorStarter {
                 var wallRoomA = roomASocket.GetParent<CsgBox3D>();
                 var wallRoomB = roomBSocket.GetParent<CsgBox3D>();
 
-                var targetRotation = (Mathf.Pi / 2) * _wallRotations[wallRoomB.Name.ToString()][wallRoomA.Name.ToString()];
+                var rotationToAlignRooms = _wallRotations[wallRoomB.Name.ToString()][wallRoomA.Name.ToString()];
 
-                roomB.RotateY(targetRotation - (-roomA.Rotation.Y));
+                roomB.RotateY(rotationToAlignRooms - (-roomA.Rotation.Y)); // This -room calculation adapts the rotation relatively to last room
                 roomB.GlobalTranslate(roomASocket.GlobalPosition - roomBSocket.GlobalPosition);
 
                 roomASocket.SetMeta("connected", true);
@@ -346,84 +368,125 @@ namespace GodotExtensionatorStarter {
                     _rng.NextFloat(minRoomSize.Value.Z, maxRoomSize.Value.Z));
         }
 
-        public void GenerateRoomMesh() {
-            if (ToolCanBeUsed() && CsgCombinerRoot is not null && CsgCombinerRoot.IsRootShape() && CsgCombinerRoot.GetChildCount() > 0) {
+        private void NameSurfacesOnMesh(CsgCombiner3D room, MeshInstance3D roomMeshInstance) {
+            for (int i = 0; i < roomMeshInstance.Mesh.GetSurfaceCount(); i++) {
+                if (room.GetChildOrNull<CsgBox3D>(i) is CsgBox3D roomPart) {
+                    ((ArrayMesh)roomMeshInstance.Mesh).SurfaceSetName(i, roomPart.Name);
+                }
+            }
+        }
+
+        private void GenerateCollisionsOnRoomMesh(MeshInstance3D roomMeshInstance) {
+            if (GenerateCollisions) {
+                switch (TypeOfCollision) {
+                    case AvailableCollisions.Convex:
+                        var convexCollision = new CollisionShape3D() {
+                            Name = "ConvexCollision",
+                            Shape = roomMeshInstance.Mesh.CreateConvexShape(CleanCollision, SimplifiedCollision)
+                        };
+
+                        if (CreateStaticBody) {
+                            var body = new StaticBody3D() { Name = "StaticBody3D" };
+                            roomMeshInstance.AddChild(body);
+                            body.SetOwnerToEditedSceneRoot();
+                            body.AddChild(convexCollision);
+
+                        }
+                        else {
+                            roomMeshInstance.AddChild(convexCollision);
+                        }
+
+                        convexCollision.SetOwnerToEditedSceneRoot();
+
+                        break;
+                    case AvailableCollisions.Trimesh:
+                        var trimeshCollision = new CollisionShape3D() {
+                            Name = "TrimeshCollision",
+                            Shape = roomMeshInstance.Mesh.CreateTrimeshShape()
+                        };
+
+                        if (CreateStaticBody) {
+                            var body = new StaticBody3D() { Name = "StaticBody3D" };
+                            roomMeshInstance.AddChild(body);
+                            body.SetOwnerToEditedSceneRoot();
+                            body.AddChild(trimeshCollision);
+                            trimeshCollision.SetOwnerToEditedSceneRoot();
+                        }
+                        else {
+                            roomMeshInstance.AddChild(trimeshCollision);
+                        }
+
+                        trimeshCollision.SetOwnerToEditedSceneRoot();
+
+                        break;
+                }
+            }
+        }
+
+        private void GenerateRoomMesh() {
+            if (ToolCanBeUsed() && ((GenerateMeshPerRoom && CSGNode3DRoot is not null && CSGNode3DRoot.GetChildCount() > 0) || (!GenerateMeshPerRoom && CsgCombinerRoot is not null && CsgCombinerRoot.IsRootShape() && CsgCombinerRoot.GetChildCount() > 0))) {
+
+                if (MeshOutputNode is not null) {
+                    MeshOutputNode.Free();
+                    MeshOutputNode = null;
+                }
 
                 MeshOutputNode = new Node3D() { Name = nameof(MeshOutputNode) };
                 AddChild(MeshOutputNode);
                 MeshOutputNode.SetOwnerToEditedSceneRoot();
 
-                var meshes = CsgCombinerRoot.GetMeshes();
-                var meshInstance = new MeshInstance3D {
-                    Name = "GeneratedRoomMesh",
-                    Mesh = (Mesh)meshes[1]
-                };
+                if (GenerateMeshPerRoom) {
 
-                MeshOutputNode.AddChild(meshInstance);
-                meshInstance.SetOwnerToEditedSceneRoot();
+                    foreach (CsgCombiner3D room in CSGNode3DRoot.GetChildren().Where(child => child is CsgCombiner3D).Cast<CsgCombiner3D>()) {
+                        var roomMesh = room.GetMeshes();
 
-                for (int i = 0; i < meshInstance.Mesh.GetSurfaceCount(); i++) {
-                    if (CsgCombinerRoot.GetChildOrNull<CsgBox3D>(i) is CsgBox3D roomPart) {
-                        ((ArrayMesh)meshInstance.Mesh).SurfaceSetName(i, roomPart.Name);
+                        if (roomMesh.Count > 1) {
+                            var roomMeshInstance = new MeshInstance3D {
+                                Name = room.Name,
+                                Mesh = (Mesh)roomMesh[1],
+                                Position = room.Position,
+                                Rotation = room.Rotation
+                            };
+
+                            MeshOutputNode.AddChild(roomMeshInstance);
+                            roomMeshInstance.SetOwnerToEditedSceneRoot();
+
+                            NameSurfacesOnMesh(room, roomMeshInstance);
+                            GenerateCollisionsOnRoomMesh(roomMeshInstance);
+                        }
+
                     }
                 }
+                else {
+                    var meshes = CsgCombinerRoot.GetMeshes();
 
-                if (GenerateCollisions) {
-                    switch (TypeOfCollision) {
-                        case AvailableCollisions.Convex:
-                            var convexCollision = new CollisionShape3D() {
-                                Name = "ConvexCollision",
-                                Shape = meshInstance.Mesh.CreateConvexShape(CleanCollision, SimplifiedCollision)
-                            };
+                    if (meshes.Count > 1) {
+                        var meshInstance = new MeshInstance3D {
+                            Name = "GeneratedRoomMesh",
+                            Mesh = (Mesh)meshes[1]
+                        };
 
-                            if (CreateStaticBody) {
-                                var body = new StaticBody3D() { Name = "StaticBody3D" };
-                                meshInstance.AddChild(body);
-                                body.SetOwnerToEditedSceneRoot();
-                                body.AddChild(convexCollision);
+                        MeshOutputNode.AddChild(meshInstance);
+                        meshInstance.SetOwnerToEditedSceneRoot();
 
-                            }
-                            else {
-                                meshInstance.AddChild(convexCollision);
-                            }
-
-                            convexCollision.SetOwnerToEditedSceneRoot();
-
-                            break;
-                        case AvailableCollisions.Trimesh:
-                            var trimeshCollision = new CollisionShape3D() {
-                                Name = "TrimeshCollision",
-                                Shape = meshInstance.Mesh.CreateTrimeshShape()
-                            };
-
-                            if (CreateStaticBody) {
-                                var body = new StaticBody3D() { Name = "StaticBody3D" };
-                                meshInstance.AddChild(body);
-                                body.SetOwnerToEditedSceneRoot();
-                                body.AddChild(trimeshCollision);
-                                trimeshCollision.SetOwnerToEditedSceneRoot();
-                            }
-                            else {
-                                meshInstance.AddChild(trimeshCollision);
-                            }
-
-                            trimeshCollision.SetOwnerToEditedSceneRoot();
-
-                            break;
+                        NameSurfacesOnMesh(CsgCombinerRoot, meshInstance);
+                        GenerateCollisionsOnRoomMesh(meshInstance);
                     }
+
                 }
             }
-
         }
-        public void ClearExistingRooms() {
-            if (ToolCanBeUsed() && GetChildCount() > 0) {
+
+        private void ClearRoomsInSceneTree() {
+            if (ToolCanBeUsed()) {
 
                 foreach (var child in GetChildren())
                     child.Free();
 
                 CsgCombinerRoot = null;
-                LastRoom = null;
+                CSGNode3DRoot = null;
                 MeshOutputNode = null;
+                LastRoom = null;
             }
         }
 

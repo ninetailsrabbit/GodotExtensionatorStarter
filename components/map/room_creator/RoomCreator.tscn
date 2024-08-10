@@ -4,9 +4,6 @@
 
 [node name="RoomCreator" type="Node3D"]
 script = ExtResource("1_a6h5c")
-NumberOfRooms = 6
 UseBridgeConnectorsBetweenRooms = true
-BridgeConnectorSize = Vector3(2, 2.5, 4)
-MinRoomSize = Vector3(4, 3.5, 4)
-MaxRoomSize = Vector3(15, 10, 15)
+GenerateMeshPerRoom = true
 TypeOfCollision = 1
