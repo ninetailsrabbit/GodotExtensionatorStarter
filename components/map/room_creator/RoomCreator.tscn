@@ -4,5 +4,5 @@
 
 [node name="RoomCreator" type="Node3D"]
 script = ExtResource("1_a6h5c")
-NumberOfRooms = 5
 UseBridgeConnectorsBetweenRooms = true
+RandomizeDoorPositionInWall = true

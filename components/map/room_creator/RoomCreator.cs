@@ -23,11 +23,11 @@ namespace GodotExtensionatorStarter {
         [Export(PropertyHint.Range, "1, 1000, 1")] public int NumberOfRooms = 3;
         [Export(PropertyHint.Range, "1, 4, 1")] public int DoorsPerRoom = 2;
         [Export] public bool UseBridgeConnectorsBetweenRooms = false;
+        [Export] public bool RandomizeDoorPositionInWall = false;
         [Export] public Vector3 DoorSize = new(1.5f, 2f, 0.25f);
         [Export] public Vector3 MinBridgeConnectorSize = new(2f, 3f, 4f);
         [Export] public Vector3 MaxBridgeConnectorSize = new(2f, 3f, 10f);
 
-        [Export] public bool RandomizeDoorPositionInWall = false;
         [Export]
         public Vector3 MinRoomSize = new(6f, 3.5f, 5f);
 
@@ -353,12 +353,26 @@ namespace GodotExtensionatorStarter {
         public void CreateDoorSlotInWall(CsgBox3D wall, Vector3 roomSize, int socketNumber = 1) {
             if (wall.GetChildCount().IsZero()) {
 
+                Vector3 doorPosition = new(0, Vector3.Down.Y * ((roomSize.Y / 2) - (DoorSize.Y / 2)), 0);
+                Vector3 doorRotation = new(0, Regex.IsMatch(wall.Name.ToString(), "(front|back)", RegexOptions.IgnoreCase) ? 0 : Mathf.Pi / 2, 0);
+
+                if (RandomizeDoorPositionInWall) {
+                    if (doorRotation.Y != 0 && (wall.Size.Z - DoorSize.X) > DoorSize.X) {
+                        doorPosition.Z = (_rng.Chance(0.5f) ? -1 : 1) * _rng.NextFloat(DoorSize.X, (wall.Size.Z - DoorSize.X) / 2);
+                    }
+
+                    if (doorRotation.Y == 0 && (wall.Size.X - DoorSize.X) > DoorSize.X) {
+                        doorPosition.X = (_rng.Chance(0.5f) ? -1 : 1) * _rng.NextFloat(DoorSize.X, (wall.Size.X - DoorSize.X) / 2);
+
+                    }
+                }
+
                 CsgBox3D doorSlot = new() {
                     Name = "DoorSlot",
                     Operation = CsgShape3D.OperationEnum.Subtraction,
                     Size = DoorSize,
-                    Position = new Vector3(0, Vector3.Down.Y * ((roomSize.Y / 2) - (DoorSize.Y / 2)), 0),
-                    Rotation = new Vector3(0, Regex.IsMatch(wall.Name.ToString(), "(front|back)", RegexOptions.IgnoreCase) ? 0 : Mathf.Pi / 2, 0)
+                    Position = doorPosition,
+                    Rotation = doorRotation
                 };
 
                 wall.AddChild(doorSlot);
@@ -366,7 +380,7 @@ namespace GodotExtensionatorStarter {
 
                 Marker3D roomSocket = new() {
                     Name = $"RoomSocket{socketNumber}",
-                    Position = new Vector3(0, Math.Min((doorSlot.Position.Y + DoorSize.Y / 2) + 0.1f, roomSize.Y), 0),
+                    Position = new Vector3(doorSlot.Position.X, Math.Min((doorSlot.Position.Y + DoorSize.Y / 2) + 0.1f, roomSize.Y), doorSlot.Position.Z),
                 };
 
                 roomSocket.SetMeta("connected", false);
