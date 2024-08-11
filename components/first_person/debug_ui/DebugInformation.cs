@@ -11,6 +11,31 @@ namespace GodotExtensionatorStarter {
 
         [Export] public FirstPersonController Actor { get; set; } = null!;
         [Export] public string OpenDebugMenuInputAction = "open_debug_ui";
+        [Export]
+        public bool ShowHardwareInformation {
+            get => _showHardwareInformation;
+            set {
+                if (value != _showHardwareInformation) {
+                    _showHardwareInformation = value;
+
+                    if (_showHardwareInformation) {
+                        OSInfo?.Hide();
+                        DistroInfo?.Hide();
+                        CPUInfo?.Hide();
+                        GPUInfo?.Hide();
+                    }
+                    else {
+                        OSInfo?.Show();
+                        DistroInfo?.Show();
+                        CPUInfo?.Show();
+                        GPUInfo?.Show();
+                    }
+
+                }
+            }
+        }
+
+        private bool _showHardwareInformation = true;
 
         public Label FPSInfo { get; set; } = default!;
         public Label VsyncInfo { get; set; } = default!;
@@ -175,7 +200,7 @@ namespace GodotExtensionatorStarter {
             JumpReducedHeightByJumpSpinBox = GetNode<SpinBox>($"%{nameof(JumpReducedHeightByJumpSpinBox)}");
             JumpShortenJumpOnInputReleaseCheckBox = GetNode<CheckBox>($"%{nameof(JumpShortenJumpOnInputReleaseCheckBox)}");
             JumpAirControlModeOptionButton = GetNode<OptionButton>($"%{nameof(JumpAirControlModeOptionButton)}");
-            
+
             MouseSensitivitySlider.ValueChanged += OnMouseSensitivityValueChanged;
             CameraSensitivitySlider.ValueChanged += OnCameraSensitivityValueChanged;
             CameraVerticalRotationLimitSlider.ValueChanged += OnCameraVerticalRotationLimitValueChanged;
@@ -237,6 +262,13 @@ namespace GodotExtensionatorStarter {
 
             State.Text = $"[{Actor.FSM.CurrentState.Name}]";
 
+            if (!ShowHardwareInformation) {
+                OSInfo.Hide();
+                DistroInfo.Hide();
+                CPUInfo.Hide();
+                GPUInfo.Hide();
+            }
+
             DisplayFPS();
             DisplayVsync();
             DisplayMemory();
@@ -268,19 +300,19 @@ namespace GodotExtensionatorStarter {
         }
 
         private void DisplayVsync() {
-            VsyncInfo.Text = $"Vsync: {DisplayServer.WindowGetVsyncMode().ToString()}";
+            VsyncInfo.Text = $"Vsync: {DisplayServer.WindowGetVsyncMode()}";
         }
 
         private void DisplayMemory() {
-            MemoryInfo.Text = $"Memory: {OS.GetStaticMemoryUsage() / 1048576.0f} MiB";
+            MemoryInfo.Text = $"Memory: {OS.GetStaticMemoryUsage() / 1048576.0f:F} MiB";
         }
 
         private void DisplayVelocity() {
-            Velocity.Text = $"Velocity: {Actor.Velocity}";
+            Velocity.Text = $"Velocity: {(Actor.Velocity.X.ToString("F"), Actor.Velocity.Y.ToString("F"), Actor.Velocity.Z.ToString("F"))}";
         }
 
         private void DisplaySpeed() {
-            Speed.Text = $"Speed: {Actor.CurrentSpeed()} kmh";
+            Speed.Text = $"Speed: {Actor.CurrentSpeed():F} kmh";
         }
 
 

@@ -161,16 +161,16 @@ namespace GodotExtensionatorStarter {
 
                 //Adjust the distance to not overlap the walls and be able to display the attached materials correctly.
                 switch (wall.Name.ToString()) {
-                    case "FrontWall":
+                    case nameof(FrontWall):
                         roomSocket.Position += Vector3.Forward * (WallThickness / 2);
                         break;
-                    case "BackWall":
+                    case nameof(BackWall):
                         roomSocket.Position += Vector3.Back * (WallThickness / 2);
                         break;
-                    case "RightWall":
+                    case nameof(RightWall):
                         roomSocket.Position += Vector3.Right * (WallThickness / 2);
                         break;
-                    case "LeftWall":
+                    case nameof(LeftWall):
                         roomSocket.Position += Vector3.Left * (WallThickness / 2);
                         break;
                 }
@@ -179,8 +179,6 @@ namespace GodotExtensionatorStarter {
 
                 wall.AddChild(roomSocket);
                 roomSocket.SetOwnerToEditedSceneRoot();
-
-
             }
         }
         #endregion

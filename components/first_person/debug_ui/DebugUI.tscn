@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://pm541j6sodr8"]
+[gd_scene load_steps=3 format=3 uid="uid://pm541j6sodr8"]
 
 [ext_resource type="Script" path="res://components/first_person/debug_ui/DebugInformation.cs" id="1_rx7iq"]
+[ext_resource type="LabelSettings" uid="uid://c5gh5a2ufjefn" path="res://components/first_person/debug_ui/DebugUILabelSettings.tres" id="2_wmu6m"]
 
 [node name="DebugUI" type="Control"]
 process_mode = 3
@@ -15,11 +16,15 @@ size_flags_horizontal = 0
 script = ExtResource("1_rx7iq")
 
 [node name="Panel" type="Panel" parent="."]
+self_modulate = Color(0.00392157, 0.00392157, 0.00392157, 0.0784314)
 layout_mode = 1
-anchors_preset = 10
+anchors_preset = 11
+anchor_left = 1.0
 anchor_right = 1.0
-offset_bottom = 184.0
-grow_horizontal = 2
+anchor_bottom = 1.0
+offset_left = -342.0
+grow_horizontal = 0
+grow_vertical = 2
 mouse_filter = 2
 
 [node name="MarginContainer" type="MarginContainer" parent="Panel"]
@@ -27,8 +32,6 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_top = -10.0
-offset_bottom = 9.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/margin_left = 20
@@ -45,57 +48,62 @@ theme_override_constants/separation = 5
 unique_name_in_owner = true
 layout_mode = 2
 text = "FPS:"
+label_settings = ExtResource("2_wmu6m")
 
 [node name="VsyncLabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "VSYNC:"
+label_settings = ExtResource("2_wmu6m")
 
 [node name="MemoryLabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "MEMORY:"
+label_settings = ExtResource("2_wmu6m")
 
 [node name="VelocityLabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "VELOCITY:"
+label_settings = ExtResource("2_wmu6m")
 
 [node name="SpeedLabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "SPEED:"
+label_settings = ExtResource("2_wmu6m")
 
 [node name="StateLabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "STATE:"
+label_settings = ExtResource("2_wmu6m")
 
-[node name="SpecVboxContainer" type="VBoxContainer" parent="Panel/MarginContainer"]
-layout_mode = 2
-size_flags_horizontal = 8
-theme_override_constants/separation = 5
-
-[node name="OSLabel" type="Label" parent="Panel/MarginContainer/SpecVboxContainer"]
+[node name="OSLabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 0
 text = "OS:"
+label_settings = ExtResource("2_wmu6m")
 
-[node name="DistroLabel" type="Label" parent="Panel/MarginContainer/SpecVboxContainer"]
+[node name="DistroLabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Distro:"
+label_settings = ExtResource("2_wmu6m")
 
-[node name="CPULabel" type="Label" parent="Panel/MarginContainer/SpecVboxContainer"]
+[node name="CPULabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "CPU:"
+label_settings = ExtResource("2_wmu6m")
 
-[node name="GPULabel" type="Label" parent="Panel/MarginContainer/SpecVboxContainer"]
+[node name="GPULabel" type="Label" parent="Panel/MarginContainer/EngineVboxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "GPU:"
+label_settings = ExtResource("2_wmu6m")
 
 [node name="Parameters" type="Control" parent="."]
 process_mode = 2
