@@ -34,6 +34,9 @@ namespace GodotExtensionatorStarter {
 
         public CsgBox3D[] DoorSlots = [];
 
+        // CSGShape and the surface related index
+        public Dictionary<CsgBox3D, int> MaterialsByRoomPart = [];
+
         private readonly Random _rng = new();
 
         public override void _EnterTree() {
@@ -242,8 +245,11 @@ namespace GodotExtensionatorStarter {
 
         private void CreateMaterialsOnRoom() {
             if (GenerateMaterials)
-                foreach (var csgShape in this.GetAllChildren<CsgBox3D>())
-                    csgShape.Material = new StandardMaterial3D();
+                foreach (var (shape, index) in this.GetAllChildren<CsgBox3D>().Select((shape, index) => (shape, index))) {
+                    shape.Material = new StandardMaterial3D();
+                    MaterialsByRoomPart[shape] = index;
+                }
+
         }
         #endregion
 

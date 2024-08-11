@@ -12,9 +12,12 @@ namespace GodotExtensionatorStarter {
     public partial class MeshRoom : MeshInstance3D {
 
         public ArrayMesh RoomMesh { get; set; } = null!;
-
-
+        public Material FloorMaterial { get; set; } = default!;
         public Material? GetFloorMaterial() => RoomMesh.SurfaceGetMaterial(0);
+
+        public override void _EnterTree() {
+
+        }
         public void ApplyMaterialOnFloor(Material newMaterial) {
             var material = RoomMesh.SurfaceGetMaterial(0);
 
@@ -213,12 +216,24 @@ namespace GodotExtensionatorStarter {
                     _rng.NextFloat(minRoomSize.Value.Z, maxRoomSize.Value.Z));
         }
 
-        private void NameSurfacesOnMesh(CsgCombiner3D room, MeshInstance3D roomMeshInstance) {
-            for (int i = 0; i < roomMeshInstance.Mesh.GetSurfaceCount(); i++) {
-                if (room.GetChildOrNull<CsgBox3D>(i) is CsgBox3D roomPart) {
-                    ((ArrayMesh)roomMeshInstance.Mesh).SurfaceSetName(i, roomPart.Name);
+        private void NameSurfacesOnCombinedMesh(CsgCombiner3D rootNodeForRooms, MeshInstance3D roomMeshInstance) {
+            int index = 0;
+
+            foreach (var room in rootNodeForRooms.GetChildren().Where(child => child is CSGRoom).Cast<CSGRoom>()) {
+
+                foreach (var entry in room.MaterialsByRoomPart) {
+                    ((ArrayMesh)roomMeshInstance.Mesh).SurfaceSetName(index, entry.Key.Name);
+                    index += 1;
                 }
+
             }
+
+
+        }
+
+        private void NameSurfacesOnRoomMesh(CSGRoom room, MeshInstance3D roomMeshInstance) {
+            foreach (var entry in room.MaterialsByRoomPart)
+                ((ArrayMesh)roomMeshInstance.Mesh).SurfaceSetName(entry.Value, entry.Key.Name);
         }
 
         private void GenerateCollisionsOnRoomMesh(MeshInstance3D roomMeshInstance) {
@@ -283,7 +298,7 @@ namespace GodotExtensionatorStarter {
                             MeshOutputNode.AddChild(roomMeshInstance);
                             roomMeshInstance.SetOwnerToEditedSceneRoot();
 
-                            NameSurfacesOnMesh(room, roomMeshInstance);
+                            NameSurfacesOnRoomMesh(room, roomMeshInstance);
                             GenerateCollisionsOnRoomMesh(roomMeshInstance);
 
                             RoomsCreated.Add(roomMeshInstance);
@@ -307,7 +322,7 @@ namespace GodotExtensionatorStarter {
                         MeshOutputNode.AddChild(meshInstance);
                         meshInstance.SetOwnerToEditedSceneRoot();
 
-                        NameSurfacesOnMesh(CsgCombinerRoot, meshInstance);
+                        NameSurfacesOnCombinedMesh(CsgCombinerRoot, meshInstance);
                         GenerateCollisionsOnRoomMesh(meshInstance);
                     }
 
