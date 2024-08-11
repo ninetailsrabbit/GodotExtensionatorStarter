@@ -7,27 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace GodotExtensionatorStarter {
+
     [Tool]
     [GlobalClass, Icon("res://components/map/room_creator/room_creator.svg")]
-    public partial class MeshRoom : MeshInstance3D {
-
-        public ArrayMesh RoomMesh { get; set; } = null!;
-        public Material FloorMaterial { get; set; } = default!;
-        public Material? GetFloorMaterial() => RoomMesh.SurfaceGetMaterial(0);
-
-        public override void _EnterTree() {
-
-        }
-        public void ApplyMaterialOnFloor(Material newMaterial) {
-            var material = RoomMesh.SurfaceGetMaterial(0);
-
-            material = newMaterial;
-        }
-
-
-    }
-
-    [Tool]
     public partial class RoomCreator : Node3D {
 
         [Signal]
@@ -81,7 +63,7 @@ namespace GodotExtensionatorStarter {
             Trimesh, // More complex shapes that contains csg operations as substraction
         }
 
-        public List<MeshInstance3D> RoomsCreated = [];
+        public List<RoomMesh> RoomsCreated = [];
 
         private CsgCombiner3D? CsgCombinerRoot { get; set; } = default!;
         private Node3D? CSGNode3DRoot { get; set; } = default!;
@@ -225,16 +207,14 @@ namespace GodotExtensionatorStarter {
                 }
 
             }
-
-
         }
 
-        private void NameSurfacesOnRoomMesh(CSGRoom room, MeshInstance3D roomMeshInstance) {
+        private void NameSurfacesOnRoomMesh(CSGRoom room, RoomMesh roomMeshInstance) {
             foreach (var entry in room.MaterialsByRoomPart)
                 ((ArrayMesh)roomMeshInstance.Mesh).SurfaceSetName(entry.Value, entry.Key.Name);
         }
 
-        private void GenerateCollisionsOnRoomMesh(MeshInstance3D roomMeshInstance) {
+        private void GenerateCollisionsOnRoomMesh(RoomMesh roomMeshInstance) {
             if (GenerateCollisions) {
                 switch (TypeOfCollision) {
                     case AvailableCollisions.Convex:
@@ -292,7 +272,7 @@ namespace GodotExtensionatorStarter {
 
                     foreach (CSGRoom room in CSGNode3DRoot.GetChildren().Where(child => child is CSGRoom).Cast<CSGRoom>()) {
 
-                        if (room.GenerateMeshInstance() is MeshInstance3D roomMeshInstance) {
+                        if (room.GenerateMeshInstance() is RoomMesh roomMeshInstance) {
                             MeshOutputNode.AddChild(roomMeshInstance);
                             roomMeshInstance.SetOwnerToEditedSceneRoot();
 
@@ -312,16 +292,16 @@ namespace GodotExtensionatorStarter {
                     var meshes = CsgCombinerRoot.GetMeshes();
 
                     if (meshes.Count > 1) {
-                        var meshInstance = new MeshInstance3D {
+                        var roomMeshInstance = new RoomMesh {
                             Name = "GeneratedRoomMesh",
                             Mesh = (Mesh)meshes[1]
                         };
 
-                        MeshOutputNode.AddChild(meshInstance);
-                        meshInstance.SetOwnerToEditedSceneRoot();
+                        MeshOutputNode.AddChild(roomMeshInstance);
+                        roomMeshInstance.SetOwnerToEditedSceneRoot();
 
-                        NameSurfacesOnCombinedMesh(CsgCombinerRoot, meshInstance);
-                        GenerateCollisionsOnRoomMesh(meshInstance);
+                        NameSurfacesOnCombinedMesh(CsgCombinerRoot, roomMeshInstance);
+                        GenerateCollisionsOnRoomMesh(roomMeshInstance);
                     }
 
                 }

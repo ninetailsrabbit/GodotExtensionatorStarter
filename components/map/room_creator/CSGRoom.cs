@@ -81,11 +81,11 @@ namespace GodotExtensionatorStarter {
             CreateMaterialsOnRoom();
         }
 
-        public MeshInstance3D? GenerateMeshInstance() {
+        public RoomMesh? GenerateMeshInstance() {
             var meshes = GetMeshes();
 
             if (meshes.Count > 1) {
-                return new MeshInstance3D {
+                return new RoomMesh {
                     Name = Name,
                     Mesh = (Mesh)meshes[1],
                     Position = Position,

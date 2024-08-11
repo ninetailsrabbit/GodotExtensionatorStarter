@@ -16,7 +16,7 @@ size_flags_horizontal = 0
 script = ExtResource("1_rx7iq")
 
 [node name="Panel" type="Panel" parent="."]
-self_modulate = Color(0.00392157, 0.00392157, 0.00392157, 0.0784314)
+self_modulate = Color(0.00392157, 0.00392157, 0.00392157, 0)
 layout_mode = 1
 anchors_preset = 11
 anchor_left = 1.0

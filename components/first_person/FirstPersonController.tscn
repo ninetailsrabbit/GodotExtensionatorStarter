@@ -107,6 +107,7 @@ layer = 2
 
 [node name="DebugUI" parent="Debug" node_paths=PackedStringArray("Actor") instance=ExtResource("2_db6yj")]
 Actor = NodePath("../..")
+ShowHardwareInformation = false
 
 [node name="HUD" type="CanvasLayer" parent="."]
 
