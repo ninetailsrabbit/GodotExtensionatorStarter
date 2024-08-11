@@ -159,6 +159,22 @@ namespace GodotExtensionatorStarter {
                     Position = new Vector3(doorSlot.Position.X, Math.Min((doorSlot.Position.Y + doorSize.Y / 2) + 0.1f, roomSize.Y), doorSlot.Position.Z),
                 };
 
+                //Adjust the distance to not overlap the walls and be able to display the attached materials correctly.
+                switch (wall.Name.ToString()) {
+                    case "FrontWall":
+                        roomSocket.Position += Vector3.Forward * (WallThickness / 2);
+                        break;
+                    case "BackWall":
+                        roomSocket.Position += Vector3.Back * (WallThickness / 2);
+                        break;
+                    case "RightWall":
+                        roomSocket.Position += Vector3.Right * (WallThickness / 2);
+                        break;
+                    case "LeftWall":
+                        roomSocket.Position += Vector3.Left * (WallThickness / 2);
+                        break;
+                }
+
                 roomSocket.SetMeta("connected", false);
 
                 wall.AddChild(roomSocket);

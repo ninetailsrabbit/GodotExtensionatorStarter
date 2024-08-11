@@ -195,8 +195,6 @@ namespace GodotExtensionatorStarter {
                 // This -room calculation adapts the rotation relatively to last room
                 roomB.RotateY(rotationToAlignRooms - (-roomA.Rotation.Y));
                 roomB.GlobalTranslate(roomASocket.GlobalPosition - roomBSocket.GlobalPosition);
-                //Adjust the distance to not overlap the walls to display the materials correctly.
-                roomB.GlobalPosition += roomBSocket.GlobalDirectionTo(roomASocket).Flip() * WallThickness;
 
                 roomASocket.SetMeta("connected", true);
                 roomBSocket.SetMeta("connected", true);
