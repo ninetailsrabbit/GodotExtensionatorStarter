@@ -5,6 +5,5 @@
 [node name="RoomCreator" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.838329, 0.0699253, 0.230934)
 script = ExtResource("1_a6h5c")
-UseBridgeConnectorsBetweenRooms = true
-RandomizeDoorPositionInWall = true
+NumberOfRooms = 4
 GenerateMeshPerRoom = true

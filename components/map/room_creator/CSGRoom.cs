@@ -38,10 +38,10 @@ namespace GodotExtensionatorStarter {
 
         public override void _EnterTree() {
             if (GetChildCount().IsZero() && RoomSize.IsNotZeroApprox())
-                Create();
+                Build();
         }
 
-        public void Create() {
+        public void Build() {
             this.SetOwnerToEditedSceneRoot();
 
             if (IsBridgeRoomConnector)
@@ -76,16 +76,24 @@ namespace GodotExtensionatorStarter {
             }
 
             CreateMaterialsOnRoom();
-
         }
 
-        public CsgBox3D? GetDoorSlotFromWall(CsgBox3D wall) {
-            if (wall is not null && wall.GetNode<CsgBox3D>("DoorSlot") is CsgBox3D doorSlot)
-                return doorSlot;
+        public MeshInstance3D? GenerateMeshInstance() {
+            var meshes = GetMeshes();
+
+            if (meshes.Count > 1) {
+                return new MeshInstance3D {
+                    Name = Name,
+                    Mesh = (Mesh)meshes[1],
+                    Position = Position,
+                    Rotation = Rotation
+                };
+            }
 
             return null;
         }
 
+        #region Getters
         public IEnumerable<CsgBox3D> Walls() {
             List<CsgBox3D> walls = [FrontWall, BackWall, RightWall, LeftWall];
 
@@ -97,7 +105,16 @@ namespace GodotExtensionatorStarter {
                .Where(socket => IsInstanceValid(socket) && !(bool)socket.GetMeta("connected"))
                .Cast<Marker3D>();
         }
+        #endregion
 
+        #region Doors
+
+        public CsgBox3D? GetDoorSlotFromWall(CsgBox3D wall) {
+            if (wall is not null && wall.GetNode<CsgBox3D>("DoorSlot") is CsgBox3D doorSlot)
+                return doorSlot;
+
+            return null;
+        }
         public void CreateDoorSlotInRandomWall(Vector3 roomSize, Vector3 doorSize, int socketNumber = 1) {
             IEnumerable<CsgBox3D> availableWalls = Walls()
                 .Where(wall => wall.Name.ToString().Contains("wall", StringComparison.OrdinalIgnoreCase) && wall.GetChildCount().IsZero());
@@ -145,7 +162,9 @@ namespace GodotExtensionatorStarter {
                 roomSocket.SetOwnerToEditedSceneRoot();
             }
         }
+        #endregion
 
+        #region Room creation
         private void CreateFloor(Vector3 roomSize) {
             Floor ??= new() {
                 Name = nameof(Floor),
@@ -224,6 +243,7 @@ namespace GodotExtensionatorStarter {
                 foreach (var csgShape in this.GetAllChildren<CsgBox3D>())
                     csgShape.Material = new StandardMaterial3D();
         }
+        #endregion
 
         [GeneratedRegex("(front|back)", RegexOptions.IgnoreCase, "en-GB")]
         private static partial Regex FrontBackWallsRegex();

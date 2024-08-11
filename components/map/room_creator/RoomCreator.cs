@@ -120,8 +120,9 @@ namespace GodotExtensionatorStarter {
                     CsgCombinerRoot ??= new CsgCombiner3D() { Name = nameof(CsgCombinerRoot), UseCollision = false };
                     AddChild(CsgCombinerRoot);
                     CsgCombinerRoot.SetOwnerToEditedSceneRoot();
-
                 }
+
+                var rootNode = GenerateMeshPerRoom ? CSGNode3DRoot : CsgCombinerRoot;
 
                 int numberOfRooms = CalculateNumberOfRooms(UseBridgeConnectorsBetweenRooms);
 
@@ -146,7 +147,7 @@ namespace GodotExtensionatorStarter {
                         GenerateMaterials = GenerateMaterials
                     };
 
-                    CsgCombinerRoot?.AddChild(room);
+                    rootNode?.AddChild(room);
 
                     if (CurrentLastRoom is not null && room is not null) {
                         ConnectRooms(CurrentLastRoom, room);
@@ -267,16 +268,8 @@ namespace GodotExtensionatorStarter {
                     MeshOutputNode.SetOwnerToEditedSceneRoot();
 
                     foreach (CSGRoom room in CSGNode3DRoot.GetChildren().Where(child => child is CSGRoom).Cast<CSGRoom>()) {
-                        var roomMesh = room.GetMeshes();
 
-                        if (roomMesh.Count > 1) {
-                            var roomMeshInstance = new MeshInstance3D {
-                                Name = room.Name,
-                                Mesh = (Mesh)roomMesh[1],
-                                Position = room.Position,
-                                Rotation = room.Rotation
-                            };
-
+                        if (room.GenerateMeshInstance() is MeshInstance3D roomMeshInstance) {
                             MeshOutputNode.AddChild(roomMeshInstance);
                             roomMeshInstance.SetOwnerToEditedSceneRoot();
 
@@ -285,7 +278,6 @@ namespace GodotExtensionatorStarter {
 
                             RoomsCreated.Add(roomMeshInstance);
                         }
-
                     }
                 }
                 else {
