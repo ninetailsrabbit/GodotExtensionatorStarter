@@ -8,7 +8,19 @@ using System.Linq;
 
 namespace GodotExtensionatorStarter {
     [Tool]
+    [GlobalClass, Icon("res://components/map/room_creator/room_creator.svg")]
     public partial class MeshRoom : MeshInstance3D {
+
+        public ArrayMesh RoomMesh { get; set; } = null!;
+
+
+        public Material? GetFloorMaterial() => RoomMesh.SurfaceGetMaterial(0);
+        public void ApplyMaterialOnFloor(Material newMaterial) {
+            var material = RoomMesh.SurfaceGetMaterial(0);
+
+            material = newMaterial;
+        }
+
 
     }
 
@@ -102,11 +114,7 @@ namespace GodotExtensionatorStarter {
         private void OnRequestedGenerateRoomChunk(int amount) {
             CurrentLastRoom = LastRoomGeneratedFromChunk;
 
-            CreateRooms();
-            GenerateRoomMeshes();
         }
-
-
 
         public void CreateRooms() {
             if (ToolCanBeUsed()) {
@@ -184,6 +192,8 @@ namespace GodotExtensionatorStarter {
                 // This -room calculation adapts the rotation relatively to last room
                 roomB.RotateY(rotationToAlignRooms - (-roomA.Rotation.Y));
                 roomB.GlobalTranslate(roomASocket.GlobalPosition - roomBSocket.GlobalPosition);
+                //Adjust the distance to not overlap the walls to display the materials correctly.
+                roomB.GlobalPosition += roomBSocket.GlobalDirectionTo(roomASocket).Flip() * WallThickness;
 
                 roomASocket.SetMeta("connected", true);
                 roomBSocket.SetMeta("connected", true);

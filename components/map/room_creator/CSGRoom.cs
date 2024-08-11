@@ -160,6 +160,8 @@ namespace GodotExtensionatorStarter {
 
                 wall.AddChild(roomSocket);
                 roomSocket.SetOwnerToEditedSceneRoot();
+
+
             }
         }
         #endregion
@@ -168,7 +170,7 @@ namespace GodotExtensionatorStarter {
         private void CreateFloor(Vector3 roomSize) {
             Floor ??= new() {
                 Name = nameof(Floor),
-                Size = new Vector3(roomSize.X, FloorThickness, roomSize.Z),
+                Size = new Vector3(roomSize.X + FloorThickness * 2, FloorThickness, roomSize.Z + FloorThickness * 2),
                 Position = Vector3.Zero
             };
 
@@ -180,7 +182,7 @@ namespace GodotExtensionatorStarter {
         private void CreateCeil(Vector3 roomSize) {
             Ceil ??= new() {
                 Name = nameof(Ceil),
-                Size = new Vector3(roomSize.X, CeilThickness, roomSize.Z),
+                Size = new Vector3(roomSize.X + CeilThickness * 2, CeilThickness, roomSize.Z + CeilThickness * 2),
                 Position = Position with { X = 0, Y = Mathf.Max(roomSize.Y, (roomSize.Y + CeilThickness) - roomSize.Y / 2.5f), Z = 0 }
             };
 
