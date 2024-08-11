@@ -92,6 +92,12 @@ namespace GodotExtensionatorStarter {
             return walls.RemoveNullables();
         }
 
+        public IEnumerable<Marker3D> AvailableSockets() {
+            return FindChildren("*", typeof(Marker3D).Name)
+               .Where(socket => IsInstanceValid(socket) && !(bool)socket.GetMeta("connected"))
+               .Cast<Marker3D>();
+        }
+
         public void CreateDoorSlotInRandomWall(Vector3 roomSize, Vector3 doorSize, int socketNumber = 1) {
             IEnumerable<CsgBox3D> availableWalls = Walls()
                 .Where(wall => wall.Name.ToString().Contains("wall", StringComparison.OrdinalIgnoreCase) && wall.GetChildCount().IsZero());
