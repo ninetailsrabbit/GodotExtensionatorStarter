@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="RoomParameters" load_steps=2 format=3 uid="uid://bd6v8ntenblpk"]
+
+[ext_resource type="Script" path="res://components/map/room_creator/RoomParameters.cs" id="1_77rh2"]
+
+[resource]
+script = ExtResource("1_77rh2")
+NumberOfRoomsPerGeneration = 3
+DoorsPerRoom = 2
+UseBridgeConnectorsBetweenRooms = false
+RandomizeDoorPositionInWall = false
+DoorSize = Vector3(1.5, 2, 0.25)
+MinBridgeConnectorSize = Vector3(2, 3, 4)
+MaxBridgeConnectorSize = Vector3(2, 3, 10)
+MinRoomSize = Vector3(6, 3.5, 5)
+MaxRoomSize = Vector3(10, 5, 6)
+WallThickness = 0.15
+CeilThickness = 0.1
+FloorThickness = 0.1
