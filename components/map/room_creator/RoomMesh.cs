@@ -3,6 +3,7 @@
 namespace GodotExtensionatorStarter {
     [Tool]
     public partial class RoomMesh : MeshInstance3D {
+        #region Walls
         public ArrayMesh RoomMeshShape { get; set; } = null!;
         public Material FloorMaterial { get; set; } = default!;
         public Material CeilMaterial { get; set; } = default!;
@@ -10,36 +11,44 @@ namespace GodotExtensionatorStarter {
         public Material BackWallMaterial { get; set; } = default!;
         public Material LeftWallMaterial { get; set; } = default!;
         public Material RightWallMaterial { get; set; } = default!;
+        #endregion
+
+        #region Door slots
+        public Material FrontWallDoorSlootMaterial { get; set; } = default!;
+        public Material BackWallDoorSlootMaterial { get; set; } = default!;
+        public Material RightWallDoorSlootMaterial { get; set; } = default!;
+        public Material LeftWallDoorSlootMaterial { get; set; } = default!;
+        #endregion
 
         public override void _EnterTree() {
+            RoomMeshShape = (ArrayMesh)Mesh;
+
             if (!Engine.IsEditorHint()) {
-                int floorSurfaceIndex = RoomMeshShape.SurfaceFindByName("Floor");
-                int ceilSurfaceIndex = RoomMeshShape.SurfaceFindByName("Ceil");
-                int frontWallSurfaceIndex = RoomMeshShape.SurfaceFindByName("FrontWall");
-                int backWallSurfaceIndex = RoomMeshShape.SurfaceFindByName("BackWall");
-                int leftWallSurfaceIndex = RoomMeshShape.SurfaceFindByName("LeftWall");
-                int rightWallSurfaceIndex = RoomMeshShape.SurfaceFindByName("RightWall");
-
-                if (floorSurfaceIndex != -1)
-                    FloorMaterial = RoomMeshShape.SurfaceGetMaterial(floorSurfaceIndex);
-
-                if (ceilSurfaceIndex != -1)
-                    CeilMaterial = RoomMeshShape.SurfaceGetMaterial(ceilSurfaceIndex);
-
-                if (frontWallSurfaceIndex != -1)
-                    CeilMaterial = RoomMeshShape.SurfaceGetMaterial(frontWallSurfaceIndex);
-
-                if (backWallSurfaceIndex != -1)
-                    BackWallMaterial = RoomMeshShape.SurfaceGetMaterial(backWallSurfaceIndex);
-
-                if (leftWallSurfaceIndex != -1)
-                    LeftWallMaterial = RoomMeshShape.SurfaceGetMaterial(leftWallSurfaceIndex);
-
-                if (rightWallSurfaceIndex != -1)
-                    RightWallMaterial = RoomMeshShape.SurfaceGetMaterial(rightWallSurfaceIndex);
+                UpdateRoomMaterials();
             }
         }
 
+        public Material? GetSurfaceMaterial(string name) {
+            int surfaceIndex = RoomMeshShape.SurfaceFindByName(name);
+
+            return surfaceIndex == -1 ? null : RoomMeshShape.SurfaceGetMaterial(surfaceIndex);
+        }
+
+        public void UpdateRoomMaterials() {
+            RoomMeshShape ??= (ArrayMesh)Mesh;
+
+            FloorMaterial = GetSurfaceMaterial("Floor");
+            CeilMaterial = GetSurfaceMaterial("Ceil");
+            FrontWallMaterial = GetSurfaceMaterial("FrontWall");
+            BackWallMaterial = GetSurfaceMaterial("BackWall");
+            LeftWallMaterial = GetSurfaceMaterial("LeftWall");
+            RightWallMaterial = GetSurfaceMaterial("RightWall");
+
+            RightWallDoorSlootMaterial = GetSurfaceMaterial("RightWallDoorSlot");
+            LeftWallMaterial = GetSurfaceMaterial("LeftWallDoorSlot");
+            FrontWallMaterial = GetSurfaceMaterial("FrontWallDoorSlot");
+            BackWallMaterial = GetSurfaceMaterial("BackWallDoorSlot");
+        }
 
     }
 }
