@@ -11,11 +11,10 @@ namespace GodotExtensionatorStarter {
     [Tool]
     [GlobalClass, Icon("res://components/map/room_creator/room_creator.svg")]
     public partial class RoomCreator : Node3D {
-
         [Signal]
-        public delegate void RequestedGenerateRoomChunkEventHandler(int amount);
+        public delegate void CreatedCSGRoomsEventHandler(Array<CSGRoom> newRooms);
         [Signal]
-        public delegate void GeneratedRoomChunkEventHandler(Array<MeshInstance3D> chunk);
+        public delegate void CreatedRoomsEventHandler(Array<RoomMesh> newRooms);
 
         [ExportGroup("Tool buttons")]
         [Export] public bool CreateNewRoom { get => _createNewRoom; set { CreateCSGRooms(); } } // Tool button
@@ -83,22 +82,6 @@ namespace GodotExtensionatorStarter {
 
         private readonly Random _rng = new();
 
-        //public override void _ExitTree() {
-        //    if (!Engine.IsEditorHint()) {
-        //        RequestedGenerateRoomChunk -= OnRequestedGenerateRoomChunk;
-        //    }
-        //}
-        //public override void _EnterTree() {
-        //    if (!Engine.IsEditorHint()) {
-        //        RequestedGenerateRoomChunk += OnRequestedGenerateRoomChunk;
-        //    }
-        //}
-
-        //private void OnRequestedGenerateRoomChunk(int amount) {
-
-
-        //}
-
         public void CreateCSGRooms() {
             if (ToolCanBeUsed()) {
 
@@ -153,6 +136,8 @@ namespace GodotExtensionatorStarter {
 
                     CSGRoomsCreated.Add(room);
                 }
+
+                EmitSignal(SignalName.CreatedCSGRooms, new Array<CSGRoom>(CSGRoomsCreated.Skip(CSGRoomsCreated.Count - numberOfRooms).Take(numberOfRooms)));
 
             }
         }
@@ -265,7 +250,7 @@ namespace GodotExtensionatorStarter {
             }
         }
 
-        private void GenerateRoomsMeshes() {
+        public void GenerateRoomsMeshes() {
             if (ToolCanBeUsed()) {
 
                 if (GenerateMeshPerRoom) {
@@ -275,20 +260,21 @@ namespace GodotExtensionatorStarter {
                     RoomMeshesOutputNode.SetOwnerToEditedSceneRoot();
 
                     var roomCreatedNames = RoomsCreated.Select(room => room.Name);
+                    var newRooms = CSGRoomsCreated.Where(csgRoom => !roomCreatedNames.Contains(csgRoom.Name));
 
-                    foreach (CSGRoom room in CSGRoomsCreated.Where(csgRoom => !roomCreatedNames.Contains(csgRoom.Name))) {
-
+                    foreach (CSGRoom room in newRooms) {
                         if (room.GenerateMeshInstance() is RoomMesh roomMeshInstance) {
+
                             RoomMeshesOutputNode.AddChild(roomMeshInstance);
                             roomMeshInstance.SetOwnerToEditedSceneRoot();
 
                             NameSurfacesOnRoomMesh(room, roomMeshInstance);
                             GenerateCollisionsOnRoomMesh(roomMeshInstance);
-
                             RoomsCreated.Add(roomMeshInstance);
-
                         }
                     }
+
+                    EmitSignal(SignalName.CreatedRooms, new Array<RoomMesh>(RoomsCreated.Skip(RoomsCreated.Count - newRooms.Count()).Take(newRooms.Count())));
                 }
                 else {
                     if (CSGRoomsOutputNode?.GetNode<CsgCombiner3D>("CSGCombinerRoot") is CsgCombiner3D csgCombinerRoot) {
@@ -319,7 +305,7 @@ namespace GodotExtensionatorStarter {
             }
         }
 
-        private void ClearRoomsInSceneTree() {
+        public void ClearRoomsInSceneTree() {
             if (ToolCanBeUsed()) {
 
                 foreach (var child in GetChildren())
