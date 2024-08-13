@@ -22,6 +22,7 @@ namespace GodotExtensionatorStarter {
         public const string KeybindingsSection = "keybindings";
         public const string GraphicsSection = "graphics";
         public const string AudioSection = "audio";
+        public const string ControlsSection = "controls";
         public const string AccessibilitySection = "accessibility";
         public const string LocalizationSection = "localization";
         public const string AnalyticsSection = "analytics";
@@ -194,6 +195,10 @@ namespace GodotExtensionatorStarter {
             UpdateAudioSection("muted", gameSettings.MutedAudio);
         }
 
+        public void CreateControlsSection(GameSettingsResource gameSettings) {
+            // TODO
+        }
+
         public void CreateGraphicsSection(GameSettingsResource gameSettings) {
             UpdateGraphicSection("fps_counter", gameSettings.FPSCounter);
             UpdateGraphicSection("max_fps", gameSettings.MaxFPS);
@@ -206,6 +211,7 @@ namespace GodotExtensionatorStarter {
         }
 
         public void CreateAccessibilitySection(GameSettingsResource gameSettings) {
+            UpdateAccessibilitySection("mouse_sensitivity", gameSettings.MouseSensitivity);
             UpdateAccessibilitySection("controller_vibration", gameSettings.ControllerVibration);
             UpdateAccessibilitySection("screen_brightness", gameSettings.ScreenBrightness);
             UpdateAccessibilitySection("photosensitive", gameSettings.PhotoSensitive);
@@ -334,6 +340,10 @@ namespace GodotExtensionatorStarter {
         #region Update
         public void UpdateAudioSection(string key, Variant value) {
             ConfigFileApi.SetValue(AudioSection, key, value);
+        }
+
+        public void UpdateControlsSection(string key, Variant value) {
+            ConfigFileApi.SetValue(ControlsSection, key, value);
         }
 
         public void UpdateGraphicSection(string key, Variant value) {

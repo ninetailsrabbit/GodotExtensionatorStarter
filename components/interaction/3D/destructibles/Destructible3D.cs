@@ -9,30 +9,30 @@ namespace GodotExtensionatorStarter {
 
         public const string GroupName = "destructible";
         public enum ShardTypes {
-            BOX,
-            BRICK,
+            Box,
+            Brick,
         }
 
         public enum ExplosionModes {
-            ALL_DIRECTIONS,
-            HORIZONTAL,
-            FORWARD,
-            OPPOSITE_TO_CAMERA,
-            TO_THE_CAMERA,
-            LEFT,
-            RIGHT,
-            ASCENDANT,
-            LANDSLIDE
+            AllDirections,
+            Horizontal,
+            Forward,
+            OppositeToCamera,
+            ToTheCamera,
+            Left,
+            Right,
+            Ascendant,
+            Landslide
         }
 
         [Export] public MeshInstance3D TargetMesh { get; set; } = null!;
         [Export] public Node3D ShardsSpawnSpot { get; set; } = null!;
         [Export] public Hurtbox3D HurtboxTrigger { get; set; } = null!;
-        [Export] public ShardTypes SelectedShardType = ShardTypes.BRICK;
+        [Export] public ShardTypes SelectedShardType = ShardTypes.Brick;
         [Export] public int AmountOfShards = 150;
         [Export] public float MinShardSize = 0.1f;
         [Export] public float MaxShardSize = 0.5f;
-        [Export] public ExplosionModes SelectedExplosionMode = ExplosionModes.ALL_DIRECTIONS;
+        [Export] public ExplosionModes SelectedExplosionMode = ExplosionModes.AllDirections;
         [Export] public float MinExplosionPower = 4.5f;
         [Export] public float MaxExplosionPower = 7f;
         [Export(PropertyHint.Range, "-8, 8, 0.001")] public float ShardsGravityScale = 0.75f;

@@ -16,61 +16,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
-#: components/ui/components/DaltonismContainer.cs
-msgid "GENERAL_NO"
-msgstr "No"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_DEUTERANOPIA"
-msgstr "Deuteranopia"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_PROTANOPIA"
-msgstr "Protanopia"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_TRITANOPIA"
-msgstr "Tritanopia"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_ACHROMATOPSIA"
-msgstr "Achromatopsia"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_LOW"
-msgstr "Low"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_MEDIUM"
-msgstr "Medium"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_HIGH"
-msgstr "High"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_ULTRA"
-msgstr "Ultra"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "GRAPHICS_QUALITY"
-msgstr "Graphics quality"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "AUDIO_TAB"
-msgstr "Audio"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "SCREEN_TAB"
-msgstr "Screen"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "GRAPHICS_TAB"
-msgstr "Graphics"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "GENERAL_TAB"
-msgstr "General"
+#: components/narrative/subtitles/SubtitleDisplayer.cs
+msgid "WAITING_FOR_INPUT"
+msgstr "WAITING_FOR_INPUT"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MASTER"
@@ -152,6 +100,10 @@ msgstr "Voices language"
 msgid "SETTINGS_TELEMETRY"
 msgstr "Allow telemetry"
 
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_MOUSE_SENSITIVITY"
+msgstr "Mouse sensitivity"
+
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_TITLE"
 msgstr "PHOTOSENSITIVE SEIZURE WARNING"
@@ -175,3 +127,83 @@ msgstr ""
 "Immediately stop playing and consult a medical professional if you "
 "experience any symptoms or begin to feel unwell whilst playing [TITLE OF THE "
 "GAME]"
+
+#: scenes/world/test-level/TestLevel.tscn
+msgid "YELLOW_CUBE"
+msgstr "YELLOW_CUBE"
+
+#: scenes/world/test-level/TestLevel.tscn
+msgid "YELLOW_CUBE_INFORMATION"
+msgstr "YELLOW_CUBE_INFORMATION"
+
+#: utilities/Localization/Localization.cs
+msgid "GENERAL_NO"
+msgstr "No"
+
+#: utilities/Localization/Localization.cs
+msgid "GENERAL_YES"
+msgstr "Yes"
+
+#: utilities/Localization/Localization.cs
+msgid "AUDIO_TAB"
+msgstr "Audio"
+
+#: utilities/Localization/Localization.cs
+msgid "SCREEN_TAB"
+msgstr "Screen"
+
+#: utilities/Localization/Localization.cs
+msgid "GRAPHICS_TAB"
+msgstr "Graphics"
+
+#: utilities/Localization/Localization.cs
+msgid "GENERAL_TAB"
+msgstr "General"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "Deuteranopia"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "Protanopia"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "Tritanopia"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "Achromatopsia"
+
+#: utilities/Localization/Localization.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "Graphics quality"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_LOW"
+msgstr "Low"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_MEDIUM"
+msgstr "Medium"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_HIGH"
+msgstr "High"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_ULTRA"
+msgstr "Ultra"
+
+#~ msgid "FREE_MOVEMENT"
+#~ msgstr "FREE_MOVEMENT"
+
+#~ msgid "ALL_DIRECTIONS"
+#~ msgstr "ALL_DIRECTIONS"
+
+#~ msgid "OPPOSITE_TO_CAMERA"
+#~ msgstr "OPPOSITE_TO_CAMERA"
+
+#~ msgid "TO_THE_CAMERA"
+#~ msgstr "TO_THE_CAMERA"

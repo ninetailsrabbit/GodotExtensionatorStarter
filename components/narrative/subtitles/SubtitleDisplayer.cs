@@ -34,9 +34,9 @@ namespace GodotExtensionatorStarter {
         [Export] public bool UseTypeSounds = false;
         [Export] public string[] InputActionsToTransition = ["ui_accept"];
         public enum SubtitleState {
-            WAITING_FOR_INPUT,
-            DISPLAYING,
-            NEUTRAL
+            WaitingForInput,
+            Displaying,
+            Neutral
         }
 
         public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
@@ -47,14 +47,14 @@ namespace GodotExtensionatorStarter {
         public List<DialogueBlock> DialogueBlocks { get; set; } = [];
         public DialogueBlock? CurrentDialogueBlock { get; set; } = default!;
 
-        public SubtitleState CurrentSubtitleState = SubtitleState.NEUTRAL;
+        public SubtitleState CurrentSubtitleState = SubtitleState.Neutral;
         public bool IsDisplaying {
             get => _isDisplaying;
             set {
                 if (_isDisplaying != value) {
                     _isDisplaying = value;
 
-                    CurrentSubtitleState = _isDisplaying ? SubtitleState.DISPLAYING : SubtitleState.NEUTRAL;
+                    CurrentSubtitleState = _isDisplaying ? SubtitleState.Displaying : SubtitleState.Neutral;
                 }
 
             }
@@ -76,7 +76,7 @@ namespace GodotExtensionatorStarter {
 
         public override void _Input(InputEvent @event) {
             if (ManualSubtitleTransition &&
-                CurrentSubtitleState.Equals(SubtitleState.WAITING_FOR_INPUT) &&
+                CurrentSubtitleState.Equals(SubtitleState.WaitingForInput) &&
                 InputExtension.IsAnyActionJustPressed(InputActionsToTransition) && !AutoTypedText.IsSkipped) {
                 DisplayNextSubtitleBlock();
             }
@@ -148,7 +148,7 @@ namespace GodotExtensionatorStarter {
                     GlobalGameEvents.EmitSubtitleDisplayFinished(currentDialogueBlock);
                 }
 
-                CurrentSubtitleState = SubtitleState.DISPLAYING;
+                CurrentSubtitleState = SubtitleState.Displaying;
                 CurrentDialogueBlock = nextSubtitle;
 
                 SubtitleDisplayStarted?.Invoke(nextSubtitle);
@@ -181,7 +181,7 @@ namespace GodotExtensionatorStarter {
             }
 
             if (ManualSubtitleTransition)
-                CurrentSubtitleState = SubtitleState.WAITING_FOR_INPUT;
+                CurrentSubtitleState = SubtitleState.WaitingForInput;
             else
                 BetweenBlocksTimer.Start();
         }
@@ -194,7 +194,7 @@ namespace GodotExtensionatorStarter {
             AudioStreamPlayer.Stop();
 
             if (ManualSubtitleTransition)
-                CurrentSubtitleState = SubtitleState.WAITING_FOR_INPUT;
+                CurrentSubtitleState = SubtitleState.WaitingForInput;
 
         }
     }

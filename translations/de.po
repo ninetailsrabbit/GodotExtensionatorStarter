@@ -15,61 +15,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 3.4.4\n"
 
-#: components/ui/components/DaltonismContainer.cs
-msgid "GENERAL_NO"
-msgstr "Nein"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_DEUTERANOPIA"
-msgstr "Deuteranopie"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_PROTANOPIA"
-msgstr "Protanopie"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_TRITANOPIA"
-msgstr "Tritanopie"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_ACHROMATOPSIA"
-msgstr "Achromatopsie"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_LOW"
-msgstr "Niedrig"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_MEDIUM"
-msgstr "Mittel"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_HIGH"
-msgstr "Hoch"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_ULTRA"
-msgstr "Ultra"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "GRAPHICS_QUALITY"
-msgstr "Grafikqualität"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "AUDIO_TAB"
-msgstr "Audio"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "SCREEN_TAB"
-msgstr "Bildschirm"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "GRAPHICS_TAB"
-msgstr "Grafik"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "GENERAL_TAB"
-msgstr "Allgemein"
+#: components/narrative/subtitles/SubtitleDisplayer.cs
+msgid "WAITING_FOR_INPUT"
+msgstr "WAITING_FOR_INPUT"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MASTER"
@@ -153,6 +101,11 @@ msgstr "Sprachsprache"
 msgid "SETTINGS_TELEMETRY"
 msgstr "Telemetrie zulassen"
 
+#: components/ui/menus/GameSettingsUI.tscn
+#, fuzzy
+msgid "SETTINGS_MOUSE_SENSITIVITY"
+msgstr "Fotosensitiv sicher"
+
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_TITLE"
 msgstr "WARNUNG VOR LICHTEMPFINDLICHEN ANFALLEN"
@@ -175,6 +128,87 @@ msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr ""
 "Beenden Sie das Spiel sofort und konsultieren Sie einen Arzt, wenn Sie "
 "während des Spielens [SPIELTITEL] Symptome verspüren oder sich unwohl fühlen"
+
+#: scenes/world/test-level/TestLevel.tscn
+msgid "YELLOW_CUBE"
+msgstr "YELLOW_CUBE"
+
+#: scenes/world/test-level/TestLevel.tscn
+msgid "YELLOW_CUBE_INFORMATION"
+msgstr "YELLOW_CUBE_INFORMATION"
+
+#: utilities/Localization/Localization.cs
+msgid "GENERAL_NO"
+msgstr "Nein"
+
+#: utilities/Localization/Localization.cs
+#, fuzzy
+msgid "GENERAL_YES"
+msgstr "Nein"
+
+#: utilities/Localization/Localization.cs
+msgid "AUDIO_TAB"
+msgstr "Audio"
+
+#: utilities/Localization/Localization.cs
+msgid "SCREEN_TAB"
+msgstr "Bildschirm"
+
+#: utilities/Localization/Localization.cs
+msgid "GRAPHICS_TAB"
+msgstr "Grafik"
+
+#: utilities/Localization/Localization.cs
+msgid "GENERAL_TAB"
+msgstr "Allgemein"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "Deuteranopie"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "Protanopie"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "Tritanopie"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "Achromatopsie"
+
+#: utilities/Localization/Localization.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "Grafikqualität"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_LOW"
+msgstr "Niedrig"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_MEDIUM"
+msgstr "Mittel"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_HIGH"
+msgstr "Hoch"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_ULTRA"
+msgstr "Ultra"
+
+#~ msgid "FREE_MOVEMENT"
+#~ msgstr "FREE_MOVEMENT"
+
+#~ msgid "ALL_DIRECTIONS"
+#~ msgstr "ALL_DIRECTIONS"
+
+#~ msgid "OPPOSITE_TO_CAMERA"
+#~ msgstr "OPPOSITE_TO_CAMERA"
+
+#~ msgid "TO_THE_CAMERA"
+#~ msgstr "TO_THE_CAMERA"
 
 #~ msgid "CAMERA_SHIFT"
 #~ msgstr "CAMERA_SHIFT"

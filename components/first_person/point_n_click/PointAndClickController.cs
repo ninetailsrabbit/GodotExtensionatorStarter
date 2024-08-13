@@ -57,8 +57,8 @@ namespace GodotExtensionatorStarter {
         public Vector3 OriginalEyesPosition = Vector3.Zero;
         public Vector3 OriginalEyesRotation = Vector3.Zero;
         public enum PointAndClickCameraMode {
-            FREE_MOVEMENT,
-            STATIC
+            FreeMovement,
+            Static
         }
 
         public PointAndClickCameraMode CurrentCameraMode {
@@ -69,13 +69,13 @@ namespace GodotExtensionatorStarter {
 
                     if (IsNodeReady()) {
                         switch (_currentCameraMode) {
-                            case PointAndClickCameraMode.FREE_MOVEMENT:
+                            case PointAndClickCameraMode.FreeMovement:
                                 CameraMovement.Enable();
                                 MouseRayCastInteractor.Disable();
                                 InputExtension.CaptureMouse();
 
                                 break;
-                            case PointAndClickCameraMode.STATIC:
+                            case PointAndClickCameraMode.Static:
                                 CameraMovement.Disable();
                                 MouseRayCastInteractor.Enable();
                                 Input.MouseMode = Input.MouseModeEnum.Visible;
@@ -93,7 +93,7 @@ namespace GodotExtensionatorStarter {
             }
         }
 
-        private PointAndClickCameraMode _currentCameraMode = PointAndClickCameraMode.STATIC;
+        private PointAndClickCameraMode _currentCameraMode = PointAndClickCameraMode.Static;
         private bool _useAnimations = true;
         private bool _canMoveCamera = false;
 
@@ -147,7 +147,7 @@ namespace GodotExtensionatorStarter {
 
         public override void _Input(InputEvent @event) {
             if (CameraMovement is not null && CanMoveCamera && Input.IsActionJustPressed(InputActionToChangeCameraMode)) {
-                if (CurrentCameraMode.Equals(PointAndClickCameraMode.STATIC))
+                if (CurrentCameraMode.Equals(PointAndClickCameraMode.Static))
                     ChangeCameraToFreeMovement();
                 else
                     ChangeCameraToStaticMovement();
@@ -190,13 +190,13 @@ namespace GodotExtensionatorStarter {
             CameraMovement?.Unlock();
         }
         public void ChangeCameraToFreeMovement() {
-            CurrentCameraMode = PointAndClickCameraMode.FREE_MOVEMENT;
+            CurrentCameraMode = PointAndClickCameraMode.FreeMovement;
 
             AnimationPlayer?.Stop();
         }
 
         public void ChangeCameraToStaticMovement() {
-            CurrentCameraMode = PointAndClickCameraMode.STATIC;
+            CurrentCameraMode = PointAndClickCameraMode.Static;
 
             if (UseAnimations)
                 RunAnimation(DefaultAnimation);

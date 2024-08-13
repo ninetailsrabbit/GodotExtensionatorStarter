@@ -11,61 +11,9 @@ msgstr ""
 "Content-Transfer-Encoding: 8-bit\n"
 
 
-#: components/ui/components/DaltonismContainer.cs
-msgid "GENERAL_NO"
-msgstr "GENERAL_NO"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_DEUTERANOPIA"
-msgstr "DALTONISM_DEUTERANOPIA"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_PROTANOPIA"
-msgstr "DALTONISM_PROTANOPIA"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_TRITANOPIA"
-msgstr "DALTONISM_TRITANOPIA"
-
-#: components/ui/components/DaltonismContainer.cs
-msgid "DALTONISM_ACHROMATOPSIA"
-msgstr "DALTONISM_ACHROMATOPSIA"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_LOW"
-msgstr "QUALITY_LOW"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_MEDIUM"
-msgstr "QUALITY_MEDIUM"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_HIGH"
-msgstr "QUALITY_HIGH"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "QUALITY_ULTRA"
-msgstr "QUALITY_ULTRA"
-
-#: components/ui/components/GraphicQualitySettings.cs
-msgid "GRAPHICS_QUALITY"
-msgstr "GRAPHICS_QUALITY"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "AUDIO_TAB"
-msgstr "AUDIO_TAB"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "SCREEN_TAB"
-msgstr "SCREEN_TAB"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "GRAPHICS_TAB"
-msgstr "GRAPHICS_TAB"
-
-#: components/ui/menus/GameSettingsUI.cs
-msgid "GENERAL_TAB"
-msgstr "GENERAL_TAB"
+#: components/narrative/subtitles/SubtitleDisplayer.cs
+msgid "WAITING_FOR_INPUT"
+msgstr "WAITING_FOR_INPUT"
 
 #: components/ui/menus/GameSettingsUI.tscn
 msgid "BUS_MASTER"
@@ -143,6 +91,10 @@ msgstr "VOICES_LANGUAGE"
 msgid "SETTINGS_TELEMETRY"
 msgstr "SETTINGS_TELEMETRY"
 
+#: components/ui/menus/GameSettingsUI.tscn
+msgid "SETTINGS_MOUSE_SENSITIVITY"
+msgstr "SETTINGS_MOUSE_SENSITIVITY"
+
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_TITLE"
 msgstr "PHOTOSENSITIVE_TITLE"
@@ -158,3 +110,71 @@ msgstr "PHOTOSENSITIVE_CONTENT"
 #: scenes/main/main.tscn
 msgid "PHOTOSENSITIVE_CONTENT_2"
 msgstr "PHOTOSENSITIVE_CONTENT_2"
+
+#: scenes/world/test-level/TestLevel.tscn
+msgid "YELLOW_CUBE"
+msgstr "YELLOW_CUBE"
+
+#: scenes/world/test-level/TestLevel.tscn
+msgid "YELLOW_CUBE_INFORMATION"
+msgstr "YELLOW_CUBE_INFORMATION"
+
+#: utilities/Localization/Localization.cs
+msgid "GENERAL_NO"
+msgstr "GENERAL_NO"
+
+#: utilities/Localization/Localization.cs
+msgid "GENERAL_YES"
+msgstr "GENERAL_YES"
+
+#: utilities/Localization/Localization.cs
+msgid "AUDIO_TAB"
+msgstr "AUDIO_TAB"
+
+#: utilities/Localization/Localization.cs
+msgid "SCREEN_TAB"
+msgstr "SCREEN_TAB"
+
+#: utilities/Localization/Localization.cs
+msgid "GRAPHICS_TAB"
+msgstr "GRAPHICS_TAB"
+
+#: utilities/Localization/Localization.cs
+msgid "GENERAL_TAB"
+msgstr "GENERAL_TAB"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_DEUTERANOPIA"
+msgstr "DALTONISM_DEUTERANOPIA"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_PROTANOPIA"
+msgstr "DALTONISM_PROTANOPIA"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_TRITANOPIA"
+msgstr "DALTONISM_TRITANOPIA"
+
+#: utilities/Localization/Localization.cs
+msgid "DALTONISM_ACHROMATOPSIA"
+msgstr "DALTONISM_ACHROMATOPSIA"
+
+#: utilities/Localization/Localization.cs
+msgid "GRAPHICS_QUALITY"
+msgstr "GRAPHICS_QUALITY"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_LOW"
+msgstr "QUALITY_LOW"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_MEDIUM"
+msgstr "QUALITY_MEDIUM"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_HIGH"
+msgstr "QUALITY_HIGH"
+
+#: utilities/Localization/Localization.cs
+msgid "QUALITY_ULTRA"
+msgstr "QUALITY_ULTRA"
