@@ -1,8 +1,24 @@
-[gd_scene load_steps=2 format=3 uid="uid://bxv8eytsgj061"]
+[gd_scene load_steps=4 format=3 uid="uid://bxv8eytsgj061"]
 
 [ext_resource type="Script" path="res://components/map/room_creator/RoomCreator.cs" id="1_a6h5c"]
+[ext_resource type="Script" path="res://components/map/room_creator/RoomParameters.cs" id="2_kvl1e"]
+
+[sub_resource type="Resource" id="Resource_5iw4i"]
+script = ExtResource("2_kvl1e")
+NumberOfRoomsPerGeneration = 3
+DoorsPerRoom = 2
+UseBridgeConnectorsBetweenRooms = false
+RandomizeDoorPositionInWall = false
+DoorSize = Vector3(1.5, 2, 0.25)
+MinBridgeConnectorSize = Vector3(2, 3, 4)
+MaxBridgeConnectorSize = Vector3(2, 3, 10)
+MinRoomSize = Vector3(6, 3.5, 5)
+MaxRoomSize = Vector3(10, 5, 6)
+WallThickness = 0.15
+CeilThickness = 0.1
+FloorThickness = 0.1
 
 [node name="RoomCreator" type="Node3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.838329, 0.0699253, 0.230934)
 script = ExtResource("1_a6h5c")
-UseBridgeConnectorsBetweenRooms = true
+RoomParameters = SubResource("Resource_5iw4i")
