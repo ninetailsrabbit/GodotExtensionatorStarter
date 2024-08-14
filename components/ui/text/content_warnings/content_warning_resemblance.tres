@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ContentWarning" load_steps=2 format=3 uid="uid://bgr4ccqwj3qj7"]
+
+[ext_resource type="Script" path="res://components/ui/text/ContentWarning.cs" id="1_06yt0"]
+
+[resource]
+script = ExtResource("1_06yt0")
+CanBeSkipped = true
+TimeOnScreen = 5.0
+TimeToDisplayContentWarning = 2.0
+TimeToHideContentWarning = 2.0
+Title = ""
+Subtitle = "This game is a work of fiction and imagination. The characters, places, and events depicted are products of the author's creative mind and do not represent reality"
+Description = ""
+SecondaryDescription = ""
+TitleTranslationKey = ""
+SubtitleTranslationKey = "WARNING_RESEMBLANCE_CONTENT"
+DescriptionTranslationKey = ""
+SecondaryDescriptionTranslationKey = ""

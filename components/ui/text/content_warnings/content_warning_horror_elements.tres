@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ContentWarning" load_steps=2 format=3 uid="uid://cqquele8ueo01"]
+
+[ext_resource type="Script" path="res://components/ui/text/ContentWarning.cs" id="1_ftdb3"]
+
+[resource]
+script = ExtResource("1_ftdb3")
+CanBeSkipped = true
+TimeOnScreen = 5.0
+TimeToDisplayContentWarning = 2.0
+TimeToHideContentWarning = 2.0
+Title = ""
+Subtitle = " Viewer discretion is advised"
+Description = "This game contains horror elements, including disturbing imagery and sounds"
+SecondaryDescription = ""
+TitleTranslationKey = ""
+SubtitleTranslationKey = "WARNING_HORROR_ELEMENTS_TITLE"
+DescriptionTranslationKey = "WARNING_HORROR_ELEMENTS"
+SecondaryDescriptionTranslationKey = ""

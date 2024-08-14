@@ -1,69 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://cmm1g2fvueyhm"]
+[gd_scene load_steps=3 format=3 uid="uid://cmm1g2fvueyhm"]
 
 [ext_resource type="Script" path="res://scenes/main/Main.cs" id="1_kthcj"]
+[ext_resource type="PackedScene" uid="uid://bewi7gvan2wwq" path="res://components/ui/text/content_warnings/ContentWarningsDisplayer.tscn" id="2_1wqta"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_kthcj")
 
-[node name="ContentWarnings" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="ColorRect" type="ColorRect" parent="ContentWarnings"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0.0383972, 0.0383972, 0.0383972, 1)
-
-[node name="MarginContainer" type="MarginContainer" parent="ContentWarnings"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/margin_left = 200
-theme_override_constants/margin_top = 50
-theme_override_constants/margin_right = 200
-theme_override_constants/margin_bottom = 50
-
-[node name="VBoxContainer" type="VBoxContainer" parent="ContentWarnings/MarginContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/separation = 10
-
-[node name="Label" type="Label" parent="ContentWarnings/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 28
-text = "PHOTOSENSITIVE_TITLE"
-
-[node name="Label2" type="Label" parent="ContentWarnings/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 24
-text = "PHOTOSENSITIVE_SUBTITLE"
-
-[node name="RichTextLabel" type="RichTextLabel" parent="ContentWarnings/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_constants/line_separation = 0
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
-text = "PHOTOSENSITIVE_CONTENT"
-fit_content = true
-
-[node name="RichTextLabel2" type="RichTextLabel" parent="ContentWarnings/MarginContainer/VBoxContainer"]
-layout_mode = 2
-size_flags_vertical = 4
-theme_override_font_sizes/normal_font_size = 18
-bbcode_enabled = true
-text = "PHOTOSENSITIVE_CONTENT_2"
-fit_content = true
+[node name="ContentWarnings" parent="." instance=ExtResource("2_1wqta")]
