@@ -1,9 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://cmm1g2fvueyhm"]
+[gd_scene load_steps=5 format=3 uid="uid://cmm1g2fvueyhm"]
 
 [ext_resource type="Script" path="res://scenes/main/Main.cs" id="1_kthcj"]
 [ext_resource type="PackedScene" uid="uid://bewi7gvan2wwq" path="res://components/ui/text/content_warnings/ContentWarningsDisplayer.tscn" id="2_1wqta"]
+[ext_resource type="Shader" path="res://shaders/effects/image_chunk_load.gdshader" id="3_aosc3"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fy4k8"]
+shader = ExtResource("3_aosc3")
+shader_parameter/image_load_percent = null
+shader_parameter/blank_color = null
+shader_parameter/image_columns = 4
 
 [node name="Main" type="Node"]
 script = ExtResource("1_kthcj")
 
 [node name="ContentWarnings" parent="." instance=ExtResource("2_1wqta")]
+material = SubResource("ShaderMaterial_fy4k8")
