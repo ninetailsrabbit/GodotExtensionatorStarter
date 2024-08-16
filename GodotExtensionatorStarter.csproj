@@ -1,10 +1,10 @@
-﻿<Project Sdk="Godot.NET.Sdk/4.2.2">
+﻿<Project Sdk="Godot.NET.Sdk/4.3.0">
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'android' ">net7.0</TargetFramework>
     <TargetFramework Condition=" '$(GodotTargetPlatform)' == 'ios' ">net8.0</TargetFramework>
 	<NoWarn>0108,8604,8021,1591,1573,8601</NoWarn>
-
+	<RootNamespace>GodotExtensionatorStarter</RootNamespace>
 	<EnableDynamicLoading>true</EnableDynamicLoading>
 	<LangVersion>preview</LangVersion>
 	<Nullable>enable</Nullable>
