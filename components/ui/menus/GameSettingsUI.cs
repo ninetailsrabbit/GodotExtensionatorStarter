@@ -3,6 +3,7 @@ using GodotExtensionator;
 using System.Collections.Generic;
 
 namespace GodotExtensionatorStarter {
+    [Icon("res://components/ui/menus/game_settings.svg")]
     public partial class GameSettingsUI : Control, ITranslatable {
 
         public GameGlobals GameGlobals { get; set; } = null!;
@@ -15,9 +16,14 @@ namespace GodotExtensionatorStarter {
         public TabBar ScreenTabBar { get; set; } = default!;
         public TabBar GraphicsTabBar { get; set; } = default!;
         public TabBar GeneralTabBar { get; set; } = default!;
+        public TabBar ControlsTabBar { get; set; } = default!;
+        public Button BackButton { get; set; } = default!;
 
         public override void _ExitTree() {
             SettingsFileHandlerAutoload.LoadedSettings -= OnLoadedSettings;
+
+            BackButton.Pressed -= OnBackButtonPressed;
+
         }
 
         public override void _EnterTree() {
@@ -27,6 +33,10 @@ namespace GodotExtensionatorStarter {
             ScreenTabBar = GetNode<TabBar>("%Screen");
             GraphicsTabBar = GetNode<TabBar>("%Graphics");
             GeneralTabBar = GetNode<TabBar>("%General");
+            ControlsTabBar = GetNode<TabBar>("%Controls");
+
+            BackButton = GetNode<Button>($"%{nameof(BackButton)}");
+            BackButton.Pressed += OnBackButtonPressed;
 
             SettingsFileHandlerAutoload = this.GetAutoloadNode<SettingsFileHandlerAutoload>();
             SettingsFileHandlerAutoload.LoadedSettings += OnLoadedSettings;
@@ -46,6 +56,7 @@ namespace GodotExtensionatorStarter {
             ScreenTabBar.Name = Tr(Localization.ScreenTabTranslationKey);
             GraphicsTabBar.Name = Tr(Localization.GraphicsTabTranslationKey);
             GeneralTabBar.Name = Tr(Localization.GeneralTabTranslationKeyTr);
+            ControlsTabBar.Name = Tr(Localization.GeneralTabTranslationKeyTr);
         }
 
         private void OnLoadedSettings() {
@@ -54,8 +65,16 @@ namespace GodotExtensionatorStarter {
             }
         }
 
+        private void OnBackButtonPressed() {
+            // Only hide when this scene it's render within another
+
+            if (Owner is not null) {
+                Hide();
+            }
+        }
         public void OnLocaleChanged() {
-            PrepareTabBars();
+            if (IsNodeReady())
+                PrepareTabBars();
         }
     }
 

@@ -4,6 +4,7 @@ using Godot.Collections;
 using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
+    [Icon("res://components/ui/text/content_warnings/content_warning.svg")]
     public partial class ContentWarningsDisplayer : Control {
         [Signal]
         public delegate void ContentWarningDisplayedEventHandler(ContentWarning contentWarning);

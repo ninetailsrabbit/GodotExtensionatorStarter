@@ -1,7 +1,7 @@
 ﻿using Extensionator;
 using Godot;
-using Godot.Collections;
 using GodotExtensionator;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,7 +22,7 @@ namespace GodotExtensionatorStarter {
         public AnimationPlayer TransitionAnimationPlayer { get; set; } = default!;
         public ColorRect ColorRect { get; set; } = default!;
 
-        public enum TRANSITIONS {
+        public enum Transitions {
             NoTransition,
             FadeToBlack,
             FadeFromBlack,
@@ -33,19 +33,21 @@ namespace GodotExtensionatorStarter {
         }
 
         public string NextScenePath = string.Empty;
-        public Array<TRANSITIONS> RemainingAnimations = [];
+        public List<Transitions> RemainingAnimations = [];
 
         public override void _EnterTree() {
-            TransitionAnimationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
-            ColorRect = GetNode<ColorRect>("ColorRect");
+            TransitionAnimationPlayer = GetNode<AnimationPlayer>(nameof(AnimationPlayer));
+            ColorRect = GetNode<ColorRect>(nameof(ColorRect));
 
             TransitionAnimationPlayer.AnimationFinished += OnTransitionAnimationFinished;
+
+            ColorRect.ZIndex = 100;
         }
         public async void TransitionToScene(
             string scenePath,
             bool loadingScreen = false,
-            TRANSITIONS outTransition = TRANSITIONS.FadeToBlack,
-            TRANSITIONS inTransition = TRANSITIONS.FadeFromBlack) {
+            Transitions outTransition = Transitions.FadeToBlack,
+            Transitions inTransition = Transitions.FadeFromBlack) {
 
             if (scenePath.FilePathIsValid()) {
                 PrepareTransitionAnimations(loadingScreen, outTransition, inTransition);
@@ -53,7 +55,7 @@ namespace GodotExtensionatorStarter {
                 EmitSignal(SignalName.TransitionRequested, scenePath);
 
                 if (RemainingAnimations.Count > 0)
-                    await TriggerTransition(RemainingAnimations.Last());
+                    await TriggerTransition(RemainingAnimations.PopBack());
 
                 TransitionToSceneFile(scenePath, loadingScreen);
             }
@@ -62,8 +64,8 @@ namespace GodotExtensionatorStarter {
         public async void TransitionToScene(
            PackedScene scene,
            bool loadingScreen = false,
-           TRANSITIONS outTransition = TRANSITIONS.FadeToBlack,
-           TRANSITIONS inTransition = TRANSITIONS.FadeFromBlack) {
+           Transitions outTransition = Transitions.FadeToBlack,
+           Transitions inTransition = Transitions.FadeFromBlack) {
 
             PrepareTransitionAnimations(loadingScreen, outTransition, inTransition);
 
@@ -112,8 +114,8 @@ namespace GodotExtensionatorStarter {
         }
 
 
-        private async Task TriggerTransition(TRANSITIONS transition) {
-            if (transition.Equals(TRANSITIONS.NoTransition))
+        private async Task TriggerTransition(Transitions transition) {
+            if (transition.Equals(Transitions.NoTransition))
                 return;
 
             string transitionName = AnimationNameFromTransition(transition);
@@ -125,7 +127,7 @@ namespace GodotExtensionatorStarter {
         }
 
 
-        private void PrepareTransitionAnimations(bool loadingScreen, TRANSITIONS outTransition, TRANSITIONS inTransition) {
+        private void PrepareTransitionAnimations(bool loadingScreen, Transitions outTransition, Transitions inTransition) {
             RemainingAnimations.Clear();
 
             if (loadingScreen)
@@ -133,17 +135,17 @@ namespace GodotExtensionatorStarter {
             else
                 RemainingAnimations.AddRange([inTransition, outTransition]);
 
-            RemainingAnimations = (Array<TRANSITIONS>)RemainingAnimations.Where((transition) => !transition.Equals(TRANSITIONS.NoTransition));
+            RemainingAnimations = RemainingAnimations.Where((transition) => !transition.Equals(Transitions.NoTransition)).Cast<Transitions>().ToList();
         }
 
-        private static string AnimationNameFromTransition(TRANSITIONS transition) {
+        private static string AnimationNameFromTransition(Transitions transition) {
             string animationName = transition switch {
-                TRANSITIONS.FadeToBlack => "fade_to_black",
-                TRANSITIONS.FadeFromBlack => "fade_from_black",
-                TRANSITIONS.VoronoiInLeftToRight => "voronoi_in_left",
-                TRANSITIONS.VoronoiInRightToLeft => "voronoi_in_right",
-                TRANSITIONS.VoronoiOutRightToLeft => "voronoi_out_left",
-                TRANSITIONS.VoronoiOutLeftToRight => "voronoi_out_right",
+                Transitions.FadeToBlack => "fade_to_black",
+                Transitions.FadeFromBlack => "fade_from_black",
+                Transitions.VoronoiInLeftToRight => "voronoi_in_left",
+                Transitions.VoronoiInRightToLeft => "voronoi_in_right",
+                Transitions.VoronoiOutRightToLeft => "voronoi_out_left",
+                Transitions.VoronoiOutLeftToRight => "voronoi_out_right",
                 _ => string.Empty,
             };
 
@@ -174,7 +176,7 @@ namespace GodotExtensionatorStarter {
             if (RemainingAnimations.IsEmpty())
                 return;
 
-            string animation = AnimationNameFromTransition(RemainingAnimations.Last());
+            string animation = AnimationNameFromTransition(RemainingAnimations.PopBack());
 
             if (!string.IsNullOrEmpty(animation) && TransitionAnimationPlayer.HasAnimation(animation))
                 TransitionAnimationPlayer.Play(animation);

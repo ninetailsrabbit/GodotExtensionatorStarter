@@ -37,7 +37,7 @@ namespace GodotExtensionatorStarter {
         // CSGShape and the surface related index
         public Dictionary<CsgBox3D, int> MaterialsByRoomPart = [];
 
-      
+
         private readonly Random _rng = new();
 
         public override void _EnterTree() {

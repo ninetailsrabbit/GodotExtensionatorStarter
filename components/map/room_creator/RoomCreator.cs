@@ -20,7 +20,8 @@ namespace GodotExtensionatorStarter {
         [Export] public bool CreateNewRoom { get => _createNewRoom; set { CreateCSGRooms(); } } // Tool button
         [Export] public bool GenerateFinalMesh { get => _generateFinalMesh; set { GenerateRoomsMeshes(); } } // Tool button
         [Export] public bool ClearGeneratedRooms { get => _clearRoom; set { ClearRoomsInSceneTree(); } } // Tool button
-        [Export] public RoomParameters RoomParameters { get; set; } = new();
+        [Export] public bool ClearLastGeneratedRooms { get => _clearLastGeneratedRooms; set { ClearLastGeneratedRoomsInSceneTree(); } } // Tool button
+        [Export] public RoomParameters RoomParameters { get; set; } = default!;
         [ExportGroup("Include in generation")]
         [Export] public bool GenerateMeshPerRoom = true;
         [Export] public bool GenerateMaterials = true;
@@ -50,6 +51,7 @@ namespace GodotExtensionatorStarter {
 
         private bool _createNewRoom = false;
         private bool _clearRoom = false;
+        private bool _clearLastGeneratedRooms = false;
         private bool _generateFinalMesh = false;
 
         // (Pi / 2) * wallRotation selected
@@ -88,7 +90,7 @@ namespace GodotExtensionatorStarter {
                 int numberOfRooms = CalculateNumberOfRooms(RoomParameters.UseBridgeConnectorsBetweenRooms);
 
                 for (int i = 0; i < numberOfRooms; i++) {
-                    bool isBridgeConnector = RoomParameters.UseBridgeConnectorsBetweenRooms && i % 2 != 0;
+                    bool isBridgeConnector = RoomParameters.UseBridgeConnectorsBetweenRooms && CSGRoomsCreated.Count > 0 && !CSGRoomsCreated.Last().IsBridgeRoomConnector;
 
                     var room = new CSGRoom() {
                         Name = $"Room{CSGRoomsCreated.Count}",
@@ -301,6 +303,20 @@ namespace GodotExtensionatorStarter {
             }
         }
 
-        private bool ToolCanBeUsed() => (Engine.IsEditorHint() && IsInsideTree()) || (!Engine.IsEditorHint() && IsNodeReady());
+        public void ClearLastGeneratedRoomsInSceneTree() {
+            if (ToolCanBeUsed() && !CSGRoomsCreated.IsEmpty()) {
+
+                var roomsToRemoveCount = RoomParameters.NumberOfRoomsPerGeneration + (RoomParameters.UseBridgeConnectorsBetweenRooms ? (int)Mathf.Ceil(RoomParameters.NumberOfRoomsPerGeneration / 2) : 0);
+
+                var lastRoomsCreated = CSGRoomsCreated.Skip(Math.Max(0, CSGRoomsCreated.Count - roomsToRemoveCount));
+                CSGRoomsCreated = CSGRoomsCreated.Take(Math.Max(0, CSGRoomsCreated.Count - roomsToRemoveCount)).ToList();
+
+                foreach (var child in lastRoomsCreated)
+                    child.Free();
+
+            }
+        }
+
+        private bool ToolCanBeUsed() => RoomParameters is not null && ((Engine.IsEditorHint() && IsInsideTree()) || (!Engine.IsEditorHint() && IsNodeReady()));
     }
 }
