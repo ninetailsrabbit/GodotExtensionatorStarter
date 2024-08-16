@@ -2,7 +2,7 @@
 
 namespace GodotExtensionatorStarter {
     [GlobalClass]
-    public partial class OutlinedPolygon : Polygon2D {
+    public partial class OutlinedPolygon2D : Polygon2D {
         [Export] public float LineThickness = 2f;
         [Export] public Color LineColor = new(0f, 0f, 0f, 0.1f);
 
