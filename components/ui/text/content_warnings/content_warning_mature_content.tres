@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="ContentWarning" load_steps=2 format=3 uid="uid://p5m4fngey0i"]
+
+[ext_resource type="Script" path="res://components/ui/text/content_warnings/ContentWarning.cs" id="1_7wh4t"]
+
+[resource]
+script = ExtResource("1_7wh4t")
+CanBeSkipped = true
+TimeOnScreen = 5.0
+TimeToDisplayContentWarning = 2.0
+TimeToHideContentWarning = 2.0
+Title = "Mature Content Warning"
+Subtitle = ""
+Description = "The following video game contains graphics depictions of suicide and violence, which some players may find disturbing. It is intended for mature audiences"
+SecondaryDescription = "Player discretion is advised"
+TitleTranslationKey = "MATURE_CONTENT_TITLE"
+SubtitleTranslationKey = "PHOTOSENSITIVE_SUBTITLE"
+DescriptionTranslationKey = "MATURE_CONTENT_DESCRIPTION"
+SecondaryDescriptionTranslationKey = "WARNING_VIEWER_DISCRETION"
