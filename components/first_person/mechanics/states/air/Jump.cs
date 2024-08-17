@@ -106,6 +106,7 @@ namespace GodotExtensionatorStarter {
             }
 
             DetectFallAfterJumpFallTimePassed();
+            DetectWall();
 
             AirMove(delta);
 

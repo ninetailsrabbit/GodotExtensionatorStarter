@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=28 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
@@ -17,6 +17,8 @@
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Crawl.cs" id="11_171lm"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Slide.cs" id="12_aj1ds"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/air/Jump.cs" id="14_xlj0y"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/states/wall/WallRun.cs" id="18_17pfo"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/states/wall/WallClimb.cs" id="19_5g6jj"]
 
 [sub_resource type="Animation" id="Animation_y7dw2"]
 length = 0.001
@@ -239,4 +241,14 @@ AirSpeed = 7.0
 script = ExtResource("14_xlj0y")
 JumpHeight = 3.5
 JumpDistance = 2.5
+Actor = NodePath("../../..")
+
+[node name="Wall" type="Node" parent="FiniteStateMachine"]
+
+[node name="WallRun" type="Node" parent="FiniteStateMachine/Wall" node_paths=PackedStringArray("Actor")]
+script = ExtResource("18_17pfo")
+Actor = NodePath("../../..")
+
+[node name="WallClimb" type="Node" parent="FiniteStateMachine/Wall" node_paths=PackedStringArray("Actor")]
+script = ExtResource("19_5g6jj")
 Actor = NodePath("../../..")

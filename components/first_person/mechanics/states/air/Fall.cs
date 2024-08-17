@@ -49,6 +49,7 @@ namespace GodotExtensionatorStarter {
 
             AirMove(delta);
 
+            DetectWall();
             Actor.MoveAndSlide();
         }
 

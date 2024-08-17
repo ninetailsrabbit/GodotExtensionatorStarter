@@ -64,8 +64,18 @@ namespace GodotExtensionatorStarter {
         }
 
         public void DetectJump() {
-            if (InputMap.HasAction(JumpInputAction) && Input.IsActionJustPressed(JumpInputAction))
+            if (Actor.Jump && InputMap.HasAction(JumpInputAction) && Input.IsActionJustPressed(JumpInputAction))
                 FSM?.ChangeStateTo<Jump>();
+        }
+
+        public void DetectWall() {
+            //if (Actor.WallClimb && Actor.WallRayCastDetector3D.IsFrontWallDetected()) {
+            //    FSM?.ChangeStateTo<WallClimb>();
+            //}
+            if (Actor.WallRun && Actor.WallRayCastDetector3D.AnySideWallDetected()) {
+                FSM?.ChangeStateTo<WallRun>();
+
+            }
         }
     }
 }

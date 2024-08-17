@@ -50,6 +50,7 @@ namespace GodotExtensionatorStarter {
 
         protected void Accelerate(double? delta = null) {
             delta ??= GetPhysicsProcessDeltaTime();
+
             var currentSpeed = Actor.MotionInput.InputDirection.In(Vector2.Right, Vector2.Left) ? SideSpeed : Speed;
 
             if (Acceleration > 0 && Friction > 0) {

@@ -44,6 +44,7 @@ namespace GodotExtensionatorStarter {
         public CameraMovement CameraMovement { get; private set; } = default!;
         public HeadBob HeadBob { get; private set; } = default!;
         public StairStepper StairStepper { get; private set; } = default!;
+        public WallRayCastDetector3D WallRayCastDetector3D { get; private set; } = default!;
 
         public FiniteStateMachine FSM { get; private set; } = default!;
         public TransformedInput MotionInput { get; private set; } = default!;
@@ -77,10 +78,12 @@ namespace GodotExtensionatorStarter {
             CameraMovement = this.FirstNodeOfClass<CameraMovement>();
             HeadBob = this.FirstNodeOfClass<HeadBob>();
             StairStepper = this.FirstNodeOfClass<StairStepper>();
+            WallRayCastDetector3D = this.FirstNodeOfClass<WallRayCastDetector3D>();
 
             FSM.RegisterTransitions([
                 new WalkToRunTransition(),
-                new RunToWalkTransition()
+                new RunToWalkTransition(),
+                new AnyToWallRunTransition()
             ]);
 
             FSM.StateChanged += OnStateChanged;

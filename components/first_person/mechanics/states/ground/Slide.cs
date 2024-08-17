@@ -83,7 +83,7 @@ namespace GodotExtensionatorStarter {
             Actor.Velocity = new Vector3(_entryVelocity.X * momentum, Actor.Velocity.Y, _entryVelocity.Z * momentum);
 
             if (SwingHead && SlideTilt > 0)
-                Head.Rotation = Head.Rotation with { Z = Mathf.Lerp(Head.Rotation.Z, _slideSide * Mathf.DegToRad(SlideTilt), (float)delta * SlideLerpSpeed) };
+                Head.Rotation = Head.Rotation with { Z = Mathf.LerpAngle(Head.Rotation.Z, _slideSide * Mathf.DegToRad(SlideTilt), (float)delta * SlideLerpSpeed) };
 
             if (!Actor.CeilShapeCast.IsColliding())
                 DetectJump();

@@ -31,11 +31,44 @@ namespace FirstPersonTemplate {
             CreateWallRayCastDetectors();
         }
 
+        public bool IsFrontWallDetected() => TopFrontRayCast.IsColliding() && BottomFrontRayCast.IsColliding();
+        public bool IsLeftWallDetected() => TopLeftRayCast.IsColliding() && BottomLeftRayCast.IsColliding();
+        public bool IsRightWallDetected() => TopRightRayCast.IsColliding() && BottomRightRayCast.IsColliding();
+        public bool AnyWallSideDetected() => IsFrontWallDetected() || IsLeftWallDetected() || IsRightWallDetected();
+        public bool AnySideWallDetected() => !IsFrontWallDetected() && (IsLeftWallDetected() || IsRightWallDetected());
+
+        public Vector3 GetLeftWallNormal() {
+            if (IsLeftWallDetected()) {
+                return BottomLeftRayCast.GetCollisionNormal();
+            }
+
+            return Vector3.Zero;
+        }
+
+        public Vector3 GetRightWallNormal() {
+            if (IsRightWallDetected()) {
+                return BottomRightRayCast.GetCollisionNormal();
+            }
+
+            return Vector3.Zero;
+        }
+
+        public Vector3 GetFrontWallNormal() {
+            if (IsFrontWallDetected()) {
+                return BottomFrontRayCast.GetCollisionNormal();
+            }
+
+            return Vector3.Zero;
+        }
+
+
         private void CreateWallRayCastDetectors() {
             TopRightRayCast = new RayCast3D { TargetPosition = Vector3.Right * RightDistanceDetector };
             BottomRightRayCast = new RayCast3D { TargetPosition = Vector3.Right * RightDistanceDetector };
+
             TopLeftRayCast = new RayCast3D { TargetPosition = Vector3.Left * LeftDistanceDetector };
             BottomLeftRayCast = new RayCast3D { TargetPosition = Vector3.Left * LeftDistanceDetector };
+
             TopFrontRayCast = new RayCast3D { TargetPosition = Vector3.Forward * FrontDistanceDetector };
             BottomFrontRayCast = new RayCast3D { TargetPosition = Vector3.Forward * FrontDistanceDetector };
 

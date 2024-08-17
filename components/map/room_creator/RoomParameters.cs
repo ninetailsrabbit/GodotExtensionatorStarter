@@ -2,6 +2,7 @@
 
 namespace GodotExtensionatorStarter {
     [GlobalClass]
+    [Tool]
     public partial class RoomParameters : Resource {
 
         [Export(PropertyHint.Range, "1, 1000, 1")] public int NumberOfRoomsPerGeneration = 3;

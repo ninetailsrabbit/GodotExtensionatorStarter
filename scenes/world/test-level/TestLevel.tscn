@@ -1,6 +1,5 @@
 [gd_scene load_steps=22 format=3 uid="uid://2df7eofiqpkx"]
 
-[ext_resource type="PackedScene" uid="uid://b01ettgh4fl37" path="res://components/first_person/point_n_click/PointNClickController.tscn" id="2_puqhl"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickMovement.cs" id="2_py680"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickObjectScanner.cs" id="4_gi2vb"]
 [ext_resource type="Script" path="res://components/interaction/3D/Interactable3D.cs" id="4_s6iyf"]
@@ -8,6 +7,7 @@
 [ext_resource type="Script" path="res://components/first_person/point_n_click/VisualHint3D.cs" id="6_52flb"]
 [ext_resource type="Texture2D" uid="uid://dd4rwobbo7262" path="res://assets/geometry/shapes/square/diamond.png" id="7_o5bd8"]
 [ext_resource type="Texture2D" uid="uid://b0jqy8kmi7byq" path="res://assets/geometry/shapes/square/rhombus.png" id="8_darqg"]
+[ext_resource type="PackedScene" uid="uid://bu4wye7x6eoel" path="res://components/first_person/FirstPersonController.tscn" id="8_j4nhx"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -125,10 +125,6 @@ transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -0.280
 operation = 2
 size = Vector3(0.439514, 2.41166, 1.57172)
 
-[node name="PointAndClickController" parent="." instance=ExtResource("2_puqhl")]
-transform = Transform3D(0.630283, 0, -0.776366, 0, 1, 0, 0.776366, 0, 0.630283, 3.77366, 1.28625, 3.45565)
-CanMoveCamera = true
-
 [node name="PointAndClickMovement" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.45713, 1.71341, -1.29201)
 script = ExtResource("2_py680")
@@ -240,3 +236,27 @@ script = ExtResource("4_s6iyf")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="PointAndClickCameraShifter2/Interactable3D"]
 shape = SubResource("SphereShape3D_ewsfj")
+
+[node name="CSGBox3D7" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -20.3349, 2.60918, 4.49146)
+use_collision = true
+size = Vector3(0.36145, 2.63477, 9.98291)
+
+[node name="CSGBox3D8" type="CSGBox3D" parent="."]
+transform = Transform3D(0.655901, 0, -0.754847, 0, 1, 0, 0.754847, 0, 0.655901, -16.5146, 2.60918, -3.88179)
+use_collision = true
+size = Vector3(0.36145, 2.63477, 9.98291)
+
+[node name="CSGBox3D9" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.79683, 3.83607, -7.40457)
+use_collision = true
+size = Vector3(4.74048, 0.666107, 4.24207)
+
+[node name="CSGBox3D10" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0234, 5.20843, 13.3012)
+use_collision = true
+size = Vector3(6.28735, 9.26688, 0.888947)
+
+[node name="FirstPersonController" parent="." instance=ExtResource("8_j4nhx")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.866382, 0)
+WallRun = true
