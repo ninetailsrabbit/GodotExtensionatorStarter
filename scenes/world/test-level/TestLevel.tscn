@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://2df7eofiqpkx"]
+[gd_scene load_steps=27 format=3 uid="uid://2df7eofiqpkx"]
 
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickMovement.cs" id="2_py680"]
 [ext_resource type="Script" path="res://components/first_person/point_n_click/PointAndClickObjectScanner.cs" id="4_gi2vb"]
@@ -8,6 +8,8 @@
 [ext_resource type="Texture2D" uid="uid://dd4rwobbo7262" path="res://assets/geometry/shapes/square/diamond.png" id="7_o5bd8"]
 [ext_resource type="Texture2D" uid="uid://b0jqy8kmi7byq" path="res://assets/geometry/shapes/square/rhombus.png" id="8_darqg"]
 [ext_resource type="PackedScene" uid="uid://bu4wye7x6eoel" path="res://components/first_person/FirstPersonController.tscn" id="8_j4nhx"]
+[ext_resource type="Script" path="res://components/interaction/3D/destructibles/Destructible3D.cs" id="9_ghuc5"]
+[ext_resource type="Script" path="res://components/hitbox_hurtbox/3D/Hurtbox3D.cs" id="10_5uvm8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_vv2x2"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -51,6 +53,16 @@ radius = 0.819787
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_ewsfj"]
 radius = 2.16232
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iyefl"]
+albedo_color = Color(1, 0.513726, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_hbl6b"]
+material = SubResource("StandardMaterial3D_iyefl")
+size = Vector3(5, 1, 0.1)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_s3cud"]
+size = Vector3(1.1416, 1, 1)
 
 [node name="TestLevel" type="Node3D"]
 
@@ -258,5 +270,23 @@ use_collision = true
 size = Vector3(6.28735, 9.26688, 0.888947)
 
 [node name="FirstPersonController" parent="." instance=ExtResource("8_j4nhx")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.866382, 0)
+transform = Transform3D(-0.534869, 0, -0.844935, 0, 1, 0, 0.844935, 0, -0.534869, -4.02025, 0.866382, 0)
 WallRun = true
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.66982, 4.29296)
+mesh = SubResource("BoxMesh_hbl6b")
+
+[node name="Destructible3D" type="Node3D" parent="MeshInstance3D" node_paths=PackedStringArray("TargetMesh", "HurtboxTrigger")]
+script = ExtResource("9_ghuc5")
+TargetMesh = NodePath("..")
+HurtboxTrigger = NodePath("Hurtbox3D")
+MinExplosionPower = 25.0
+MaxExplosionPower = 50.0
+
+[node name="Hurtbox3D" type="Area3D" parent="MeshInstance3D/Destructible3D"]
+script = ExtResource("10_5uvm8")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Destructible3D/Hurtbox3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0708008, 0, 0)
+shape = SubResource("BoxShape3D_s3cud")

@@ -6,7 +6,7 @@ namespace GodotExtensionatorStarter {
     public partial class Wall : MachineState {
 
         [Export] public FirstPersonController Actor { get; set; } = default!;
-        [Export(PropertyHint.Range, "0, 360f, 0.01f")] public float CameraRotationAngle = 15f;
+        [Export(PropertyHint.Range, "0, 360f, 0.01f")] public float CameraRotationAngle = 5f;
         [Export] public float CameraLerpRotationSpeed = 8f;
         [Export] public float WallGravity = 0.5f;
         [Export] public float WallSpeed = 7.5f;
