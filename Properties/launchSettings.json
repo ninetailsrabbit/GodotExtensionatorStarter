@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "GodotExtensionatorStarter": {
+      "commandName": "Project"
+    },
+    "GodotDebug": {
+      "commandName": "Executable",
+      "executablePath": "C:\\Users\\there\\Documents\\Godot_v4.3-stable_mono_win64\\Godot_v4.3-stable_mono_win64.exe",
+      "commandLineArgs": "--path . --verbose",
+      "workingDirectory": ".",
+      "nativeDebugging": true
+    }
+  }
+}
