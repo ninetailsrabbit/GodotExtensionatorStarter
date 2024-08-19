@@ -1,9 +1,9 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Extensionator;
 using Godot;
 using GodotExtensionator;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 
 namespace GodotExtensionatorStarter {
@@ -28,6 +28,7 @@ namespace GodotExtensionatorStarter {
         [Signal]
         public delegate void SubtitleBlocksFinishedToDisplayEventHandler();
 
+        [Export] public bool StaticDisplay = false;
         [Export] public bool AutoTypeCanBeSkipped = false;
         [Export] public bool ManualSubtitleTransition = false;
         [Export] public float TimeBetweenBlocks = 1f;
@@ -65,6 +66,8 @@ namespace GodotExtensionatorStarter {
         public override void _ExitTree() {
             GlobalGameEvents.SubtitlesRequested -= OnSubtitlesRequested;
 
+            SubtitleBlocksFinishedToDisplay -= OnSubtitleBlocksFinishedToDisplay;
+
             AutoTypedText.Skipped -= OnSkippedSubtitleBlock;
             AutoTypedText.Finished -= OnFinishedSubtitleBlockDisplay;
         }
@@ -72,6 +75,8 @@ namespace GodotExtensionatorStarter {
         public override void _EnterTree() {
             GlobalGameEvents = this.GetAutoloadNode<GlobalGameEvents>();
             GlobalGameEvents.SubtitlesRequested += OnSubtitlesRequested;
+
+            SubtitleBlocksFinishedToDisplay += OnSubtitleBlocksFinishedToDisplay;
         }
 
         public override void _Input(InputEvent @event) {
@@ -81,7 +86,7 @@ namespace GodotExtensionatorStarter {
                 DisplayNextSubtitleBlock();
             }
 
-            if(AutoTypeCanBeSkipped && AutoTypedText.IsSkipped)
+            if (AutoTypeCanBeSkipped && AutoTypedText.IsSkipped)
                 AutoTypedText.IsSkipped = false;
         }
 
@@ -106,6 +111,8 @@ namespace GodotExtensionatorStarter {
             AutoTypedText.Skipped += OnSkippedSubtitleBlock;
             AutoTypedText.Finished += OnFinishedSubtitleBlockDisplay;
 
+
+            LoadDialogueBlocks([new DialogueBlock("100", "potato", "give me the freedom i want piece of shit")]);
         }
 
         public void LoadDialogueBlocks(IEnumerable<DialogueBlock> dialogueBlocks) {
@@ -121,18 +128,17 @@ namespace GodotExtensionatorStarter {
             }
 
 
-            if (CurrentDialogueBlock is null && DialogueBlocks.Count > 0)
+            if (CurrentDialogueBlock is null && DialogueBlocks.Count > 0) {
+                Show();
                 DisplayNextSubtitleBlock();
+
+            }
         }
 
         public void DisplayNextSubtitleBlock() {
             if (DialogueBlocks.IsEmpty()) {
 
                 if (CurrentDialogueBlock is not null) {
-                    CurrentDialogueBlock = null;
-                    BetweenBlocksTimer.Stop();
-                    IsDisplaying = false;
-
                     EmitSignal(SignalName.SubtitleBlocksFinishedToDisplay);
                     GlobalGameEvents.EmitSignal(GlobalGameEvents.SignalName.SubtitleBlocksFinishedToDisplay);
                 }
@@ -196,6 +202,15 @@ namespace GodotExtensionatorStarter {
             if (ManualSubtitleTransition)
                 CurrentSubtitleState = SubtitleState.WaitingForInput;
 
+        }
+
+        private void OnSubtitleBlocksFinishedToDisplay() {
+            CurrentDialogueBlock = null;
+            BetweenBlocksTimer.Stop();
+            IsDisplaying = false;
+
+            AutoTypedText.Clear();
+            Hide();
         }
     }
 
