@@ -40,6 +40,9 @@ namespace GodotExtensionatorStarter {
         #endregion
 
         #region Motion
+        public Node3D Head { get; private set; } = default!;
+        public Node3D Eyes { get; private set; } = default!;
+        public Camera3D Camera { get; private set; } = default!;
         public AnimationPlayer AnimationPlayer { get; private set; } = default!;
         public CameraMovement CameraMovement { get; private set; } = default!;
         public HeadBob HeadBob { get; private set; } = default!;
@@ -67,6 +70,10 @@ namespace GodotExtensionatorStarter {
             AddToGroup(GroupName);
 
             MotionInput = new(this);
+
+            Head = GetNode<Node3D>($"%{nameof(Head)}");
+            Eyes = GetNode<Node3D>($"%{nameof(Eyes)}");
+            Camera = GetNode<Camera3D>($"%{nameof(Camera3D)}");
 
             AnimationPlayer = GetNode<AnimationPlayer>(nameof(AnimationPlayer));
             StandShape = GetNode<CollisionShape3D>(nameof(StandShape));

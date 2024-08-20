@@ -1,9 +1,9 @@
-using Godot;
+﻿using Godot;
 using GodotExtensionator;
 
 
 namespace GodotExtensionatorStarter {
-    public partial class WorldInteractableInformation : Control, ITranslatable {
+    public partial class WorldInformation : Control, ITranslatable {
         public GlobalGameEvents GlobalGameEvents { get; set; } = default!;
 
         public Label InformationLabel { get; set; } = null!;

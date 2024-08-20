@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace GodotExtensionatorStarter {
 
-    [Icon("res://components/audio/footstep_manager/footstep_manager_3d.svg")]
+    [GlobalClass, Icon("res://components/audio/footstep_manager/footstep_manager_3d.svg")]
     public partial class FootstepManager : Node3D {
         [Export] public RayCast3D FloorDetectorRaycast { get; set; } = default!;
         [Export] public bool UsePitch = true;

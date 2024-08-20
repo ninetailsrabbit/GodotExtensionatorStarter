@@ -1,4 +1,4 @@
-using Godot;
+﻿using Godot;
 using GodotExtensionator;
 
 namespace GodotExtensionatorStarter {
@@ -17,10 +17,16 @@ namespace GodotExtensionatorStarter {
         [Export] public float AirFriction { get; set; } = 25.0f;
         [Export] public float AirSpeed { get; set; } = 8.5f;
 
+        public MeshInstance3D Ocean { get; set; } = default!;
+
         public float FinalSpeed = 0f;
 
         public override void Enter() {
             FinalSpeed = FSM?.LastState() is GroundState groundState ? Mathf.Max(AirSpeed, groundState.Speed) : AirSpeed;
+        }
+
+        public override void Ready() {
+            Ocean = GetTree().Root.GetFirstNodeInGroup<MeshInstance3D>("ocean");
         }
 
         public override void PhysicsUpdate(double delta) {
@@ -76,6 +82,11 @@ namespace GodotExtensionatorStarter {
                 FSM?.ChangeStateTo<WallRun>();
 
             }
+        }
+
+        public void DetectSwim() {
+            if (Actor.Swim && Actor.Eyes.GlobalPosition.Y <= Ocean.GlobalPosition.Y)
+                FSM?.ChangeStateTo<Swim>();
         }
     }
 }

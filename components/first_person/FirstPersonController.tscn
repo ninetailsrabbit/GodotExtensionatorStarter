@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bu4wye7x6eoel"]
+[gd_scene load_steps=31 format=3 uid="uid://bu4wye7x6eoel"]
 
 [ext_resource type="Script" path="res://components/state_management/FiniteStateMachine.cs" id="1_r2hbn"]
 [ext_resource type="Script" path="res://components/first_person/FirstPersonController.cs" id="1_xrc74"]
@@ -8,9 +8,11 @@
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Idle.cs" id="3_b68la"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/SwingHead.cs" id="4_r2a3k"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/camera/HeadBob.cs" id="4_ur46t"]
+[ext_resource type="Script" path="res://components/interaction/3D/RayCastInteractor3D.cs" id="4_vriqw"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/walls/WallRayCastDetector3D.cs" id="6_t0ij4"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/stairs/StairStepper.cs" id="7_11x7o"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Walk.cs" id="8_5flmd"]
+[ext_resource type="Script" path="res://components/audio/footstep_manager/FootstepManager.cs" id="9_0hn8b"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Run.cs" id="9_v3glq"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/ground/Crouch.cs" id="10_2mvts"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/air/Fall.cs" id="10_sbrnj"]
@@ -19,6 +21,7 @@
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/air/Jump.cs" id="14_xlj0y"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/wall/WallRun.cs" id="18_17pfo"]
 [ext_resource type="Script" path="res://components/first_person/mechanics/states/wall/WallClimb.cs" id="19_5g6jj"]
+[ext_resource type="Script" path="res://components/first_person/mechanics/states/special/Swim.cs" id="20_hfggc"]
 
 [sub_resource type="Animation" id="Animation_y7dw2"]
 length = 0.001
@@ -135,6 +138,7 @@ shape = SubResource("CapsuleShape3D_lixv4")
 disabled = true
 
 [node name="Head" type="Node3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.55665, 0)
 
 [node name="CeilShapeCast" type="ShapeCast3D" parent="Head"]
@@ -143,9 +147,15 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.05612, 0)
 shape = SubResource("CapsuleShape3D_1dytl")
 
 [node name="Eyes" type="Node3D" parent="Head"]
+unique_name_in_owner = true
 
 [node name="Camera3D" type="Camera3D" parent="Head/Eyes"]
+unique_name_in_owner = true
 current = true
+
+[node name="RayCastInteractor3D" type="RayCast3D" parent="Head/Eyes"]
+target_position = Vector3(0, 0, -1.5)
+script = ExtResource("4_vriqw")
 
 [node name="CameraMovement" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "Camera", "PivotPoint")]
 script = ExtResource("3_7s15c")
@@ -166,6 +176,14 @@ Head = NodePath("../Head/Eyes")
 [node name="WallRayCastDetector3D" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.925, 0)
 script = ExtResource("6_t0ij4")
+
+[node name="FootstepManager" type="Node3D" parent="." node_paths=PackedStringArray("FloorDetectorRaycast")]
+script = ExtResource("9_0hn8b")
+FloorDetectorRaycast = NodePath("FloorDetector")
+
+[node name="FloorDetector" type="RayCast3D" parent="FootstepManager"]
+target_position = Vector3(0, -0.2, 0)
+debug_shape_custom_color = Color(1, 0.894118, 0, 1)
 
 [node name="StairStepper" type="Node3D" parent="." node_paths=PackedStringArray("Actor", "CameraSmoothingPivot")]
 script = ExtResource("7_11x7o")
@@ -251,4 +269,10 @@ Actor = NodePath("../../..")
 
 [node name="WallClimb" type="Node" parent="FiniteStateMachine/Wall" node_paths=PackedStringArray("Actor")]
 script = ExtResource("19_5g6jj")
+Actor = NodePath("../../..")
+
+[node name="Special" type="Node" parent="FiniteStateMachine"]
+
+[node name="Swim" type="Node" parent="FiniteStateMachine/Special" node_paths=PackedStringArray("Actor")]
+script = ExtResource("20_hfggc")
 Actor = NodePath("../../..")
