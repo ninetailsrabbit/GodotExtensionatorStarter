@@ -32,8 +32,9 @@ def create_or_update_translation_files(selected_locales = []):
     translation_template_path = os.path.join(CURRENT_DIR, translation_template_name).lstrip().replace("\\", "/")
 
     for locale in selected_locales:
-        current_po_translation_path = os.path.join(CURRENT_DIR, f"{locale}.po")
-
+        current_po_translation_path = os.path.join(CURRENT_DIR, f"{locale}.po").lstrip().replace("\\", "/")
+        
+        print(os.path.exists(current_po_translation_path), current_po_translation_path)
         if os.path.exists(current_po_translation_path):
             subprocess.run(['msgmerge', '--update', '--backup=none', current_po_translation_path, translation_template_path], check=True, capture_output=True, text=True)
         else:
@@ -46,8 +47,18 @@ def included_files_filter(file: str) -> bool:
     split_tuple = os.path.splitext(file)
     filename = split_tuple[0]
     file_extension = split_tuple[1]
-    
+
     return not "." in filename and file_extension in included_extensions
+
+
+def _contains_godot_prefixes(filename: str) -> bool:
+    godot_prefixes_to_exclude = ["EASE_", "TRANS_", "MOUSE_", "TYPE_", "THREAD_", "AUTOWRAP_", "ERROR_", "ERR_", "BYTE_"]
+    print(filename)
+    for prefix in godot_prefixes_to_exclude:
+        if filename.startswith(prefix):
+            return True
+
+    return False
 
 
 def scan_file_for_translation_keys(filepath: str):
@@ -56,7 +67,8 @@ def scan_file_for_translation_keys(filepath: str):
     with open(filepath, 'r', encoding="utf8") as file:
         for line in file:
             for translation_key in translation_keys_from(line):
-                translation_keys[translation_key] = os.path.relpath(filepath, GODOT_ROOT_DIR).lstrip().replace("\\", "/")
+                if not _contains_godot_prefixes(translation_key):
+                    translation_keys[translation_key] = os.path.relpath(filepath, GODOT_ROOT_DIR).lstrip().replace("\\", "/")
 
 
 def find_godot_root_dir() -> str:
@@ -75,8 +87,9 @@ def find_godot_root_dir() -> str:
             
     return root_dir
 
+
 def translation_keys_from(value: str):
-    return re.findall(r'\b[A-Z0-9]+(?:_[A-Z0-9]+)+\b', value)
+    return re.findall(r'\b[A-Z][A-Z0-9]*(?:_[A-Z0-9]+)+\b', value)
 
 
 locales = ['en', 'es', 'fr', 'de', 'it', 'pt', 'pl', 'ru','nl']
